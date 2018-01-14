@@ -1,0 +1,14 @@
+"\tfoo"
+	foo
+"\t\tfoo"
+		
+
+"\tfoo "
+	foo 
+"\t\tfoo  "
+		foo  
+
+" \tfoo"
+ 	foo
+"\t foo"
+	 foo
