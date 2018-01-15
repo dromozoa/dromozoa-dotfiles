@@ -14,7 +14,9 @@ set wildmode=list:longest
 set formatoptions+=nmM
 "set textwidth=60
 
-set breakindent
+if exists("&breakindent")
+  set breakindent
+endif
 
 set hlsearch
 set incsearch
