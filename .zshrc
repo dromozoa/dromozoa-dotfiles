@@ -1,45 +1,56 @@
+bindkey -v
+
 umask 022
-set -o vi
 
-PATH=/opt/dromozoa53/bin:/opt/dromozoa/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
-MANPATH=/opt/dromozoa53/share/man:/opt/dromozoa/share/man:/usr/share/man
-EDITOR=vim
-LANG=ja_JP.UTF-8
-CPPFLAGS=-I/opt/dromozoa/include
-LDFLAGS=-L/opt/dromozoa/lib
+export PATH=/opt/dromozoa53/bin:/opt/dromozoa/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+export MANPATH=/opt/dromozoa53/share/man:/opt/dromozoa/share/man:/usr/local/share/man:/usr/share/man
+export EDITOR=vim
+export LANG=ja_JP.UTF-8
+export CPPFLAGS=-I/opt/dromozoa/include
+export LDFLAGS=-L/opt/dromozoa/lib
 
-for i in PATH MANPATH EDITOR LANG CPPFLAGS LDFLAGS
-do
-  export "$i"
-done
+autoload -U colors
+colors
 
-if autoload -U compinit; then
-  compinit
-fi
+autoload -U compinit
+compinit
 
-if autoload -U colors; then
-  colors
-  PS1="%{$fg[red]%}%n@%m:%~%#%{$reset_color%} "
-  PS2="%{$fg[red]%}>%{$reset_color%} "
-fi
+PROMPT="%{$fg[red]%}%n@%m:%~%#%{$reset_color%} "
+PROMPT2="%{$fg[red]%}>%{$reset_color%} "
+SPROMPT="%{$fg[red]%}correct '%R' to '%r' [nyae]?%{$reset_color%} "
 
+setopt auto_cd
+setopt autopushd
+setopt correct
+setopt extended_glob
+setopt extended_history
+setopt hist_expand
 setopt hist_ignore_dups
+setopt hist_verify
+setopt inc_append_history
+setopt noautoremoveslash
 setopt share_history
 
 HISTFILE=~/.zsh_history
 HISTSIZE=65536
 SAVEHIST=65536
 
-setopt extended_glob
-
 alias c=clear
-alias cp='cp -i'
 alias e=exit
 alias h='fc -l -i 1 | grep'
+alias cp='cp -i'
 alias mv='mv -i'
-alias o='cd "$OLDPWD"'
 alias rm='rm -i'
-alias rmfr='\rm -f -r'
+alias rmfr='\rm -fr'
+
+uname=`uname`
+case x$uname in
+  xDarwin)
+    alias ls='ls -F -G'
+    export LSCOLORS=gxcxheheDxagadabagacad;;
+  *)
+    alias ls='ls -F --color=auto';;
+esac
 
 alias git-checkout-branch-feature='git checkout -b feature'
 alias git-checkout-branch-release='git checkout -b release'
