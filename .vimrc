@@ -10,7 +10,7 @@ set softtabstop=2
 
 set wildmode=list:longest
 
-set nowrap
+" set nowrap
 set formatoptions+=nmM
 "set textwidth=60
 
