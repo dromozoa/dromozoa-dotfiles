@@ -36,7 +36,7 @@ set listchars=tab:__,trail:_,precedes:<,extends:>
 " set modeline
 set modelines=5
 
-set clipboard=unnamed,autoselect
+set clipboard=unnamed
 
 syntax enable
 colorscheme darkblue
