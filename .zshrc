@@ -2,12 +2,37 @@ bindkey -v
 
 umask 022
 
-export PATH=/opt/dromozoa53/bin:/opt/dromozoa/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-export MANPATH=/opt/dromozoa53/share/man:/opt/dromozoa/share/man:/usr/local/share/man:/usr/share/man
-export EDITOR=vim
-export LANG=ja_JP.UTF-8
-export CPPFLAGS=-I/opt/dromozoa/include
-export LDFLAGS=-L/opt/dromozoa/lib
+PATH=\
+/opt/dromozoa53/bin:\
+/opt/dromozoa/bin:\
+/usr/local/bin:\
+/usr/bin:\
+/bin:\
+/usr/sbin:\
+/sbin
+
+MANPATH=\
+/opt/dromozoa53/share/man:\
+/opt/dromozoa/share/man:\
+/usr/local/share/man:\
+/usr/share/man
+
+CPPFLAGS=-I/opt/dromozoa/include
+LDFLAGS=-L/opt/dromozoa/lib
+
+if (locale -a | grep -iE 'ja_JP\.UTF-?8') >/dev/null 2>&1
+then
+  LANG=ja_JP.UTF-8
+else
+  LANG=C.UTF-8
+fi
+
+EDITOR=vim
+
+for i in PATH MANPATH CPPFLAGS LDFLAGS LANG EDITOR
+do
+  export "$i"
+done
 
 autoload -U colors
 colors
@@ -38,6 +63,7 @@ SAVEHIST=65536
 alias c=clear
 alias e=exit
 alias h='fc -l -i 1 | grep'
+alias o='cd "$OLDPWD"'
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'

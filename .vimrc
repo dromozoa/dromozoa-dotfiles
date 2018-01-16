@@ -33,6 +33,11 @@ set statusline=%F\ %m%r%h%w%y%q%{'['.&fileencoding.']['.&fileformat.']'}%=[%l,%c
 set list
 set listchars=tab:__,trail:_,precedes:<,extends:>
 
+" set modeline
+set modelines=5
+
+set clipboard=unnamed
+
 syntax enable
 colorscheme darkblue
 
