@@ -28,7 +28,7 @@ set noswapfile
 
 set number
 set laststatus=2
-set statusline=%F\ %m%r%h%w%y%q%{'['.&fileencoding.']['.&fileformat.']'}%=[%l,%c][U+%04B]
+set statusline=%F\ %m%r%h%w%y%{'['.&fileencoding.']['.&fileformat.']'}%=[%l,%c][U+%04B]
 
 set list
 set listchars=tab:__,trail:_,precedes:<,extends:>
