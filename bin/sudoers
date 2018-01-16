@@ -1,0 +1,39 @@
+#! /bin/sh -e
+
+# Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+#
+# This file is part of dromozoa-dotfiles.
+#
+# dromozoa-dotfiles is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# dromozoa-dotfiles is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
+
+case x$1 in
+  x) exit 1;;
+  *) u=$1;;
+esac
+
+case x$2 in
+  x) g=wheel;;
+  *) g=$2;;
+esac
+
+f="/etc/sudoers.d/$u"
+
+cat << EOH >"$f.new"
+Defaults:$u env_keep+="PATH SSH_AUTH_SOCK"
+Defaults:$u exempt_group=$g
+Defaults:$u !requiretty
+EOH
+
+mv "$f.new" "$f"
+chmod 600 "$f"
