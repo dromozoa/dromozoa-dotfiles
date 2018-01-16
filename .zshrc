@@ -2,7 +2,7 @@ bindkey -v
 
 umask 022
 
-export PATH=\
+PATH=\
 /opt/dromozoa53/bin:\
 /opt/dromozoa/bin:\
 /usr/local/bin:\
@@ -11,23 +11,28 @@ export PATH=\
 /usr/sbin:\
 /sbin
 
-export MANPATH=\
+MANPATH=\
 /opt/dromozoa53/share/man:\
 /opt/dromozoa/share/man:\
 /usr/local/share/man:\
 /usr/share/man
 
-export CPPFLAGS=-I/opt/dromozoa/include
-export LDFLAGS=-L/opt/dromozoa/lib
+CPPFLAGS=-I/opt/dromozoa/include
+LDFLAGS=-L/opt/dromozoa/lib
 
 if (locale -a | grep -iE 'ja_JP\.UTF-?8') >/dev/null 2>&1
 then
-  export LANG=ja_JP.UTF-8
+  LANG=ja_JP.UTF-8
 else
-  export LANG=C.UTF-8
+  LANG=C.UTF-8
 fi
 
-export EDITOR=vim
+EDITOR=vim
+
+for i in PATH MANPATH CPPFLAGS LDFLAGS LANG EDITOR
+do
+  export "$i"
+done
 
 autoload -U colors
 colors
