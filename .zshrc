@@ -63,6 +63,7 @@ SAVEHIST=65536
 alias c=clear
 alias e=exit
 alias h='fc -l -i 1 | grep'
+alias o='cd "$OLDPWD"'
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
