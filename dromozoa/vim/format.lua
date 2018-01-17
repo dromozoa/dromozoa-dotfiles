@@ -34,7 +34,7 @@ local function char_width(char)
   return widths[east_asian_width(char)]
 end
 
-return function (buffer, first, last, max_width)
+local function format(buffer, first, last, max_width)
   if not buffer then
     buffer = vim.buffer()
   end
@@ -147,3 +147,9 @@ return function (buffer, first, last, max_width)
 
   return "0"
 end
+
+local function format()
+  return "1"
+end
+
+return format
