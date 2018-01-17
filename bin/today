@@ -1,0 +1,3 @@
+#! /usr/bin/env lua
+
+io.write(os.date("%Y-%m-%d"), "\n")
