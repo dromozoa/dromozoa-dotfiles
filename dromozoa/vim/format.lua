@@ -38,10 +38,16 @@ end
 
 local function format(mock)
   local vim = vim or mock
-  local buffer = vim.buffer()
+  local b = vim.buffer()
   local first = vim.eval "v:lnum"
-  local last = first + vim.eval "v:count" - 1
-  local max_width = vim.eval "&textwidth"
+  local n = vim.eval "v:count"
+  -- local last = first + vim.eval "v:count" - 1
+  -- local max_width = vim.eval "&textwidth"
+
+
+
+
+
 
 --[[
   local paragraphs = { { text = {} } }

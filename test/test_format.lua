@@ -16,7 +16,6 @@
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 local format = require "dromozoa.vim.format"
-local length = require "dromozoa.vim.length"
 local mock = require "dromozoa.vim.mock"
 local buffer = require "dromozoa.vim.mock.buffer"
 
@@ -51,10 +50,10 @@ local b = buffer [[
 
 local vim = mock(b, {
   ["v:lnum"] = 2;
-  ["v:count"] = length(b) - 1;
+  ["v:count"] = b:size() - 1;
   ["&textwidth"] = 20;
 })
 
 format(vim)
 
-io.write(tostring(vim.buffer()))
+io.write(vim.buffer():text())
