@@ -20,6 +20,9 @@ local east_asian_width = require "dromozoa.ucd.east_asian_width"
 
 local unpack = table.unpack or unpack
 
+local class = {}
+local metatable = { __index = class }
+
 local widths = {
   ["N"]  = 1; -- neutral
   ["Na"] = 1; -- narrow
@@ -33,20 +36,14 @@ local function char_width(char)
   return widths[east_asian_width(char)]
 end
 
-local function format(buffer, first, last, max_width)
-  if not buffer then
-    buffer = vim.buffer()
-  end
-  if not first then
-    first = vim.eval "v:lnum"
-  end
-  if not last then
-    last = first + vim.eval "v:count" - 1
-  end
-  if not max_width then
-    max_width = vim.eval "&textwidth"
-  end
+local function format(mock)
+  local vim = vim or mock
+  local buffer = vim.buffer()
+  local first = vim.eval "v:lnum"
+  local last = first + vim.eval "v:count" - 1
+  local max_width = vim.eval "&textwidth"
 
+--[[
   local paragraphs = { { text = {} } }
   for i = first, last do
     local line = buffer[i]
@@ -133,7 +130,7 @@ local function format(buffer, first, last, max_width)
       buffer[first + i - 1] = result[i]
     end
     for i = buffer_count + 1, result_count do
-      buffer:insert(first + i - 1, result[i])
+      buffer:insert(result[i], first + i - 1)
     end
   else
     for i = 1, result_count do
@@ -143,12 +140,9 @@ local function format(buffer, first, last, max_width)
       buffer[first + result_count + 1] = nil
     end
   end
+]]
 
   return "0"
-end
-
-local function format()
-  return "1"
 end
 
 return format

@@ -30,6 +30,11 @@ function class:insert(newline, pos)
   table.insert(impl, pos + 1, newline)
 end
 
+function metatable:__len()
+  local impl = self[private_impl]
+  return #impl
+end
+
 function metatable:__index(key)
   local impl = self[private_impl]
   local value = impl[key]

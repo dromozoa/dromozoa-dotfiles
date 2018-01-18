@@ -16,8 +16,11 @@
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 local format = require "dromozoa.vim.format"
+local length = require "dromozoa.vim.length"
+local mock = require "dromozoa.vim.mock"
+local buffer = require "dromozoa.vim.mock.buffer"
 
-local text = [[
+local b = buffer [[
 あいうえお
 あいうえおかきくけこ
 あいうえおかきくけこさしすせそ
@@ -46,18 +49,12 @@ local text = [[
 あいうえおかきくけこさしすせそたちつてとなにぬねの
 ]]
 
-local buffer = {}
-for line in text:gmatch "([^\n]-)\n" do
-  buffer[#buffer + 1] = line
-end
-setmetatable(buffer, {
-  __index = {
-    insert = table.insert;
-  };
+local vim = mock(b, {
+  ["v:lnum"] = 2;
+  ["v:count"] = length(b) - 1;
+  ["&textwidth"] = 20;
 })
 
-format(buffer, 2, #buffer - 1, 20)
+format(vim)
 
-for i = 1, #buffer do
-  print(buffer[i])
-end
+io.write(tostring(vim.buffer()))
