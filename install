@@ -37,13 +37,14 @@ backup=$here/backup-`date "+%Y-%m-%d-%H-%M-%S"`
 cd
 home=`pwd`
 
-for i in .vimrc .zshrc
+for i in .editrc .inputrc .vimrc .zshrc
 do
   if test -h "$i"
   then
     echo "unlink $home/$i"
     rm -f "$i"
-  else
+  elif test -f "$i"
+  then
     echo "move $home/$i -> $backup"
     mkdir -p "$backup"
     mv -f "$i" "$backup"

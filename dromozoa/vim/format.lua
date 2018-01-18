@@ -15,7 +15,6 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-local dumper = require "dromozoa.commons.dumper"
 local utf8 = require "dromozoa.utf8"
 local east_asian_width = require "dromozoa.ucd.east_asian_width"
 

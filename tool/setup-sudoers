@@ -18,7 +18,7 @@
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 case x$1 in
-  x) exit 1;;
+  x) echo "usage: $0 user [group]"; exit 1;;
   *) u=$1;;
 esac
 
