@@ -65,6 +65,6 @@ return setmetatable(class, {
         impl[#impl + 1] = line
       end
     end
-    return setmetatable({ [private_impl] = {} }, metatable)
+    return setmetatable({ [private_impl] = impl }, metatable)
   end;
 })
