@@ -30,11 +30,6 @@ function class:insert(newline, pos)
   table.insert(impl, pos + 1, newline)
 end
 
-function metatable:__len(newline, pos)
-  local impl = self[private_impl]
-  return #impl
-end
-
 function metatable:__index(key)
   local impl = self[private_impl]
   local value = impl[key]
@@ -51,6 +46,15 @@ function metatable:__newindex(key, value)
     table.remove(impl, key)
   else
     impl[key] = value
+  end
+end
+
+function metatable:__tostring()
+  local impl = self[private_impl]
+  if #impl == 0 then
+    return ""
+  else
+    return table.concat(impl, "\n") .. "\n"
   end
 end
 
