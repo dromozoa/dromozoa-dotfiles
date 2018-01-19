@@ -95,17 +95,3 @@ case x$uname in
   *)
     alias ls='ls -F --color=auto';;
 esac
-
-alias git-checkout-branch-feature='git checkout -b feature'
-alias git-checkout-branch-release='git checkout -b release'
-alias git-merge-feature='git merge --no-ff -m "作業ブランチをマージ。" feature'
-alias git-merge-release='git merge --no-ff -m "リリースブランチをマージ。" release'
-alias git-merge-source='git merge --no-ff -m "ソースブランチをマージ。" source'
-alias git-commit-prepare='git commit -m "リリース準備。"'
-alias git-commit-refactoring='git commit -m "リファクタリング。"'
-alias git-commit-release='git commit -m "リリースメッセージを設定。"'
-alias git-tag='git tag -m "" -a'
-alias git-push-all-tags='git push --all && git push --tags'
-alias git-push-all-tags-dry-run='git push --dry-run --all && git push --dry-run --tags'
-alias git-clean='git clean -d -x'
-alias git-config-user-name-email='git config user.name "Tomoyuki Fujimori" && git config user.email "moyu@dromozoa.com"'
