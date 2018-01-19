@@ -3,6 +3,7 @@ bindkey -v
 umask 022
 
 PATH=\
+$HOME/dromozoa-dotfiles/bin:\
 /opt/dromozoa53/bin:\
 /opt/dromozoa/bin:\
 /usr/local/bin:\

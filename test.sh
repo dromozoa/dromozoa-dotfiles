@@ -17,38 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-if (unset CDPATH) >/dev/null 2>&1
-then
-  unset CDPATH
-fi
+case x$1 in
+  x) lua=lua;;
+  *) lua=$1;;
+esac
 
-fn_dirname() {
-  expr "x$1" : 'x\(.*[^/]\)//*[^/][^/]*/*$' \
-    '|' "x$1" : 'x\(//\)[^/]' \
-    '|' "x$1" : 'x\(//\)$' \
-    '|' "x$1" : 'x\(/\)' \
-    '|' .
-}
-
-here=`fn_dirname "$0"`
-here=`(cd "$here" && pwd)`
-backup=$here/backup-`date "+%Y-%m-%d-%H-%M-%S"`
-
-cd
-home=`pwd`
-
-for i in .editrc .inputrc .vimrc .zshrc
+for i in test/test*.lua
 do
-  if test -h "$i"
-  then
-    echo "unlink $home/$i"
-    rm -f "$i"
-  elif test -f "$i"
-  then
-    echo "move $home/$i -> $backup"
-    mkdir -p "$backup"
-    mv -f "$i" "$backup"
-  fi
-  echo "link $home/$i -> $here/$i"
-  ln -s "$here/$i" "$i"
+  "$lua" "$i"
 done

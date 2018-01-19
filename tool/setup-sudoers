@@ -17,38 +17,23 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-if (unset CDPATH) >/dev/null 2>&1
-then
-  unset CDPATH
-fi
+case x$1 in
+  x) echo "usage: $0 user [group]"; exit 1;;
+  *) u=$1;;
+esac
 
-fn_dirname() {
-  expr "x$1" : 'x\(.*[^/]\)//*[^/][^/]*/*$' \
-    '|' "x$1" : 'x\(//\)[^/]' \
-    '|' "x$1" : 'x\(//\)$' \
-    '|' "x$1" : 'x\(/\)' \
-    '|' .
-}
+case x$2 in
+  x) g=wheel;;
+  *) g=$2;;
+esac
 
-here=`fn_dirname "$0"`
-here=`(cd "$here" && pwd)`
-backup=$here/backup-`date "+%Y-%m-%d-%H-%M-%S"`
+f="/etc/sudoers.d/$u"
 
-cd
-home=`pwd`
+cat << EOH >"$f.new"
+Defaults:$u env_keep+="PATH SSH_AUTH_SOCK"
+Defaults:$u exempt_group=$g
+Defaults:$u !requiretty
+EOH
 
-for i in .editrc .inputrc .vimrc .zshrc
-do
-  if test -h "$i"
-  then
-    echo "unlink $home/$i"
-    rm -f "$i"
-  elif test -f "$i"
-  then
-    echo "move $home/$i -> $backup"
-    mkdir -p "$backup"
-    mv -f "$i" "$backup"
-  fi
-  echo "link $home/$i -> $here/$i"
-  ln -s "$here/$i" "$i"
-done
+mv "$f.new" "$f"
+chmod 600 "$f"

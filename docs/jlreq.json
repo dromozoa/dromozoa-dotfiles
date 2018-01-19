@@ -1,0 +1,8582 @@
+[
+  {
+    "id": "cl-01",
+    "name": "Opening brackets",
+    "data": [
+      {
+        "code": "2018",
+        "name": "LEFT SINGLE QUOTATION MARK",
+        "remark": "used horizontal composition"
+      },
+      {
+        "code": "201C",
+        "name": "LEFT DOUBLE QUOTATION MARK",
+        "remark": "used horizontal composition"
+      },
+      {
+        "code": "0028",
+        "name": "LEFT PARENTHESIS",
+        "remark": ""
+      },
+      {
+        "code": "3014",
+        "name": "LEFT TORTOISE SHELL BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "005B",
+        "name": "LEFT SQUARE BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "007B",
+        "name": "LEFT CURLY BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "3008",
+        "name": "LEFT ANGLE BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "300A",
+        "name": "LEFT DOUBLE ANGLE BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "300C",
+        "name": "LEFT CORNER BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "300E",
+        "name": "LEFT WHITE CORNER BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "3010",
+        "name": "LEFT BLACK LENTICULAR BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "2985",
+        "name": "LEFT WHITE PARENTHESIS",
+        "remark": ""
+      },
+      {
+        "code": "3018",
+        "name": "LEFT WHITE TORTOISE SHELL BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "3016",
+        "name": "LEFT WHITE LENTICULAR BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "00AB",
+        "name": "LEFT-POINTING DOUBLE ANGLE QUOTATION MARK",
+        "remark": ""
+      },
+      {
+        "code": "301D",
+        "name": "REVERSED DOUBLE PRIME QUOTATION MARK",
+        "remark": "used vertical composition"
+      }
+    ]
+  },
+  {
+    "id": "cl-02",
+    "name": "Closing brackets",
+    "data": [
+      {
+        "code": "2019",
+        "name": "RIGHT SINGLE QUOTATION MARK",
+        "remark": "used horizontal composition"
+      },
+      {
+        "code": "201D",
+        "name": "RIGHT DOUBLE QUOTATION MARK",
+        "remark": "used horizontal composition"
+      },
+      {
+        "code": "0029",
+        "name": "RIGHT PARENTHESIS",
+        "remark": ""
+      },
+      {
+        "code": "3015",
+        "name": "RIGHT TORTOISE SHELL BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "005D",
+        "name": "RIGHT SQUARE BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "007D",
+        "name": "RIGHT CURLY BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "3009",
+        "name": "RIGHT ANGLE BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "300B",
+        "name": "RIGHT DOUBLE ANGLE BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "300D",
+        "name": "RIGHT CORNER BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "300F",
+        "name": "RIGHT WHITE CORNER BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "3011",
+        "name": "RIGHT BLACK LENTICULAR BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "2986",
+        "name": "RIGHT WHITE PARENTHESIS",
+        "remark": ""
+      },
+      {
+        "code": "3019",
+        "name": "RIGHT WHITE TORTOISE SHELL BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "3017",
+        "name": "RIGHT WHITE LENTICULAR BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "00BB",
+        "name": "RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK",
+        "remark": ""
+      },
+      {
+        "code": "301F",
+        "name": "LOW DOUBLE PRIME QUOTATION MARK",
+        "remark": "used vertical composition"
+      }
+    ]
+  },
+  {
+    "id": "cl-03",
+    "name": "Hyphens",
+    "data": [
+      {
+        "code": "2010",
+        "name": "HYPHEN",
+        "remark": "quarter em width"
+      },
+      {
+        "code": "301C",
+        "name": "WAVE DASH",
+        "remark": ""
+      },
+      {
+        "code": "30A0",
+        "name": "KATAKANA-HIRAGANA DOUBLE HYPHEN",
+        "remark": "half-width"
+      },
+      {
+        "code": "2013",
+        "name": "EN DASH",
+        "remark": "half-width"
+      }
+    ]
+  },
+  {
+    "id": "cl-04",
+    "name": "Dividing punctuation marks",
+    "data": [
+      {
+        "code": "0021",
+        "name": "EXCLAMATION MARK",
+        "remark": ""
+      },
+      {
+        "code": "003F",
+        "name": "QUESTION MARK",
+        "remark": ""
+      },
+      {
+        "code": "203C",
+        "name": "DOUBLE EXCLAMATION MARK",
+        "remark": ""
+      },
+      {
+        "code": "2047",
+        "name": "DOUBLE QUESTION MARK",
+        "remark": ""
+      },
+      {
+        "code": "2048",
+        "name": "QUESTION EXCLAMATION MARK",
+        "remark": ""
+      },
+      {
+        "code": "2049",
+        "name": "EXCLAMATION QUESTION MARK",
+        "remark": ""
+      }
+    ]
+  },
+  {
+    "id": "cl-05",
+    "name": "Middle dots",
+    "data": [
+      {
+        "code": "30FB",
+        "name": "KATAKANA MIDDLE DOT",
+        "remark": ""
+      },
+      {
+        "code": "003A",
+        "name": "COLON",
+        "remark": ""
+      },
+      {
+        "code": "003B",
+        "name": "SEMICOLON",
+        "remark": "used horizontal composition"
+      }
+    ]
+  },
+  {
+    "id": "cl-06",
+    "name": "Full stops",
+    "data": [
+      {
+        "code": "3002",
+        "name": "IDEOGRAPHIC FULL STOP",
+        "remark": ""
+      },
+      {
+        "code": "002E",
+        "name": "FULL STOP",
+        "remark": "used horizontal composition"
+      }
+    ]
+  },
+  {
+    "id": "cl-07",
+    "name": "Commas",
+    "data": [
+      {
+        "code": "3001",
+        "name": "IDEOGRAPHIC COMMA",
+        "remark": ""
+      },
+      {
+        "code": "002C",
+        "name": "COMMA",
+        "remark": "used horizontal composition"
+      }
+    ]
+  },
+  {
+    "id": "cl-08",
+    "name": "Inseparable characters",
+    "data": [
+      {
+        "code": "2014",
+        "name": "EM DASH",
+        "remark": "Some systems implement U+2015 HORIZONTAL BAR very similar behavior to U+2014 EM DASH"
+      },
+      {
+        "code": "2026",
+        "name": "HORIZONTAL ELLIPSIS",
+        "remark": ""
+      },
+      {
+        "code": "2025",
+        "name": "TWO DOT LEADER",
+        "remark": ""
+      },
+      {
+        "code": "3033",
+        "name": "VERTICAL KANA REPEAT MARK UPPER HALF",
+        "remark": "used vertical compositionU+3035 follows this\n                        "
+      },
+      {
+        "code": "3034",
+        "name": "VERTICAL KANA REPEAT WITH VOICED SOUND MARK UPPER HALF",
+        "remark": "used vertical compositionU+3035 follows this\n                        "
+      },
+      {
+        "code": "3035",
+        "name": "VERTICAL KANA REPEAT MARK LOWER HALF",
+        "remark": "used vertical composition"
+      }
+    ]
+  },
+  {
+    "id": "cl-09",
+    "name": "Iteration marks",
+    "data": [
+      {
+        "code": "30FD",
+        "name": "KATAKANA ITERATION MARK",
+        "remark": ""
+      },
+      {
+        "code": "30FE",
+        "name": "KATAKANA VOICED ITERATION MARK",
+        "remark": ""
+      },
+      {
+        "code": "309D",
+        "name": "HIRAGANA ITERATION MARK",
+        "remark": ""
+      },
+      {
+        "code": "309E",
+        "name": "HIRAGANA VOICED ITERATION MARK",
+        "remark": ""
+      },
+      {
+        "code": "3005",
+        "name": "IDEOGRAPHIC ITERATION MARK",
+        "remark": ""
+      },
+      {
+        "code": "303B",
+        "name": "VERTICAL IDEOGRAPHIC ITERATION MARK",
+        "remark": ""
+      }
+    ]
+  },
+  {
+    "id": "cl-10",
+    "name": "Prolonged sound mark",
+    "data": [
+      {
+        "code": "30FC",
+        "name": "KATAKANA-HIRAGANA PROLONGED SOUND MARK",
+        "remark": ""
+      }
+    ]
+  },
+  {
+    "id": "cl-11",
+    "name": "Small kana",
+    "data": [
+      {
+        "code": "3041",
+        "name": "HIRAGANA LETTER SMALL A",
+        "remark": ""
+      },
+      {
+        "code": "3043",
+        "name": "HIRAGANA LETTER SMALL I",
+        "remark": ""
+      },
+      {
+        "code": "3045",
+        "name": "HIRAGANA LETTER SMALL U",
+        "remark": ""
+      },
+      {
+        "code": "3047",
+        "name": "HIRAGANA LETTER SMALL E",
+        "remark": ""
+      },
+      {
+        "code": "3049",
+        "name": "HIRAGANA LETTER SMALL O",
+        "remark": ""
+      },
+      {
+        "code": "30A1",
+        "name": "KATAKANA LETTER SMALL A",
+        "remark": ""
+      },
+      {
+        "code": "30A3",
+        "name": "KATAKANA LETTER SMALL I",
+        "remark": ""
+      },
+      {
+        "code": "30A5",
+        "name": "KATAKANA LETTER SMALL U",
+        "remark": ""
+      },
+      {
+        "code": "30A7",
+        "name": "KATAKANA LETTER SMALL E",
+        "remark": ""
+      },
+      {
+        "code": "30A9",
+        "name": "KATAKANA LETTER SMALL O",
+        "remark": ""
+      },
+      {
+        "code": "3063",
+        "name": "HIRAGANA LETTER SMALL TU",
+        "remark": ""
+      },
+      {
+        "code": "3083",
+        "name": "HIRAGANA LETTER SMALL YA",
+        "remark": ""
+      },
+      {
+        "code": "3085",
+        "name": "HIRAGANA LETTER SMALL YU",
+        "remark": ""
+      },
+      {
+        "code": "3087",
+        "name": "HIRAGANA LETTER SMALL YO",
+        "remark": ""
+      },
+      {
+        "code": "308E",
+        "name": "HIRAGANA LETTER SMALL WA",
+        "remark": ""
+      },
+      {
+        "code": "3095",
+        "name": "HIRAGANA LETTER SMALL KA",
+        "remark": ""
+      },
+      {
+        "code": "3096",
+        "name": "HIRAGANA LETTER SMALL KE",
+        "remark": ""
+      },
+      {
+        "code": "30C3",
+        "name": "KATAKANA LETTER SMALL TU",
+        "remark": ""
+      },
+      {
+        "code": "30E3",
+        "name": "KATAKANA LETTER SMALL YA",
+        "remark": ""
+      },
+      {
+        "code": "30E5",
+        "name": "KATAKANA LETTER SMALL YU",
+        "remark": ""
+      },
+      {
+        "code": "30E7",
+        "name": "KATAKANA LETTER SMALL YO",
+        "remark": ""
+      },
+      {
+        "code": "30EE",
+        "name": "KATAKANA LETTER SMALL WA",
+        "remark": ""
+      },
+      {
+        "code": "30F5",
+        "name": "KATAKANA LETTER SMALL KA",
+        "remark": ""
+      },
+      {
+        "code": "30F6",
+        "name": "KATAKANA LETTER SMALL KE",
+        "remark": ""
+      },
+      {
+        "code": "31F0",
+        "name": "KATAKANA LETTER SMALL KU",
+        "remark": ""
+      },
+      {
+        "code": "31F1",
+        "name": "KATAKANA LETTER SMALL SI",
+        "remark": ""
+      },
+      {
+        "code": "31F2",
+        "name": "KATAKANA LETTER SMALL SU",
+        "remark": ""
+      },
+      {
+        "code": "31F3",
+        "name": "KATAKANA LETTER SMALL TO",
+        "remark": ""
+      },
+      {
+        "code": "31F4",
+        "name": "KATAKANA LETTER SMALL NU",
+        "remark": ""
+      },
+      {
+        "code": "31F5",
+        "name": "KATAKANA LETTER SMALL HA",
+        "remark": ""
+      },
+      {
+        "code": "31F6",
+        "name": "KATAKANA LETTER SMALL HI",
+        "remark": ""
+      },
+      {
+        "code": "31F7",
+        "name": "KATAKANA LETTER SMALL HU",
+        "remark": ""
+      },
+      {
+        "code": "31F8",
+        "name": "KATAKANA LETTER SMALL HE",
+        "remark": ""
+      },
+      {
+        "code": "31F9",
+        "name": "KATAKANA LETTER SMALL HO",
+        "remark": ""
+      },
+      {
+        "code": "31FA",
+        "name": "KATAKANA LETTER SMALL MU",
+        "remark": ""
+      },
+      {
+        "code": "31FB",
+        "name": "KATAKANA LETTER SMALL RA",
+        "remark": ""
+      },
+      {
+        "code": "31FC",
+        "name": "KATAKANA LETTER SMALL RI",
+        "remark": ""
+      },
+      {
+        "code": "31FD",
+        "name": "KATAKANA LETTER SMALL RU",
+        "remark": ""
+      },
+      {
+        "code": "31FE",
+        "name": "KATAKANA LETTER SMALL RE",
+        "remark": ""
+      },
+      {
+        "code": "31FF",
+        "name": "KATAKANA LETTER SMALL RO",
+        "remark": ""
+      },
+      {
+        "code": "<31F7, 309A>",
+        "name": "<KATAKANA LETTER SMALL HU, COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK>",
+        "remark": ""
+      }
+    ]
+  },
+  {
+    "id": "cl-12",
+    "name": "Prefixed abbreviations",
+    "data": [
+      {
+        "code": "00A5",
+        "name": "YEN SIGN",
+        "remark": ""
+      },
+      {
+        "code": "0024",
+        "name": "DOLLAR SIGN",
+        "remark": ""
+      },
+      {
+        "code": "00A3",
+        "name": "POUND SIGN",
+        "remark": ""
+      },
+      {
+        "code": "0023",
+        "name": "NUMBER SIGN",
+        "remark": ""
+      },
+      {
+        "code": "20AC",
+        "name": "EURO SIGN",
+        "remark": ""
+      },
+      {
+        "code": "2116",
+        "name": "NUMERO SIGN",
+        "remark": ""
+      }
+    ]
+  },
+  {
+    "id": "cl-13",
+    "name": "Postfixed abbreviations",
+    "data": [
+      {
+        "code": "00B0",
+        "name": "DEGREE SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2032",
+        "name": "PRIME",
+        "remark": "proportional"
+      },
+      {
+        "code": "2033",
+        "name": "DOUBLE PRIME",
+        "remark": "proportional"
+      },
+      {
+        "code": "2103",
+        "name": "DEGREE CELSIUS",
+        "remark": ""
+      },
+      {
+        "code": "00A2",
+        "name": "CENT SIGN",
+        "remark": ""
+      },
+      {
+        "code": "0025",
+        "name": "PERCENT SIGN",
+        "remark": ""
+      },
+      {
+        "code": "2030",
+        "name": "PER MILLE SIGN",
+        "remark": ""
+      },
+      {
+        "code": "33CB",
+        "name": "SQUARE HP",
+        "remark": ""
+      },
+      {
+        "code": "2113",
+        "name": "SCRIPT SMALL L",
+        "remark": ""
+      },
+      {
+        "code": "3303",
+        "name": "SQUARE AARU",
+        "remark": ""
+      },
+      {
+        "code": "330D",
+        "name": "SQUARE KARORII",
+        "remark": ""
+      },
+      {
+        "code": "3314",
+        "name": "SQUARE KIRO",
+        "remark": ""
+      },
+      {
+        "code": "3318",
+        "name": "SQUARE GURAMU",
+        "remark": ""
+      },
+      {
+        "code": "3322",
+        "name": "SQUARE SENTI",
+        "remark": ""
+      },
+      {
+        "code": "3323",
+        "name": "SQUARE SENTO",
+        "remark": ""
+      },
+      {
+        "code": "3326",
+        "name": "SQUARE DORU",
+        "remark": ""
+      },
+      {
+        "code": "3327",
+        "name": "SQUARE TON",
+        "remark": ""
+      },
+      {
+        "code": "332B",
+        "name": "SQUARE PAASENTO",
+        "remark": ""
+      },
+      {
+        "code": "3336",
+        "name": "SQUARE HEKUTAARU",
+        "remark": ""
+      },
+      {
+        "code": "333B",
+        "name": "SQUARE PEEZI",
+        "remark": ""
+      },
+      {
+        "code": "3349",
+        "name": "SQUARE MIRI",
+        "remark": ""
+      },
+      {
+        "code": "334A",
+        "name": "SQUARE MIRIBAARU",
+        "remark": ""
+      },
+      {
+        "code": "334D",
+        "name": "SQUARE MEETORU",
+        "remark": ""
+      },
+      {
+        "code": "3351",
+        "name": "SQUARE RITTORU",
+        "remark": ""
+      },
+      {
+        "code": "3357",
+        "name": "SQUARE WATTO",
+        "remark": ""
+      },
+      {
+        "code": "338E",
+        "name": "SQUARE MG",
+        "remark": ""
+      },
+      {
+        "code": "338F",
+        "name": "SQUARE KG",
+        "remark": ""
+      },
+      {
+        "code": "339C",
+        "name": "SQUARE MM",
+        "remark": ""
+      },
+      {
+        "code": "339D",
+        "name": "SQUARE CM",
+        "remark": ""
+      },
+      {
+        "code": "339E",
+        "name": "SQUARE KM",
+        "remark": ""
+      },
+      {
+        "code": "33A1",
+        "name": "SQUARE M SQUARED",
+        "remark": ""
+      },
+      {
+        "code": "33C4",
+        "name": "SQUARE CC",
+        "remark": ""
+      }
+    ]
+  },
+  {
+    "id": "cl-14",
+    "name": "Full-width ideographic space",
+    "data": [
+      {
+        "code": "3000",
+        "name": "IDEOGRAPHIC SPACE",
+        "remark": ""
+      }
+    ]
+  },
+  {
+    "id": "cl-15",
+    "name": "Hiragana",
+    "data": [
+      {
+        "code": "3042",
+        "name": "HIRAGANA LETTER A",
+        "remark": ""
+      },
+      {
+        "code": "3044",
+        "name": "HIRAGANA LETTER I",
+        "remark": ""
+      },
+      {
+        "code": "3046",
+        "name": "HIRAGANA LETTER U",
+        "remark": ""
+      },
+      {
+        "code": "3048",
+        "name": "HIRAGANA LETTER E",
+        "remark": ""
+      },
+      {
+        "code": "304A",
+        "name": "HIRAGANA LETTER O",
+        "remark": ""
+      },
+      {
+        "code": "304B",
+        "name": "HIRAGANA LETTER KA",
+        "remark": ""
+      },
+      {
+        "code": "304C",
+        "name": "HIRAGANA LETTER GA",
+        "remark": ""
+      },
+      {
+        "code": "304D",
+        "name": "HIRAGANA LETTER KI",
+        "remark": ""
+      },
+      {
+        "code": "304E",
+        "name": "HIRAGANA LETTER GI",
+        "remark": ""
+      },
+      {
+        "code": "304F",
+        "name": "HIRAGANA LETTER KU",
+        "remark": ""
+      },
+      {
+        "code": "3050",
+        "name": "HIRAGANA LETTER GU",
+        "remark": ""
+      },
+      {
+        "code": "3051",
+        "name": "HIRAGANA LETTER KE",
+        "remark": ""
+      },
+      {
+        "code": "3052",
+        "name": "HIRAGANA LETTER GE",
+        "remark": ""
+      },
+      {
+        "code": "3053",
+        "name": "HIRAGANA LETTER KO",
+        "remark": ""
+      },
+      {
+        "code": "3054",
+        "name": "HIRAGANA LETTER GO",
+        "remark": ""
+      },
+      {
+        "code": "3055",
+        "name": "HIRAGANA LETTER SA",
+        "remark": ""
+      },
+      {
+        "code": "3056",
+        "name": "HIRAGANA LETTER ZA",
+        "remark": ""
+      },
+      {
+        "code": "3057",
+        "name": "HIRAGANA LETTER SI",
+        "remark": ""
+      },
+      {
+        "code": "3058",
+        "name": "HIRAGANA LETTER ZI",
+        "remark": ""
+      },
+      {
+        "code": "3059",
+        "name": "HIRAGANA LETTER SU",
+        "remark": ""
+      },
+      {
+        "code": "305A",
+        "name": "HIRAGANA LETTER ZU",
+        "remark": ""
+      },
+      {
+        "code": "305B",
+        "name": "HIRAGANA LETTER SE",
+        "remark": ""
+      },
+      {
+        "code": "305C",
+        "name": "HIRAGANA LETTER ZE",
+        "remark": ""
+      },
+      {
+        "code": "305D",
+        "name": "HIRAGANA LETTER SO",
+        "remark": ""
+      },
+      {
+        "code": "305E",
+        "name": "HIRAGANA LETTER ZO",
+        "remark": ""
+      },
+      {
+        "code": "305F",
+        "name": "HIRAGANA LETTER TA",
+        "remark": ""
+      },
+      {
+        "code": "3060",
+        "name": "HIRAGANA LETTER DA",
+        "remark": ""
+      },
+      {
+        "code": "3061",
+        "name": "HIRAGANA LETTER TI",
+        "remark": ""
+      },
+      {
+        "code": "3062",
+        "name": "HIRAGANA LETTER DI",
+        "remark": ""
+      },
+      {
+        "code": "3064",
+        "name": "HIRAGANA LETTER TU",
+        "remark": ""
+      },
+      {
+        "code": "3065",
+        "name": "HIRAGANA LETTER DU",
+        "remark": ""
+      },
+      {
+        "code": "3066",
+        "name": "HIRAGANA LETTER TE",
+        "remark": ""
+      },
+      {
+        "code": "3067",
+        "name": "HIRAGANA LETTER DE",
+        "remark": ""
+      },
+      {
+        "code": "3068",
+        "name": "HIRAGANA LETTER TO",
+        "remark": ""
+      },
+      {
+        "code": "3069",
+        "name": "HIRAGANA LETTER DO",
+        "remark": ""
+      },
+      {
+        "code": "306A",
+        "name": "HIRAGANA LETTER NA",
+        "remark": ""
+      },
+      {
+        "code": "306B",
+        "name": "HIRAGANA LETTER NI",
+        "remark": ""
+      },
+      {
+        "code": "306C",
+        "name": "HIRAGANA LETTER NU",
+        "remark": ""
+      },
+      {
+        "code": "306D",
+        "name": "HIRAGANA LETTER NE",
+        "remark": ""
+      },
+      {
+        "code": "306E",
+        "name": "HIRAGANA LETTER NO",
+        "remark": ""
+      },
+      {
+        "code": "306F",
+        "name": "HIRAGANA LETTER HA",
+        "remark": ""
+      },
+      {
+        "code": "3070",
+        "name": "HIRAGANA LETTER BA",
+        "remark": ""
+      },
+      {
+        "code": "3071",
+        "name": "HIRAGANA LETTER PA",
+        "remark": ""
+      },
+      {
+        "code": "3072",
+        "name": "HIRAGANA LETTER HI",
+        "remark": ""
+      },
+      {
+        "code": "3073",
+        "name": "HIRAGANA LETTER BI",
+        "remark": ""
+      },
+      {
+        "code": "3074",
+        "name": "HIRAGANA LETTER PI",
+        "remark": ""
+      },
+      {
+        "code": "3075",
+        "name": "HIRAGANA LETTER HU",
+        "remark": ""
+      },
+      {
+        "code": "3076",
+        "name": "HIRAGANA LETTER BU",
+        "remark": ""
+      },
+      {
+        "code": "3077",
+        "name": "HIRAGANA LETTER PU",
+        "remark": ""
+      },
+      {
+        "code": "3078",
+        "name": "HIRAGANA LETTER HE",
+        "remark": ""
+      },
+      {
+        "code": "3079",
+        "name": "HIRAGANA LETTER BE",
+        "remark": ""
+      },
+      {
+        "code": "307A",
+        "name": "HIRAGANA LETTER PE",
+        "remark": ""
+      },
+      {
+        "code": "307B",
+        "name": "HIRAGANA LETTER HO",
+        "remark": ""
+      },
+      {
+        "code": "307C",
+        "name": "HIRAGANA LETTER BO",
+        "remark": ""
+      },
+      {
+        "code": "307D",
+        "name": "HIRAGANA LETTER PO",
+        "remark": ""
+      },
+      {
+        "code": "307E",
+        "name": "HIRAGANA LETTER MA",
+        "remark": ""
+      },
+      {
+        "code": "307F",
+        "name": "HIRAGANA LETTER MI",
+        "remark": ""
+      },
+      {
+        "code": "3080",
+        "name": "HIRAGANA LETTER MU",
+        "remark": ""
+      },
+      {
+        "code": "3081",
+        "name": "HIRAGANA LETTER ME",
+        "remark": ""
+      },
+      {
+        "code": "3082",
+        "name": "HIRAGANA LETTER MO",
+        "remark": ""
+      },
+      {
+        "code": "3084",
+        "name": "HIRAGANA LETTER YA",
+        "remark": ""
+      },
+      {
+        "code": "3086",
+        "name": "HIRAGANA LETTER YU",
+        "remark": ""
+      },
+      {
+        "code": "3088",
+        "name": "HIRAGANA LETTER YO",
+        "remark": ""
+      },
+      {
+        "code": "3089",
+        "name": "HIRAGANA LETTER RA",
+        "remark": ""
+      },
+      {
+        "code": "308A",
+        "name": "HIRAGANA LETTER RI",
+        "remark": ""
+      },
+      {
+        "code": "308B",
+        "name": "HIRAGANA LETTER RU",
+        "remark": ""
+      },
+      {
+        "code": "308C",
+        "name": "HIRAGANA LETTER RE",
+        "remark": ""
+      },
+      {
+        "code": "308D",
+        "name": "HIRAGANA LETTER RO",
+        "remark": ""
+      },
+      {
+        "code": "308F",
+        "name": "HIRAGANA LETTER WA",
+        "remark": ""
+      },
+      {
+        "code": "3090",
+        "name": "HIRAGANA LETTER WI",
+        "remark": ""
+      },
+      {
+        "code": "3091",
+        "name": "HIRAGANA LETTER WE",
+        "remark": ""
+      },
+      {
+        "code": "3092",
+        "name": "HIRAGANA LETTER WO",
+        "remark": ""
+      },
+      {
+        "code": "3093",
+        "name": "HIRAGANA LETTER N",
+        "remark": ""
+      },
+      {
+        "code": "3094",
+        "name": "HIRAGANA LETTER VU",
+        "remark": ""
+      },
+      {
+        "code": "<304B, 309A>",
+        "name": "<HIRAGANA LETTER KA, COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK>",
+        "remark": ""
+      },
+      {
+        "code": "<304D, 309A>",
+        "name": "<HIRAGANA LETTER KI, COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK>",
+        "remark": ""
+      },
+      {
+        "code": "<304F, 309A>",
+        "name": "<HIRAGANA LETTER KU, COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK>",
+        "remark": ""
+      },
+      {
+        "code": "<3051, 309A>",
+        "name": "<HIRAGANA LETTER KE, COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK>",
+        "remark": ""
+      },
+      {
+        "code": "<3053, 309A>",
+        "name": "<HIRAGANA LETTER KO, COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK>",
+        "remark": ""
+      }
+    ]
+  },
+  {
+    "id": "cl-16",
+    "name": "Katakana",
+    "data": [
+      {
+        "code": "30A2",
+        "name": "KATAKANA LETTER A",
+        "remark": ""
+      },
+      {
+        "code": "30A4",
+        "name": "KATAKANA LETTER I",
+        "remark": ""
+      },
+      {
+        "code": "30A6",
+        "name": "KATAKANA LETTER U",
+        "remark": ""
+      },
+      {
+        "code": "30A8",
+        "name": "KATAKANA LETTER E",
+        "remark": ""
+      },
+      {
+        "code": "30AA",
+        "name": "KATAKANA LETTER O",
+        "remark": ""
+      },
+      {
+        "code": "30AB",
+        "name": "KATAKANA LETTER KA",
+        "remark": ""
+      },
+      {
+        "code": "30AC",
+        "name": "KATAKANA LETTER GA",
+        "remark": ""
+      },
+      {
+        "code": "30AD",
+        "name": "KATAKANA LETTER KI",
+        "remark": ""
+      },
+      {
+        "code": "30AE",
+        "name": "KATAKANA LETTER GI",
+        "remark": ""
+      },
+      {
+        "code": "30AF",
+        "name": "KATAKANA LETTER KU",
+        "remark": ""
+      },
+      {
+        "code": "30B0",
+        "name": "KATAKANA LETTER GU",
+        "remark": ""
+      },
+      {
+        "code": "30B1",
+        "name": "KATAKANA LETTER KE",
+        "remark": ""
+      },
+      {
+        "code": "30B2",
+        "name": "KATAKANA LETTER GE",
+        "remark": ""
+      },
+      {
+        "code": "30B3",
+        "name": "KATAKANA LETTER KO",
+        "remark": ""
+      },
+      {
+        "code": "30B4",
+        "name": "KATAKANA LETTER GO",
+        "remark": ""
+      },
+      {
+        "code": "30B5",
+        "name": "KATAKANA LETTER SA",
+        "remark": ""
+      },
+      {
+        "code": "30B6",
+        "name": "KATAKANA LETTER ZA",
+        "remark": ""
+      },
+      {
+        "code": "30B7",
+        "name": "KATAKANA LETTER SI",
+        "remark": ""
+      },
+      {
+        "code": "30B8",
+        "name": "KATAKANA LETTER ZI",
+        "remark": ""
+      },
+      {
+        "code": "30B9",
+        "name": "KATAKANA LETTER SU",
+        "remark": ""
+      },
+      {
+        "code": "30BA",
+        "name": "KATAKANA LETTER ZU",
+        "remark": ""
+      },
+      {
+        "code": "30BB",
+        "name": "KATAKANA LETTER SE",
+        "remark": ""
+      },
+      {
+        "code": "30BC",
+        "name": "KATAKANA LETTER ZE",
+        "remark": ""
+      },
+      {
+        "code": "30BD",
+        "name": "KATAKANA LETTER SO",
+        "remark": ""
+      },
+      {
+        "code": "30BE",
+        "name": "KATAKANA LETTER ZO",
+        "remark": ""
+      },
+      {
+        "code": "30BF",
+        "name": "KATAKANA LETTER TA",
+        "remark": ""
+      },
+      {
+        "code": "30C0",
+        "name": "KATAKANA LETTER DA",
+        "remark": ""
+      },
+      {
+        "code": "30C1",
+        "name": "KATAKANA LETTER TI",
+        "remark": ""
+      },
+      {
+        "code": "30C2",
+        "name": "KATAKANA LETTER DI",
+        "remark": ""
+      },
+      {
+        "code": "30C4",
+        "name": "KATAKANA LETTER TU",
+        "remark": ""
+      },
+      {
+        "code": "30C5",
+        "name": "KATAKANA LETTER DU",
+        "remark": ""
+      },
+      {
+        "code": "30C6",
+        "name": "KATAKANA LETTER TE",
+        "remark": ""
+      },
+      {
+        "code": "30C7",
+        "name": "KATAKANA LETTER DE",
+        "remark": ""
+      },
+      {
+        "code": "30C8",
+        "name": "KATAKANA LETTER TO",
+        "remark": ""
+      },
+      {
+        "code": "30C9",
+        "name": "KATAKANA LETTER DO",
+        "remark": ""
+      },
+      {
+        "code": "30CA",
+        "name": "KATAKANA LETTER NA",
+        "remark": ""
+      },
+      {
+        "code": "30CB",
+        "name": "KATAKANA LETTER NI",
+        "remark": ""
+      },
+      {
+        "code": "30CC",
+        "name": "KATAKANA LETTER NU",
+        "remark": ""
+      },
+      {
+        "code": "30CD",
+        "name": "KATAKANA LETTER NE",
+        "remark": ""
+      },
+      {
+        "code": "30CE",
+        "name": "KATAKANA LETTER NO",
+        "remark": ""
+      },
+      {
+        "code": "30CF",
+        "name": "KATAKANA LETTER HA",
+        "remark": ""
+      },
+      {
+        "code": "30D0",
+        "name": "KATAKANA LETTER BA",
+        "remark": ""
+      },
+      {
+        "code": "30D1",
+        "name": "KATAKANA LETTER PA",
+        "remark": ""
+      },
+      {
+        "code": "30D2",
+        "name": "KATAKANA LETTER HI",
+        "remark": ""
+      },
+      {
+        "code": "30D3",
+        "name": "KATAKANA LETTER BI",
+        "remark": ""
+      },
+      {
+        "code": "30D4",
+        "name": "KATAKANA LETTER PI",
+        "remark": ""
+      },
+      {
+        "code": "30D5",
+        "name": "KATAKANA LETTER HU",
+        "remark": ""
+      },
+      {
+        "code": "30D6",
+        "name": "KATAKANA LETTER BU",
+        "remark": ""
+      },
+      {
+        "code": "30D7",
+        "name": "KATAKANA LETTER PU",
+        "remark": ""
+      },
+      {
+        "code": "30D8",
+        "name": "KATAKANA LETTER HE",
+        "remark": ""
+      },
+      {
+        "code": "30D9",
+        "name": "KATAKANA LETTER BE",
+        "remark": ""
+      },
+      {
+        "code": "30DA",
+        "name": "KATAKANA LETTER PE",
+        "remark": ""
+      },
+      {
+        "code": "30DB",
+        "name": "KATAKANA LETTER HO",
+        "remark": ""
+      },
+      {
+        "code": "30DC",
+        "name": "KATAKANA LETTER BO",
+        "remark": ""
+      },
+      {
+        "code": "30DD",
+        "name": "KATAKANA LETTER PO",
+        "remark": ""
+      },
+      {
+        "code": "30DE",
+        "name": "KATAKANA LETTER MA",
+        "remark": ""
+      },
+      {
+        "code": "30DF",
+        "name": "KATAKANA LETTER MI",
+        "remark": ""
+      },
+      {
+        "code": "30E0",
+        "name": "KATAKANA LETTER MU",
+        "remark": ""
+      },
+      {
+        "code": "30E1",
+        "name": "KATAKANA LETTER ME",
+        "remark": ""
+      },
+      {
+        "code": "30E2",
+        "name": "KATAKANA LETTER MO",
+        "remark": ""
+      },
+      {
+        "code": "30E4",
+        "name": "KATAKANA LETTER YA",
+        "remark": ""
+      },
+      {
+        "code": "30E6",
+        "name": "KATAKANA LETTER YU",
+        "remark": ""
+      },
+      {
+        "code": "30E8",
+        "name": "KATAKANA LETTER YO",
+        "remark": ""
+      },
+      {
+        "code": "30E9",
+        "name": "KATAKANA LETTER RA",
+        "remark": ""
+      },
+      {
+        "code": "30EA",
+        "name": "KATAKANA LETTER RI",
+        "remark": ""
+      },
+      {
+        "code": "30EB",
+        "name": "KATAKANA LETTER RU",
+        "remark": ""
+      },
+      {
+        "code": "30EC",
+        "name": "KATAKANA LETTER RE",
+        "remark": ""
+      },
+      {
+        "code": "30ED",
+        "name": "KATAKANA LETTER RO",
+        "remark": ""
+      },
+      {
+        "code": "30EF",
+        "name": "KATAKANA LETTER WA",
+        "remark": ""
+      },
+      {
+        "code": "30F0",
+        "name": "KATAKANA LETTER WI",
+        "remark": ""
+      },
+      {
+        "code": "30F1",
+        "name": "KATAKANA LETTER WE",
+        "remark": ""
+      },
+      {
+        "code": "30F2",
+        "name": "KATAKANA LETTER WO",
+        "remark": ""
+      },
+      {
+        "code": "30F3",
+        "name": "KATAKANA LETTER N",
+        "remark": ""
+      },
+      {
+        "code": "30F4",
+        "name": "KATAKANA LETTER VU",
+        "remark": ""
+      },
+      {
+        "code": "<30AB, 309A>",
+        "name": "<KATAKANA LETTER KA, COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK>",
+        "remark": ""
+      },
+      {
+        "code": "<30AD, 309A>",
+        "name": "<KATAKANA LETTER KI, COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK>",
+        "remark": ""
+      },
+      {
+        "code": "<30AF, 309A>",
+        "name": "<KATAKANA LETTER KU, COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK>",
+        "remark": ""
+      },
+      {
+        "code": "<30B1, 309A>",
+        "name": "<KATAKANA LETTER KE, COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK>",
+        "remark": ""
+      },
+      {
+        "code": "<30B3, 309A>",
+        "name": "<KATAKANA LETTER KO, COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK>",
+        "remark": ""
+      },
+      {
+        "code": "<30BB, 309A>",
+        "name": "<KATAKANA LETTER SE, COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK>",
+        "remark": ""
+      },
+      {
+        "code": "<30C4, 309A>",
+        "name": "<KATAKANA LETTER TU, COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK>",
+        "remark": ""
+      },
+      {
+        "code": "<30C8, 309A>",
+        "name": "<KATAKANA LETTER TO, COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK>",
+        "remark": ""
+      },
+      {
+        "code": "30F7",
+        "name": "KATAKANA LETTER VA",
+        "remark": ""
+      },
+      {
+        "code": "30F8",
+        "name": "KATAKANA LETTER VI",
+        "remark": ""
+      },
+      {
+        "code": "30F9",
+        "name": "KATAKANA LETTER VE",
+        "remark": ""
+      },
+      {
+        "code": "30FA",
+        "name": "KATAKANA LETTER VO",
+        "remark": ""
+      }
+    ]
+  },
+  {
+    "id": "cl-17",
+    "name": "Math symbols",
+    "data": [
+      {
+        "code": "003D",
+        "name": "EQUALS SIGN",
+        "remark": ""
+      },
+      {
+        "code": "2260",
+        "name": "NOT EQUAL TO",
+        "remark": ""
+      },
+      {
+        "code": "2252",
+        "name": "APPROXIMATELY EQUAL TO OR THE IMAGE OF",
+        "remark": ""
+      },
+      {
+        "code": "2243",
+        "name": "ASYMPTOTICALLY EQUAL TO",
+        "remark": ""
+      },
+      {
+        "code": "2245",
+        "name": "APPROXIMATELY EQUAL TO",
+        "remark": ""
+      },
+      {
+        "code": "2248",
+        "name": "ALMOST EQUAL TO",
+        "remark": ""
+      },
+      {
+        "code": "2261",
+        "name": "IDENTICAL TO",
+        "remark": ""
+      },
+      {
+        "code": "2262",
+        "name": "NOT IDENTICAL TO",
+        "remark": ""
+      },
+      {
+        "code": "003C",
+        "name": "LESS-THAN SIGN",
+        "remark": ""
+      },
+      {
+        "code": "003E",
+        "name": "GREATER-THAN SIGN",
+        "remark": ""
+      },
+      {
+        "code": "2266",
+        "name": "LESS-THAN OVER EQUAL TO",
+        "remark": ""
+      },
+      {
+        "code": "2267",
+        "name": "GREATER-THAN OVER EQUAL TO",
+        "remark": ""
+      },
+      {
+        "code": "226A",
+        "name": "MUCH LESS-THAN",
+        "remark": ""
+      },
+      {
+        "code": "226B",
+        "name": "MUCH GREATER-THAN",
+        "remark": ""
+      },
+      {
+        "code": "2276",
+        "name": "LESS-THAN OR GREATER-THAN",
+        "remark": ""
+      },
+      {
+        "code": "2277",
+        "name": "GREATER-THAN OR LESS-THAN",
+        "remark": ""
+      },
+      {
+        "code": "22DA",
+        "name": "LESS-THAN EQUAL TO OR GREATER-THAN",
+        "remark": ""
+      },
+      {
+        "code": "22DB",
+        "name": "GREATER-THAN EQUAL TO OR LESS-THAN",
+        "remark": ""
+      },
+      {
+        "code": "2227",
+        "name": "LOGICAL AND",
+        "remark": ""
+      },
+      {
+        "code": "2228",
+        "name": "LOGICAL OR",
+        "remark": ""
+      },
+      {
+        "code": "2305",
+        "name": "PROJECTIVE",
+        "remark": ""
+      },
+      {
+        "code": "2306",
+        "name": "PERSPECTIVE",
+        "remark": ""
+      },
+      {
+        "code": "2282",
+        "name": "SUBSET OF",
+        "remark": ""
+      },
+      {
+        "code": "2283",
+        "name": "SUPERSET OF",
+        "remark": ""
+      },
+      {
+        "code": "2284",
+        "name": "NOT A SUBSET OF",
+        "remark": ""
+      },
+      {
+        "code": "2285",
+        "name": "NOT A SUPERSET OF",
+        "remark": ""
+      },
+      {
+        "code": "2286",
+        "name": "SUBSET OF OR EQUAL TO",
+        "remark": ""
+      },
+      {
+        "code": "2287",
+        "name": "SUPERSET OF OR EQUAL TO",
+        "remark": ""
+      },
+      {
+        "code": "228A",
+        "name": "SUBSET OF WITH NOT EQUAL TO",
+        "remark": ""
+      },
+      {
+        "code": "228B",
+        "name": "SUPERSET OF WITH NOT EQUAL TO",
+        "remark": ""
+      },
+      {
+        "code": "2208",
+        "name": "ELEMENT OF",
+        "remark": ""
+      },
+      {
+        "code": "220B",
+        "name": "CONTAINS AS MEMBER",
+        "remark": ""
+      },
+      {
+        "code": "2209",
+        "name": "NOT AN ELEMENT OF",
+        "remark": ""
+      },
+      {
+        "code": "222A",
+        "name": "UNION",
+        "remark": ""
+      },
+      {
+        "code": "2229",
+        "name": "INTERSECTION",
+        "remark": ""
+      },
+      {
+        "code": "2225",
+        "name": "PARALLEL TO",
+        "remark": ""
+      },
+      {
+        "code": "2226",
+        "name": "NOT PARALLEL TO",
+        "remark": ""
+      },
+      {
+        "code": "21D2",
+        "name": "RIGHTWARDS DOUBLE ARROW",
+        "remark": ""
+      },
+      {
+        "code": "21D4",
+        "name": "LEFT RIGHT DOUBLE ARROW",
+        "remark": ""
+      },
+      {
+        "code": "2194",
+        "name": "LEFT RIGHT ARROW",
+        "remark": ""
+      },
+      {
+        "code": "223D",
+        "name": "REVERSED TILDE (lazy S)",
+        "remark": ""
+      },
+      {
+        "code": "221D",
+        "name": "PROPORTIONAL TO",
+        "remark": ""
+      },
+      {
+        "code": "22A5",
+        "name": "UP TACK",
+        "remark": ""
+      },
+      {
+        "code": "2295",
+        "name": "CIRCLED PLUS",
+        "remark": ""
+      },
+      {
+        "code": "2297",
+        "name": "CIRCLED TIMES",
+        "remark": ""
+      }
+    ]
+  },
+  {
+    "id": "cl-18",
+    "name": "Math operators",
+    "data": [
+      {
+        "code": "002B",
+        "name": "PLUS SIGN",
+        "remark": ""
+      },
+      {
+        "code": "2212",
+        "name": "MINUS SIGN",
+        "remark": ""
+      },
+      {
+        "code": "00D7",
+        "name": "MULTIPLICATION SIGN",
+        "remark": ""
+      },
+      {
+        "code": "00F7",
+        "name": "DIVISION SIGN",
+        "remark": ""
+      },
+      {
+        "code": "00B1",
+        "name": "PLUS-MINUS SIGN",
+        "remark": ""
+      },
+      {
+        "code": "2213",
+        "name": "MINUS-OR-PLUS SIGN",
+        "remark": ""
+      }
+    ]
+  },
+  {
+    "id": "cl-19",
+    "name": "Ideographic characters",
+    "data": [
+      {
+        "code": "0026",
+        "name": "AMPERSAND",
+        "remark": ""
+      },
+      {
+        "code": "002A",
+        "name": "ASTERISK",
+        "remark": ""
+      },
+      {
+        "code": "002F",
+        "name": "SOLIDUS",
+        "remark": ""
+      },
+      {
+        "code": "0030",
+        "name": "DIGIT ZERO",
+        "remark": ""
+      },
+      {
+        "code": "0031",
+        "name": "DIGIT ONE",
+        "remark": ""
+      },
+      {
+        "code": "0032",
+        "name": "DIGIT TWO",
+        "remark": ""
+      },
+      {
+        "code": "0033",
+        "name": "DIGIT THREE",
+        "remark": ""
+      },
+      {
+        "code": "0034",
+        "name": "DIGIT FOUR",
+        "remark": ""
+      },
+      {
+        "code": "0035",
+        "name": "DIGIT FIVE",
+        "remark": ""
+      },
+      {
+        "code": "0036",
+        "name": "DIGIT SIX",
+        "remark": ""
+      },
+      {
+        "code": "0037",
+        "name": "DIGIT SEVEN",
+        "remark": ""
+      },
+      {
+        "code": "0038",
+        "name": "DIGIT EIGHT",
+        "remark": ""
+      },
+      {
+        "code": "0039",
+        "name": "DIGIT NINE",
+        "remark": ""
+      },
+      {
+        "code": "0040",
+        "name": "COMMERCIAL AT",
+        "remark": ""
+      },
+      {
+        "code": "0041",
+        "name": "LATIN CAPITAL LETTER A",
+        "remark": ""
+      },
+      {
+        "code": "0042",
+        "name": "LATIN CAPITAL LETTER B",
+        "remark": ""
+      },
+      {
+        "code": "0043",
+        "name": "LATIN CAPITAL LETTER C",
+        "remark": ""
+      },
+      {
+        "code": "0044",
+        "name": "LATIN CAPITAL LETTER D",
+        "remark": ""
+      },
+      {
+        "code": "0045",
+        "name": "LATIN CAPITAL LETTER E",
+        "remark": ""
+      },
+      {
+        "code": "0046",
+        "name": "LATIN CAPITAL LETTER F",
+        "remark": ""
+      },
+      {
+        "code": "0047",
+        "name": "LATIN CAPITAL LETTER G",
+        "remark": ""
+      },
+      {
+        "code": "0048",
+        "name": "LATIN CAPITAL LETTER H",
+        "remark": ""
+      },
+      {
+        "code": "0049",
+        "name": "LATIN CAPITAL LETTER I",
+        "remark": ""
+      },
+      {
+        "code": "004A",
+        "name": "LATIN CAPITAL LETTER J",
+        "remark": ""
+      },
+      {
+        "code": "004B",
+        "name": "LATIN CAPITAL LETTER K",
+        "remark": ""
+      },
+      {
+        "code": "004C",
+        "name": "LATIN CAPITAL LETTER L",
+        "remark": ""
+      },
+      {
+        "code": "004D",
+        "name": "LATIN CAPITAL LETTER M",
+        "remark": ""
+      },
+      {
+        "code": "004E",
+        "name": "LATIN CAPITAL LETTER N",
+        "remark": ""
+      },
+      {
+        "code": "004F",
+        "name": "LATIN CAPITAL LETTER O",
+        "remark": ""
+      },
+      {
+        "code": "0050",
+        "name": "LATIN CAPITAL LETTER P",
+        "remark": ""
+      },
+      {
+        "code": "0051",
+        "name": "LATIN CAPITAL LETTER Q",
+        "remark": ""
+      },
+      {
+        "code": "0052",
+        "name": "LATIN CAPITAL LETTER R",
+        "remark": ""
+      },
+      {
+        "code": "0053",
+        "name": "LATIN CAPITAL LETTER S",
+        "remark": ""
+      },
+      {
+        "code": "0054",
+        "name": "LATIN CAPITAL LETTER T",
+        "remark": ""
+      },
+      {
+        "code": "0055",
+        "name": "LATIN CAPITAL LETTER U",
+        "remark": ""
+      },
+      {
+        "code": "0056",
+        "name": "LATIN CAPITAL LETTER V",
+        "remark": ""
+      },
+      {
+        "code": "0057",
+        "name": "LATIN CAPITAL LETTER W",
+        "remark": ""
+      },
+      {
+        "code": "0058",
+        "name": "LATIN CAPITAL LETTER X",
+        "remark": ""
+      },
+      {
+        "code": "0059",
+        "name": "LATIN CAPITAL LETTER Y",
+        "remark": ""
+      },
+      {
+        "code": "005A",
+        "name": "LATIN CAPITAL LETTER Z",
+        "remark": ""
+      },
+      {
+        "code": "005C",
+        "name": "REVERSE SOLIDUS",
+        "remark": ""
+      },
+      {
+        "code": "0061",
+        "name": "LATIN SMALL LETTER A",
+        "remark": ""
+      },
+      {
+        "code": "0062",
+        "name": "LATIN SMALL LETTER B",
+        "remark": ""
+      },
+      {
+        "code": "0063",
+        "name": "LATIN SMALL LETTER C",
+        "remark": ""
+      },
+      {
+        "code": "0064",
+        "name": "LATIN SMALL LETTER D",
+        "remark": ""
+      },
+      {
+        "code": "0065",
+        "name": "LATIN SMALL LETTER E",
+        "remark": ""
+      },
+      {
+        "code": "0066",
+        "name": "LATIN SMALL LETTER F",
+        "remark": ""
+      },
+      {
+        "code": "0067",
+        "name": "LATIN SMALL LETTER G",
+        "remark": ""
+      },
+      {
+        "code": "0068",
+        "name": "LATIN SMALL LETTER H",
+        "remark": ""
+      },
+      {
+        "code": "0069",
+        "name": "LATIN SMALL LETTER I",
+        "remark": ""
+      },
+      {
+        "code": "006A",
+        "name": "LATIN SMALL LETTER J",
+        "remark": ""
+      },
+      {
+        "code": "006B",
+        "name": "LATIN SMALL LETTER K",
+        "remark": ""
+      },
+      {
+        "code": "006C",
+        "name": "LATIN SMALL LETTER L",
+        "remark": ""
+      },
+      {
+        "code": "006D",
+        "name": "LATIN SMALL LETTER M",
+        "remark": ""
+      },
+      {
+        "code": "006E",
+        "name": "LATIN SMALL LETTER N",
+        "remark": ""
+      },
+      {
+        "code": "006F",
+        "name": "LATIN SMALL LETTER O",
+        "remark": ""
+      },
+      {
+        "code": "0070",
+        "name": "LATIN SMALL LETTER P",
+        "remark": ""
+      },
+      {
+        "code": "0071",
+        "name": "LATIN SMALL LETTER Q",
+        "remark": ""
+      },
+      {
+        "code": "0072",
+        "name": "LATIN SMALL LETTER R",
+        "remark": ""
+      },
+      {
+        "code": "0073",
+        "name": "LATIN SMALL LETTER S",
+        "remark": ""
+      },
+      {
+        "code": "0074",
+        "name": "LATIN SMALL LETTER T",
+        "remark": ""
+      },
+      {
+        "code": "0075",
+        "name": "LATIN SMALL LETTER U",
+        "remark": ""
+      },
+      {
+        "code": "0076",
+        "name": "LATIN SMALL LETTER V",
+        "remark": ""
+      },
+      {
+        "code": "0077",
+        "name": "LATIN SMALL LETTER W",
+        "remark": ""
+      },
+      {
+        "code": "0078",
+        "name": "LATIN SMALL LETTER X",
+        "remark": ""
+      },
+      {
+        "code": "0079",
+        "name": "LATIN SMALL LETTER Y",
+        "remark": ""
+      },
+      {
+        "code": "007A",
+        "name": "LATIN SMALL LETTER Z",
+        "remark": ""
+      },
+      {
+        "code": "007C",
+        "name": "VERTICAL LINE",
+        "remark": ""
+      },
+      {
+        "code": "00A7",
+        "name": "SECTION SIGN",
+        "remark": ""
+      },
+      {
+        "code": "00A9",
+        "name": "COPYRIGHT SIGN",
+        "remark": ""
+      },
+      {
+        "code": "00AE",
+        "name": "REGISTERED SIGN",
+        "remark": ""
+      },
+      {
+        "code": "00B6",
+        "name": "PILCROW SIGN",
+        "remark": ""
+      },
+      {
+        "code": "00BC",
+        "name": "VULGAR FRACTION ONE QUARTER",
+        "remark": ""
+      },
+      {
+        "code": "00BD",
+        "name": "VULGAR FRACTION ONE HALF",
+        "remark": ""
+      },
+      {
+        "code": "00BE",
+        "name": "VULGAR FRACTION THREE QUARTERS",
+        "remark": ""
+      },
+      {
+        "code": "0391",
+        "name": "GREEK CAPITAL LETTER ALPHA",
+        "remark": ""
+      },
+      {
+        "code": "0392",
+        "name": "GREEK CAPITAL LETTER BETA",
+        "remark": ""
+      },
+      {
+        "code": "0393",
+        "name": "GREEK CAPITAL LETTER GAMMA",
+        "remark": ""
+      },
+      {
+        "code": "0394",
+        "name": "GREEK CAPITAL LETTER DELTA",
+        "remark": ""
+      },
+      {
+        "code": "0395",
+        "name": "GREEK CAPITAL LETTER EPSILON",
+        "remark": ""
+      },
+      {
+        "code": "0396",
+        "name": "GREEK CAPITAL LETTER ZETA",
+        "remark": ""
+      },
+      {
+        "code": "0397",
+        "name": "GREEK CAPITAL LETTER ETA",
+        "remark": ""
+      },
+      {
+        "code": "0398",
+        "name": "GREEK CAPITAL LETTER THETA",
+        "remark": ""
+      },
+      {
+        "code": "0399",
+        "name": "GREEK CAPITAL LETTER IOTA",
+        "remark": ""
+      },
+      {
+        "code": "039A",
+        "name": "GREEK CAPITAL LETTER KAPPA",
+        "remark": ""
+      },
+      {
+        "code": "039B",
+        "name": "GREEK CAPITAL LETTER LAMDA",
+        "remark": ""
+      },
+      {
+        "code": "039C",
+        "name": "GREEK CAPITAL LETTER MU",
+        "remark": ""
+      },
+      {
+        "code": "039D",
+        "name": "GREEK CAPITAL LETTER NU",
+        "remark": ""
+      },
+      {
+        "code": "039E",
+        "name": "GREEK CAPITAL LETTER XI",
+        "remark": ""
+      },
+      {
+        "code": "039F",
+        "name": "GREEK CAPITAL LETTER OMICRON",
+        "remark": ""
+      },
+      {
+        "code": "03A0",
+        "name": "GREEK CAPITAL LETTER PI",
+        "remark": ""
+      },
+      {
+        "code": "03A1",
+        "name": "GREEK CAPITAL LETTER RHO",
+        "remark": ""
+      },
+      {
+        "code": "03A3",
+        "name": "GREEK CAPITAL LETTER SIGMA",
+        "remark": ""
+      },
+      {
+        "code": "03A4",
+        "name": "GREEK CAPITAL LETTER TAU",
+        "remark": ""
+      },
+      {
+        "code": "03A5",
+        "name": "GREEK CAPITAL LETTER UPSILON",
+        "remark": ""
+      },
+      {
+        "code": "03A6",
+        "name": "GREEK CAPITAL LETTER PHI",
+        "remark": ""
+      },
+      {
+        "code": "03A7",
+        "name": "GREEK CAPITAL LETTER CHI",
+        "remark": ""
+      },
+      {
+        "code": "03A8",
+        "name": "GREEK CAPITAL LETTER PSI",
+        "remark": ""
+      },
+      {
+        "code": "03A9",
+        "name": "GREEK CAPITAL LETTER OMEGA",
+        "remark": ""
+      },
+      {
+        "code": "03B1",
+        "name": "GREEK SMALL LETTER ALPHA",
+        "remark": ""
+      },
+      {
+        "code": "03B2",
+        "name": "GREEK SMALL LETTER BETA",
+        "remark": ""
+      },
+      {
+        "code": "03B3",
+        "name": "GREEK SMALL LETTER GAMMA",
+        "remark": ""
+      },
+      {
+        "code": "03B4",
+        "name": "GREEK SMALL LETTER DELTA",
+        "remark": ""
+      },
+      {
+        "code": "03B5",
+        "name": "GREEK SMALL LETTER EPSILON",
+        "remark": ""
+      },
+      {
+        "code": "03B6",
+        "name": "GREEK SMALL LETTER ZETA",
+        "remark": ""
+      },
+      {
+        "code": "03B7",
+        "name": "GREEK SMALL LETTER ETA",
+        "remark": ""
+      },
+      {
+        "code": "03B8",
+        "name": "GREEK SMALL LETTER THETA",
+        "remark": ""
+      },
+      {
+        "code": "03B9",
+        "name": "GREEK SMALL LETTER IOTA",
+        "remark": ""
+      },
+      {
+        "code": "03BA",
+        "name": "GREEK SMALL LETTER KAPPA",
+        "remark": ""
+      },
+      {
+        "code": "03BB",
+        "name": "GREEK SMALL LETTER LAMDA",
+        "remark": ""
+      },
+      {
+        "code": "03BC",
+        "name": "GREEK SMALL LETTER MU",
+        "remark": ""
+      },
+      {
+        "code": "03BD",
+        "name": "GREEK SMALL LETTER NU",
+        "remark": ""
+      },
+      {
+        "code": "03BE",
+        "name": "GREEK SMALL LETTER XI",
+        "remark": ""
+      },
+      {
+        "code": "03BF",
+        "name": "GREEK SMALL LETTER OMICRON",
+        "remark": ""
+      },
+      {
+        "code": "03C0",
+        "name": "GREEK SMALL LETTER PI",
+        "remark": ""
+      },
+      {
+        "code": "03C1",
+        "name": "GREEK SMALL LETTER RHO",
+        "remark": ""
+      },
+      {
+        "code": "03C2",
+        "name": "GREEK SMALL LETTER FINAL SIGMA",
+        "remark": ""
+      },
+      {
+        "code": "03C3",
+        "name": "GREEK SMALL LETTER SIGMA",
+        "remark": ""
+      },
+      {
+        "code": "03C4",
+        "name": "GREEK SMALL LETTER TAU",
+        "remark": ""
+      },
+      {
+        "code": "03C5",
+        "name": "GREEK SMALL LETTER UPSILON",
+        "remark": ""
+      },
+      {
+        "code": "03C6",
+        "name": "GREEK SMALL LETTER PHI",
+        "remark": ""
+      },
+      {
+        "code": "03C7",
+        "name": "GREEK SMALL LETTER CHI",
+        "remark": ""
+      },
+      {
+        "code": "03C8",
+        "name": "GREEK SMALL LETTER PSI",
+        "remark": ""
+      },
+      {
+        "code": "03C9",
+        "name": "GREEK SMALL LETTER OMEGA",
+        "remark": ""
+      },
+      {
+        "code": "0401",
+        "name": "CYRILLIC CAPITAL LETTER IO",
+        "remark": ""
+      },
+      {
+        "code": "0410",
+        "name": "CYRILLIC CAPITAL LETTER A",
+        "remark": ""
+      },
+      {
+        "code": "0411",
+        "name": "CYRILLIC CAPITAL LETTER BE",
+        "remark": ""
+      },
+      {
+        "code": "0412",
+        "name": "CYRILLIC CAPITAL LETTER VE",
+        "remark": ""
+      },
+      {
+        "code": "0413",
+        "name": "CYRILLIC CAPITAL LETTER GHE",
+        "remark": ""
+      },
+      {
+        "code": "0414",
+        "name": "CYRILLIC CAPITAL LETTER DE",
+        "remark": ""
+      },
+      {
+        "code": "0415",
+        "name": "CYRILLIC CAPITAL LETTER IE",
+        "remark": ""
+      },
+      {
+        "code": "0416",
+        "name": "CYRILLIC CAPITAL LETTER ZHE",
+        "remark": ""
+      },
+      {
+        "code": "0417",
+        "name": "CYRILLIC CAPITAL LETTER ZE",
+        "remark": ""
+      },
+      {
+        "code": "0418",
+        "name": "CYRILLIC CAPITAL LETTER I",
+        "remark": ""
+      },
+      {
+        "code": "0419",
+        "name": "CYRILLIC CAPITAL LETTER SHORT I",
+        "remark": ""
+      },
+      {
+        "code": "041A",
+        "name": "CYRILLIC CAPITAL LETTER KA",
+        "remark": ""
+      },
+      {
+        "code": "041B",
+        "name": "CYRILLIC CAPITAL LETTER EL",
+        "remark": ""
+      },
+      {
+        "code": "041C",
+        "name": "CYRILLIC CAPITAL LETTER EM",
+        "remark": ""
+      },
+      {
+        "code": "041D",
+        "name": "CYRILLIC CAPITAL LETTER EN",
+        "remark": ""
+      },
+      {
+        "code": "041E",
+        "name": "CYRILLIC CAPITAL LETTER O",
+        "remark": ""
+      },
+      {
+        "code": "041F",
+        "name": "CYRILLIC CAPITAL LETTER PE",
+        "remark": ""
+      },
+      {
+        "code": "0420",
+        "name": "CYRILLIC CAPITAL LETTER ER",
+        "remark": ""
+      },
+      {
+        "code": "0421",
+        "name": "CYRILLIC CAPITAL LETTER ES",
+        "remark": ""
+      },
+      {
+        "code": "0422",
+        "name": "CYRILLIC CAPITAL LETTER TE",
+        "remark": ""
+      },
+      {
+        "code": "0423",
+        "name": "CYRILLIC CAPITAL LETTER U",
+        "remark": ""
+      },
+      {
+        "code": "0424",
+        "name": "CYRILLIC CAPITAL LETTER EF",
+        "remark": ""
+      },
+      {
+        "code": "0425",
+        "name": "CYRILLIC CAPITAL LETTER HA",
+        "remark": ""
+      },
+      {
+        "code": "0426",
+        "name": "CYRILLIC CAPITAL LETTER TSE",
+        "remark": ""
+      },
+      {
+        "code": "0427",
+        "name": "CYRILLIC CAPITAL LETTER CHE",
+        "remark": ""
+      },
+      {
+        "code": "0428",
+        "name": "CYRILLIC CAPITAL LETTER SHA",
+        "remark": ""
+      },
+      {
+        "code": "0429",
+        "name": "CYRILLIC CAPITAL LETTER SHCHA",
+        "remark": ""
+      },
+      {
+        "code": "042A",
+        "name": "CYRILLIC CAPITAL LETTER HARD SIGN",
+        "remark": ""
+      },
+      {
+        "code": "042B",
+        "name": "CYRILLIC CAPITAL LETTER YERU",
+        "remark": ""
+      },
+      {
+        "code": "042C",
+        "name": "CYRILLIC CAPITAL LETTER SOFT SIGN",
+        "remark": ""
+      },
+      {
+        "code": "042D",
+        "name": "CYRILLIC CAPITAL LETTER E",
+        "remark": ""
+      },
+      {
+        "code": "042E",
+        "name": "CYRILLIC CAPITAL LETTER YU",
+        "remark": ""
+      },
+      {
+        "code": "042F",
+        "name": "CYRILLIC CAPITAL LETTER YA",
+        "remark": ""
+      },
+      {
+        "code": "0430",
+        "name": "CYRILLIC SMALL LETTER A",
+        "remark": ""
+      },
+      {
+        "code": "0431",
+        "name": "CYRILLIC SMALL LETTER BE",
+        "remark": ""
+      },
+      {
+        "code": "0432",
+        "name": "CYRILLIC SMALL LETTER VE",
+        "remark": ""
+      },
+      {
+        "code": "0433",
+        "name": "CYRILLIC SMALL LETTER GHE",
+        "remark": ""
+      },
+      {
+        "code": "0434",
+        "name": "CYRILLIC SMALL LETTER DE",
+        "remark": ""
+      },
+      {
+        "code": "0435",
+        "name": "CYRILLIC SMALL LETTER IE",
+        "remark": ""
+      },
+      {
+        "code": "0436",
+        "name": "CYRILLIC SMALL LETTER ZHE",
+        "remark": ""
+      },
+      {
+        "code": "0437",
+        "name": "CYRILLIC SMALL LETTER ZE",
+        "remark": ""
+      },
+      {
+        "code": "0438",
+        "name": "CYRILLIC SMALL LETTER I",
+        "remark": ""
+      },
+      {
+        "code": "0439",
+        "name": "CYRILLIC SMALL LETTER SHORT I",
+        "remark": ""
+      },
+      {
+        "code": "043A",
+        "name": "CYRILLIC SMALL LETTER KA",
+        "remark": ""
+      },
+      {
+        "code": "043B",
+        "name": "CYRILLIC SMALL LETTER EL",
+        "remark": ""
+      },
+      {
+        "code": "043C",
+        "name": "CYRILLIC SMALL LETTER EM",
+        "remark": ""
+      },
+      {
+        "code": "043D",
+        "name": "CYRILLIC SMALL LETTER EN",
+        "remark": ""
+      },
+      {
+        "code": "043E",
+        "name": "CYRILLIC SMALL LETTER O",
+        "remark": ""
+      },
+      {
+        "code": "043F",
+        "name": "CYRILLIC SMALL LETTER PE",
+        "remark": ""
+      },
+      {
+        "code": "0440",
+        "name": "CYRILLIC SMALL LETTER ER",
+        "remark": ""
+      },
+      {
+        "code": "0441",
+        "name": "CYRILLIC SMALL LETTER ES",
+        "remark": ""
+      },
+      {
+        "code": "0442",
+        "name": "CYRILLIC SMALL LETTER TE",
+        "remark": ""
+      },
+      {
+        "code": "0443",
+        "name": "CYRILLIC SMALL LETTER U",
+        "remark": ""
+      },
+      {
+        "code": "0444",
+        "name": "CYRILLIC SMALL LETTER EF",
+        "remark": ""
+      },
+      {
+        "code": "0445",
+        "name": "CYRILLIC SMALL LETTER HA",
+        "remark": ""
+      },
+      {
+        "code": "0446",
+        "name": "CYRILLIC SMALL LETTER TSE",
+        "remark": ""
+      },
+      {
+        "code": "0447",
+        "name": "CYRILLIC SMALL LETTER CHE",
+        "remark": ""
+      },
+      {
+        "code": "0448",
+        "name": "CYRILLIC SMALL LETTER SHA",
+        "remark": ""
+      },
+      {
+        "code": "0449",
+        "name": "CYRILLIC SMALL LETTER SHCHA",
+        "remark": ""
+      },
+      {
+        "code": "044A",
+        "name": "CYRILLIC SMALL LETTER HARD SIGN",
+        "remark": ""
+      },
+      {
+        "code": "044B",
+        "name": "CYRILLIC SMALL LETTER YERU",
+        "remark": ""
+      },
+      {
+        "code": "044C",
+        "name": "CYRILLIC SMALL LETTER SOFT SIGN",
+        "remark": ""
+      },
+      {
+        "code": "044D",
+        "name": "CYRILLIC SMALL LETTER E",
+        "remark": ""
+      },
+      {
+        "code": "044E",
+        "name": "CYRILLIC SMALL LETTER YU",
+        "remark": ""
+      },
+      {
+        "code": "044F",
+        "name": "CYRILLIC SMALL LETTER YA",
+        "remark": ""
+      },
+      {
+        "code": "0451",
+        "name": "CYRILLIC SMALL LETTER IO",
+        "remark": ""
+      },
+      {
+        "code": "2016",
+        "name": "DOUBLE VERTICAL LINE",
+        "remark": ""
+      },
+      {
+        "code": "2020",
+        "name": "DAGGER",
+        "remark": ""
+      },
+      {
+        "code": "2021",
+        "name": "DOUBLE DAGGER",
+        "remark": ""
+      },
+      {
+        "code": "2022",
+        "name": "BULLET",
+        "remark": ""
+      },
+      {
+        "code": "203B",
+        "name": "REFERENCE MARK",
+        "remark": ""
+      },
+      {
+        "code": "2042",
+        "name": "ASTERISM",
+        "remark": ""
+      },
+      {
+        "code": "2051",
+        "name": "TWO ASTERISKS ALIGNED VERTICALLY",
+        "remark": ""
+      },
+      {
+        "code": "2121",
+        "name": "TELEPHONE SIGN",
+        "remark": ""
+      },
+      {
+        "code": "2153",
+        "name": "VULGAR FRACTION ONE THIRD",
+        "remark": ""
+      },
+      {
+        "code": "2154",
+        "name": "VULGAR FRACTION TWO THIRDS",
+        "remark": ""
+      },
+      {
+        "code": "2155",
+        "name": "VULGAR FRACTION ONE FIFTH",
+        "remark": ""
+      },
+      {
+        "code": "2160",
+        "name": "ROMAN NUMERAL ONE",
+        "remark": ""
+      },
+      {
+        "code": "2161",
+        "name": "ROMAN NUMERAL TWO",
+        "remark": ""
+      },
+      {
+        "code": "2162",
+        "name": "ROMAN NUMERAL THREE",
+        "remark": ""
+      },
+      {
+        "code": "2163",
+        "name": "ROMAN NUMERAL FOUR",
+        "remark": ""
+      },
+      {
+        "code": "2164",
+        "name": "ROMAN NUMERAL FIVE",
+        "remark": ""
+      },
+      {
+        "code": "2165",
+        "name": "ROMAN NUMERAL SIX",
+        "remark": ""
+      },
+      {
+        "code": "2166",
+        "name": "ROMAN NUMERAL SEVEN",
+        "remark": ""
+      },
+      {
+        "code": "2167",
+        "name": "ROMAN NUMERAL EIGHT",
+        "remark": ""
+      },
+      {
+        "code": "2168",
+        "name": "ROMAN NUMERAL NINE",
+        "remark": ""
+      },
+      {
+        "code": "2169",
+        "name": "ROMAN NUMERAL TEN",
+        "remark": ""
+      },
+      {
+        "code": "216A",
+        "name": "ROMAN NUMERAL ELEVEN",
+        "remark": ""
+      },
+      {
+        "code": "216B",
+        "name": "ROMAN NUMERAL TWELVE",
+        "remark": ""
+      },
+      {
+        "code": "2170",
+        "name": "SMALL ROMAN NUMERAL ONE",
+        "remark": ""
+      },
+      {
+        "code": "2171",
+        "name": "SMALL ROMAN NUMERAL TWO",
+        "remark": ""
+      },
+      {
+        "code": "2172",
+        "name": "SMALL ROMAN NUMERAL THREE",
+        "remark": ""
+      },
+      {
+        "code": "2173",
+        "name": "SMALL ROMAN NUMERAL FOUR",
+        "remark": ""
+      },
+      {
+        "code": "2174",
+        "name": "SMALL ROMAN NUMERAL FIVE",
+        "remark": ""
+      },
+      {
+        "code": "2175",
+        "name": "SMALL ROMAN NUMERAL SIX",
+        "remark": ""
+      },
+      {
+        "code": "2176",
+        "name": "SMALL ROMAN NUMERAL SEVEN",
+        "remark": ""
+      },
+      {
+        "code": "2177",
+        "name": "SMALL ROMAN NUMERAL EIGHT",
+        "remark": ""
+      },
+      {
+        "code": "2178",
+        "name": "SMALL ROMAN NUMERAL NINE",
+        "remark": ""
+      },
+      {
+        "code": "2179",
+        "name": "SMALL ROMAN NUMERAL TEN",
+        "remark": ""
+      },
+      {
+        "code": "217A",
+        "name": "SMALL ROMAN NUMERAL ELEVEN",
+        "remark": ""
+      },
+      {
+        "code": "217B",
+        "name": "SMALL ROMAN NUMERAL TWELVE",
+        "remark": ""
+      },
+      {
+        "code": "2190",
+        "name": "LEFTWARDS ARROW",
+        "remark": ""
+      },
+      {
+        "code": "2191",
+        "name": "UPWARDS ARROW",
+        "remark": ""
+      },
+      {
+        "code": "2192",
+        "name": "RIGHTWARDS ARROW",
+        "remark": ""
+      },
+      {
+        "code": "2193",
+        "name": "DOWNWARDS ARROW",
+        "remark": ""
+      },
+      {
+        "code": "2194",
+        "name": "LEFT RIGHT ARROW",
+        "remark": ""
+      },
+      {
+        "code": "2196",
+        "name": "NORTH WEST ARROW",
+        "remark": ""
+      },
+      {
+        "code": "2197",
+        "name": "NORTH EAST ARROW",
+        "remark": ""
+      },
+      {
+        "code": "2198",
+        "name": "SOUTH EAST ARROW",
+        "remark": ""
+      },
+      {
+        "code": "2199",
+        "name": "SOUTH WEST ARROW",
+        "remark": ""
+      },
+      {
+        "code": "21C4",
+        "name": "RIGHTWARDS ARROW OVER LEFTWARDS ARROW",
+        "remark": ""
+      },
+      {
+        "code": "21E6",
+        "name": "LEFTWARDS WHITE ARROW",
+        "remark": ""
+      },
+      {
+        "code": "21E7",
+        "name": "UPWARDS WHITE ARROW",
+        "remark": ""
+      },
+      {
+        "code": "21E8",
+        "name": "RIGHTWARDS WHITE ARROW",
+        "remark": ""
+      },
+      {
+        "code": "21E9",
+        "name": "DOWNWARDS WHITE ARROW",
+        "remark": ""
+      },
+      {
+        "code": "221A",
+        "name": "SQUARE ROOT",
+        "remark": ""
+      },
+      {
+        "code": "221E",
+        "name": "INFINITY",
+        "remark": ""
+      },
+      {
+        "code": "221F",
+        "name": "RIGHT ANGLE",
+        "remark": ""
+      },
+      {
+        "code": "222B",
+        "name": "INTEGRAL",
+        "remark": ""
+      },
+      {
+        "code": "222C",
+        "name": "DOUBLE INTEGRAL",
+        "remark": ""
+      },
+      {
+        "code": "2234",
+        "name": "THEREFORE",
+        "remark": ""
+      },
+      {
+        "code": "2235",
+        "name": "BECAUSE",
+        "remark": ""
+      },
+      {
+        "code": "2296",
+        "name": "CIRCLED MINUS",
+        "remark": ""
+      },
+      {
+        "code": "22BF",
+        "name": "RIGHT TRIANGLE",
+        "remark": ""
+      },
+      {
+        "code": "2318",
+        "name": "PLACE OF INTEREST SIGN",
+        "remark": ""
+      },
+      {
+        "code": "23CE",
+        "name": "RETURN SYMBOL",
+        "remark": ""
+      },
+      {
+        "code": "2423",
+        "name": "OPEN BOX",
+        "remark": ""
+      },
+      {
+        "code": "2460",
+        "name": "CIRCLED DIGIT ONE",
+        "remark": ""
+      },
+      {
+        "code": "2461",
+        "name": "CIRCLED DIGIT TWO",
+        "remark": ""
+      },
+      {
+        "code": "2462",
+        "name": "CIRCLED DIGIT THREE",
+        "remark": ""
+      },
+      {
+        "code": "2463",
+        "name": "CIRCLED DIGIT FOUR",
+        "remark": ""
+      },
+      {
+        "code": "2464",
+        "name": "CIRCLED DIGIT FIVE",
+        "remark": ""
+      },
+      {
+        "code": "2465",
+        "name": "CIRCLED DIGIT SIX",
+        "remark": ""
+      },
+      {
+        "code": "2466",
+        "name": "CIRCLED DIGIT SEVEN",
+        "remark": ""
+      },
+      {
+        "code": "2467",
+        "name": "CIRCLED DIGIT EIGHT",
+        "remark": ""
+      },
+      {
+        "code": "2468",
+        "name": "CIRCLED DIGIT NINE",
+        "remark": ""
+      },
+      {
+        "code": "2469",
+        "name": "CIRCLED NUMBER TEN",
+        "remark": ""
+      },
+      {
+        "code": "246A",
+        "name": "CIRCLED NUMBER ELEVEN",
+        "remark": ""
+      },
+      {
+        "code": "246B",
+        "name": "CIRCLED NUMBER TWELVE",
+        "remark": ""
+      },
+      {
+        "code": "246C",
+        "name": "CIRCLED NUMBER THIRTEEN",
+        "remark": ""
+      },
+      {
+        "code": "246D",
+        "name": "CIRCLED NUMBER FOURTEEN",
+        "remark": ""
+      },
+      {
+        "code": "246E",
+        "name": "CIRCLED NUMBER FIFTEEN",
+        "remark": ""
+      },
+      {
+        "code": "246F",
+        "name": "CIRCLED NUMBER SIXTEEN",
+        "remark": ""
+      },
+      {
+        "code": "2470",
+        "name": "CIRCLED NUMBER SEVENTEEN",
+        "remark": ""
+      },
+      {
+        "code": "2471",
+        "name": "CIRCLED NUMBER EIGHTEEN",
+        "remark": ""
+      },
+      {
+        "code": "2472",
+        "name": "CIRCLED NUMBER NINETEEN",
+        "remark": ""
+      },
+      {
+        "code": "2473",
+        "name": "CIRCLED NUMBER TWENTY",
+        "remark": ""
+      },
+      {
+        "code": "24D0",
+        "name": "CIRCLED LATIN SMALL LETTER A",
+        "remark": ""
+      },
+      {
+        "code": "24D1",
+        "name": "CIRCLED LATIN SMALL LETTER B",
+        "remark": ""
+      },
+      {
+        "code": "24D2",
+        "name": "CIRCLED LATIN SMALL LETTER C",
+        "remark": ""
+      },
+      {
+        "code": "24D3",
+        "name": "CIRCLED LATIN SMALL LETTER D",
+        "remark": ""
+      },
+      {
+        "code": "24D4",
+        "name": "CIRCLED LATIN SMALL LETTER E",
+        "remark": ""
+      },
+      {
+        "code": "24D5",
+        "name": "CIRCLED LATIN SMALL LETTER F",
+        "remark": ""
+      },
+      {
+        "code": "24D6",
+        "name": "CIRCLED LATIN SMALL LETTER G",
+        "remark": ""
+      },
+      {
+        "code": "24D7",
+        "name": "CIRCLED LATIN SMALL LETTER H",
+        "remark": ""
+      },
+      {
+        "code": "24D8",
+        "name": "CIRCLED LATIN SMALL LETTER I",
+        "remark": ""
+      },
+      {
+        "code": "24D9",
+        "name": "CIRCLED LATIN SMALL LETTER J",
+        "remark": ""
+      },
+      {
+        "code": "24DA",
+        "name": "CIRCLED LATIN SMALL LETTER K",
+        "remark": ""
+      },
+      {
+        "code": "24DB",
+        "name": "CIRCLED LATIN SMALL LETTER L",
+        "remark": ""
+      },
+      {
+        "code": "24DC",
+        "name": "CIRCLED LATIN SMALL LETTER M",
+        "remark": ""
+      },
+      {
+        "code": "24DD",
+        "name": "CIRCLED LATIN SMALL LETTER N",
+        "remark": ""
+      },
+      {
+        "code": "24DE",
+        "name": "CIRCLED LATIN SMALL LETTER O",
+        "remark": ""
+      },
+      {
+        "code": "24DF",
+        "name": "CIRCLED LATIN SMALL LETTER P",
+        "remark": ""
+      },
+      {
+        "code": "24E0",
+        "name": "CIRCLED LATIN SMALL LETTER Q",
+        "remark": ""
+      },
+      {
+        "code": "24E1",
+        "name": "CIRCLED LATIN SMALL LETTER R",
+        "remark": ""
+      },
+      {
+        "code": "24E2",
+        "name": "CIRCLED LATIN SMALL LETTER S",
+        "remark": ""
+      },
+      {
+        "code": "24E3",
+        "name": "CIRCLED LATIN SMALL LETTER T",
+        "remark": ""
+      },
+      {
+        "code": "24E4",
+        "name": "CIRCLED LATIN SMALL LETTER U",
+        "remark": ""
+      },
+      {
+        "code": "24E5",
+        "name": "CIRCLED LATIN SMALL LETTER V",
+        "remark": ""
+      },
+      {
+        "code": "24E6",
+        "name": "CIRCLED LATIN SMALL LETTER W",
+        "remark": ""
+      },
+      {
+        "code": "24E7",
+        "name": "CIRCLED LATIN SMALL LETTER X",
+        "remark": ""
+      },
+      {
+        "code": "24E8",
+        "name": "CIRCLED LATIN SMALL LETTER Y",
+        "remark": ""
+      },
+      {
+        "code": "24E9",
+        "name": "CIRCLED LATIN SMALL LETTER Z",
+        "remark": ""
+      },
+      {
+        "code": "24EB",
+        "name": "NEGATIVE CIRCLED NUMBER ELEVEN",
+        "remark": ""
+      },
+      {
+        "code": "24EC",
+        "name": "NEGATIVE CIRCLED NUMBER TWELVE",
+        "remark": ""
+      },
+      {
+        "code": "24ED",
+        "name": "NEGATIVE CIRCLED NUMBER THIRTEEN",
+        "remark": ""
+      },
+      {
+        "code": "24EE",
+        "name": "NEGATIVE CIRCLED NUMBER FOURTEEN",
+        "remark": ""
+      },
+      {
+        "code": "24EF",
+        "name": "NEGATIVE CIRCLED NUMBER FIFTEEN",
+        "remark": ""
+      },
+      {
+        "code": "24F0",
+        "name": "NEGATIVE CIRCLED NUMBER SIXTEEN",
+        "remark": ""
+      },
+      {
+        "code": "24F1",
+        "name": "NEGATIVE CIRCLED NUMBER SEVENTEEN",
+        "remark": ""
+      },
+      {
+        "code": "24F2",
+        "name": "NEGATIVE CIRCLED NUMBER EIGHTEEN",
+        "remark": ""
+      },
+      {
+        "code": "24F3",
+        "name": "NEGATIVE CIRCLED NUMBER NINETEEN",
+        "remark": ""
+      },
+      {
+        "code": "24F4",
+        "name": "NEGATIVE CIRCLED NUMBER TWENTY",
+        "remark": ""
+      },
+      {
+        "code": "24F5",
+        "name": "DOUBLE CIRCLED DIGIT ONE",
+        "remark": ""
+      },
+      {
+        "code": "24F6",
+        "name": "DOUBLE CIRCLED DIGIT TWO",
+        "remark": ""
+      },
+      {
+        "code": "24F7",
+        "name": "DOUBLE CIRCLED DIGIT THREE",
+        "remark": ""
+      },
+      {
+        "code": "24F8",
+        "name": "DOUBLE CIRCLED DIGIT FOUR",
+        "remark": ""
+      },
+      {
+        "code": "24F9",
+        "name": "DOUBLE CIRCLED DIGIT FIVE",
+        "remark": ""
+      },
+      {
+        "code": "24FA",
+        "name": "DOUBLE CIRCLED DIGIT SIX",
+        "remark": ""
+      },
+      {
+        "code": "24FB",
+        "name": "DOUBLE CIRCLED DIGIT SEVEN",
+        "remark": ""
+      },
+      {
+        "code": "24FC",
+        "name": "DOUBLE CIRCLED DIGIT EIGHT",
+        "remark": ""
+      },
+      {
+        "code": "24FD",
+        "name": "DOUBLE CIRCLED DIGIT NINE",
+        "remark": ""
+      },
+      {
+        "code": "24FE",
+        "name": "DOUBLE CIRCLED NUMBER TEN",
+        "remark": ""
+      },
+      {
+        "code": "25A0",
+        "name": "BLACK SQUARE",
+        "remark": ""
+      },
+      {
+        "code": "25A1",
+        "name": "WHITE SQUARE",
+        "remark": ""
+      },
+      {
+        "code": "25B1",
+        "name": "WHITE PARALLELOGRAM",
+        "remark": ""
+      },
+      {
+        "code": "25B2",
+        "name": "BLACK UP-POINTING TRIANGLE",
+        "remark": ""
+      },
+      {
+        "code": "25B3",
+        "name": "WHITE UP-POINTING TRIANGLE",
+        "remark": ""
+      },
+      {
+        "code": "25B6",
+        "name": "BLACK RIGHT-POINTING TRIANGLE",
+        "remark": ""
+      },
+      {
+        "code": "25B7",
+        "name": "WHITE RIGHT-POINTING TRIANGLE",
+        "remark": ""
+      },
+      {
+        "code": "25BC",
+        "name": "BLACK DOWN-POINTING TRIANGLE",
+        "remark": ""
+      },
+      {
+        "code": "25BD",
+        "name": "WHITE DOWN-POINTING TRIANGLE",
+        "remark": ""
+      },
+      {
+        "code": "25C0",
+        "name": "BLACK LEFT-POINTING TRIANGLE",
+        "remark": ""
+      },
+      {
+        "code": "25C1",
+        "name": "WHITE LEFT-POINTING TRIANGLE",
+        "remark": ""
+      },
+      {
+        "code": "25C6",
+        "name": "BLACK DIAMOND",
+        "remark": ""
+      },
+      {
+        "code": "25C7",
+        "name": "WHITE DIAMOND",
+        "remark": ""
+      },
+      {
+        "code": "25C9",
+        "name": "FISHEYE",
+        "remark": ""
+      },
+      {
+        "code": "25CB",
+        "name": "WHITE CIRCLE",
+        "remark": ""
+      },
+      {
+        "code": "25CE",
+        "name": "BULLSEYE",
+        "remark": ""
+      },
+      {
+        "code": "25CF",
+        "name": "BLACK CIRCLE",
+        "remark": ""
+      },
+      {
+        "code": "25D0",
+        "name": "CIRCLE WITH LEFT HALF BLACK",
+        "remark": ""
+      },
+      {
+        "code": "25D1",
+        "name": "CIRCLE WITH RIGHT HALF BLACK",
+        "remark": ""
+      },
+      {
+        "code": "25D2",
+        "name": "CIRCLE WITH LOWER HALF BLACK",
+        "remark": ""
+      },
+      {
+        "code": "25D3",
+        "name": "CIRCLE WITH UPPER HALF BLACK",
+        "remark": ""
+      },
+      {
+        "code": "25E6",
+        "name": "WHITE BULLET",
+        "remark": ""
+      },
+      {
+        "code": "25EF",
+        "name": "LARGE CIRCLE",
+        "remark": ""
+      },
+      {
+        "code": "2600",
+        "name": "BLACK SUN WITH RAYS",
+        "remark": ""
+      },
+      {
+        "code": "2601",
+        "name": "CLOUD",
+        "remark": ""
+      },
+      {
+        "code": "2602",
+        "name": "UMBRELLA",
+        "remark": ""
+      },
+      {
+        "code": "2603",
+        "name": "SNOWMAN",
+        "remark": ""
+      },
+      {
+        "code": "2605",
+        "name": "BLACK STAR",
+        "remark": ""
+      },
+      {
+        "code": "2606",
+        "name": "WHITE STAR",
+        "remark": ""
+      },
+      {
+        "code": "260E",
+        "name": "BLACK TELEPHONE",
+        "remark": ""
+      },
+      {
+        "code": "2616",
+        "name": "WHITE SHOGI PIECE",
+        "remark": ""
+      },
+      {
+        "code": "2617",
+        "name": "BLACK SHOGI PIECE",
+        "remark": ""
+      },
+      {
+        "code": "261E",
+        "name": "WHITE RIGHT POINTING INDEX",
+        "remark": ""
+      },
+      {
+        "code": "2640",
+        "name": "FEMALE SIGN",
+        "remark": ""
+      },
+      {
+        "code": "2642",
+        "name": "MALE SIGN",
+        "remark": ""
+      },
+      {
+        "code": "2660",
+        "name": "BLACK SPADE SUIT",
+        "remark": ""
+      },
+      {
+        "code": "2661",
+        "name": "WHITE HEART SUIT",
+        "remark": ""
+      },
+      {
+        "code": "2662",
+        "name": "WHITE DIAMOND SUIT",
+        "remark": ""
+      },
+      {
+        "code": "2663",
+        "name": "BLACK CLUB SUIT",
+        "remark": ""
+      },
+      {
+        "code": "2664",
+        "name": "WHITE SPADE SUIT",
+        "remark": ""
+      },
+      {
+        "code": "2665",
+        "name": "BLACK HEART SUIT",
+        "remark": ""
+      },
+      {
+        "code": "2666",
+        "name": "BLACK DIAMOND SUIT",
+        "remark": ""
+      },
+      {
+        "code": "2667",
+        "name": "WHITE CLUB SUIT",
+        "remark": ""
+      },
+      {
+        "code": "2668",
+        "name": "HOT SPRINGS",
+        "remark": ""
+      },
+      {
+        "code": "2669",
+        "name": "QUARTER NOTE",
+        "remark": ""
+      },
+      {
+        "code": "266A",
+        "name": "EIGHTH NOTE",
+        "remark": ""
+      },
+      {
+        "code": "266B",
+        "name": "BEAMED EIGHTH NOTES",
+        "remark": ""
+      },
+      {
+        "code": "266C",
+        "name": "BEAMED SIXTEENTH NOTES",
+        "remark": ""
+      },
+      {
+        "code": "266D",
+        "name": "MUSIC FLAT SIGN",
+        "remark": ""
+      },
+      {
+        "code": "266E",
+        "name": "MUSIC NATURAL SIGN",
+        "remark": ""
+      },
+      {
+        "code": "266F",
+        "name": "MUSIC SHARP SIGN",
+        "remark": ""
+      },
+      {
+        "code": "2713",
+        "name": "CHECK MARK",
+        "remark": ""
+      },
+      {
+        "code": "2756",
+        "name": "BLACK DIAMOND MINUS WHITE X",
+        "remark": ""
+      },
+      {
+        "code": "2776",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT ONE",
+        "remark": ""
+      },
+      {
+        "code": "2777",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT TWO",
+        "remark": ""
+      },
+      {
+        "code": "2778",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT THREE",
+        "remark": ""
+      },
+      {
+        "code": "2779",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT FOUR",
+        "remark": ""
+      },
+      {
+        "code": "277A",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT FIVE",
+        "remark": ""
+      },
+      {
+        "code": "277B",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT SIX",
+        "remark": ""
+      },
+      {
+        "code": "277C",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT SEVEN",
+        "remark": ""
+      },
+      {
+        "code": "277D",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT EIGHT",
+        "remark": ""
+      },
+      {
+        "code": "277E",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT NINE",
+        "remark": ""
+      },
+      {
+        "code": "277F",
+        "name": "DINGBAT NEGATIVE CIRCLED NUMBER TEN",
+        "remark": ""
+      },
+      {
+        "code": "2934",
+        "name": "ARROW POINTING RIGHTWARDS THEN CURVING UPWARDS",
+        "remark": ""
+      },
+      {
+        "code": "2935",
+        "name": "ARROW POINTING RIGHTWARDS THEN CURVING DOWNWARDS",
+        "remark": ""
+      },
+      {
+        "code": "29BF",
+        "name": "CIRCLED BULLET",
+        "remark": ""
+      },
+      {
+        "code": "29FA",
+        "name": "DOUBLE PLUS",
+        "remark": ""
+      },
+      {
+        "code": "29FB",
+        "name": "TRIPLE PLUS",
+        "remark": ""
+      },
+      {
+        "code": "3003",
+        "name": "DITTO MARK",
+        "remark": ""
+      },
+      {
+        "code": "3006",
+        "name": "IDEOGRAPHIC CLOSING MARK",
+        "remark": ""
+      },
+      {
+        "code": "3007",
+        "name": "IDEOGRAPHIC NUMBER ZERO",
+        "remark": ""
+      },
+      {
+        "code": "3012",
+        "name": "POSTAL MARK",
+        "remark": ""
+      },
+      {
+        "code": "3013",
+        "name": "GETA MARK",
+        "remark": ""
+      },
+      {
+        "code": "3020",
+        "name": "POSTAL MARK FACE",
+        "remark": ""
+      },
+      {
+        "code": "303C",
+        "name": "MASU MARK",
+        "remark": ""
+      },
+      {
+        "code": "303D",
+        "name": "PART ALTERNATION MARK",
+        "remark": ""
+      },
+      {
+        "code": "309F",
+        "name": "HIRAGANA DIGRAPH YORI",
+        "remark": ""
+      },
+      {
+        "code": "30FF",
+        "name": "KATAKANA DIGRAPH KOTO",
+        "remark": ""
+      },
+      {
+        "code": "3231",
+        "name": "PARENTHESIZED IDEOGRAPH STOCK",
+        "remark": ""
+      },
+      {
+        "code": "3232",
+        "name": "PARENTHESIZED IDEOGRAPH HAVE",
+        "remark": ""
+      },
+      {
+        "code": "3239",
+        "name": "PARENTHESIZED IDEOGRAPH REPRESENT",
+        "remark": ""
+      },
+      {
+        "code": "3251",
+        "name": "CIRCLED NUMBER TWENTY ONE",
+        "remark": ""
+      },
+      {
+        "code": "3252",
+        "name": "CIRCLED NUMBER TWENTY TWO",
+        "remark": ""
+      },
+      {
+        "code": "3253",
+        "name": "CIRCLED NUMBER TWENTY THREE",
+        "remark": ""
+      },
+      {
+        "code": "3254",
+        "name": "CIRCLED NUMBER TWENTY FOUR",
+        "remark": ""
+      },
+      {
+        "code": "3255",
+        "name": "CIRCLED NUMBER TWENTY FIVE",
+        "remark": ""
+      },
+      {
+        "code": "3256",
+        "name": "CIRCLED NUMBER TWENTY SIX",
+        "remark": ""
+      },
+      {
+        "code": "3257",
+        "name": "CIRCLED NUMBER TWENTY SEVEN",
+        "remark": ""
+      },
+      {
+        "code": "3258",
+        "name": "CIRCLED NUMBER TWENTY EIGHT",
+        "remark": ""
+      },
+      {
+        "code": "3259",
+        "name": "CIRCLED NUMBER TWENTY NINE",
+        "remark": ""
+      },
+      {
+        "code": "325A",
+        "name": "CIRCLED NUMBER THIRTY",
+        "remark": ""
+      },
+      {
+        "code": "325B",
+        "name": "CIRCLED NUMBER THIRTY ONE",
+        "remark": ""
+      },
+      {
+        "code": "325C",
+        "name": "CIRCLED NUMBER THIRTY TWO",
+        "remark": ""
+      },
+      {
+        "code": "325D",
+        "name": "CIRCLED NUMBER THIRTY THREE",
+        "remark": ""
+      },
+      {
+        "code": "325E",
+        "name": "CIRCLED NUMBER THIRTY FOUR",
+        "remark": ""
+      },
+      {
+        "code": "325F",
+        "name": "CIRCLED NUMBER THIRTY FIVE",
+        "remark": ""
+      },
+      {
+        "code": "32A4",
+        "name": "CIRCLED IDEOGRAPH HIGH",
+        "remark": ""
+      },
+      {
+        "code": "32A5",
+        "name": "CIRCLED IDEOGRAPH CENTRE",
+        "remark": ""
+      },
+      {
+        "code": "32A6",
+        "name": "CIRCLED IDEOGRAPH LOW",
+        "remark": ""
+      },
+      {
+        "code": "32A7",
+        "name": "CIRCLED IDEOGRAPH LEFT",
+        "remark": ""
+      },
+      {
+        "code": "32A8",
+        "name": "CIRCLED IDEOGRAPH RIGHT",
+        "remark": ""
+      },
+      {
+        "code": "32B1",
+        "name": "CIRCLED NUMBER THIRTY SIX",
+        "remark": ""
+      },
+      {
+        "code": "32B2",
+        "name": "CIRCLED NUMBER THIRTY SEVEN",
+        "remark": ""
+      },
+      {
+        "code": "32B3",
+        "name": "CIRCLED NUMBER THIRTY EIGHT",
+        "remark": ""
+      },
+      {
+        "code": "32B4",
+        "name": "CIRCLED NUMBER THIRTY NINE",
+        "remark": ""
+      },
+      {
+        "code": "32B5",
+        "name": "CIRCLED NUMBER FORTY",
+        "remark": ""
+      },
+      {
+        "code": "32B6",
+        "name": "CIRCLED NUMBER FORTY ONE",
+        "remark": ""
+      },
+      {
+        "code": "32B7",
+        "name": "CIRCLED NUMBER FORTY TWO",
+        "remark": ""
+      },
+      {
+        "code": "32B8",
+        "name": "CIRCLED NUMBER FORTY THREE",
+        "remark": ""
+      },
+      {
+        "code": "32B9",
+        "name": "CIRCLED NUMBER FORTY FOUR",
+        "remark": ""
+      },
+      {
+        "code": "32BA",
+        "name": "CIRCLED NUMBER FORTY FIVE",
+        "remark": ""
+      },
+      {
+        "code": "32BB",
+        "name": "CIRCLED NUMBER FORTY SIX",
+        "remark": ""
+      },
+      {
+        "code": "32BC",
+        "name": "CIRCLED NUMBER FORTY SEVEN",
+        "remark": ""
+      },
+      {
+        "code": "32BD",
+        "name": "CIRCLED NUMBER FORTY EIGHT",
+        "remark": ""
+      },
+      {
+        "code": "32BE",
+        "name": "CIRCLED NUMBER FORTY NINE",
+        "remark": ""
+      },
+      {
+        "code": "32BF",
+        "name": "CIRCLED NUMBER FIFTY",
+        "remark": ""
+      },
+      {
+        "code": "32D0",
+        "name": "CIRCLED KATAKANA A",
+        "remark": ""
+      },
+      {
+        "code": "32D1",
+        "name": "CIRCLED KATAKANA I",
+        "remark": ""
+      },
+      {
+        "code": "32D2",
+        "name": "CIRCLED KATAKANA U",
+        "remark": ""
+      },
+      {
+        "code": "32D3",
+        "name": "CIRCLED KATAKANA E",
+        "remark": ""
+      },
+      {
+        "code": "32D4",
+        "name": "CIRCLED KATAKANA O",
+        "remark": ""
+      },
+      {
+        "code": "32D5",
+        "name": "CIRCLED KATAKANA KA",
+        "remark": ""
+      },
+      {
+        "code": "32D6",
+        "name": "CIRCLED KATAKANA KI",
+        "remark": ""
+      },
+      {
+        "code": "32D7",
+        "name": "CIRCLED KATAKANA KU",
+        "remark": ""
+      },
+      {
+        "code": "32D8",
+        "name": "CIRCLED KATAKANA KE",
+        "remark": ""
+      },
+      {
+        "code": "32D9",
+        "name": "CIRCLED KATAKANA KO",
+        "remark": ""
+      },
+      {
+        "code": "32DA",
+        "name": "CIRCLED KATAKANA SA",
+        "remark": ""
+      },
+      {
+        "code": "32DB",
+        "name": "CIRCLED KATAKANA SI",
+        "remark": ""
+      },
+      {
+        "code": "32DC",
+        "name": "CIRCLED KATAKANA SU",
+        "remark": ""
+      },
+      {
+        "code": "32DD",
+        "name": "CIRCLED KATAKANA SE",
+        "remark": ""
+      },
+      {
+        "code": "32DE",
+        "name": "CIRCLED KATAKANA SO",
+        "remark": ""
+      },
+      {
+        "code": "32DF",
+        "name": "CIRCLED KATAKANA TA",
+        "remark": ""
+      },
+      {
+        "code": "32E0",
+        "name": "CIRCLED KATAKANA TI",
+        "remark": ""
+      },
+      {
+        "code": "32E1",
+        "name": "CIRCLED KATAKANA TU",
+        "remark": ""
+      },
+      {
+        "code": "32E2",
+        "name": "CIRCLED KATAKANA TE",
+        "remark": ""
+      },
+      {
+        "code": "32E3",
+        "name": "CIRCLED KATAKANA TO",
+        "remark": ""
+      },
+      {
+        "code": "32E5",
+        "name": "CIRCLED KATAKANA NI",
+        "remark": ""
+      },
+      {
+        "code": "32E9",
+        "name": "CIRCLED KATAKANA HA",
+        "remark": ""
+      },
+      {
+        "code": "32EC",
+        "name": "CIRCLED KATAKANA HE",
+        "remark": ""
+      },
+      {
+        "code": "32ED",
+        "name": "CIRCLED KATAKANA HO",
+        "remark": ""
+      },
+      {
+        "code": "32FA",
+        "name": "CIRCLED KATAKANA RO",
+        "remark": ""
+      },
+      {
+        "code": "337B",
+        "name": "SQUARE ERA NAME HEISEI",
+        "remark": ""
+      },
+      {
+        "code": "337C",
+        "name": "SQUARE ERA NAME SYOUWA",
+        "remark": ""
+      },
+      {
+        "code": "337D",
+        "name": "SQUARE ERA NAME TAISYOU",
+        "remark": ""
+      },
+      {
+        "code": "337E",
+        "name": "SQUARE ERA NAME MEIZI",
+        "remark": ""
+      },
+      {
+        "code": "33CD",
+        "name": "SQUARE KK",
+        "remark": ""
+      },
+      {
+        "code": "4EDD",
+        "name": "CJK UNIFIED IDEOGRAPH-4EDD",
+        "remark": ""
+      }
+    ]
+  },
+  {
+    "id": "cl-24",
+    "name": "Grouped numerals",
+    "data": [
+      {
+        "code": "0020",
+        "name": "SPACE",
+        "remark": "quarter em width"
+      },
+      {
+        "code": "002C",
+        "name": "COMMA",
+        "remark": "quarter em width or half-width"
+      },
+      {
+        "code": "002E",
+        "name": "FULL STOP",
+        "remark": "decimal pointquarter em width or half-width"
+      },
+      {
+        "code": "0030",
+        "name": "DIGIT ZERO",
+        "remark": "half-width"
+      },
+      {
+        "code": "0031",
+        "name": "DIGIT ONE",
+        "remark": "half-width"
+      },
+      {
+        "code": "0032",
+        "name": "DIGIT TWO",
+        "remark": "half-width"
+      },
+      {
+        "code": "0033",
+        "name": "DIGIT THREE",
+        "remark": "half-width"
+      },
+      {
+        "code": "0034",
+        "name": "DIGIT FOUR",
+        "remark": "half-width"
+      },
+      {
+        "code": "0035",
+        "name": "DIGIT FIVE",
+        "remark": "half-width"
+      },
+      {
+        "code": "0036",
+        "name": "DIGIT SIX",
+        "remark": "half-width"
+      },
+      {
+        "code": "0037",
+        "name": "DIGIT SEVEN",
+        "remark": "half-width"
+      },
+      {
+        "code": "0038",
+        "name": "DIGIT EIGHT",
+        "remark": "half-width"
+      },
+      {
+        "code": "0039",
+        "name": "DIGIT NINE",
+        "remark": "half-width"
+      }
+    ]
+  },
+  {
+    "id": "cl-25",
+    "name": "Unit symbols",
+    "data": [
+      {
+        "code": "0020",
+        "name": "SPACE",
+        "remark": "quarter em width"
+      },
+      {
+        "code": "0028",
+        "name": "LEFT PARENTHESIS",
+        "remark": ""
+      },
+      {
+        "code": "0029",
+        "name": "RIGHT PARENTHESIS",
+        "remark": ""
+      },
+      {
+        "code": "002F",
+        "name": "SOLIDUS",
+        "remark": "one third em width, half-width or proportional"
+      },
+      {
+        "code": "0031",
+        "name": "DIGIT ONE",
+        "remark": "half-width or proportional"
+      },
+      {
+        "code": "0032",
+        "name": "DIGIT TWO",
+        "remark": "half-width or proportional"
+      },
+      {
+        "code": "0033",
+        "name": "DIGIT THREE",
+        "remark": "half-width or proportional"
+      },
+      {
+        "code": "0034",
+        "name": "DIGIT FOUR",
+        "remark": "half-width or proportional"
+      },
+      {
+        "code": "0041",
+        "name": "LATIN CAPITAL LETTER A",
+        "remark": "proportional"
+      },
+      {
+        "code": "0042",
+        "name": "LATIN CAPITAL LETTER B",
+        "remark": "proportional"
+      },
+      {
+        "code": "0043",
+        "name": "LATIN CAPITAL LETTER C",
+        "remark": "proportional"
+      },
+      {
+        "code": "0044",
+        "name": "LATIN CAPITAL LETTER D",
+        "remark": "proportional"
+      },
+      {
+        "code": "0045",
+        "name": "LATIN CAPITAL LETTER E",
+        "remark": "proportional"
+      },
+      {
+        "code": "0046",
+        "name": "LATIN CAPITAL LETTER F",
+        "remark": "proportional"
+      },
+      {
+        "code": "0047",
+        "name": "LATIN CAPITAL LETTER G",
+        "remark": "proportional"
+      },
+      {
+        "code": "0048",
+        "name": "LATIN CAPITAL LETTER H",
+        "remark": "proportional"
+      },
+      {
+        "code": "0049",
+        "name": "LATIN CAPITAL LETTER I",
+        "remark": "proportional"
+      },
+      {
+        "code": "004A",
+        "name": "LATIN CAPITAL LETTER J",
+        "remark": "proportional"
+      },
+      {
+        "code": "004B",
+        "name": "LATIN CAPITAL LETTER K",
+        "remark": "proportional"
+      },
+      {
+        "code": "004C",
+        "name": "LATIN CAPITAL LETTER L",
+        "remark": "proportional"
+      },
+      {
+        "code": "004D",
+        "name": "LATIN CAPITAL LETTER M",
+        "remark": "proportional"
+      },
+      {
+        "code": "004E",
+        "name": "LATIN CAPITAL LETTER N",
+        "remark": "proportional"
+      },
+      {
+        "code": "004F",
+        "name": "LATIN CAPITAL LETTER O",
+        "remark": "proportional"
+      },
+      {
+        "code": "0050",
+        "name": "LATIN CAPITAL LETTER P",
+        "remark": "proportional"
+      },
+      {
+        "code": "0051",
+        "name": "LATIN CAPITAL LETTER Q",
+        "remark": "proportional"
+      },
+      {
+        "code": "0052",
+        "name": "LATIN CAPITAL LETTER R",
+        "remark": "proportional"
+      },
+      {
+        "code": "0053",
+        "name": "LATIN CAPITAL LETTER S",
+        "remark": "proportional"
+      },
+      {
+        "code": "0054",
+        "name": "LATIN CAPITAL LETTER T",
+        "remark": "proportional"
+      },
+      {
+        "code": "0055",
+        "name": "LATIN CAPITAL LETTER U",
+        "remark": "proportional"
+      },
+      {
+        "code": "0056",
+        "name": "LATIN CAPITAL LETTER V",
+        "remark": "proportional"
+      },
+      {
+        "code": "0057",
+        "name": "LATIN CAPITAL LETTER W",
+        "remark": "proportional"
+      },
+      {
+        "code": "0058",
+        "name": "LATIN CAPITAL LETTER X",
+        "remark": "proportional"
+      },
+      {
+        "code": "0059",
+        "name": "LATIN CAPITAL LETTER Y",
+        "remark": "proportional"
+      },
+      {
+        "code": "005A",
+        "name": "LATIN CAPITAL LETTER Z",
+        "remark": "proportional"
+      },
+      {
+        "code": "0061",
+        "name": "LATIN SMALL LETTER A",
+        "remark": "proportional"
+      },
+      {
+        "code": "0062",
+        "name": "LATIN SMALL LETTER B",
+        "remark": "proportional"
+      },
+      {
+        "code": "0063",
+        "name": "LATIN SMALL LETTER C",
+        "remark": "proportional"
+      },
+      {
+        "code": "0064",
+        "name": "LATIN SMALL LETTER D",
+        "remark": "proportional"
+      },
+      {
+        "code": "0065",
+        "name": "LATIN SMALL LETTER E",
+        "remark": "proportional"
+      },
+      {
+        "code": "0066",
+        "name": "LATIN SMALL LETTER F",
+        "remark": "proportional"
+      },
+      {
+        "code": "0067",
+        "name": "LATIN SMALL LETTER G",
+        "remark": "proportional"
+      },
+      {
+        "code": "0068",
+        "name": "LATIN SMALL LETTER H",
+        "remark": "proportional"
+      },
+      {
+        "code": "0069",
+        "name": "LATIN SMALL LETTER I",
+        "remark": "proportional"
+      },
+      {
+        "code": "006A",
+        "name": "LATIN SMALL LETTER J",
+        "remark": "proportional"
+      },
+      {
+        "code": "006B",
+        "name": "LATIN SMALL LETTER K",
+        "remark": "proportional"
+      },
+      {
+        "code": "006C",
+        "name": "LATIN SMALL LETTER L",
+        "remark": "proportional"
+      },
+      {
+        "code": "006D",
+        "name": "LATIN SMALL LETTER M",
+        "remark": "proportional"
+      },
+      {
+        "code": "006E",
+        "name": "LATIN SMALL LETTER N",
+        "remark": "proportional"
+      },
+      {
+        "code": "006F",
+        "name": "LATIN SMALL LETTER O",
+        "remark": "proportional"
+      },
+      {
+        "code": "0070",
+        "name": "LATIN SMALL LETTER P",
+        "remark": "proportional"
+      },
+      {
+        "code": "0071",
+        "name": "LATIN SMALL LETTER Q",
+        "remark": "proportional"
+      },
+      {
+        "code": "0072",
+        "name": "LATIN SMALL LETTER R",
+        "remark": "proportional"
+      },
+      {
+        "code": "0073",
+        "name": "LATIN SMALL LETTER S",
+        "remark": "proportional"
+      },
+      {
+        "code": "0074",
+        "name": "LATIN SMALL LETTER T",
+        "remark": "proportional"
+      },
+      {
+        "code": "0075",
+        "name": "LATIN SMALL LETTER U",
+        "remark": "proportional"
+      },
+      {
+        "code": "0076",
+        "name": "LATIN SMALL LETTER V",
+        "remark": "proportional"
+      },
+      {
+        "code": "0077",
+        "name": "LATIN SMALL LETTER W",
+        "remark": "proportional"
+      },
+      {
+        "code": "0078",
+        "name": "LATIN SMALL LETTER X",
+        "remark": "proportional"
+      },
+      {
+        "code": "0079",
+        "name": "LATIN SMALL LETTER Y",
+        "remark": "proportional"
+      },
+      {
+        "code": "007A",
+        "name": "LATIN SMALL LETTER Z",
+        "remark": "proportional"
+      },
+      {
+        "code": "03A9",
+        "name": "GREEK CAPITAL LETTER OMEGA",
+        "remark": "proportional"
+      },
+      {
+        "code": "03BC",
+        "name": "GREEK SMALL LETTER MU",
+        "remark": "proportional"
+      },
+      {
+        "code": "2127",
+        "name": "INVERTED OHM SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "212B",
+        "name": "ANGSTROM SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2212",
+        "name": "MINUS SIGN",
+        "remark": ""
+      },
+      {
+        "code": "30FB",
+        "name": "KATAKANA MIDDLE DOT",
+        "remark": "half-width"
+      }
+    ]
+  },
+  {
+    "id": "cl-26",
+    "name": "Western word space",
+    "data": [
+      {
+        "code": "0020",
+        "name": "SPACE",
+        "remark": ""
+      }
+    ]
+  },
+  {
+    "id": "cl-27",
+    "name": "Western characters",
+    "data": [
+      {
+        "code": "0021",
+        "name": "EXCLAMATION MARK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0022",
+        "name": "QUOTATION MARK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0023",
+        "name": "NUMBER SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "0024",
+        "name": "DOLLAR SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "0025",
+        "name": "PERCENT SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "0026",
+        "name": "AMPERSAND",
+        "remark": "proportional"
+      },
+      {
+        "code": "0027",
+        "name": "APOSTROPHE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0028",
+        "name": "LEFT PARENTHESIS",
+        "remark": "proportional"
+      },
+      {
+        "code": "0029",
+        "name": "RIGHT PARENTHESIS",
+        "remark": "proportional"
+      },
+      {
+        "code": "002A",
+        "name": "ASTERISK",
+        "remark": "proportional"
+      },
+      {
+        "code": "002B",
+        "name": "PLUS SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "002C",
+        "name": "COMMA",
+        "remark": "proportional"
+      },
+      {
+        "code": "002D",
+        "name": "HYPHEN-MINUS",
+        "remark": "proportional"
+      },
+      {
+        "code": "002E",
+        "name": "FULL STOP",
+        "remark": "proportional"
+      },
+      {
+        "code": "002F",
+        "name": "SOLIDUS",
+        "remark": "proportional"
+      },
+      {
+        "code": "0030",
+        "name": "DIGIT ZERO",
+        "remark": "proportional"
+      },
+      {
+        "code": "0031",
+        "name": "DIGIT ONE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0032",
+        "name": "DIGIT TWO",
+        "remark": "proportional"
+      },
+      {
+        "code": "0033",
+        "name": "DIGIT THREE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0034",
+        "name": "DIGIT FOUR",
+        "remark": "proportional"
+      },
+      {
+        "code": "0035",
+        "name": "DIGIT FIVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0036",
+        "name": "DIGIT SIX",
+        "remark": "proportional"
+      },
+      {
+        "code": "0037",
+        "name": "DIGIT SEVEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "0038",
+        "name": "DIGIT EIGHT",
+        "remark": "proportional"
+      },
+      {
+        "code": "0039",
+        "name": "DIGIT NINE",
+        "remark": "proportional"
+      },
+      {
+        "code": "003A",
+        "name": "COLON",
+        "remark": "proportional"
+      },
+      {
+        "code": "003B",
+        "name": "SEMICOLON",
+        "remark": "proportional"
+      },
+      {
+        "code": "003C",
+        "name": "LESS-THAN SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "003D",
+        "name": "EQUALS SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "003E",
+        "name": "GREATER-THAN SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "003F",
+        "name": "QUESTION MARK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0040",
+        "name": "COMMERCIAL AT",
+        "remark": "proportional"
+      },
+      {
+        "code": "0041",
+        "name": "LATIN CAPITAL LETTER A",
+        "remark": "proportional"
+      },
+      {
+        "code": "0042",
+        "name": "LATIN CAPITAL LETTER B",
+        "remark": "proportional"
+      },
+      {
+        "code": "0043",
+        "name": "LATIN CAPITAL LETTER C",
+        "remark": "proportional"
+      },
+      {
+        "code": "0044",
+        "name": "LATIN CAPITAL LETTER D",
+        "remark": "proportional"
+      },
+      {
+        "code": "0045",
+        "name": "LATIN CAPITAL LETTER E",
+        "remark": "proportional"
+      },
+      {
+        "code": "0046",
+        "name": "LATIN CAPITAL LETTER F",
+        "remark": "proportional"
+      },
+      {
+        "code": "0047",
+        "name": "LATIN CAPITAL LETTER G",
+        "remark": "proportional"
+      },
+      {
+        "code": "0048",
+        "name": "LATIN CAPITAL LETTER H",
+        "remark": "proportional"
+      },
+      {
+        "code": "0049",
+        "name": "LATIN CAPITAL LETTER I",
+        "remark": "proportional"
+      },
+      {
+        "code": "004A",
+        "name": "LATIN CAPITAL LETTER J",
+        "remark": "proportional"
+      },
+      {
+        "code": "004B",
+        "name": "LATIN CAPITAL LETTER K",
+        "remark": "proportional"
+      },
+      {
+        "code": "004C",
+        "name": "LATIN CAPITAL LETTER L",
+        "remark": "proportional"
+      },
+      {
+        "code": "004D",
+        "name": "LATIN CAPITAL LETTER M",
+        "remark": "proportional"
+      },
+      {
+        "code": "004E",
+        "name": "LATIN CAPITAL LETTER N",
+        "remark": "proportional"
+      },
+      {
+        "code": "004F",
+        "name": "LATIN CAPITAL LETTER O",
+        "remark": "proportional"
+      },
+      {
+        "code": "0050",
+        "name": "LATIN CAPITAL LETTER P",
+        "remark": "proportional"
+      },
+      {
+        "code": "0051",
+        "name": "LATIN CAPITAL LETTER Q",
+        "remark": "proportional"
+      },
+      {
+        "code": "0052",
+        "name": "LATIN CAPITAL LETTER R",
+        "remark": "proportional"
+      },
+      {
+        "code": "0053",
+        "name": "LATIN CAPITAL LETTER S",
+        "remark": "proportional"
+      },
+      {
+        "code": "0054",
+        "name": "LATIN CAPITAL LETTER T",
+        "remark": "proportional"
+      },
+      {
+        "code": "0055",
+        "name": "LATIN CAPITAL LETTER U",
+        "remark": "proportional"
+      },
+      {
+        "code": "0056",
+        "name": "LATIN CAPITAL LETTER V",
+        "remark": "proportional"
+      },
+      {
+        "code": "0057",
+        "name": "LATIN CAPITAL LETTER W",
+        "remark": "proportional"
+      },
+      {
+        "code": "0058",
+        "name": "LATIN CAPITAL LETTER X",
+        "remark": "proportional"
+      },
+      {
+        "code": "0059",
+        "name": "LATIN CAPITAL LETTER Y",
+        "remark": "proportional"
+      },
+      {
+        "code": "005A",
+        "name": "LATIN CAPITAL LETTER Z",
+        "remark": "proportional"
+      },
+      {
+        "code": "005B",
+        "name": "LEFT SQUARE BRACKET",
+        "remark": "proportional"
+      },
+      {
+        "code": "005C",
+        "name": "REVERSE SOLIDUS",
+        "remark": "proportional"
+      },
+      {
+        "code": "005D",
+        "name": "RIGHT SQUARE BRACKET",
+        "remark": "proportional"
+      },
+      {
+        "code": "005E",
+        "name": "CIRCUMFLEX ACCENT",
+        "remark": "proportional"
+      },
+      {
+        "code": "005F",
+        "name": "LOW LINE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0060",
+        "name": "GRAVE ACCENT",
+        "remark": "proportional"
+      },
+      {
+        "code": "0061",
+        "name": "LATIN SMALL LETTER A",
+        "remark": "proportional"
+      },
+      {
+        "code": "0062",
+        "name": "LATIN SMALL LETTER B",
+        "remark": "proportional"
+      },
+      {
+        "code": "0063",
+        "name": "LATIN SMALL LETTER C",
+        "remark": "proportional"
+      },
+      {
+        "code": "0064",
+        "name": "LATIN SMALL LETTER D",
+        "remark": "proportional"
+      },
+      {
+        "code": "0065",
+        "name": "LATIN SMALL LETTER E",
+        "remark": "proportional"
+      },
+      {
+        "code": "0066",
+        "name": "LATIN SMALL LETTER F",
+        "remark": "proportional"
+      },
+      {
+        "code": "0067",
+        "name": "LATIN SMALL LETTER G",
+        "remark": "proportional"
+      },
+      {
+        "code": "0068",
+        "name": "LATIN SMALL LETTER H",
+        "remark": "proportional"
+      },
+      {
+        "code": "0069",
+        "name": "LATIN SMALL LETTER I",
+        "remark": "proportional"
+      },
+      {
+        "code": "006A",
+        "name": "LATIN SMALL LETTER J",
+        "remark": "proportional"
+      },
+      {
+        "code": "006B",
+        "name": "LATIN SMALL LETTER K",
+        "remark": "proportional"
+      },
+      {
+        "code": "006C",
+        "name": "LATIN SMALL LETTER L",
+        "remark": "proportional"
+      },
+      {
+        "code": "006D",
+        "name": "LATIN SMALL LETTER M",
+        "remark": "proportional"
+      },
+      {
+        "code": "006E",
+        "name": "LATIN SMALL LETTER N",
+        "remark": "proportional"
+      },
+      {
+        "code": "006F",
+        "name": "LATIN SMALL LETTER O",
+        "remark": "proportional"
+      },
+      {
+        "code": "0070",
+        "name": "LATIN SMALL LETTER P",
+        "remark": "proportional"
+      },
+      {
+        "code": "0071",
+        "name": "LATIN SMALL LETTER Q",
+        "remark": "proportional"
+      },
+      {
+        "code": "0072",
+        "name": "LATIN SMALL LETTER R",
+        "remark": "proportional"
+      },
+      {
+        "code": "0073",
+        "name": "LATIN SMALL LETTER S",
+        "remark": "proportional"
+      },
+      {
+        "code": "0074",
+        "name": "LATIN SMALL LETTER T",
+        "remark": "proportional"
+      },
+      {
+        "code": "0075",
+        "name": "LATIN SMALL LETTER U",
+        "remark": "proportional"
+      },
+      {
+        "code": "0076",
+        "name": "LATIN SMALL LETTER V",
+        "remark": "proportional"
+      },
+      {
+        "code": "0077",
+        "name": "LATIN SMALL LETTER W",
+        "remark": "proportional"
+      },
+      {
+        "code": "0078",
+        "name": "LATIN SMALL LETTER X",
+        "remark": "proportional"
+      },
+      {
+        "code": "0079",
+        "name": "LATIN SMALL LETTER Y",
+        "remark": "proportional"
+      },
+      {
+        "code": "007A",
+        "name": "LATIN SMALL LETTER Z",
+        "remark": "proportional"
+      },
+      {
+        "code": "007B",
+        "name": "LEFT CURLY BRACKET",
+        "remark": "proportional"
+      },
+      {
+        "code": "007C",
+        "name": "VERTICAL LINE",
+        "remark": "proportional"
+      },
+      {
+        "code": "007D",
+        "name": "RIGHT CURLY BRACKET",
+        "remark": "proportional"
+      },
+      {
+        "code": "007E",
+        "name": "TILDE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00A0",
+        "name": "NO-BREAK SPACE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00A1",
+        "name": "INVERTED EXCLAMATION MARK",
+        "remark": "proportional"
+      },
+      {
+        "code": "00A2",
+        "name": "CENT SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "00A3",
+        "name": "POUND SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "00A4",
+        "name": "CURRENCY SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "00A5",
+        "name": "YEN SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "00A6",
+        "name": "BROKEN BAR",
+        "remark": "proportional"
+      },
+      {
+        "code": "00A7",
+        "name": "SECTION SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "00A8",
+        "name": "DIAERESIS",
+        "remark": "proportional"
+      },
+      {
+        "code": "00A9",
+        "name": "COPYRIGHT SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "00AA",
+        "name": "FEMININE ORDINAL INDICATOR",
+        "remark": "proportional"
+      },
+      {
+        "code": "00AB",
+        "name": "LEFT-POINTING DOUBLE ANGLE QUOTATION MARK",
+        "remark": "proportional"
+      },
+      {
+        "code": "00AC",
+        "name": "NOT SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "00AD",
+        "name": "SOFT HYPHEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "00AE",
+        "name": "REGISTERED SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "00AF",
+        "name": "MACRON",
+        "remark": "proportional"
+      },
+      {
+        "code": "00B0",
+        "name": "DEGREE SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "00B1",
+        "name": "PLUS-MINUS SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "00B2",
+        "name": "SUPERSCRIPT TWO",
+        "remark": "proportional"
+      },
+      {
+        "code": "00B3",
+        "name": "SUPERSCRIPT THREE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00B4",
+        "name": "ACUTE ACCENT",
+        "remark": "proportional"
+      },
+      {
+        "code": "00B6",
+        "name": "PILCROW SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "00B7",
+        "name": "MIDDLE DOT",
+        "remark": "proportional"
+      },
+      {
+        "code": "00B8",
+        "name": "CEDILLA",
+        "remark": "proportional"
+      },
+      {
+        "code": "00B9",
+        "name": "SUPERSCRIPT ONE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00BA",
+        "name": "MASCULINE ORDINAL INDICATOR",
+        "remark": "proportional"
+      },
+      {
+        "code": "00BB",
+        "name": "RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK",
+        "remark": "proportional"
+      },
+      {
+        "code": "00BC",
+        "name": "VULGAR FRACTION ONE QUARTER",
+        "remark": "proportional"
+      },
+      {
+        "code": "00BD",
+        "name": "VULGAR FRACTION ONE HALF",
+        "remark": "proportional"
+      },
+      {
+        "code": "00BE",
+        "name": "VULGAR FRACTION THREE QUARTERS",
+        "remark": "proportional"
+      },
+      {
+        "code": "00BF",
+        "name": "INVERTED QUESTION MARK",
+        "remark": "proportional"
+      },
+      {
+        "code": "00C0",
+        "name": "LATIN CAPITAL LETTER A WITH GRAVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00C1",
+        "name": "LATIN CAPITAL LETTER A WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00C2",
+        "name": "LATIN CAPITAL LETTER A WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "00C3",
+        "name": "LATIN CAPITAL LETTER A WITH TILDE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00C4",
+        "name": "LATIN CAPITAL LETTER A WITH DIAERESIS",
+        "remark": "proportional"
+      },
+      {
+        "code": "00C5",
+        "name": "LATIN CAPITAL LETTER A WITH RING ABOVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00C6",
+        "name": "LATIN CAPITAL LETTER AE (ash)",
+        "remark": "proportional"
+      },
+      {
+        "code": "00C7",
+        "name": "LATIN CAPITAL LETTER C WITH CEDILLA",
+        "remark": "proportional"
+      },
+      {
+        "code": "00C8",
+        "name": "LATIN CAPITAL LETTER E WITH GRAVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00C9",
+        "name": "LATIN CAPITAL LETTER E WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00CA",
+        "name": "LATIN CAPITAL LETTER E WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "00CB",
+        "name": "LATIN CAPITAL LETTER E WITH DIAERESIS",
+        "remark": "proportional"
+      },
+      {
+        "code": "00CC",
+        "name": "LATIN CAPITAL LETTER I WITH GRAVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00CD",
+        "name": "LATIN CAPITAL LETTER I WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00CE",
+        "name": "LATIN CAPITAL LETTER I WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "00CF",
+        "name": "LATIN CAPITAL LETTER I WITH DIAERESIS",
+        "remark": "proportional"
+      },
+      {
+        "code": "00D0",
+        "name": "LATIN CAPITAL LETTER ETH (Icelandic)",
+        "remark": "proportional"
+      },
+      {
+        "code": "00D1",
+        "name": "LATIN CAPITAL LETTER N WITH TILDE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00D2",
+        "name": "LATIN CAPITAL LETTER O WITH GRAVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00D3",
+        "name": "LATIN CAPITAL LETTER O WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00D4",
+        "name": "LATIN CAPITAL LETTER O WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "00D5",
+        "name": "LATIN CAPITAL LETTER O WITH TILDE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00D6",
+        "name": "LATIN CAPITAL LETTER O WITH DIAERESIS",
+        "remark": "proportional"
+      },
+      {
+        "code": "00D7",
+        "name": "MULTIPLICATION SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "00D8",
+        "name": "LATIN CAPITAL LETTER O WITH STROKE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00D9",
+        "name": "LATIN CAPITAL LETTER U WITH GRAVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00DA",
+        "name": "LATIN CAPITAL LETTER U WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00DB",
+        "name": "LATIN CAPITAL LETTER U WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "00DC",
+        "name": "LATIN CAPITAL LETTER U WITH DIAERESIS",
+        "remark": "proportional"
+      },
+      {
+        "code": "00DD",
+        "name": "LATIN CAPITAL LETTER Y WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00DE",
+        "name": "LATIN CAPITAL LETTER THORN (Icelandic)",
+        "remark": "proportional"
+      },
+      {
+        "code": "00DF",
+        "name": "LATIN SMALL LETTER SHARP S (German)",
+        "remark": "proportional"
+      },
+      {
+        "code": "00E0",
+        "name": "LATIN SMALL LETTER A WITH GRAVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00E1",
+        "name": "LATIN SMALL LETTER A WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00E2",
+        "name": "LATIN SMALL LETTER A WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "00E3",
+        "name": "LATIN SMALL LETTER A WITH TILDE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00E4",
+        "name": "LATIN SMALL LETTER A WITH DIAERESIS",
+        "remark": "proportional"
+      },
+      {
+        "code": "00E5",
+        "name": "LATIN SMALL LETTER A WITH RING ABOVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00E6",
+        "name": "LATIN SMALL LETTER AE (ash)",
+        "remark": "proportional"
+      },
+      {
+        "code": "<00E6, 0300>",
+        "name": "<LATIN SMALL LETTER AE, COMBINING GRAVE ACCENT>",
+        "remark": "proportional"
+      },
+      {
+        "code": "00E7",
+        "name": "LATIN SMALL LETTER C WITH CEDILLA",
+        "remark": "proportional"
+      },
+      {
+        "code": "00E8",
+        "name": "LATIN SMALL LETTER E WITH GRAVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00E9",
+        "name": "LATIN SMALL LETTER E WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00EA",
+        "name": "LATIN SMALL LETTER E WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "00EB",
+        "name": "LATIN SMALL LETTER E WITH DIAERESIS",
+        "remark": "proportional"
+      },
+      {
+        "code": "00EC",
+        "name": "LATIN SMALL LETTER I WITH GRAVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00ED",
+        "name": "LATIN SMALL LETTER I WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00EE",
+        "name": "LATIN SMALL LETTER I WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "00EF",
+        "name": "LATIN SMALL LETTER I WITH DIAERESIS",
+        "remark": "proportional"
+      },
+      {
+        "code": "00F0",
+        "name": "LATIN SMALL LETTER ETH (Icelandic)",
+        "remark": "proportional"
+      },
+      {
+        "code": "00F1",
+        "name": "LATIN SMALL LETTER N WITH TILDE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00F2",
+        "name": "LATIN SMALL LETTER O WITH GRAVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00F3",
+        "name": "LATIN SMALL LETTER O WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00F4",
+        "name": "LATIN SMALL LETTER O WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "00F5",
+        "name": "LATIN SMALL LETTER O WITH TILDE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00F6",
+        "name": "LATIN SMALL LETTER O WITH DIAERESIS",
+        "remark": "proportional"
+      },
+      {
+        "code": "00F7",
+        "name": "DIVISION SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "00F8",
+        "name": "LATIN SMALL LETTER O WITH STROKE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00F9",
+        "name": "LATIN SMALL LETTER U WITH GRAVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00FA",
+        "name": "LATIN SMALL LETTER U WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00FB",
+        "name": "LATIN SMALL LETTER U WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "00FC",
+        "name": "LATIN SMALL LETTER U WITH DIAERESIS",
+        "remark": "proportional"
+      },
+      {
+        "code": "00FD",
+        "name": "LATIN SMALL LETTER Y WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "00FE",
+        "name": "LATIN SMALL LETTER THORN (Icelandic)",
+        "remark": "proportional"
+      },
+      {
+        "code": "00FF",
+        "name": "LATIN SMALL LETTER Y WITH DIAERESIS",
+        "remark": "proportional"
+      },
+      {
+        "code": "0100",
+        "name": "LATIN CAPITAL LETTER A WITH MACRON",
+        "remark": "proportional"
+      },
+      {
+        "code": "0101",
+        "name": "LATIN SMALL LETTER A WITH MACRON",
+        "remark": "proportional"
+      },
+      {
+        "code": "0102",
+        "name": "LATIN CAPITAL LETTER A WITH BREVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0103",
+        "name": "LATIN SMALL LETTER A WITH BREVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0104",
+        "name": "LATIN CAPITAL LETTER A WITH OGONEK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0105",
+        "name": "LATIN SMALL LETTER A WITH OGONEK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0106",
+        "name": "LATIN CAPITAL LETTER C WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0107",
+        "name": "LATIN SMALL LETTER C WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0108",
+        "name": "LATIN CAPITAL LETTER C WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "0109",
+        "name": "LATIN SMALL LETTER C WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "010C",
+        "name": "LATIN CAPITAL LETTER C WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "010D",
+        "name": "LATIN SMALL LETTER C WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "010E",
+        "name": "LATIN CAPITAL LETTER D WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "010F",
+        "name": "LATIN SMALL LETTER D WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "0111",
+        "name": "LATIN SMALL LETTER D WITH STROKE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0112",
+        "name": "LATIN CAPITAL LETTER E WITH MACRON",
+        "remark": "proportional"
+      },
+      {
+        "code": "0113",
+        "name": "LATIN SMALL LETTER E WITH MACRON",
+        "remark": "proportional"
+      },
+      {
+        "code": "0118",
+        "name": "LATIN CAPITAL LETTER E WITH OGONEK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0119",
+        "name": "LATIN SMALL LETTER E WITH OGONEK",
+        "remark": "proportional"
+      },
+      {
+        "code": "011A",
+        "name": "LATIN CAPITAL LETTER E WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "011B",
+        "name": "LATIN SMALL LETTER E WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "011C",
+        "name": "LATIN CAPITAL LETTER G WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "011D",
+        "name": "LATIN SMALL LETTER G WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "0124",
+        "name": "LATIN CAPITAL LETTER H WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "0125",
+        "name": "LATIN SMALL LETTER H WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "0127",
+        "name": "LATIN SMALL LETTER H WITH STROKE",
+        "remark": "proportional"
+      },
+      {
+        "code": "012A",
+        "name": "LATIN CAPITAL LETTER I WITH MACRON",
+        "remark": "proportional"
+      },
+      {
+        "code": "012B",
+        "name": "LATIN SMALL LETTER I WITH MACRON",
+        "remark": "proportional"
+      },
+      {
+        "code": "0134",
+        "name": "LATIN CAPITAL LETTER J WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "0135",
+        "name": "LATIN SMALL LETTER J WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "0139",
+        "name": "LATIN CAPITAL LETTER L WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "013A",
+        "name": "LATIN SMALL LETTER L WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "013D",
+        "name": "LATIN CAPITAL LETTER L WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "013E",
+        "name": "LATIN SMALL LETTER L WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "0141",
+        "name": "LATIN CAPITAL LETTER L WITH STROKE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0142",
+        "name": "LATIN SMALL LETTER L WITH STROKE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0143",
+        "name": "LATIN CAPITAL LETTER N WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0144",
+        "name": "LATIN SMALL LETTER N WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0147",
+        "name": "LATIN CAPITAL LETTER N WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "0148",
+        "name": "LATIN SMALL LETTER N WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "014B",
+        "name": "LATIN SMALL LETTER ENG (Sami)",
+        "remark": "proportional"
+      },
+      {
+        "code": "014C",
+        "name": "LATIN CAPITAL LETTER O WITH MACRON",
+        "remark": "proportional"
+      },
+      {
+        "code": "014D",
+        "name": "LATIN SMALL LETTER O WITH MACRON",
+        "remark": "proportional"
+      },
+      {
+        "code": "0150",
+        "name": "LATIN CAPITAL LETTER O WITH DOUBLE ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0151",
+        "name": "LATIN SMALL LETTER O WITH DOUBLE ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0152",
+        "name": "LATIN CAPITAL LIGATURE OE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0153",
+        "name": "LATIN SMALL LIGATURE OE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0154",
+        "name": "LATIN CAPITAL LETTER R WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0155",
+        "name": "LATIN SMALL LETTER R WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0158",
+        "name": "LATIN CAPITAL LETTER R WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "0159",
+        "name": "LATIN SMALL LETTER R WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "015A",
+        "name": "LATIN CAPITAL LETTER S WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "015B",
+        "name": "LATIN SMALL LETTER S WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "015C",
+        "name": "LATIN CAPITAL LETTER S WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "015D",
+        "name": "LATIN SMALL LETTER S WITH CIRCUMFLEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "015E",
+        "name": "LATIN CAPITAL LETTER S WITH CEDILLA",
+        "remark": "proportional"
+      },
+      {
+        "code": "015F",
+        "name": "LATIN SMALL LETTER S WITH CEDILLA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0160",
+        "name": "LATIN CAPITAL LETTER S WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "0161",
+        "name": "LATIN SMALL LETTER S WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "0162",
+        "name": "LATIN CAPITAL LETTER T WITH CEDILLA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0163",
+        "name": "LATIN SMALL LETTER T WITH CEDILLA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0164",
+        "name": "LATIN CAPITAL LETTER T WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "0165",
+        "name": "LATIN SMALL LETTER T WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "016A",
+        "name": "LATIN CAPITAL LETTER U WITH MACRON",
+        "remark": "proportional"
+      },
+      {
+        "code": "016B",
+        "name": "LATIN SMALL LETTER U WITH MACRON",
+        "remark": "proportional"
+      },
+      {
+        "code": "016C",
+        "name": "LATIN CAPITAL LETTER U WITH BREVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "016D",
+        "name": "LATIN SMALL LETTER U WITH BREVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "016E",
+        "name": "LATIN CAPITAL LETTER U WITH RING ABOVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "016F",
+        "name": "LATIN SMALL LETTER U WITH RING ABOVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0170",
+        "name": "LATIN CAPITAL LETTER U WITH DOUBLE ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0171",
+        "name": "LATIN SMALL LETTER U WITH DOUBLE ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0179",
+        "name": "LATIN CAPITAL LETTER Z WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "017A",
+        "name": "LATIN SMALL LETTER Z WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "017B",
+        "name": "LATIN CAPITAL LETTER Z WITH DOT ABOVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "017C",
+        "name": "LATIN SMALL LETTER Z WITH DOT ABOVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "017D",
+        "name": "LATIN CAPITAL LETTER Z WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "017E",
+        "name": "LATIN SMALL LETTER Z WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "0193",
+        "name": "LATIN CAPITAL LETTER G WITH HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "01C2",
+        "name": "LATIN LETTER ALVEOLAR CLICK",
+        "remark": "proportional"
+      },
+      {
+        "code": "01CD",
+        "name": "LATIN CAPITAL LETTER A WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "01CE",
+        "name": "LATIN SMALL LETTER A WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "01D0",
+        "name": "LATIN SMALL LETTER I WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "01D1",
+        "name": "LATIN CAPITAL LETTER O WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "01D2",
+        "name": "LATIN SMALL LETTER O WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "01D4",
+        "name": "LATIN SMALL LETTER U WITH CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "01D6",
+        "name": "LATIN SMALL LETTER U WITH DIAERESIS AND MACRON",
+        "remark": "proportional"
+      },
+      {
+        "code": "01D8",
+        "name": "LATIN SMALL LETTER U WITH DIAERESIS AND ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "01DA",
+        "name": "LATIN SMALL LETTER U WITH DIAERESIS AND CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "01DC",
+        "name": "LATIN SMALL LETTER U WITH DIAERESIS AND GRAVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "01F8",
+        "name": "LATIN CAPITAL LETTER N WITH GRAVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "01F9",
+        "name": "LATIN SMALL LETTER N WITH GRAVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "01FD",
+        "name": "LATIN SMALL LETTER AE WITH ACUTE (ash)",
+        "remark": "proportional"
+      },
+      {
+        "code": "0250",
+        "name": "LATIN SMALL LETTER TURNED A",
+        "remark": "proportional"
+      },
+      {
+        "code": "0251",
+        "name": "LATIN SMALL LETTER ALPHA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0252",
+        "name": "LATIN SMALL LETTER TURNED ALPHA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0253",
+        "name": "LATIN SMALL LETTER B WITH HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0254",
+        "name": "LATIN SMALL LETTER OPEN O",
+        "remark": "proportional"
+      },
+      {
+        "code": "<0254, 0300>",
+        "name": "<LATIN SMALL LETTER OPEN O, COMBINING GRAVE ACCENT>",
+        "remark": "proportional"
+      },
+      {
+        "code": "<0254, 0301>",
+        "name": "<LATIN SMALL LETTER OPEN O, COMBINING ACUTE ACCENT>",
+        "remark": "proportional"
+      },
+      {
+        "code": "0255",
+        "name": "LATIN SMALL LETTER C WITH CURL",
+        "remark": "proportional"
+      },
+      {
+        "code": "0256",
+        "name": "LATIN SMALL LETTER D WITH TAIL",
+        "remark": "proportional"
+      },
+      {
+        "code": "0257",
+        "name": "LATIN SMALL LETTER D WITH HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0258",
+        "name": "LATIN SMALL LETTER REVERSED E",
+        "remark": "proportional"
+      },
+      {
+        "code": "0259",
+        "name": "LATIN SMALL LETTER SCHWA",
+        "remark": "proportional"
+      },
+      {
+        "code": "<0259, 0300>",
+        "name": "<LATIN SMALL LETTER SCHWA, COMBINING GRAVE ACCENT>",
+        "remark": "proportional"
+      },
+      {
+        "code": "<0259, 0301>",
+        "name": "<LATIN SMALL LETTER SCHWA, COMBINING ACUTE ACCENT>",
+        "remark": "proportional"
+      },
+      {
+        "code": "025A",
+        "name": "LATIN SMALL LETTER SCHWA WITH HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "<025A, 0300>",
+        "name": "<LATIN SMALL LETTER SCHWA WITH HOOK, COMBINING GRAVE ACCENT>",
+        "remark": "proportional"
+      },
+      {
+        "code": "<025A, 0301>",
+        "name": "<LATIN SMALL LETTER SCHWA WITH HOOK, COMBINING ACUTE ACCENT>",
+        "remark": "proportional"
+      },
+      {
+        "code": "025C",
+        "name": "LATIN SMALL LETTER REVERSED OPEN E",
+        "remark": "proportional"
+      },
+      {
+        "code": "025E",
+        "name": "LATIN SMALL LETTER CLOSED REVERSED OPEN E",
+        "remark": "proportional"
+      },
+      {
+        "code": "025F",
+        "name": "LATIN SMALL LETTER DOTLESS J WITH STROKE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0260",
+        "name": "LATIN SMALL LETTER G WITH HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0261",
+        "name": "LATIN SMALL LETTER SCRIPT G",
+        "remark": "proportional"
+      },
+      {
+        "code": "0264",
+        "name": "LATIN SMALL LETTER RAMS HORN",
+        "remark": "proportional"
+      },
+      {
+        "code": "0265",
+        "name": "LATIN SMALL LETTER TURNED H",
+        "remark": "proportional"
+      },
+      {
+        "code": "0266",
+        "name": "LATIN SMALL LETTER H WITH HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0267",
+        "name": "LATIN SMALL LETTER HENG WITH HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0268",
+        "name": "LATIN SMALL LETTER I WITH STROKE",
+        "remark": "proportional"
+      },
+      {
+        "code": "026C",
+        "name": "LATIN SMALL LETTER L WITH BELT",
+        "remark": "proportional"
+      },
+      {
+        "code": "026D",
+        "name": "LATIN SMALL LETTER L WITH RETROFLEX HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "026E",
+        "name": "LATIN SMALL LETTER LEZH",
+        "remark": "proportional"
+      },
+      {
+        "code": "026F",
+        "name": "LATIN SMALL LETTER TURNED M",
+        "remark": "proportional"
+      },
+      {
+        "code": "0270",
+        "name": "LATIN SMALL LETTER TURNED M WITH LONG LEG",
+        "remark": "proportional"
+      },
+      {
+        "code": "0271",
+        "name": "LATIN SMALL LETTER M WITH HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0272",
+        "name": "LATIN SMALL LETTER N WITH LEFT HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0273",
+        "name": "LATIN SMALL LETTER N WITH RETROFLEX HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0275",
+        "name": "LATIN SMALL LETTER BARRED O",
+        "remark": "proportional"
+      },
+      {
+        "code": "0279",
+        "name": "LATIN SMALL LETTER TURNED R",
+        "remark": "proportional"
+      },
+      {
+        "code": "027A",
+        "name": "LATIN SMALL LETTER TURNED R WITH LONG LEG",
+        "remark": "proportional"
+      },
+      {
+        "code": "027B",
+        "name": "LATIN SMALL LETTER TURNED R WITH HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "027D",
+        "name": "LATIN SMALL LETTER R WITH TAIL",
+        "remark": "proportional"
+      },
+      {
+        "code": "027E",
+        "name": "LATIN SMALL LETTER R WITH FISHHOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0281",
+        "name": "LATIN LETTER SMALL CAPITAL INVERTED R",
+        "remark": "proportional"
+      },
+      {
+        "code": "0282",
+        "name": "LATIN SMALL LETTER S WITH HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0283",
+        "name": "LATIN SMALL LETTER ESH",
+        "remark": "proportional"
+      },
+      {
+        "code": "0284",
+        "name": "LATIN SMALL LETTER DOTLESS J WITH STROKE AND HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0288",
+        "name": "LATIN SMALL LETTER T WITH RETROFLEX HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0289",
+        "name": "LATIN SMALL LETTER U BAR",
+        "remark": "proportional"
+      },
+      {
+        "code": "028A",
+        "name": "LATIN SMALL LETTER UPSILON",
+        "remark": "proportional"
+      },
+      {
+        "code": "028B",
+        "name": "LATIN SMALL LETTER V WITH HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "028C",
+        "name": "LATIN SMALL LETTER TURNED V",
+        "remark": "proportional"
+      },
+      {
+        "code": "<028C, 0300>",
+        "name": "<LATIN SMALL LETTER TURNED V, COMBINING GRAVE ACCENT>",
+        "remark": "proportional"
+      },
+      {
+        "code": "<028C, 0301>",
+        "name": "<LATIN SMALL LETTER TURNED V, COMBINING ACUTE ACCENT>",
+        "remark": "proportional"
+      },
+      {
+        "code": "028D",
+        "name": "LATIN SMALL LETTER TURNED W",
+        "remark": "proportional"
+      },
+      {
+        "code": "028E",
+        "name": "LATIN SMALL LETTER TURNED Y",
+        "remark": "proportional"
+      },
+      {
+        "code": "0290",
+        "name": "LATIN SMALL LETTER Z WITH RETROFLEX HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "0291",
+        "name": "LATIN SMALL LETTER Z WITH CURL",
+        "remark": "proportional"
+      },
+      {
+        "code": "0292",
+        "name": "LATIN SMALL LETTER EZH",
+        "remark": "proportional"
+      },
+      {
+        "code": "0294",
+        "name": "LATIN LETTER GLOTTAL STOP",
+        "remark": "proportional"
+      },
+      {
+        "code": "0295",
+        "name": "LATIN LETTER PHARYNGEAL VOICED FRICATIVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0298",
+        "name": "LATIN LETTER BILABIAL CLICK",
+        "remark": "proportional"
+      },
+      {
+        "code": "029D",
+        "name": "LATIN SMALL LETTER J WITH CROSSED-TAIL",
+        "remark": "proportional"
+      },
+      {
+        "code": "02A1",
+        "name": "LATIN LETTER GLOTTAL STOP WITH STROKE",
+        "remark": "proportional"
+      },
+      {
+        "code": "02A2",
+        "name": "LATIN LETTER REVERSED GLOTTAL STOP WITH STROKE",
+        "remark": "proportional"
+      },
+      {
+        "code": "02C7",
+        "name": "CARON (Mandarin Chinese third tone)",
+        "remark": "proportional"
+      },
+      {
+        "code": "02C8",
+        "name": "MODIFIER LETTER VERTICAL LINE",
+        "remark": "proportional"
+      },
+      {
+        "code": "02CC",
+        "name": "MODIFIER LETTER LOW VERTICAL LINE",
+        "remark": "proportional"
+      },
+      {
+        "code": "02D0",
+        "name": "MODIFIER LETTER TRIANGULAR COLON",
+        "remark": "proportional"
+      },
+      {
+        "code": "02D1",
+        "name": "MODIFIER LETTER HALF TRIANGULAR COLON",
+        "remark": "proportional"
+      },
+      {
+        "code": "02D8",
+        "name": "BREVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "02D9",
+        "name": "DOT ABOVE (Mandarin Chinese light tone)",
+        "remark": "proportional"
+      },
+      {
+        "code": "02DB",
+        "name": "OGONEK",
+        "remark": "proportional"
+      },
+      {
+        "code": "02DD",
+        "name": "DOUBLE ACUTE ACCENT",
+        "remark": "proportional"
+      },
+      {
+        "code": "02DE",
+        "name": "MODIFIER LETTER RHOTIC HOOK",
+        "remark": "proportional"
+      },
+      {
+        "code": "02E5",
+        "name": "MODIFIER LETTER EXTRA-HIGH TONE BAR",
+        "remark": "proportional"
+      },
+      {
+        "code": "<02E5, 02E9>",
+        "name": "<MODIFIER LETTER EXTRA-HIGH TONE BAR, MODIFIER LETTER EXTRA-LOW TONE BAR>",
+        "remark": "proportional"
+      },
+      {
+        "code": "02E6",
+        "name": "MODIFIER LETTER HIGH TONE BAR",
+        "remark": "proportional"
+      },
+      {
+        "code": "02E7",
+        "name": "MODIFIER LETTER MID TONE BAR",
+        "remark": "proportional"
+      },
+      {
+        "code": "02E8",
+        "name": "MODIFIER LETTER LOW TONE BAR",
+        "remark": "proportional"
+      },
+      {
+        "code": "02E9",
+        "name": "MODIFIER LETTER EXTRA-LOW TONE BAR",
+        "remark": "proportional"
+      },
+      {
+        "code": "<02E9, 02E5>",
+        "name": "<MODIFIER LETTER EXTRA-LOW TONE BAR, MODIFIER LETTER EXTRA-HIGH TONE BAR>",
+        "remark": "proportional"
+      },
+      {
+        "code": "0300",
+        "name": "COMBINING GRAVE ACCENT (Varia)",
+        "remark": "proportional"
+      },
+      {
+        "code": "0301",
+        "name": "COMBINING ACUTE ACCENT (Oxia, Tonos)",
+        "remark": "proportional"
+      },
+      {
+        "code": "0302",
+        "name": "COMBINING CIRCUMFLEX ACCENT",
+        "remark": "proportional"
+      },
+      {
+        "code": "0303",
+        "name": "COMBINING TILDE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0304",
+        "name": "COMBINING MACRON",
+        "remark": "proportional"
+      },
+      {
+        "code": "0306",
+        "name": "COMBINING BREVE (Vrachy)",
+        "remark": "proportional"
+      },
+      {
+        "code": "0308",
+        "name": "COMBINING DIAERESIS (Dialytika)",
+        "remark": "proportional"
+      },
+      {
+        "code": "030B",
+        "name": "COMBINING DOUBLE ACUTE ACCENT",
+        "remark": "proportional"
+      },
+      {
+        "code": "030C",
+        "name": "COMBINING CARON",
+        "remark": "proportional"
+      },
+      {
+        "code": "030F",
+        "name": "COMBINING DOUBLE GRAVE ACCENT",
+        "remark": "proportional"
+      },
+      {
+        "code": "0318",
+        "name": "COMBINING LEFT TACK BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "0319",
+        "name": "COMBINING RIGHT TACK BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "031A",
+        "name": "COMBINING LEFT ANGLE ABOVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "031C",
+        "name": "COMBINING LEFT HALF RING BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "031D",
+        "name": "COMBINING UP TACK BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "031E",
+        "name": "COMBINING DOWN TACK BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "031F",
+        "name": "COMBINING PLUS SIGN BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "0320",
+        "name": "COMBINING MINUS SIGN BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "0324",
+        "name": "COMBINING DIAERESIS BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "0325",
+        "name": "COMBINING RING BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "0329",
+        "name": "COMBINING VERTICAL LINE BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "032A",
+        "name": "COMBINING BRIDGE BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "032C",
+        "name": "COMBINING CARON BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "032F",
+        "name": "COMBINING INVERTED BREVE BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "0330",
+        "name": "COMBINING TILDE BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "0334",
+        "name": "COMBINING TILDE OVERLAY",
+        "remark": "proportional"
+      },
+      {
+        "code": "0339",
+        "name": "COMBINING RIGHT HALF RING BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "033A",
+        "name": "COMBINING INVERTED BRIDGE BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "033B",
+        "name": "COMBINING SQUARE BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "033C",
+        "name": "COMBINING SEAGULL BELOW",
+        "remark": "proportional"
+      },
+      {
+        "code": "033D",
+        "name": "COMBINING X ABOVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0361",
+        "name": "COMBINING DOUBLE INVERTED BREVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0391",
+        "name": "GREEK CAPITAL LETTER ALPHA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0392",
+        "name": "GREEK CAPITAL LETTER BETA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0393",
+        "name": "GREEK CAPITAL LETTER GAMMA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0394",
+        "name": "GREEK CAPITAL LETTER DELTA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0395",
+        "name": "GREEK CAPITAL LETTER EPSILON",
+        "remark": "proportional"
+      },
+      {
+        "code": "0396",
+        "name": "GREEK CAPITAL LETTER ZETA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0397",
+        "name": "GREEK CAPITAL LETTER ETA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0398",
+        "name": "GREEK CAPITAL LETTER THETA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0399",
+        "name": "GREEK CAPITAL LETTER IOTA",
+        "remark": "proportional"
+      },
+      {
+        "code": "039A",
+        "name": "GREEK CAPITAL LETTER KAPPA",
+        "remark": "proportional"
+      },
+      {
+        "code": "039B",
+        "name": "GREEK CAPITAL LETTER LAMDA",
+        "remark": "proportional"
+      },
+      {
+        "code": "039C",
+        "name": "GREEK CAPITAL LETTER MU",
+        "remark": "proportional"
+      },
+      {
+        "code": "039D",
+        "name": "GREEK CAPITAL LETTER NU",
+        "remark": "proportional"
+      },
+      {
+        "code": "039E",
+        "name": "GREEK CAPITAL LETTER XI",
+        "remark": "proportional"
+      },
+      {
+        "code": "039F",
+        "name": "GREEK CAPITAL LETTER OMICRON",
+        "remark": "proportional"
+      },
+      {
+        "code": "03A0",
+        "name": "GREEK CAPITAL LETTER PI",
+        "remark": "proportional"
+      },
+      {
+        "code": "03A1",
+        "name": "GREEK CAPITAL LETTER RHO",
+        "remark": "proportional"
+      },
+      {
+        "code": "03A3",
+        "name": "GREEK CAPITAL LETTER SIGMA",
+        "remark": "proportional"
+      },
+      {
+        "code": "03A4",
+        "name": "GREEK CAPITAL LETTER TAU",
+        "remark": "proportional"
+      },
+      {
+        "code": "03A5",
+        "name": "GREEK CAPITAL LETTER UPSILON",
+        "remark": "proportional"
+      },
+      {
+        "code": "03A6",
+        "name": "GREEK CAPITAL LETTER PHI",
+        "remark": "proportional"
+      },
+      {
+        "code": "03A7",
+        "name": "GREEK CAPITAL LETTER CHI",
+        "remark": "proportional"
+      },
+      {
+        "code": "03A8",
+        "name": "GREEK CAPITAL LETTER PSI",
+        "remark": "proportional"
+      },
+      {
+        "code": "03A9",
+        "name": "GREEK CAPITAL LETTER OMEGA",
+        "remark": "proportional"
+      },
+      {
+        "code": "03B1",
+        "name": "GREEK SMALL LETTER ALPHA",
+        "remark": "proportional"
+      },
+      {
+        "code": "03B2",
+        "name": "GREEK SMALL LETTER BETA",
+        "remark": "proportional"
+      },
+      {
+        "code": "03B3",
+        "name": "GREEK SMALL LETTER GAMMA",
+        "remark": "proportional"
+      },
+      {
+        "code": "03B4",
+        "name": "GREEK SMALL LETTER DELTA",
+        "remark": "proportional"
+      },
+      {
+        "code": "03B5",
+        "name": "GREEK SMALL LETTER EPSILON",
+        "remark": "proportional"
+      },
+      {
+        "code": "03B6",
+        "name": "GREEK SMALL LETTER ZETA",
+        "remark": "proportional"
+      },
+      {
+        "code": "03B7",
+        "name": "GREEK SMALL LETTER ETA",
+        "remark": "proportional"
+      },
+      {
+        "code": "03B8",
+        "name": "GREEK SMALL LETTER THETA",
+        "remark": "proportional"
+      },
+      {
+        "code": "03B9",
+        "name": "GREEK SMALL LETTER IOTA",
+        "remark": "proportional"
+      },
+      {
+        "code": "03BA",
+        "name": "GREEK SMALL LETTER KAPPA",
+        "remark": "proportional"
+      },
+      {
+        "code": "03BB",
+        "name": "GREEK SMALL LETTER LAMDA",
+        "remark": "proportional"
+      },
+      {
+        "code": "03BC",
+        "name": "GREEK SMALL LETTER MU",
+        "remark": "proportional"
+      },
+      {
+        "code": "03BD",
+        "name": "GREEK SMALL LETTER NU",
+        "remark": "proportional"
+      },
+      {
+        "code": "03BE",
+        "name": "GREEK SMALL LETTER XI",
+        "remark": "proportional"
+      },
+      {
+        "code": "03BF",
+        "name": "GREEK SMALL LETTER OMICRON",
+        "remark": "proportional"
+      },
+      {
+        "code": "03C0",
+        "name": "GREEK SMALL LETTER PI",
+        "remark": "proportional"
+      },
+      {
+        "code": "03C1",
+        "name": "GREEK SMALL LETTER RHO",
+        "remark": "proportional"
+      },
+      {
+        "code": "03C2",
+        "name": "GREEK SMALL LETTER FINAL SIGMA",
+        "remark": "proportional"
+      },
+      {
+        "code": "03C3",
+        "name": "GREEK SMALL LETTER SIGMA",
+        "remark": "proportional"
+      },
+      {
+        "code": "03C4",
+        "name": "GREEK SMALL LETTER TAU",
+        "remark": "proportional"
+      },
+      {
+        "code": "03C5",
+        "name": "GREEK SMALL LETTER UPSILON",
+        "remark": "proportional"
+      },
+      {
+        "code": "03C6",
+        "name": "GREEK SMALL LETTER PHI",
+        "remark": "proportional"
+      },
+      {
+        "code": "03C7",
+        "name": "GREEK SMALL LETTER CHI",
+        "remark": "proportional"
+      },
+      {
+        "code": "03C8",
+        "name": "GREEK SMALL LETTER PSI",
+        "remark": "proportional"
+      },
+      {
+        "code": "03C9",
+        "name": "GREEK SMALL LETTER OMEGA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0401",
+        "name": "CYRILLIC CAPITAL LETTER IO",
+        "remark": "proportional"
+      },
+      {
+        "code": "0410",
+        "name": "CYRILLIC CAPITAL LETTER A",
+        "remark": "proportional"
+      },
+      {
+        "code": "0411",
+        "name": "CYRILLIC CAPITAL LETTER BE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0412",
+        "name": "CYRILLIC CAPITAL LETTER VE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0413",
+        "name": "CYRILLIC CAPITAL LETTER GHE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0414",
+        "name": "CYRILLIC CAPITAL LETTER DE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0415",
+        "name": "CYRILLIC CAPITAL LETTER IE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0416",
+        "name": "CYRILLIC CAPITAL LETTER ZHE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0417",
+        "name": "CYRILLIC CAPITAL LETTER ZE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0418",
+        "name": "CYRILLIC CAPITAL LETTER I",
+        "remark": "proportional"
+      },
+      {
+        "code": "0419",
+        "name": "CYRILLIC CAPITAL LETTER SHORT I",
+        "remark": "proportional"
+      },
+      {
+        "code": "041A",
+        "name": "CYRILLIC CAPITAL LETTER KA",
+        "remark": "proportional"
+      },
+      {
+        "code": "041B",
+        "name": "CYRILLIC CAPITAL LETTER EL",
+        "remark": "proportional"
+      },
+      {
+        "code": "041C",
+        "name": "CYRILLIC CAPITAL LETTER EM",
+        "remark": "proportional"
+      },
+      {
+        "code": "041D",
+        "name": "CYRILLIC CAPITAL LETTER EN",
+        "remark": "proportional"
+      },
+      {
+        "code": "041E",
+        "name": "CYRILLIC CAPITAL LETTER O",
+        "remark": "proportional"
+      },
+      {
+        "code": "041F",
+        "name": "CYRILLIC CAPITAL LETTER PE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0420",
+        "name": "CYRILLIC CAPITAL LETTER ER",
+        "remark": "proportional"
+      },
+      {
+        "code": "0421",
+        "name": "CYRILLIC CAPITAL LETTER ES",
+        "remark": "proportional"
+      },
+      {
+        "code": "0422",
+        "name": "CYRILLIC CAPITAL LETTER TE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0423",
+        "name": "CYRILLIC CAPITAL LETTER U",
+        "remark": "proportional"
+      },
+      {
+        "code": "0424",
+        "name": "CYRILLIC CAPITAL LETTER EF",
+        "remark": "proportional"
+      },
+      {
+        "code": "0425",
+        "name": "CYRILLIC CAPITAL LETTER HA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0426",
+        "name": "CYRILLIC CAPITAL LETTER TSE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0427",
+        "name": "CYRILLIC CAPITAL LETTER CHE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0428",
+        "name": "CYRILLIC CAPITAL LETTER SHA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0429",
+        "name": "CYRILLIC CAPITAL LETTER SHCHA",
+        "remark": "proportional"
+      },
+      {
+        "code": "042A",
+        "name": "CYRILLIC CAPITAL LETTER HARD SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "042B",
+        "name": "CYRILLIC CAPITAL LETTER YERU",
+        "remark": "proportional"
+      },
+      {
+        "code": "042C",
+        "name": "CYRILLIC CAPITAL LETTER SOFT SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "042D",
+        "name": "CYRILLIC CAPITAL LETTER E",
+        "remark": "proportional"
+      },
+      {
+        "code": "042E",
+        "name": "CYRILLIC CAPITAL LETTER YU",
+        "remark": "proportional"
+      },
+      {
+        "code": "042F",
+        "name": "CYRILLIC CAPITAL LETTER YA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0430",
+        "name": "CYRILLIC SMALL LETTER A",
+        "remark": "proportional"
+      },
+      {
+        "code": "0431",
+        "name": "CYRILLIC SMALL LETTER BE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0432",
+        "name": "CYRILLIC SMALL LETTER VE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0433",
+        "name": "CYRILLIC SMALL LETTER GHE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0434",
+        "name": "CYRILLIC SMALL LETTER DE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0435",
+        "name": "CYRILLIC SMALL LETTER IE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0436",
+        "name": "CYRILLIC SMALL LETTER ZHE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0437",
+        "name": "CYRILLIC SMALL LETTER ZE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0438",
+        "name": "CYRILLIC SMALL LETTER I",
+        "remark": "proportional"
+      },
+      {
+        "code": "0439",
+        "name": "CYRILLIC SMALL LETTER SHORT I",
+        "remark": "proportional"
+      },
+      {
+        "code": "043A",
+        "name": "CYRILLIC SMALL LETTER KA",
+        "remark": "proportional"
+      },
+      {
+        "code": "043B",
+        "name": "CYRILLIC SMALL LETTER EL",
+        "remark": "proportional"
+      },
+      {
+        "code": "043C",
+        "name": "CYRILLIC SMALL LETTER EM",
+        "remark": "proportional"
+      },
+      {
+        "code": "043D",
+        "name": "CYRILLIC SMALL LETTER EN",
+        "remark": "proportional"
+      },
+      {
+        "code": "043E",
+        "name": "CYRILLIC SMALL LETTER O",
+        "remark": "proportional"
+      },
+      {
+        "code": "043F",
+        "name": "CYRILLIC SMALL LETTER PE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0440",
+        "name": "CYRILLIC SMALL LETTER ER",
+        "remark": "proportional"
+      },
+      {
+        "code": "0441",
+        "name": "CYRILLIC SMALL LETTER ES",
+        "remark": "proportional"
+      },
+      {
+        "code": "0442",
+        "name": "CYRILLIC SMALL LETTER TE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0443",
+        "name": "CYRILLIC SMALL LETTER U",
+        "remark": "proportional"
+      },
+      {
+        "code": "0444",
+        "name": "CYRILLIC SMALL LETTER EF",
+        "remark": "proportional"
+      },
+      {
+        "code": "0445",
+        "name": "CYRILLIC SMALL LETTER HA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0446",
+        "name": "CYRILLIC SMALL LETTER TSE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0447",
+        "name": "CYRILLIC SMALL LETTER CHE",
+        "remark": "proportional"
+      },
+      {
+        "code": "0448",
+        "name": "CYRILLIC SMALL LETTER SHA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0449",
+        "name": "CYRILLIC SMALL LETTER SHCHA",
+        "remark": "proportional"
+      },
+      {
+        "code": "044A",
+        "name": "CYRILLIC SMALL LETTER HARD SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "044B",
+        "name": "CYRILLIC SMALL LETTER YERU",
+        "remark": "proportional"
+      },
+      {
+        "code": "044C",
+        "name": "CYRILLIC SMALL LETTER SOFT SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "044D",
+        "name": "CYRILLIC SMALL LETTER E",
+        "remark": "proportional"
+      },
+      {
+        "code": "044E",
+        "name": "CYRILLIC SMALL LETTER YU",
+        "remark": "proportional"
+      },
+      {
+        "code": "044F",
+        "name": "CYRILLIC SMALL LETTER YA",
+        "remark": "proportional"
+      },
+      {
+        "code": "0451",
+        "name": "CYRILLIC SMALL LETTER IO",
+        "remark": "proportional"
+      },
+      {
+        "code": "1E3E",
+        "name": "LATIN CAPITAL LETTER M WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "1E3F",
+        "name": "LATIN SMALL LETTER M WITH ACUTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "1F70",
+        "name": "GREEK SMALL LETTER ALPHA WITH VARIA",
+        "remark": "proportional"
+      },
+      {
+        "code": "1F71",
+        "name": "GREEK SMALL LETTER ALPHA WITH OXIA",
+        "remark": "proportional"
+      },
+      {
+        "code": "1F72",
+        "name": "GREEK SMALL LETTER EPSILON WITH VARIA",
+        "remark": "proportional"
+      },
+      {
+        "code": "1F73",
+        "name": "GREEK SMALL LETTER EPSILON WITH OXIA",
+        "remark": "proportional"
+      },
+      {
+        "code": "2010",
+        "name": "HYPHEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2013",
+        "name": "EN DASH",
+        "remark": "proportional"
+      },
+      {
+        "code": "2014",
+        "name": "EM DASH",
+        "remark": "proportional"
+      },
+      {
+        "code": "2016",
+        "name": "DOUBLE VERTICAL LINE",
+        "remark": "proportional"
+      },
+      {
+        "code": "2018",
+        "name": "LEFT SINGLE QUOTATION MARK",
+        "remark": "proportional"
+      },
+      {
+        "code": "2019",
+        "name": "RIGHT SINGLE QUOTATION MARK",
+        "remark": "proportional"
+      },
+      {
+        "code": "201C",
+        "name": "LEFT DOUBLE QUOTATION MARK",
+        "remark": "proportional"
+      },
+      {
+        "code": "201D",
+        "name": "RIGHT DOUBLE QUOTATION MARK",
+        "remark": "proportional"
+      },
+      {
+        "code": "2020",
+        "name": "DAGGER",
+        "remark": "proportional"
+      },
+      {
+        "code": "2021",
+        "name": "DOUBLE DAGGER",
+        "remark": "proportional"
+      },
+      {
+        "code": "2022",
+        "name": "BULLET",
+        "remark": "proportional"
+      },
+      {
+        "code": "2025",
+        "name": "TWO DOT LEADER",
+        "remark": "proportional"
+      },
+      {
+        "code": "2026",
+        "name": "HORIZONTAL ELLIPSIS",
+        "remark": "proportional"
+      },
+      {
+        "code": "2030",
+        "name": "PER MILLE SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2032",
+        "name": "PRIME",
+        "remark": "proportional"
+      },
+      {
+        "code": "2033",
+        "name": "DOUBLE PRIME",
+        "remark": "proportional"
+      },
+      {
+        "code": "203E",
+        "name": "OVERLINE",
+        "remark": "proportional"
+      },
+      {
+        "code": "203F",
+        "name": "UNDERTIE (Enotikon)",
+        "remark": "proportional"
+      },
+      {
+        "code": "2042",
+        "name": "ASTERISM",
+        "remark": "proportional"
+      },
+      {
+        "code": "2051",
+        "name": "TWO ASTERISKS ALIGNED VERTICALLY",
+        "remark": "proportional"
+      },
+      {
+        "code": "20AC",
+        "name": "EURO SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "210F",
+        "name": "PLANCK CONSTANT OVER TWO PI",
+        "remark": "proportional"
+      },
+      {
+        "code": "2127",
+        "name": "INVERTED OHM SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "212B",
+        "name": "ANGSTROM SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2135",
+        "name": "ALEF SYMBOL",
+        "remark": "proportional"
+      },
+      {
+        "code": "2153",
+        "name": "VULGAR FRACTION ONE THIRD",
+        "remark": "proportional"
+      },
+      {
+        "code": "2154",
+        "name": "VULGAR FRACTION TWO THIRDS",
+        "remark": "proportional"
+      },
+      {
+        "code": "2155",
+        "name": "VULGAR FRACTION ONE FIFTH",
+        "remark": "proportional"
+      },
+      {
+        "code": "2190",
+        "name": "LEFTWARDS ARROW",
+        "remark": "proportional"
+      },
+      {
+        "code": "2191",
+        "name": "UPWARDS ARROW",
+        "remark": "proportional"
+      },
+      {
+        "code": "2192",
+        "name": "RIGHTWARDS ARROW",
+        "remark": "proportional"
+      },
+      {
+        "code": "2193",
+        "name": "DOWNWARDS ARROW",
+        "remark": "proportional"
+      },
+      {
+        "code": "2194",
+        "name": "LEFT RIGHT ARROW",
+        "remark": "proportional"
+      },
+      {
+        "code": "2196",
+        "name": "NORTH WEST ARROW",
+        "remark": "proportional"
+      },
+      {
+        "code": "2197",
+        "name": "NORTH EAST ARROW",
+        "remark": "proportional"
+      },
+      {
+        "code": "2198",
+        "name": "SOUTH EAST ARROW",
+        "remark": "proportional"
+      },
+      {
+        "code": "2199",
+        "name": "SOUTH WEST ARROW",
+        "remark": "proportional"
+      },
+      {
+        "code": "21C4",
+        "name": "RIGHTWARDS ARROW OVER LEFTWARDS ARROW",
+        "remark": "proportional"
+      },
+      {
+        "code": "21D2",
+        "name": "RIGHTWARDS DOUBLE ARROW",
+        "remark": "proportional"
+      },
+      {
+        "code": "21D4",
+        "name": "LEFT RIGHT DOUBLE ARROW",
+        "remark": "proportional"
+      },
+      {
+        "code": "21E6",
+        "name": "LEFTWARDS WHITE ARROW",
+        "remark": "proportional"
+      },
+      {
+        "code": "21E7",
+        "name": "UPWARDS WHITE ARROW",
+        "remark": "proportional"
+      },
+      {
+        "code": "21E8",
+        "name": "RIGHTWARDS WHITE ARROW",
+        "remark": "proportional"
+      },
+      {
+        "code": "21E9",
+        "name": "DOWNWARDS WHITE ARROW",
+        "remark": "proportional"
+      },
+      {
+        "code": "2200",
+        "name": "FOR ALL",
+        "remark": "proportional"
+      },
+      {
+        "code": "2202",
+        "name": "PARTIAL DIFFERENTIAL",
+        "remark": "proportional"
+      },
+      {
+        "code": "2203",
+        "name": "THERE EXISTS",
+        "remark": "proportional"
+      },
+      {
+        "code": "2205",
+        "name": "EMPTY SET",
+        "remark": "proportional"
+      },
+      {
+        "code": "2207",
+        "name": "NABLA",
+        "remark": "proportional"
+      },
+      {
+        "code": "2208",
+        "name": "ELEMENT OF",
+        "remark": "proportional"
+      },
+      {
+        "code": "2209",
+        "name": "NOT AN ELEMENT OF",
+        "remark": "proportional"
+      },
+      {
+        "code": "220B",
+        "name": "CONTAINS AS MEMBER",
+        "remark": "proportional"
+      },
+      {
+        "code": "2212",
+        "name": "MINUS SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2213",
+        "name": "MINUS-OR-PLUS SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "221A",
+        "name": "SQUARE ROOT",
+        "remark": "proportional"
+      },
+      {
+        "code": "221D",
+        "name": "PROPORTIONAL TO",
+        "remark": "proportional"
+      },
+      {
+        "code": "221E",
+        "name": "INFINITY",
+        "remark": "proportional"
+      },
+      {
+        "code": "221F",
+        "name": "RIGHT ANGLE",
+        "remark": "proportional"
+      },
+      {
+        "code": "2220",
+        "name": "ANGLE",
+        "remark": "proportional"
+      },
+      {
+        "code": "2225",
+        "name": "PARALLEL TO",
+        "remark": "proportional"
+      },
+      {
+        "code": "2226",
+        "name": "NOT PARALLEL TO",
+        "remark": "proportional"
+      },
+      {
+        "code": "2227",
+        "name": "LOGICAL AND",
+        "remark": "proportional"
+      },
+      {
+        "code": "2228",
+        "name": "LOGICAL OR",
+        "remark": "proportional"
+      },
+      {
+        "code": "2229",
+        "name": "INTERSECTION",
+        "remark": "proportional"
+      },
+      {
+        "code": "222A",
+        "name": "UNION",
+        "remark": "proportional"
+      },
+      {
+        "code": "222B",
+        "name": "INTEGRAL",
+        "remark": "proportional"
+      },
+      {
+        "code": "222C",
+        "name": "DOUBLE INTEGRAL",
+        "remark": "proportional"
+      },
+      {
+        "code": "222E",
+        "name": "CONTOUR INTEGRAL",
+        "remark": "proportional"
+      },
+      {
+        "code": "2234",
+        "name": "THEREFORE",
+        "remark": "proportional"
+      },
+      {
+        "code": "2235",
+        "name": "BECAUSE",
+        "remark": "proportional"
+      },
+      {
+        "code": "223D",
+        "name": "REVERSED TILDE (lazy S)",
+        "remark": "proportional"
+      },
+      {
+        "code": "2243",
+        "name": "ASYMPTOTICALLY EQUAL TO",
+        "remark": "proportional"
+      },
+      {
+        "code": "2245",
+        "name": "APPROXIMATELY EQUAL TO",
+        "remark": "proportional"
+      },
+      {
+        "code": "2248",
+        "name": "ALMOST EQUAL TO",
+        "remark": "proportional"
+      },
+      {
+        "code": "2252",
+        "name": "APPROXIMATELY EQUAL TO OR THE IMAGE OF",
+        "remark": "proportional"
+      },
+      {
+        "code": "2260",
+        "name": "NOT EQUAL TO",
+        "remark": "proportional"
+      },
+      {
+        "code": "2261",
+        "name": "IDENTICAL TO",
+        "remark": "proportional"
+      },
+      {
+        "code": "2262",
+        "name": "NOT IDENTICAL TO",
+        "remark": "proportional"
+      },
+      {
+        "code": "2266",
+        "name": "LESS-THAN OVER EQUAL TO",
+        "remark": "proportional"
+      },
+      {
+        "code": "2267",
+        "name": "GREATER-THAN OVER EQUAL TO",
+        "remark": "proportional"
+      },
+      {
+        "code": "226A",
+        "name": "MUCH LESS-THAN",
+        "remark": "proportional"
+      },
+      {
+        "code": "226B",
+        "name": "MUCH GREATER-THAN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2276",
+        "name": "LESS-THAN OR GREATER-THAN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2277",
+        "name": "GREATER-THAN OR LESS-THAN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2282",
+        "name": "SUBSET OF",
+        "remark": "proportional"
+      },
+      {
+        "code": "2283",
+        "name": "SUPERSET OF",
+        "remark": "proportional"
+      },
+      {
+        "code": "2284",
+        "name": "NOT A SUBSET OF",
+        "remark": "proportional"
+      },
+      {
+        "code": "2285",
+        "name": "NOT A SUPERSET OF",
+        "remark": "proportional"
+      },
+      {
+        "code": "2286",
+        "name": "SUBSET OF OR EQUAL TO",
+        "remark": "proportional"
+      },
+      {
+        "code": "2287",
+        "name": "SUPERSET OF OR EQUAL TO",
+        "remark": "proportional"
+      },
+      {
+        "code": "228A",
+        "name": "SUBSET OF WITH NOT EQUAL TO",
+        "remark": "proportional"
+      },
+      {
+        "code": "228B",
+        "name": "SUPERSET OF WITH NOT EQUAL TO",
+        "remark": "proportional"
+      },
+      {
+        "code": "2295",
+        "name": "CIRCLED PLUS",
+        "remark": "proportional"
+      },
+      {
+        "code": "2296",
+        "name": "CIRCLED MINUS",
+        "remark": "proportional"
+      },
+      {
+        "code": "2297",
+        "name": "CIRCLED TIMES",
+        "remark": "proportional"
+      },
+      {
+        "code": "22A5",
+        "name": "UP TACK",
+        "remark": "proportional"
+      },
+      {
+        "code": "22DA",
+        "name": "LESS-THAN EQUAL TO OR GREATER-THAN",
+        "remark": "proportional"
+      },
+      {
+        "code": "22DB",
+        "name": "GREATER-THAN EQUAL TO OR LESS-THAN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2305",
+        "name": "PROJECTIVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "2306",
+        "name": "PERSPECTIVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "2312",
+        "name": "ARC",
+        "remark": "proportional"
+      },
+      {
+        "code": "2318",
+        "name": "PLACE OF INTEREST SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "23CE",
+        "name": "RETURN SYMBOL",
+        "remark": "proportional"
+      },
+      {
+        "code": "2423",
+        "name": "OPEN BOX",
+        "remark": "proportional"
+      },
+      {
+        "code": "2460",
+        "name": "CIRCLED DIGIT ONE",
+        "remark": "proportional"
+      },
+      {
+        "code": "2461",
+        "name": "CIRCLED DIGIT TWO",
+        "remark": "proportional"
+      },
+      {
+        "code": "2462",
+        "name": "CIRCLED DIGIT THREE",
+        "remark": "proportional"
+      },
+      {
+        "code": "2463",
+        "name": "CIRCLED DIGIT FOUR",
+        "remark": "proportional"
+      },
+      {
+        "code": "2464",
+        "name": "CIRCLED DIGIT FIVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "2465",
+        "name": "CIRCLED DIGIT SIX",
+        "remark": "proportional"
+      },
+      {
+        "code": "2466",
+        "name": "CIRCLED DIGIT SEVEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2467",
+        "name": "CIRCLED DIGIT EIGHT",
+        "remark": "proportional"
+      },
+      {
+        "code": "2468",
+        "name": "CIRCLED DIGIT NINE",
+        "remark": "proportional"
+      },
+      {
+        "code": "2469",
+        "name": "CIRCLED NUMBER TEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "246A",
+        "name": "CIRCLED NUMBER ELEVEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "246B",
+        "name": "CIRCLED NUMBER TWELVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "246C",
+        "name": "CIRCLED NUMBER THIRTEEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "246D",
+        "name": "CIRCLED NUMBER FOURTEEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "246E",
+        "name": "CIRCLED NUMBER FIFTEEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "246F",
+        "name": "CIRCLED NUMBER SIXTEEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2470",
+        "name": "CIRCLED NUMBER SEVENTEEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2471",
+        "name": "CIRCLED NUMBER EIGHTEEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2472",
+        "name": "CIRCLED NUMBER NINETEEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2473",
+        "name": "CIRCLED NUMBER TWENTY",
+        "remark": "proportional"
+      },
+      {
+        "code": "24D0",
+        "name": "CIRCLED LATIN SMALL LETTER A",
+        "remark": "proportional"
+      },
+      {
+        "code": "24D1",
+        "name": "CIRCLED LATIN SMALL LETTER B",
+        "remark": "proportional"
+      },
+      {
+        "code": "24D2",
+        "name": "CIRCLED LATIN SMALL LETTER C",
+        "remark": "proportional"
+      },
+      {
+        "code": "24D3",
+        "name": "CIRCLED LATIN SMALL LETTER D",
+        "remark": "proportional"
+      },
+      {
+        "code": "24D4",
+        "name": "CIRCLED LATIN SMALL LETTER E",
+        "remark": "proportional"
+      },
+      {
+        "code": "24D5",
+        "name": "CIRCLED LATIN SMALL LETTER F",
+        "remark": "proportional"
+      },
+      {
+        "code": "24D6",
+        "name": "CIRCLED LATIN SMALL LETTER G",
+        "remark": "proportional"
+      },
+      {
+        "code": "24D7",
+        "name": "CIRCLED LATIN SMALL LETTER H",
+        "remark": "proportional"
+      },
+      {
+        "code": "24D8",
+        "name": "CIRCLED LATIN SMALL LETTER I",
+        "remark": "proportional"
+      },
+      {
+        "code": "24D9",
+        "name": "CIRCLED LATIN SMALL LETTER J",
+        "remark": "proportional"
+      },
+      {
+        "code": "24DA",
+        "name": "CIRCLED LATIN SMALL LETTER K",
+        "remark": "proportional"
+      },
+      {
+        "code": "24DB",
+        "name": "CIRCLED LATIN SMALL LETTER L",
+        "remark": "proportional"
+      },
+      {
+        "code": "24DC",
+        "name": "CIRCLED LATIN SMALL LETTER M",
+        "remark": "proportional"
+      },
+      {
+        "code": "24DD",
+        "name": "CIRCLED LATIN SMALL LETTER N",
+        "remark": "proportional"
+      },
+      {
+        "code": "24DE",
+        "name": "CIRCLED LATIN SMALL LETTER O",
+        "remark": "proportional"
+      },
+      {
+        "code": "24DF",
+        "name": "CIRCLED LATIN SMALL LETTER P",
+        "remark": "proportional"
+      },
+      {
+        "code": "24E0",
+        "name": "CIRCLED LATIN SMALL LETTER Q",
+        "remark": "proportional"
+      },
+      {
+        "code": "24E1",
+        "name": "CIRCLED LATIN SMALL LETTER R",
+        "remark": "proportional"
+      },
+      {
+        "code": "24E2",
+        "name": "CIRCLED LATIN SMALL LETTER S",
+        "remark": "proportional"
+      },
+      {
+        "code": "24E3",
+        "name": "CIRCLED LATIN SMALL LETTER T",
+        "remark": "proportional"
+      },
+      {
+        "code": "24E4",
+        "name": "CIRCLED LATIN SMALL LETTER U",
+        "remark": "proportional"
+      },
+      {
+        "code": "24E5",
+        "name": "CIRCLED LATIN SMALL LETTER V",
+        "remark": "proportional"
+      },
+      {
+        "code": "24E6",
+        "name": "CIRCLED LATIN SMALL LETTER W",
+        "remark": "proportional"
+      },
+      {
+        "code": "24E7",
+        "name": "CIRCLED LATIN SMALL LETTER X",
+        "remark": "proportional"
+      },
+      {
+        "code": "24E8",
+        "name": "CIRCLED LATIN SMALL LETTER Y",
+        "remark": "proportional"
+      },
+      {
+        "code": "24E9",
+        "name": "CIRCLED LATIN SMALL LETTER Z",
+        "remark": "proportional"
+      },
+      {
+        "code": "24EB",
+        "name": "NEGATIVE CIRCLED NUMBER ELEVEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "24EC",
+        "name": "NEGATIVE CIRCLED NUMBER TWELVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "24ED",
+        "name": "NEGATIVE CIRCLED NUMBER THIRTEEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "24EE",
+        "name": "NEGATIVE CIRCLED NUMBER FOURTEEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "24EF",
+        "name": "NEGATIVE CIRCLED NUMBER FIFTEEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "24F0",
+        "name": "NEGATIVE CIRCLED NUMBER SIXTEEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "24F1",
+        "name": "NEGATIVE CIRCLED NUMBER SEVENTEEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "24F2",
+        "name": "NEGATIVE CIRCLED NUMBER EIGHTEEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "24F3",
+        "name": "NEGATIVE CIRCLED NUMBER NINETEEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "24F4",
+        "name": "NEGATIVE CIRCLED NUMBER TWENTY",
+        "remark": "proportional"
+      },
+      {
+        "code": "24F5",
+        "name": "DOUBLE CIRCLED DIGIT ONE",
+        "remark": "proportional"
+      },
+      {
+        "code": "24F6",
+        "name": "DOUBLE CIRCLED DIGIT TWO",
+        "remark": "proportional"
+      },
+      {
+        "code": "24F7",
+        "name": "DOUBLE CIRCLED DIGIT THREE",
+        "remark": "proportional"
+      },
+      {
+        "code": "24F8",
+        "name": "DOUBLE CIRCLED DIGIT FOUR",
+        "remark": "proportional"
+      },
+      {
+        "code": "24F9",
+        "name": "DOUBLE CIRCLED DIGIT FIVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "24FA",
+        "name": "DOUBLE CIRCLED DIGIT SIX",
+        "remark": "proportional"
+      },
+      {
+        "code": "24FB",
+        "name": "DOUBLE CIRCLED DIGIT SEVEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "24FC",
+        "name": "DOUBLE CIRCLED DIGIT EIGHT",
+        "remark": "proportional"
+      },
+      {
+        "code": "24FD",
+        "name": "DOUBLE CIRCLED DIGIT NINE",
+        "remark": "proportional"
+      },
+      {
+        "code": "24FE",
+        "name": "DOUBLE CIRCLED NUMBER TEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "25A0",
+        "name": "BLACK SQUARE",
+        "remark": "proportional"
+      },
+      {
+        "code": "25A1",
+        "name": "WHITE SQUARE",
+        "remark": "proportional"
+      },
+      {
+        "code": "25B1",
+        "name": "WHITE PARALLELOGRAM",
+        "remark": "proportional"
+      },
+      {
+        "code": "25B2",
+        "name": "BLACK UP-POINTING TRIANGLE",
+        "remark": "proportional"
+      },
+      {
+        "code": "25B3",
+        "name": "WHITE UP-POINTING TRIANGLE",
+        "remark": "proportional"
+      },
+      {
+        "code": "25B6",
+        "name": "BLACK RIGHT-POINTING TRIANGLE",
+        "remark": "proportional"
+      },
+      {
+        "code": "25B7",
+        "name": "WHITE RIGHT-POINTING TRIANGLE",
+        "remark": "proportional"
+      },
+      {
+        "code": "25BC",
+        "name": "BLACK DOWN-POINTING TRIANGLE",
+        "remark": "proportional"
+      },
+      {
+        "code": "25BD",
+        "name": "WHITE DOWN-POINTING TRIANGLE",
+        "remark": "proportional"
+      },
+      {
+        "code": "25C0",
+        "name": "BLACK LEFT-POINTING TRIANGLE",
+        "remark": "proportional"
+      },
+      {
+        "code": "25C1",
+        "name": "WHITE LEFT-POINTING TRIANGLE",
+        "remark": "proportional"
+      },
+      {
+        "code": "25C6",
+        "name": "BLACK DIAMOND",
+        "remark": "proportional"
+      },
+      {
+        "code": "25C7",
+        "name": "WHITE DIAMOND",
+        "remark": "proportional"
+      },
+      {
+        "code": "25CB",
+        "name": "WHITE CIRCLE",
+        "remark": "proportional"
+      },
+      {
+        "code": "25CE",
+        "name": "BULLSEYE",
+        "remark": "proportional"
+      },
+      {
+        "code": "25CF",
+        "name": "BLACK CIRCLE",
+        "remark": "proportional"
+      },
+      {
+        "code": "25D0",
+        "name": "CIRCLE WITH LEFT HALF BLACK",
+        "remark": "proportional"
+      },
+      {
+        "code": "25D1",
+        "name": "CIRCLE WITH RIGHT HALF BLACK",
+        "remark": "proportional"
+      },
+      {
+        "code": "25D2",
+        "name": "CIRCLE WITH LOWER HALF BLACK",
+        "remark": "proportional"
+      },
+      {
+        "code": "25D3",
+        "name": "CIRCLE WITH UPPER HALF BLACK",
+        "remark": "proportional"
+      },
+      {
+        "code": "25E6",
+        "name": "WHITE BULLET",
+        "remark": "proportional"
+      },
+      {
+        "code": "25EF",
+        "name": "LARGE CIRCLE",
+        "remark": "proportional"
+      },
+      {
+        "code": "2600",
+        "name": "BLACK SUN WITH RAYS",
+        "remark": "proportional"
+      },
+      {
+        "code": "2601",
+        "name": "CLOUD",
+        "remark": "proportional"
+      },
+      {
+        "code": "2602",
+        "name": "UMBRELLA",
+        "remark": "proportional"
+      },
+      {
+        "code": "2603",
+        "name": "SNOWMAN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2605",
+        "name": "BLACK STAR",
+        "remark": "proportional"
+      },
+      {
+        "code": "2606",
+        "name": "WHITE STAR",
+        "remark": "proportional"
+      },
+      {
+        "code": "260E",
+        "name": "BLACK TELEPHONE",
+        "remark": "proportional"
+      },
+      {
+        "code": "261E",
+        "name": "WHITE RIGHT POINTING INDEX",
+        "remark": "proportional"
+      },
+      {
+        "code": "2640",
+        "name": "FEMALE SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2642",
+        "name": "MALE SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2660",
+        "name": "BLACK SPADE SUIT",
+        "remark": "proportional"
+      },
+      {
+        "code": "2661",
+        "name": "WHITE HEART SUIT",
+        "remark": "proportional"
+      },
+      {
+        "code": "2662",
+        "name": "WHITE DIAMOND SUIT",
+        "remark": "proportional"
+      },
+      {
+        "code": "2663",
+        "name": "BLACK CLUB SUIT",
+        "remark": "proportional"
+      },
+      {
+        "code": "2664",
+        "name": "WHITE SPADE SUIT",
+        "remark": "proportional"
+      },
+      {
+        "code": "2665",
+        "name": "BLACK HEART SUIT",
+        "remark": "proportional"
+      },
+      {
+        "code": "2666",
+        "name": "BLACK DIAMOND SUIT",
+        "remark": "proportional"
+      },
+      {
+        "code": "2667",
+        "name": "WHITE CLUB SUIT",
+        "remark": "proportional"
+      },
+      {
+        "code": "2669",
+        "name": "QUARTER NOTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "266A",
+        "name": "EIGHTH NOTE",
+        "remark": "proportional"
+      },
+      {
+        "code": "266B",
+        "name": "BEAMED EIGHTH NOTES",
+        "remark": "proportional"
+      },
+      {
+        "code": "266C",
+        "name": "BEAMED SIXTEENTH NOTES",
+        "remark": "proportional"
+      },
+      {
+        "code": "266D",
+        "name": "MUSIC FLAT SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "266E",
+        "name": "MUSIC NATURAL SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "266F",
+        "name": "MUSIC SHARP SIGN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2713",
+        "name": "CHECK MARK",
+        "remark": "proportional"
+      },
+      {
+        "code": "2756",
+        "name": "BLACK DIAMOND MINUS WHITE X",
+        "remark": "proportional"
+      },
+      {
+        "code": "2776",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT ONE",
+        "remark": "proportional"
+      },
+      {
+        "code": "2777",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT TWO",
+        "remark": "proportional"
+      },
+      {
+        "code": "2778",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT THREE",
+        "remark": "proportional"
+      },
+      {
+        "code": "2779",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT FOUR",
+        "remark": "proportional"
+      },
+      {
+        "code": "277A",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT FIVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "277B",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT SIX",
+        "remark": "proportional"
+      },
+      {
+        "code": "277C",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT SEVEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "277D",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT EIGHT",
+        "remark": "proportional"
+      },
+      {
+        "code": "277E",
+        "name": "DINGBAT NEGATIVE CIRCLED DIGIT NINE",
+        "remark": "proportional"
+      },
+      {
+        "code": "277F",
+        "name": "DINGBAT NEGATIVE CIRCLED NUMBER TEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "2934",
+        "name": "ARROW POINTING RIGHTWARDS THEN CURVING UPWARDS",
+        "remark": "proportional"
+      },
+      {
+        "code": "2935",
+        "name": "ARROW POINTING RIGHTWARDS THEN CURVING DOWNWARDS",
+        "remark": "proportional"
+      },
+      {
+        "code": "29FA",
+        "name": "DOUBLE PLUS",
+        "remark": "proportional"
+      },
+      {
+        "code": "29FB",
+        "name": "TRIPLE PLUS",
+        "remark": "proportional"
+      },
+      {
+        "code": "3251",
+        "name": "CIRCLED NUMBER TWENTY ONE",
+        "remark": "proportional"
+      },
+      {
+        "code": "3252",
+        "name": "CIRCLED NUMBER TWENTY TWO",
+        "remark": "proportional"
+      },
+      {
+        "code": "3253",
+        "name": "CIRCLED NUMBER TWENTY THREE",
+        "remark": "proportional"
+      },
+      {
+        "code": "3254",
+        "name": "CIRCLED NUMBER TWENTY FOUR",
+        "remark": "proportional"
+      },
+      {
+        "code": "3255",
+        "name": "CIRCLED NUMBER TWENTY FIVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "3256",
+        "name": "CIRCLED NUMBER TWENTY SIX",
+        "remark": "proportional"
+      },
+      {
+        "code": "3257",
+        "name": "CIRCLED NUMBER TWENTY SEVEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "3258",
+        "name": "CIRCLED NUMBER TWENTY EIGHT",
+        "remark": "proportional"
+      },
+      {
+        "code": "3259",
+        "name": "CIRCLED NUMBER TWENTY NINE",
+        "remark": "proportional"
+      },
+      {
+        "code": "325A",
+        "name": "CIRCLED NUMBER THIRTY",
+        "remark": "proportional"
+      },
+      {
+        "code": "325B",
+        "name": "CIRCLED NUMBER THIRTY ONE",
+        "remark": "proportional"
+      },
+      {
+        "code": "325C",
+        "name": "CIRCLED NUMBER THIRTY TWO",
+        "remark": "proportional"
+      },
+      {
+        "code": "325D",
+        "name": "CIRCLED NUMBER THIRTY THREE",
+        "remark": "proportional"
+      },
+      {
+        "code": "325E",
+        "name": "CIRCLED NUMBER THIRTY FOUR",
+        "remark": "proportional"
+      },
+      {
+        "code": "325F",
+        "name": "CIRCLED NUMBER THIRTY FIVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "32B1",
+        "name": "CIRCLED NUMBER THIRTY SIX",
+        "remark": "proportional"
+      },
+      {
+        "code": "32B2",
+        "name": "CIRCLED NUMBER THIRTY SEVEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "32B3",
+        "name": "CIRCLED NUMBER THIRTY EIGHT",
+        "remark": "proportional"
+      },
+      {
+        "code": "32B4",
+        "name": "CIRCLED NUMBER THIRTY NINE",
+        "remark": "proportional"
+      },
+      {
+        "code": "32B5",
+        "name": "CIRCLED NUMBER FORTY",
+        "remark": "proportional"
+      },
+      {
+        "code": "32B6",
+        "name": "CIRCLED NUMBER FORTY ONE",
+        "remark": "proportional"
+      },
+      {
+        "code": "32B7",
+        "name": "CIRCLED NUMBER FORTY TWO",
+        "remark": "proportional"
+      },
+      {
+        "code": "32B8",
+        "name": "CIRCLED NUMBER FORTY THREE",
+        "remark": "proportional"
+      },
+      {
+        "code": "32B9",
+        "name": "CIRCLED NUMBER FORTY FOUR",
+        "remark": "proportional"
+      },
+      {
+        "code": "32BA",
+        "name": "CIRCLED NUMBER FORTY FIVE",
+        "remark": "proportional"
+      },
+      {
+        "code": "32BB",
+        "name": "CIRCLED NUMBER FORTY SIX",
+        "remark": "proportional"
+      },
+      {
+        "code": "32BC",
+        "name": "CIRCLED NUMBER FORTY SEVEN",
+        "remark": "proportional"
+      },
+      {
+        "code": "32BD",
+        "name": "CIRCLED NUMBER FORTY EIGHT",
+        "remark": "proportional"
+      },
+      {
+        "code": "32BE",
+        "name": "CIRCLED NUMBER FORTY NINE",
+        "remark": "proportional"
+      },
+      {
+        "code": "32BF",
+        "name": "CIRCLED NUMBER FIFTY",
+        "remark": "proportional"
+      }
+    ]
+  },
+  {
+    "id": "cl-28",
+    "name": "Warichu opening brackets",
+    "data": [
+      {
+        "code": "0028",
+        "name": "LEFT PARENTHESIS",
+        "remark": ""
+      },
+      {
+        "code": "3014",
+        "name": "LEFT TORTOISE SHELL BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "005B",
+        "name": "LEFT SQUARE BRACKET",
+        "remark": ""
+      }
+    ]
+  },
+  {
+    "id": "cl-29",
+    "name": "Warichu closing brackets",
+    "data": [
+      {
+        "code": "0029",
+        "name": "RIGHT PARENTHESIS",
+        "remark": ""
+      },
+      {
+        "code": "3015",
+        "name": "RIGHT TORTOISE SHELL BRACKET",
+        "remark": ""
+      },
+      {
+        "code": "005D",
+        "name": "RIGHT SQUARE BRACKET",
+        "remark": ""
+      }
+    ]
+  }
+]
