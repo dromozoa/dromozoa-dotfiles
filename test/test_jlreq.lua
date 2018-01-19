@@ -18,4 +18,12 @@
 local utf8 = require "dromozoa.utf8"
 local jlreq = require "dromozoa.vim.jlreq"
 
-
+assert(jlreq.is_class(utf8.codepoint("「"), 1))
+assert(not jlreq.is_class(utf8.codepoint("」"), 1))
+assert(not jlreq.is_class(utf8.codepoint("「"), 2))
+assert(jlreq.is_class(utf8.codepoint("」"), 2))
+assert(jlreq.is_class(utf8.codepoint("」"), 1, 2))
+assert(not jlreq.is_class(utf8.codepoint("あ"), 1, 2))
+assert(jlreq.is_line_start_prohibited(utf8.codepoint("、")))
+assert(jlreq.is_line_start_prohibited(utf8.codepoint("。")))
+assert(jlreq.is_line_end_prohibited(utf8.codepoint("「")))

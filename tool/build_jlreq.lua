@@ -15,9 +15,6 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
--- https://www.w3.org/TR/jlreq/
--- https://www.w3.org/TR/jlreq/ja/
-
 local json = require "dromozoa.commons.json"
 local read_file = require "dromozoa.commons.read_file"
 local builder = require "dromozoa.ucd.builder"
