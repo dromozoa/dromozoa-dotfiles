@@ -100,11 +100,7 @@ local function encode_utf8(this)
   end
 end
 
-local class = {}
-local metatable = { __index = class }
-
-local function format(mock)
-  local vim = vim or mock
+return function (vim)
   local b = vim.buffer()
   local f = vim.eval "v:lnum"
   local n = vim.eval "v:count"
@@ -275,5 +271,3 @@ local function format(mock)
 
   return "0"
 end
-
-return format
