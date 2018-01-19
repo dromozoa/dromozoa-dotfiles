@@ -43,4 +43,8 @@ function class.is_line_end_prohibited(char)
   return class.is_class(char, 1, 28)
 end
 
+function class.is_unbreakable(char)
+  return class.is_class(char, 8)
+end
+
 return class

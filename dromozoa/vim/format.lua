@@ -51,6 +51,26 @@ local function is_line_end_prohibited(this)
   end
 end
 
+local function is_unbreakable(prev, this)
+  if type(prev) == "table" then
+    prev = prev[#prev]
+  end
+  if type(this) == "table" then
+    this = this[1]
+  end
+
+  if jlreq.is_unbreakable(prev) and jlreq.is_unbreakable(this) then
+    if prev == this then
+      return this == 0x2014 or this == 0x2026 or this == 0x2025
+    else
+      return (prev == 0x3033 or prev == 0x3034) and this == 0x3035
+    end
+  else
+    return false
+  end
+end
+
+
 local east_asian_width_map = {
   ["N"]  = 1; -- neutral
   ["Na"] = 1; -- narrow
@@ -132,7 +152,16 @@ local function format(mock)
               body[#body + 1] = { char }
             end
           else
-            body[#body + 1] = char
+            local prev = body[#body]
+            if is_unbreakable(prev, char) then
+              if type(prev) == "table" then
+                prev[#prev + 1] = char
+              else
+                body[#body] = { prev, char }
+              end
+            else
+              body[#body + 1] = char
+            end
           end
         end
       end
