@@ -26,12 +26,12 @@ local function is_space(this)
   return type(this) == "number" and is_white_space(this) and this ~= 0x3000
 end
 
-local function is_line_end_prohibited(this)
-  return type(this) == "number" and jlreq.is_line_space_prohibited(this)
-end
-
 local function is_line_start_prohibited(this)
   return type(this) == "number" and jlreq.is_line_start_prohibited(this)
+end
+
+local function is_line_end_prohibited(this)
+  return type(this) == "number" and jlreq.is_line_end_prohibited(this)
 end
 
 local east_asian_width_map = {
@@ -156,8 +156,27 @@ local function format(mock)
         else
           width = width + get_width(this)
           if width > max_width and not is_space(this) and not is_line_start_prohibited(this) then
-            width = get_width(this)
-            lines[#lines + 1] = { this }
+            local prev_line = lines[#lines]
+            local this_line = {}
+
+            width = 0
+
+            for j = #prev_line, 1, -1 do
+              local prev = prev_line[j]
+              if is_space(prev) then
+                prev_line[j] = nil
+              elseif is_line_end_prohibited(prev) then
+                prev_line[j] = nil
+                width = width + get_width(prev)
+                table.insert(this_line, 1, prev)
+              else
+                break
+              end
+            end
+
+            width = width + get_width(this)
+            this_line[#this_line + 1] = this
+            lines[#lines + 1] = this_line
           else
             local line = lines[#lines]
             line[#line + 1] = this
