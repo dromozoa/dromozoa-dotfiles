@@ -17,5 +17,5 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-git push --all --dry-run
-git push --tags --dry-run
+git push --dry-run --all
+git push --dry-run --tags
