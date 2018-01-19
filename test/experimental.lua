@@ -15,6 +15,8 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
+local length = require "dromozoa.vim.length"
+
 local function test_buffer(out)
   local b = vim.buffer()
   out:write(([[
@@ -86,9 +88,17 @@ local function test_eval(out)
   end
 end
 
+local function test_length(out)
+  out:write(([[
+============================================================
+buffer length = %d
+]]):format(length(vim.buffer())))
+end
+
 return function ()
   local out = io.open("/tmp/test.log", "a")
   -- test_buffer(out)
-  test_eval(out)
+  -- test_eval(out)
+  test_length(out)
   out:close()
 end

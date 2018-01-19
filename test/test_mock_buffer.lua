@@ -32,12 +32,12 @@ b:insert("INSERT 4", 0)
 b:insert("INSERT 5", 0)
 b:insert("INSERT 6", 0)
 
-local n = 10 - 3
+local n = b:size() - 3
 b:insert("INSERT 7", n)
 b:insert("INSERT 8", n + 1)
 b:insert("INSERT 9", n + 2)
 
-assert(tostring(b) == [[
+assert(b:text() == [[
 INSERT 6
 INSERT 5
 INSERT 4
@@ -57,7 +57,7 @@ b[1] = nil
 b[2] = nil
 b[3] = nil
 
-assert(tostring(b) == [[
+assert(b:text() == [[
 INSERT 5
 foo
 baz
@@ -70,11 +70,11 @@ INSERT 2
 INSERT 3
 ]])
 
-for i = 1, 10, 2 do
+for i = 1, b:size(), 2 do
   b[i] = b[i] .. " " .. b[i]
 end
 
-assert(tostring(b) == [[
+assert(b:text() == [[
 INSERT 5 INSERT 5
 foo
 baz baz
