@@ -18,11 +18,20 @@
 local utf8 = require "dromozoa.utf8"
 local east_asian_width = require "dromozoa.ucd.east_asian_width"
 local is_white_space = require "dromozoa.ucd.is_white_space"
+local jlreq = require "dromozoa.vim.jlreq"
 
 local unpack = table.unpack or unpack
 
 local function is_space(this)
   return type(this) == "number" and is_white_space(this) and this ~= 0x3000
+end
+
+local function is_line_end_prohibited(this)
+  return type(this) == "number" and jlreq.is_line_space_prohibited(this)
+end
+
+local function is_line_start_prohibited(this)
+  return type(this) == "number" and jlreq.is_line_start_prohibited(this)
 end
 
 local east_asian_width_map = {
@@ -146,7 +155,7 @@ local function format(mock)
           lines[#lines + 1] = { this }
         else
           width = width + get_width(this)
-          if width > max_width and not is_space(this) then
+          if width > max_width and not is_space(this) and not is_line_start_prohibited(this) then
             width = get_width(this)
             lines[#lines + 1] = { this }
           else
