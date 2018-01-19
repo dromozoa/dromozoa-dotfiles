@@ -17,13 +17,15 @@
 
 local utf8 = require "dromozoa.utf8"
 local east_asian_width = require "dromozoa.ucd.east_asian_width"
+local is_white_space = require "dromozoa.ucd.is_white_space"
 
 local unpack = table.unpack or unpack
 
-local class = {}
-local metatable = { __index = class }
+local function is_space(this)
+  return type(this) == "number" and is_white_space(this) and this ~= 0x3000
+end
 
-local widths = {
+local east_asian_width_map = {
   ["N"]  = 1; -- neutral
   ["Na"] = 1; -- narrow
   ["H"]  = 1; -- halfwidth
@@ -32,121 +34,178 @@ local widths = {
   ["F"]  = 2; -- fullwidth
 }
 
-local function char_width(char)
-  return widths[east_asian_width(char)]
+local function get_width(this)
+  if type(this) == "number" then
+    return east_asian_width_map[east_asian_width(this)]
+  else
+    local width = 0
+    for i = 1, #this do
+      width = width + get_width(this[i])
+    end
+    return width
+  end
 end
+
+local function encode_utf8(this)
+  if type(this) == "number" then
+    return utf8.char(this)
+  else
+    return utf8.char(unpack(this))
+  end
+end
+
+local class = {}
+local metatable = { __index = class }
 
 local function format(mock)
   local vim = vim or mock
   local b = vim.buffer()
-  local first = vim.eval "v:lnum"
+  local f = vim.eval "v:lnum"
   local n = vim.eval "v:count"
-  -- local last = first + vim.eval "v:count" - 1
-  -- local max_width = vim.eval "&textwidth"
+  local text_width = vim.eval "&textwidth"
 
+  local paragraphs = {}
 
+  for i = f, f + n - 1 do
+    local line = {}
+    for _, char in utf8.codes(b[i]) do
+      line[#line + 1] = char
+    end
 
-
-
-
---[[
-  local paragraphs = { { text = {} } }
-  for i = first, last do
-    local line = buffer[i]
-    local head, body, tail = line:match "^(%s*)(.-)(%s*)$"
-
-    local paragraph = paragraphs[#paragraphs]
-    local text = paragraph.text
-
-    if body == "" then
-      if #text > 0 then
-        paragraphs[#paragraphs + 1] = { text = {} }
-      end
-    else
-      if #text == 0 then
-        paragraph.indent = #head
-        paragraph.margin = #head
+    for j = #line, 1, -1 do
+      if is_space(line[j]) then
+        line[j] = nil
       else
-        local prev_char = text[#text]
-        local prev_width = char_width(prev_char)
-        local width = char_width(utf8.codepoint(body))
-        if prev_width == 1 or width == 1 then
-          text[#text + 1] = 0x20
+        break
+      end
+    end
+
+    local head = {}
+    local body = {}
+    for j = 1, #line do
+      local char = line[j]
+      if #body == 0 then
+        if is_space(char) then
+          head[#head + 1] = char
+        else
+          if get_width(char) == 1 then
+            body[1] = { char }
+          else
+            body[1] = char
+          end
+        end
+      else
+        if is_space(char) then
+          body[#body + 1] = char
+        else
+          if get_width(char) == 1 then
+            local prev = body[#body]
+            if type(prev) == "table" then
+              prev[#prev + 1] = char
+            else
+              body[#body + 1] = { char }
+            end
+          else
+            body[#body + 1] = char
+          end
         end
       end
-      for _, char in utf8.codes(body) do
-        text[#text + 1] = char
+    end
+
+    if #body == 0 then
+      paragraphs[#paragraphs + 1] = { type = "separator" }
+    else
+      local paragraph = paragraphs[#paragraphs]
+      if not paragraph or paragraph.type == "separator" then
+        paragraphs[#paragraphs + 1] = { type = "paragraph", head = head, body = body }
+      else
+        local pbody = paragraph.body
+        if type(pbody[#pbody]) == "table" and type(body[1]) == "table" then
+          pbody[#pbody + 1] = 0x20
+        end
+        for j = 1, #body do
+          pbody[#pbody + 1] = body[j]
+        end
       end
     end
   end
 
   for i = 1, #paragraphs do
     local paragraph = paragraphs[i]
-    local text = paragraph.text
+    if paragraph.type == "paragraph" then
+      local head = paragraph.head
+      local body = paragraph.body
+      local max_width = text_width - get_width(head)
 
-    local lines = {}
-    local line_number = 1
-    local width = 0
-
-    for j = 1, #text do
-      local line = lines[line_number]
-      if not line then
-        line = {}
-        lines[line_number] = line
-
-        if line_number == 1 then
-          width = paragraph.indent
+      local width = 0
+      local lines = {}
+      for j = 1, #body do
+        local this = body[j]
+        if width == 0 then
+          width = get_width(this)
+          lines[#lines + 1] = { this }
         else
-          width = paragraph.margin
-        end
-        for _ = 1, width do
-          line[#line + 1] = 0x20
+          width = width + get_width(this)
+          if width > max_width and not is_space(this) then
+            width = get_width(this)
+            lines[#lines + 1] = { this }
+          else
+            local line = lines[#lines]
+            line[#line + 1] = this
+          end
         end
       end
 
-      local char = text[j]
-      width = width + char_width(char)
-      line[#line + 1] = char
-
-      if width >= max_width then
-        line_number = line_number + 1
+      for j = 1, #lines do
+        local line = lines[j]
+        for j = #line, 1, -1 do
+          if is_space(line[j]) then
+            line[j] = nil
+          else
+            break
+          end
+        end
       end
+
+      paragraph.lines = lines
     end
-
-    paragraph.lines = lines
   end
 
   local result = {}
+
   for i = 1, #paragraphs do
     local paragraph = paragraphs[i]
-    local lines = paragraph.lines
-
-    if i > 1 then
+    if paragraph.type == "separator" then
       result[#result + 1] = ""
-    end
-    for j = 1, #lines do
-      result[#result + 1] = utf8.char(unpack(lines[j]))
+    else
+      local lines = paragraph.lines
+      for j = 1, #lines do
+        local line = lines[j]
+        local out = { encode_utf8(paragraph.head) }
+        for k = 1, #line do
+          out[#out + 1] = encode_utf8(line[k])
+        end
+        result[#result + 1] = table.concat(out)
+      end
     end
   end
 
-  local buffer_count = last - first + 1
-  local result_count = #result
-  if buffer_count < result_count then
-    for i = 1, buffer_count do
-      buffer[first + i - 1] = result[i]
+  local m = #result
+  if n < m then
+    for i = 1, n do
+      b[f + i - 1] = result[i]
     end
-    for i = buffer_count + 1, result_count do
-      buffer:insert(result[i], first + i - 1)
+    for i = n + 1, m do
+      b:insert(result[i], f + i - 2)
     end
   else
-    for i = 1, result_count do
-      buffer[first + i - 1] = result[i]
+    for i = 1, m do
+      b[f + i - 1] = result[i]
     end
-    for i = result_count + 1, buffer_count do
-      buffer[first + result_count + 1] = nil
+    for i = m + 1, n do
+      b[f + m] = nil
     end
   end
-]]
 
   return "0"
 end

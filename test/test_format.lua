@@ -21,39 +21,81 @@ local buffer = require "dromozoa.vim.mock.buffer"
 
 local b = buffer [[
 あいうえお
-あいうえおかきくけこ
-あいうえおかきくけこさしすせそ
-あいうえおかきくけこさしすせそたちつてと
-あいうえおかきくけこさしすせそたちつてとなにぬねの
+　かきくけこかきくけこ
+　さしすせそさしすせそさしすせそ
+たちつてとたちつてとたちつてとたちつてと
+なにぬねのなにぬねのなにぬねのなにぬねのなにぬねの
 
 
-あいうえお
-    あいうえおかきくけこ
+あいうえお    
+    あいうえおかきくけこ	
     あいうえおかきくけこさしすせそ
     あいうえおかきくけこさしすせそたちつてと
     あいうえおかきくけこさしすせそたちつてとなにぬねの
 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-    est laborum.
+   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+   tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+   veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+   commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+   velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+   cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+   est laborum.
+
+This is a pen.
+This is a pen.
+This is a pen.
+
+      foo baaaaaaaaaaaaaaaaaaaaaaaaaaaaaar baz
+
+あいうえおかきくけこさしすせそ、
+たちつてとなにぬねのはひふへほ。
 
   あいうえお
-あいうえおかきくけこ
-あいうえおかきくけこさしすせそ
-あいうえおかきくけこさしすせそたちつてと
-あいうえおかきくけこさしすせそたちつてとなにぬねの
+かきくけこかきくけこ
+さしすせそさしすせそさしすせそ
+たちつてとたちつてとたちつてとたちつてと
+なにぬねのなにぬねのなにぬねのなにぬねのなにぬねの
 ]]
 
 local vim = mock(b, {
   ["v:lnum"] = 2;
-  ["v:count"] = b:size() - 1;
-  ["&textwidth"] = 20;
+  ["v:count"] = b:size() - 2;
+  ["&textwidth"] = 30;
 })
 
 format(vim)
 
-io.write(vim.buffer():text())
+io.write(b:text())
+
+for i = 1, b:size() do
+  assert(not b[i]:find "%s$")
+end
+
+local b = buffer [[
+あ
+い
+う
+え
+お
+か
+き
+く
+け
+こ
+]]
+
+local vim = mock(b, {
+  ["v:lnum"] = 3;
+  ["v:count"] = b:size() - 4;
+  ["&textwidth"] = 30;
+})
+
+format(vim)
+
+assert(b:text() == [[
+あ
+い
+うえおかきく
+け
+こ
+]])
