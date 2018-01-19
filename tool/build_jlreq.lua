@@ -20,11 +20,34 @@
 
 local json = require "dromozoa.commons.json"
 local read_file = require "dromozoa.commons.read_file"
+local builder = require "dromozoa.ucd.builder"
 
 local source_filename = "docs/jlreq.json"
+
+local check = {}
 
 local source = assert(json.decode(assert(read_file(source_filename))))
 for i = 1, #source do
   local class = source[i]
-  print(class.id)
+  local id = tonumber(class.id:match "^cl%-(%d+)", 10)
+  local name = class.name
+  local data = class.data
+
+  local code_filename = ("dromozoa/vim/jlreq/is_cl%02d.lua"):format(id)
+  local _ = builder(false)
+
+  for j = 1, #data do
+    local item = data[j]
+    local code = item.code
+
+    if code:find "^%x+$" then
+      local code = tonumber(code, 16)
+      _:range(code, code, true)
+    else
+      -- ignore combining character
+    end
+  end
+
+  local out = assert(io.open(code_filename, "w"))
+  _.compile(out, _:build()):close()
 end

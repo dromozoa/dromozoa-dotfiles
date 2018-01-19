@@ -15,36 +15,37 @@
 // You should have received a copy of the GNU General Public License
 // along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
+// https://www.w3.org/TR/jlreq/
+// https://www.w3.org/TR/jlreq/ja/
+
 (function (root) {
-  const console = root.console;
+  const copy = root.copy;
   const document = root.document;
   const parseInt = root.parseInt;
 
-  root.dromozoa = {};
-  root.dromozoa.parse = function () {
-    const tables = document.querySelectorAll("table.charclass");
+  const tables = document.querySelectorAll("table.charclass");
 
-    const dataset = [];
-    for (let i = 0; i < tables.length; ++i) {
-      const table = tables[i];
-      const h3 = table.parentNode.querySelector("h3");
+  const dataset = [];
+  for (let i = 0; i < tables.length; ++i) {
+    const table = tables[i];
+    const trs = table.querySelectorAll("tbody > tr");
+    const h3 = table.parentNode.querySelector("h3");
+    const id = h3.getAttribute("id");
+    const name = h3.querySelector(".heading > .index").textContent;
 
-      const id = h3.getAttribute("id");
-      const name = h3.querySelector(".heading > .index").textContent;
-
-      const data = [];
-      const trs = table.querySelectorAll("tbody > tr");
-      for (let j = 0; j < trs.length; ++j) {
-        const tr = trs[j];
-        const code = tr.querySelector("td:nth-child(2)").textContent;
-        const name = tr.querySelector("td:nth-child(3)").textContent;
-        const remark = tr.querySelector("td:nth-child(4)").textContent;
-        data.push({ code: code, name: name, remark: remark })
-      }
-
-      dataset.push({ id: id, name: name, data: data })
+    const data = [];
+    for (let j = 0; j < trs.length; ++j) {
+      const tr = trs[j];
+      const code = tr.querySelector("td:nth-child(2)").textContent;
+      const name = tr.querySelector("td:nth-child(3)").textContent;
+      const remark = tr.querySelector("td:nth-child(4)").textContent;
+      data.push({ code: code, name: name, remark: remark })
     }
+    dataset.push({ id: id, name: name, data: data })
+  }
 
-    return dataset;
-  };
+  if (copy) {
+    copy(dataset);
+  }
+  return dataset;
 }(this));
