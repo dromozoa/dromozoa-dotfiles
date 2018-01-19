@@ -23,15 +23,32 @@ local jlreq = require "dromozoa.vim.jlreq"
 local unpack = table.unpack or unpack
 
 local function is_space(this)
-  return type(this) == "number" and is_white_space(this) and this ~= 0x3000
+  if type(this) == "number" then
+    return is_white_space(this) and this ~= 0x3000
+  else
+    for i = 1, #this do
+      if not is_space(this[i]) then
+        return false
+      end
+    end
+    return true
+  end
 end
 
 local function is_line_start_prohibited(this)
-  return type(this) == "number" and jlreq.is_line_start_prohibited(this)
+  if type(this) == "number" then
+    return jlreq.is_line_start_prohibited(this)
+  else
+    return is_line_start_prohibited(this[1])
+  end
 end
 
 local function is_line_end_prohibited(this)
-  return type(this) == "number" and jlreq.is_line_end_prohibited(this)
+  if type(this) == "number" then
+    return jlreq.is_line_end_prohibited(this)
+  else
+    return is_line_end_prohibited(this[#this])
+  end
 end
 
 local east_asian_width_map = {
@@ -156,41 +173,29 @@ local function format(mock)
         else
           width = width + get_width(this)
           if width > max_width and not is_space(this) and not is_line_start_prohibited(this) then
-            local prev_line = lines[#lines]
-            local this_line = {}
+            local line1 = lines[#lines]
+            local line2 = {}
 
             width = 0
-
-            for j = #prev_line, 1, -1 do
-              local prev = prev_line[j]
-              if is_space(prev) then
-                prev_line[j] = nil
-              elseif is_line_end_prohibited(prev) then
-                prev_line[j] = nil
-                width = width + get_width(prev)
-                table.insert(this_line, 1, prev)
+            for j = #line1, 1, -1 do
+              local this = line1[j]
+              if is_space(this) then
+                line1[j] = nil
+              elseif is_line_end_prohibited(this) then
+                line1[j] = nil
+                width = width + get_width(this)
+                table.insert(line2, 1, this)
               else
                 break
               end
             end
 
             width = width + get_width(this)
-            this_line[#this_line + 1] = this
-            lines[#lines + 1] = this_line
+            line2[#line2 + 1] = this
+            lines[#lines + 1] = line2
           else
             local line = lines[#lines]
             line[#line + 1] = this
-          end
-        end
-      end
-
-      for j = 1, #lines do
-        local line = lines[j]
-        for j = #line, 1, -1 do
-          if is_space(line[j]) then
-            line[j] = nil
-          else
-            break
           end
         end
       end
@@ -220,18 +225,22 @@ local function format(mock)
 
   local m = #result
   if n < m then
+    local x = f - 1
     for i = 1, n do
-      b[f + i - 1] = result[i]
+      b[x + i] = result[i]
     end
+    local x = f - 2
     for i = n + 1, m do
-      b:insert(result[i], f + i - 2)
+      b:insert(result[i], x + i)
     end
   else
+    local x = f - 1
     for i = 1, m do
-      b[f + i - 1] = result[i]
+      b[x + i] = result[i]
     end
+    local x = f + m
     for i = m + 1, n do
-      b[f + m] = nil
+      b[x] = nil
     end
   end
 
