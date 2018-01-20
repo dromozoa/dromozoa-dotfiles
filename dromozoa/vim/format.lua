@@ -102,9 +102,15 @@ end
 
 return function (vim)
   local b = vim.buffer()
+  local w = vim.window()
   local f = vim.eval "v:lnum"
   local n = vim.eval "v:count"
+  local c = vim.eval "v:char"
   local text_width = vim.eval "&textwidth"
+
+  if c ~= "" then
+    return "1"
+  end
 
   local paragraphs = {}
 
@@ -268,6 +274,9 @@ return function (vim)
       b[x] = nil
     end
   end
+
+  w.line = f + m - 1
+  w.col = 1
 
   return "0"
 end

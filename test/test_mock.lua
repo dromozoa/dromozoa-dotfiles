@@ -24,6 +24,9 @@ bar
 baz
 qux
 ]], {
+  line = 3;
+  col = 2;
+}, {
   ["&textwidth"] = 60;
 })
 
