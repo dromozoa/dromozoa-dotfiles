@@ -1,5 +1,3 @@
-#! /bin/sh -e
-
 # Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
 # This file is part of dromozoa-dotfiles.
@@ -17,38 +15,17 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-if (unset CDPATH) >/dev/null 2>&1
+if test -f "$HOME/dromozoa-dotfiles/resource"
 then
-  unset CDPATH
+  . "$HOME/dromozoa-dotfiles/resource"
 fi
 
-fn_dirname() {
-  expr "x$1" : 'x\(.*[^/]\)//*[^/][^/]*/*$' \
-    '|' "x$1" : 'x\(//\)[^/]' \
-    '|' "x$1" : 'x\(//\)$' \
-    '|' "x$1" : 'x\(/\)' \
-    '|' .
-}
+PS1='\[\e[31m\]\u@\h:\W\$\[\e[m\] '
+PS2='\[\e[31m\]>\[\e[m\] '
 
-here=`fn_dirname "$0"`
-here=`(cd "$here" && pwd)`
-backup=$here/backup-`date "+%Y-%m-%d-%H-%M-%S"`
+HISTCONTROL=ignoreboth
+HISTSIZE=65536
+HISTFILESIZE=65536
+HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
 
-cd
-home=`pwd`
-
-for i in .bashrc .editrc .inputrc .vimrc .zshrc
-do
-  if test -h "$i"
-  then
-    echo "unlink $home/$i"
-    rm -f "$i"
-  elif test -f "$i"
-  then
-    echo "move $home/$i -> $backup"
-    mkdir -p "$backup"
-    mv -f "$i" "$backup"
-  fi
-  echo "link $home/$i -> $here/$i"
-  ln -s "$here/$i" "$i"
-done
+alias h='history | grep'
