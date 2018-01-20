@@ -15,24 +15,14 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-local mock = require "dromozoa.vim.mock"
-local buffer = require "dromozoa.vim.mock.buffer"
-
-local vim = mock(buffer [[
-foo
-bar
-baz
-qux
-]], {
-  line = 3;
-  col = 2;
-}, {
-  ["&textwidth"] = 60;
-})
-
-local b = vim.buffer()
-assert(b[1] == "foo")
-assert(b[2] == "bar")
-assert(b[3] == "baz")
-assert(b[4] == "qux")
-assert(vim.eval "&textwidth" == 60)
+return function (vim)
+  local names = { "format" }
+  for i = 1, #names do
+    local name = names[i]
+    vim.command(([[
+function! dromozoa#%s()
+  return luaeval('require "dromozoa.vim.%s" (vim)')
+endfunction
+]]):format(name, name))
+  end
+end

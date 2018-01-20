@@ -20,30 +20,12 @@ then
   . "$HOME/dromozoa-dotfiles/resource"
 fi
 
-autoload -U colors
-colors
+PS1='\[\e[31m\]\u@\h:\W\$\[\e[m\] '
+PS2='\[\e[31m\]>\[\e[m\] '
 
-autoload -U compinit
-compinit
-
-PROMPT="%{$fg[red]%}%n@%m:%~%#%{$reset_color%} "
-PROMPT2="%{$fg[red]%}>%{$reset_color%} "
-SPROMPT="%{$fg[red]%}correct '%R' to '%r' [nyae]?%{$reset_color%} "
-
-setopt auto_cd
-setopt autopushd
-setopt correct
-setopt extended_glob
-setopt extended_history
-setopt hist_expand
-setopt hist_ignore_dups
-setopt hist_verify
-setopt inc_append_history
-setopt noautoremoveslash
-setopt share_history
-
-HISTFILE=~/.zsh_history
+HISTCONTROL=ignoreboth
 HISTSIZE=65536
-SAVEHIST=65536
+HISTFILESIZE=65536
+HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
 
-alias h='fc -l -i 1 | grep'
+alias h='history | grep'

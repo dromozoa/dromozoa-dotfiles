@@ -1,3 +1,5 @@
+#! /bin/sh -e
+
 # Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
 # This file is part of dromozoa-dotfiles.
@@ -15,35 +17,4 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-if test -f "$HOME/dromozoa-dotfiles/resource"
-then
-  . "$HOME/dromozoa-dotfiles/resource"
-fi
-
-autoload -U colors
-colors
-
-autoload -U compinit
-compinit
-
-PROMPT="%{$fg[red]%}%n@%m:%~%#%{$reset_color%} "
-PROMPT2="%{$fg[red]%}>%{$reset_color%} "
-SPROMPT="%{$fg[red]%}correct '%R' to '%r' [nyae]?%{$reset_color%} "
-
-setopt auto_cd
-setopt autopushd
-setopt correct
-setopt extended_glob
-setopt extended_history
-setopt hist_expand
-setopt hist_ignore_dups
-setopt hist_verify
-setopt inc_append_history
-setopt noautoremoveslash
-setopt share_history
-
-HISTFILE=~/.zsh_history
-HISTSIZE=65536
-SAVEHIST=65536
-
-alias h='fc -l -i 1 | grep'
+git merge --no-ff -m "リリースブランチをマージ。" release

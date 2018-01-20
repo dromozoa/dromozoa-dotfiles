@@ -17,11 +17,15 @@
 
 -- http://vim-jp.org/vimdoc-ja/if_lua.html#lua-vim
 
-return function (buffer, evaluator)
+return function (buffer, window, evaluator)
   local self = {}
 
   function self.buffer()
     return buffer
+  end
+
+  function self.window()
+    return window
   end
 
   function self.eval(expr)
