@@ -100,17 +100,12 @@ local function encode_utf8(this)
   end
 end
 
-return function (vim)
+local function format_text_area(vim)
   local b = vim.buffer()
   local w = vim.window()
   local f = vim.eval "v:lnum"
   local n = vim.eval "v:count"
-  local c = vim.eval "v:char"
   local text_width = vim.eval "&textwidth"
-
-  if c ~= "" then
-    return "1"
-  end
 
   local paragraphs = {}
 
@@ -279,4 +274,14 @@ return function (vim)
   w.col = 1
 
   return "0"
+end
+
+return function (vim)
+  local filetype = vim.eval "&filetype"
+  if filetype == "text" then
+    if vim.eval "v:char" == "" then
+      return format_text_area(vim)
+    end
+  end
+  return "1"
 end

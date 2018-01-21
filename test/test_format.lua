@@ -66,6 +66,7 @@ local vim = mock(b, {}, {
   ["v:lnum"] = 2;
   ["v:count"] = b:size() - 2;
   ["v:char"] = "";
+  ["&filetype"] = "text";
   ["&textwidth"] = 30;
 })
 
@@ -94,6 +95,7 @@ local vim = mock(b, {}, {
   ["v:lnum"] = 3;
   ["v:count"] = b:size() - 4;
   ["v:char"] = "";
+  ["&filetype"] = "text";
   ["&textwidth"] = 30;
 })
 
