@@ -1,0 +1,4 @@
+12345678901234567890
+foo bar baz XXXX foo
+あいうえおかきくけこ
+vim: set textwidth=20:
