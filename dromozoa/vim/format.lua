@@ -60,7 +60,6 @@ local function is_unbreakable(prev, this)
   if type(this) == "table" then
     this = this[1]
   end
-
   if jlreq.is_unbreakable(prev) and jlreq.is_unbreakable(this) then
     if prev == this then
       return this == 0x2014 or this == 0x2026 or this == 0x2025
@@ -190,9 +189,10 @@ local function update_buffer(source, b, f, n)
   end
 end
 
-local function format_text(head, body, text_width, result)
+local function format_text(head, body, text_width)
   local max_width = text_width - get_width(head)
 
+  local result = {}
   local width = 0
   for j = 1, #body do
     local this = body[j]
@@ -270,7 +270,7 @@ local function format_text_area(vim)
   for i = 1, #paragraphs do
     local paragraph = paragraphs[i]
     if paragraph.type == "paragraph" then
-      paragraph.lines = format_text(paragraph.head, paragraph.body, text_width, {})
+      paragraph.lines = format_text(paragraph.head, paragraph.body, text_width)
     end
   end
 
