@@ -167,6 +167,53 @@ local function unparse(source)
   return result
 end
 
+local function format_text(head, body, text_width, result)
+  local max_width = text_width - get_width(head)
+  local width = 0
+  for j = 1, #body do
+    local this = body[j]
+    if width == 0 then
+      width = get_width(this)
+      result[#result + 1] = { this }
+    else
+      width = width + get_width(this)
+      if width > max_width and not is_space(this) and not is_line_start_prohibited(this) then
+        local line1 = result[#result]
+        local line2 = {}
+        local line3 = {}
+
+        width = 0
+        for k = #line1, 1, -1 do
+          local this = line1[k]
+          if is_space(this) or is_line_end_prohibited(this) then
+            line1[k] = nil
+            width = width + get_width(this)
+            line2[#line2 + 1] = this
+          else
+            break
+          end
+        end
+
+        for k = #line2, 1, -1 do
+          local this = line2[k]
+          if #line3 > 0 or not is_space(this) then
+            line3[#line3 + 1] = this
+          end
+        end
+
+        width = width + get_width(this)
+        line3[#line3 + 1] = this
+        result[#result + 1] = line3
+      else
+        local line = result[#result]
+        line[#line + 1] = this
+      end
+    end
+  end
+
+  return result
+end
+
 local function format_text_area(vim)
   local b = vim.buffer()
   local w = vim.window()
@@ -175,12 +222,9 @@ local function format_text_area(vim)
   local text_width = vim.eval "&textwidth"
 
   local paragraphs = {}
-
   for i = f, f + n - 1 do
     local line = encode_utf32(b[i])
-
     local head, body = parse(line)
-
     if #body == 0 then
       paragraphs[#paragraphs + 1] = { type = "separator" }
     else
@@ -202,59 +246,11 @@ local function format_text_area(vim)
   for i = 1, #paragraphs do
     local paragraph = paragraphs[i]
     if paragraph.type == "paragraph" then
-      local head = paragraph.head
-      local body = paragraph.body
-      local max_width = text_width - get_width(head)
-
-      local width = 0
-      local lines = {}
-      for j = 1, #body do
-        local this = body[j]
-        if width == 0 then
-          width = get_width(this)
-          lines[#lines + 1] = { this }
-        else
-          width = width + get_width(this)
-          if width > max_width and not is_space(this) and not is_line_start_prohibited(this) then
-            local line1 = lines[#lines]
-            local line2 = {}
-            local line3 = {}
-
-            width = 0
-            for k = #line1, 1, -1 do
-              local this = line1[k]
-              if is_space(this) or is_line_end_prohibited(this) then
-                line1[k] = nil
-                width = width + get_width(this)
-                line2[#line2 + 1] = this
-              else
-                break
-              end
-            end
-
-            for k = #line2, 1, -1 do
-              local this = line2[k]
-              if #line3 > 0 or not is_space(this) then
-                line3[#line3 + 1] = this
-              end
-            end
-
-            width = width + get_width(this)
-            line3[#line3 + 1] = this
-            lines[#lines + 1] = line3
-          else
-            local line = lines[#lines]
-            line[#line + 1] = this
-          end
-        end
-      end
-
-      paragraph.lines = lines
+      paragraph.lines = format_text(paragraph.head, paragraph.body, text_width, {})
     end
   end
 
   local result = {}
-
   for i = 1, #paragraphs do
     local paragraph = paragraphs[i]
     if paragraph.type == "separator" then
