@@ -167,8 +167,32 @@ local function unparse(source)
   return result
 end
 
+local function update_buffer(source, b, f, n)
+  local m = #source
+  if n < m then
+    local x = f - 1
+    for i = 1, n do
+      b[x + i] = source[i]
+    end
+    local x = f - 2
+    for i = n + 1, m do
+      b:insert(source[i], x + i)
+    end
+  else
+    local x = f - 1
+    for i = 1, m do
+      b[x + i] = source[i]
+    end
+    local x = f + m
+    for i = m + 1, n do
+      b[x] = nil
+    end
+  end
+end
+
 local function format_text(head, body, text_width, result)
   local max_width = text_width - get_width(head)
+
   local width = 0
   for j = 1, #body do
     local this = body[j]
@@ -265,28 +289,8 @@ local function format_text_area(vim)
     end
   end
 
-  local m = #result
-  if n < m then
-    local x = f - 1
-    for i = 1, n do
-      b[x + i] = result[i]
-    end
-    local x = f - 2
-    for i = n + 1, m do
-      b:insert(result[i], x + i)
-    end
-  else
-    local x = f - 1
-    for i = 1, m do
-      b[x + i] = result[i]
-    end
-    local x = f + m
-    for i = m + 1, n do
-      b[x] = nil
-    end
-  end
-
-  w.line = f + m - 1
+  update_buffer(result, b, f, n)
+  w.line = f + #result - 1
   w.col = 1
 
   return "0"
