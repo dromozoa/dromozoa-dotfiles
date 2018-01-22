@@ -23,9 +23,6 @@ fi
 autoload -U colors
 colors
 
-autoload -U compinit
-compinit
-
 PROMPT="%{$fg[red]%}%n@%m:%~%#%{$reset_color%} "
 PROMPT2="%{$fg[red]%}>%{$reset_color%} "
 SPROMPT="%{$fg[red]%}correct '%R' to '%r' [nyae]?%{$reset_color%} "
@@ -46,4 +43,13 @@ HISTFILE=~/.zsh_history
 HISTSIZE=65536
 SAVEHIST=65536
 
-alias h='fc -l -i 1 | grep'
+alias h='history -E -i 1 | grep'
+
+autoload -U compinit
+compinit
+
+autoload -U history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^P" history-beginning-search-backward-end
+bindkey "^N" history-beginning-search-forward-end

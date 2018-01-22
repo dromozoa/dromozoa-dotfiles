@@ -15,8 +15,6 @@
 " You should have received a copy of the GNU General Public License
 " along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-" http://vim-jp.org/vimdoc-ja/options.html
-
 set runtimepath+=~/dromozoa-dotfiles/vimfiles
 
 set fileformats=unix,dos,mac
@@ -27,41 +25,32 @@ set expandtab
 set shiftwidth=2
 set softtabstop=2
 
-set wildmode=list:longest
-
 set nowrap
 set formatoptions+=nmM
-
 if exists("&breakindent")
   set breakindent
 endif
 
+set clipboard=unnamed
+set modelines=5
+set wildmode=list:longest
+
 set hlsearch
-set incsearch
 set ignorecase
+set incsearch
 set smartcase
 
 set nobackup
 set noswapfile
 
 set number
+set list
+set listchars=tab:__,trail:_,precedes:<,extends:>
 set laststatus=2
 set statusline=%F\ %m%r%h%w%y%{'['.&fileencoding.']['.&fileformat.']'}%=[%l,%c][U+%04B]
 
-set list
-set listchars=tab:__,trail:_,precedes:<,extends:>
-
-set modelines=5
-
-set clipboard=unnamed
-
-" http://vim-jp.org/vimdoc-ja/syntax.html
-
 syntax enable
 colorscheme darkblue
-
-" http://vim-jp.org/vimdoc-ja/filetype.html
-
 filetype plugin on
 
 nnoremap j gj
