@@ -298,112 +298,27 @@ local function format_text_insert(vim, c)
   local b = vim.buffer()
   local w = vim.window()
   local f = vim.eval "v:lnum"
+  local n = vim.eval "v:count"
   local text_width = vim.eval "&textwidth"
 
-  local out = assert(io.open("/tmp/test.log", "a"))
-  out:write(([[
-line = %d
-col = %d
-char = %s
-lnum = %d
-count = %d
-]]):format(w.line, w.col, c, vim.eval "v:lnum", vim.eval "v:count"))
-  out:close()
+  assert(n == 1)
 
-  c = utf8.codepoint(c)
-  assert(not is_space(c))
-  assert(vim.eval "v:count" == 1)
-
-  local line = {}
-  for _, char in utf8.codes(b[f]) do
-    line[#line + 1] = char
+  local line = encode_utf32(b[f] .. c)
+  local head, body = parse(line)
+  local lines = format_text(head, body, text_width)
+  for i = 1, #lines do
+    lines[i] = unparse(lines[i])
   end
-  line[#line + 1] = c
+  local line = lines[#lines]
+  line[#line] = nil
 
-  local head = {}
-  local body = {}
-  for i = 1, #line do
-    local char = line[i]
-    if #body == 0 then
-      if is_space(char) then
-        head[#head + 1] = char
-      else
-        if get_width(char) == 1 then
-          body[1] = { char }
-        else
-          body[1] = char
-        end
-      end
-    else
-      if is_space(char) then
-        body[#body + 1] = char
-      else
-        if get_width(char) == 1 then
-          local prev = body[#body]
-          if type(prev) == "table" then
-            prev[#prev + 1] = char
-          else
-            body[#body + 1] = { char }
-          end
-        else
-          local prev = body[#body]
-          if is_unbreakable(prev, char) then
-            if type(prev) == "table" then
-              prev[#prev + 1] = char
-            else
-              body[#body] = { prev, char }
-            end
-          else
-            body[#body + 1] = char
-          end
-        end
-      end
-    end
+  local result = {}
+  for i = 1, #lines do
+    result[#result + 1] = decode_utf32(head) .. decode_utf32(lines[i])
   end
 
-  print(dumper.encode(body))
-
-  local max_width = text_width - get_width(head)
-  print(max_width)
-  local width = 0
-  local lines = {}
-  for i = 1, #body do
-    local this = body[i]
-    if width == 0 then
-      width = get_width(this)
-      lines[#lines + 1] = { this }
-    else
-      width = width + get_width(this)
-      if width > max_width and not is_space(this) and not is_line_start_prohibited(this) then
-        local line1 = lines[#lines]
-        local line2 = {}
-
-        width = 0
-        for j = #line1, 1, -1 do
-          local this = line1[j]
-          if is_space(this) then
-            line1[j] = nil
-            -- [TODO] insert space and then remove space
-          elseif is_line_end_prohibited(this) then
-            line1[j] = nil
-            width = width + get_width(this)
-            table.insert(line2, 1, this)
-          else
-            break
-          end
-        end
-
-        width = width + get_width(this)
-        line2[#line2 + 1] = this
-        lines[#lines + 1] = line2
-      else
-        local line = lines[#lines]
-        line[#line + 1] = this
-      end
-    end
-  end
-
-  print(dumper.encode(lines))
+  w.line = update_buffer(result, b, f, n)
+  w.col = #result[#result] + 1
 
   return "0"
 end
