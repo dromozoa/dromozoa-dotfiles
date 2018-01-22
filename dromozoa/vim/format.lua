@@ -93,16 +93,8 @@ local function get_width(this)
   end
 end
 
-local function encode_utf8(this)
-  if type(this) == "number" then
-    return utf8.char(this)
-  else
-    return utf8.char(unpack(this))
-  end
-end
-
-local function make_utf32_string_trim(s)
-  local result = { utf8.codepoint(s, 1, #s) }
+local function encode_utf32(source)
+  local result = { utf8.codepoint(source, 1, #source) }
   for i = #result, 1, -1 do
     if is_space(result[i]) then
       result[i] = nil
@@ -111,6 +103,10 @@ local function make_utf32_string_trim(s)
     end
   end
   return result
+end
+
+local function decode_utf32(source)
+  return utf8.char(unpack(source))
 end
 
 local function parse(source)
@@ -156,6 +152,21 @@ local function parse(source)
   return head, body
 end
 
+local function unparse(source)
+  local result = {}
+  for i = 1, #source do
+    local this = source[i]
+    if type(this) == "number" then
+      result[#result + 1] = this
+    else
+      for j = 1, #this do
+        result[#result + 1] = this[j]
+      end
+    end
+  end
+  return result
+end
+
 local function format_text_area(vim)
   local b = vim.buffer()
   local w = vim.window()
@@ -166,7 +177,7 @@ local function format_text_area(vim)
   local paragraphs = {}
 
   for i = f, f + n - 1 do
-    local line = make_utf32_string_trim(b[i])
+    local line = encode_utf32(b[i])
 
     local head, body = parse(line)
 
@@ -251,12 +262,9 @@ local function format_text_area(vim)
     else
       local lines = paragraph.lines
       for j = 1, #lines do
-        local line = lines[j]
-        local out = { encode_utf8(paragraph.head) }
-        for k = 1, #line do
-          out[#out + 1] = encode_utf8(line[k])
-        end
-        result[#result + 1] = table.concat(out)
+        local head = unparse(paragraph.head)
+        local body = unparse(lines[j])
+        result[#result + 1] = decode_utf32(head) .. decode_utf32(body)
       end
     end
   end
@@ -396,10 +404,6 @@ count = %d
       end
     end
   end
-
-
-
-
 
   print(dumper.encode(lines))
 
