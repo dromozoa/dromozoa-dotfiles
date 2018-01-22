@@ -166,7 +166,7 @@ local function unparse(source)
   return result
 end
 
-local function format_text(head, body, text_width)
+local function format(head, body, text_width)
   local max_width = text_width - get_width(head)
   local result = {}
   local width = 0
@@ -237,16 +237,22 @@ local function update_buffer(source, b, f, n)
   return f + m - 1
 end
 
-local function format_text_area(vim)
+local function format_text(vim)
   local b = vim.buffer()
   local w = vim.window()
   local f = vim.eval "v:lnum"
   local n = vim.eval "v:count"
+  local c = vim.eval "v:char"
   local text_width = vim.eval "&textwidth"
 
   local paragraphs = {}
-  for i = f, f + n - 1 do
-    local line = encode_utf32(b[i])
+  local m = f + n - 1
+  for i = f, m do
+    local s = b[i]
+    if i == m then
+      s = s .. c
+    end
+    local line = encode_utf32(s)
     local head, body = parse(line)
     if #body == 0 then
       paragraphs[#paragraphs + 1] = { type = "separator" }
@@ -269,8 +275,19 @@ local function format_text_area(vim)
   for i = 1, #paragraphs do
     local paragraph = paragraphs[i]
     if paragraph.type == "paragraph" then
-      paragraph.lines = format_text(paragraph.head, paragraph.body, text_width)
+      local lines = format(paragraph.head, paragraph.body, text_width)
+      for j = 1, #lines do
+        lines[j] = unparse(lines[j])
+      end
+      paragraph.lines = lines
     end
+  end
+
+  if c ~= "" then
+    local lines = paragraphs[#paragraphs].lines
+    local line = lines[#lines]
+    assert(utf8.codepoint(c) == line[#line])
+    line[#line] = nil
   end
 
   local result = {}
@@ -279,46 +296,20 @@ local function format_text_area(vim)
     if paragraph.type == "separator" then
       result[#result + 1] = ""
     else
+      local head = decode_utf32(paragraph.head)
       local lines = paragraph.lines
       for j = 1, #lines do
-        local head = unparse(paragraph.head)
-        local body = unparse(lines[j])
-        result[#result + 1] = decode_utf32(head) .. decode_utf32(body)
+        result[#result + 1] = head .. decode_utf32(lines[j])
       end
     end
   end
 
   w.line = update_buffer(result, b, f, n)
-  w.col = 1
-
-  return "0"
-end
-
-local function format_text_insert(vim, c)
-  local b = vim.buffer()
-  local w = vim.window()
-  local f = vim.eval "v:lnum"
-  local n = vim.eval "v:count"
-  local text_width = vim.eval "&textwidth"
-
-  assert(n == 1)
-
-  local line = encode_utf32(b[f] .. c)
-  local head, body = parse(line)
-  local lines = format_text(head, body, text_width)
-  for i = 1, #lines do
-    lines[i] = unparse(lines[i])
+  if c == "" then
+    w.col = 1
+  else
+    w.col = #result[#result] + 1
   end
-  local line = lines[#lines]
-  line[#line] = nil
-
-  local result = {}
-  for i = 1, #lines do
-    result[#result + 1] = decode_utf32(head) .. decode_utf32(lines[i])
-  end
-
-  w.line = update_buffer(result, b, f, n)
-  w.col = #result[#result] + 1
 
   return "0"
 end
@@ -326,12 +317,7 @@ end
 return function (vim)
   local filetype = vim.eval "&filetype"
   if filetype == "text" then
-    local c = vim.eval "v:char"
-    if c == "" then
-      return format_text_area(vim)
-    else
-      return format_text_insert(vim, c)
-    end
+    return format_text(vim)
   end
   return "1"
 end

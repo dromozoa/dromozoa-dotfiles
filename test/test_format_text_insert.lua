@@ -38,4 +38,9 @@ local vim = mock(b, {
 
 format(vim)
 
-io.write(b:text())
+assert(b:text() == [[
+12345678901234567890
+foo bar baz XXXX foo
+
+vim: set textwidth=20:
+]])
