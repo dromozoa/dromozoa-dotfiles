@@ -111,8 +111,8 @@ end
 local function parse(source)
   local head = {}
   local body = {}
-  for j = 1, #source do
-    local char = source[j]
+  for i = 1, #source do
+    local char = source[i]
     if #body == 0 then
       if is_space(char) then
         head[#head + 1] = char
@@ -166,6 +166,53 @@ local function unparse(source)
   return result
 end
 
+local function format_text(head, body, text_width)
+  local max_width = text_width - get_width(head)
+  local result = {}
+  local width = 0
+  for i = 1, #body do
+    local this = body[i]
+    if width == 0 then
+      width = get_width(this)
+      result[#result + 1] = { this }
+    else
+      width = width + get_width(this)
+      if width <= max_width or is_space(this) or is_line_start_prohibited(this) then
+        local line = result[#result]
+        line[#line + 1] = this
+      else
+        local line1 = result[#result]
+        local items = {}
+
+        for j = #line1, 1, -1 do
+          local this = line1[j]
+          if is_space(this) or is_line_end_prohibited(this) then
+            line1[j] = nil
+            items[#items + 1] = this
+          else
+            break
+          end
+        end
+
+        width = 0
+        local line2 = {}
+        for j = #items, 1, -1 do
+          local this = items[j]
+          if #line2 > 0 or not is_space(this) then
+            width = width + get_width(this)
+            line2[#line2 + 1] = this
+          end
+        end
+
+        width = width + get_width(this)
+        line2[#line2 + 1] = this
+        result[#result + 1] = line2
+      end
+    end
+  end
+  return result
+end
+
 local function update_buffer(source, b, f, n)
   local m = #source
   if n < m then
@@ -187,55 +234,7 @@ local function update_buffer(source, b, f, n)
       b[x] = nil
     end
   end
-end
-
-local function format_text(head, body, text_width)
-  local max_width = text_width - get_width(head)
-
-  local result = {}
-  local width = 0
-  for j = 1, #body do
-    local this = body[j]
-    if width == 0 then
-      width = get_width(this)
-      result[#result + 1] = { this }
-    else
-      width = width + get_width(this)
-      if width > max_width and not is_space(this) and not is_line_start_prohibited(this) then
-        local line1 = result[#result]
-        local line2 = {}
-        local line3 = {}
-
-        width = 0
-        for k = #line1, 1, -1 do
-          local this = line1[k]
-          if is_space(this) or is_line_end_prohibited(this) then
-            line1[k] = nil
-            width = width + get_width(this)
-            line2[#line2 + 1] = this
-          else
-            break
-          end
-        end
-
-        for k = #line2, 1, -1 do
-          local this = line2[k]
-          if #line3 > 0 or not is_space(this) then
-            line3[#line3 + 1] = this
-          end
-        end
-
-        width = width + get_width(this)
-        line3[#line3 + 1] = this
-        result[#result + 1] = line3
-      else
-        local line = result[#result]
-        line[#line + 1] = this
-      end
-    end
-  end
-
-  return result
+  return f + m - 1
 end
 
 local function format_text_area(vim)
@@ -289,8 +288,7 @@ local function format_text_area(vim)
     end
   end
 
-  update_buffer(result, b, f, n)
-  w.line = f + #result - 1
+  w.line = update_buffer(result, b, f, n)
   w.col = 1
 
   return "0"
