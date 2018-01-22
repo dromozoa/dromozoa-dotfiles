@@ -1,0 +1,3 @@
+12345678901234567890
+foo bar baz XXXX foo
+vim: set textwidth=20:

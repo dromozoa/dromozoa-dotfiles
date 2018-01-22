@@ -108,3 +108,24 @@ assert(b:text() == [[
 け
 こ
 ]])
+
+local b = buffer [[
+あいうえ『 「
+おかきくけこ
+]]
+
+local vim = mock(b, {}, {
+  ["v:lnum"] = 1;
+  ["v:count"] = b:size();
+  ["v:char"] = "";
+  ["&filetype"] = "text";
+  ["&textwidth"] = 10;
+})
+
+format(vim)
+
+assert(b:text() == [[
+あいうえ
+『 「おか
+きくけこ
+]])

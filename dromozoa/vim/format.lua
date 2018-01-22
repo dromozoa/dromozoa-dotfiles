@@ -15,6 +15,8 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
+local dumper = require "dromozoa.commons.dumper"
+
 local utf8 = require "dromozoa.utf8"
 local east_asian_width = require "dromozoa.ucd.east_asian_width"
 local is_white_space = require "dromozoa.ucd.is_white_space"
@@ -69,7 +71,6 @@ local function is_unbreakable(prev, this)
     return false
   end
 end
-
 
 local east_asian_width_map = {
   ["N"]  = 1; -- neutral
@@ -201,24 +202,30 @@ local function format_text_area(vim)
           if width > max_width and not is_space(this) and not is_line_start_prohibited(this) then
             local line1 = lines[#lines]
             local line2 = {}
+            local line3 = {}
 
             width = 0
-            for j = #line1, 1, -1 do
-              local this = line1[j]
-              if is_space(this) then
-                line1[j] = nil
-              elseif is_line_end_prohibited(this) then
-                line1[j] = nil
+            for k = #line1, 1, -1 do
+              local this = line1[k]
+              if is_space(this) or is_line_end_prohibited(this) then
+                line1[k] = nil
                 width = width + get_width(this)
-                table.insert(line2, 1, this)
+                line2[#line2 + 1] = this
               else
                 break
               end
             end
 
+            for k = #line2, 1, -1 do
+              local this = line2[k]
+              if #line3 > 0 or not is_space(this) then
+                line3[#line3 + 1] = this
+              end
+            end
+
             width = width + get_width(this)
-            line2[#line2 + 1] = this
-            lines[#lines + 1] = line2
+            line3[#line3 + 1] = this
+            lines[#lines + 1] = line3
           else
             local line = lines[#lines]
             line[#line + 1] = this
@@ -276,11 +283,132 @@ local function format_text_area(vim)
   return "0"
 end
 
+local function format_text_insert(vim, c)
+  local b = vim.buffer()
+  local w = vim.window()
+  local f = vim.eval "v:lnum"
+  local text_width = vim.eval "&textwidth"
+
+  local out = assert(io.open("/tmp/test.log", "a"))
+  out:write(([[
+line = %d
+col = %d
+char = %s
+lnum = %d
+count = %d
+]]):format(w.line, w.col, c, vim.eval "v:lnum", vim.eval "v:count"))
+  out:close()
+
+  c = utf8.codepoint(c)
+  assert(not is_space(c))
+  assert(vim.eval "v:count" == 1)
+
+  local line = {}
+  for _, char in utf8.codes(b[f]) do
+    line[#line + 1] = char
+  end
+  line[#line + 1] = c
+
+  local head = {}
+  local body = {}
+  for i = 1, #line do
+    local char = line[i]
+    if #body == 0 then
+      if is_space(char) then
+        head[#head + 1] = char
+      else
+        if get_width(char) == 1 then
+          body[1] = { char }
+        else
+          body[1] = char
+        end
+      end
+    else
+      if is_space(char) then
+        body[#body + 1] = char
+      else
+        if get_width(char) == 1 then
+          local prev = body[#body]
+          if type(prev) == "table" then
+            prev[#prev + 1] = char
+          else
+            body[#body + 1] = { char }
+          end
+        else
+          local prev = body[#body]
+          if is_unbreakable(prev, char) then
+            if type(prev) == "table" then
+              prev[#prev + 1] = char
+            else
+              body[#body] = { prev, char }
+            end
+          else
+            body[#body + 1] = char
+          end
+        end
+      end
+    end
+  end
+
+  print(dumper.encode(body))
+
+  local max_width = text_width - get_width(head)
+  print(max_width)
+  local width = 0
+  local lines = {}
+  for i = 1, #body do
+    local this = body[i]
+    if width == 0 then
+      width = get_width(this)
+      lines[#lines + 1] = { this }
+    else
+      width = width + get_width(this)
+      if width > max_width and not is_space(this) and not is_line_start_prohibited(this) then
+        local line1 = lines[#lines]
+        local line2 = {}
+
+        width = 0
+        for j = #line1, 1, -1 do
+          local this = line1[j]
+          if is_space(this) then
+            line1[j] = nil
+            -- [TODO] insert space and then remove space
+          elseif is_line_end_prohibited(this) then
+            line1[j] = nil
+            width = width + get_width(this)
+            table.insert(line2, 1, this)
+          else
+            break
+          end
+        end
+
+        width = width + get_width(this)
+        line2[#line2 + 1] = this
+        lines[#lines + 1] = line2
+      else
+        local line = lines[#lines]
+        line[#line + 1] = this
+      end
+    end
+  end
+
+
+
+
+
+  print(dumper.encode(lines))
+
+  return "0"
+end
+
 return function (vim)
   local filetype = vim.eval "&filetype"
   if filetype == "text" then
-    if vim.eval "v:char" == "" then
+    local c = vim.eval "v:char"
+    if c == "" then
       return format_text_area(vim)
+    else
+      return format_text_insert(vim, c)
     end
   end
   return "1"
