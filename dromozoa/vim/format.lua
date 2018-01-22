@@ -101,6 +101,61 @@ local function encode_utf8(this)
   end
 end
 
+local function make_utf32_string_trim(s)
+  local result = { utf8.codepoint(s, 1, #s) }
+  for i = #result, 1, -1 do
+    if is_space(result[i]) then
+      result[i] = nil
+    else
+      break
+    end
+  end
+  return result
+end
+
+local function parse(source)
+  local head = {}
+  local body = {}
+  for j = 1, #source do
+    local char = source[j]
+    if #body == 0 then
+      if is_space(char) then
+        head[#head + 1] = char
+      else
+        if get_width(char) == 1 then
+          body[1] = { char }
+        else
+          body[1] = char
+        end
+      end
+    else
+      if is_space(char) then
+        body[#body + 1] = char
+      else
+        local prev = body[#body]
+        if get_width(char) == 1 then
+          if type(prev) == "table" then
+            prev[#prev + 1] = char
+          else
+            body[#body + 1] = { char }
+          end
+        else
+          if is_unbreakable(prev, char) then
+            if type(prev) == "table" then
+              prev[#prev + 1] = char
+            else
+              body[#body] = { prev, char }
+            end
+          else
+            body[#body + 1] = char
+          end
+        end
+      end
+    end
+  end
+  return head, body
+end
+
 local function format_text_area(vim)
   local b = vim.buffer()
   local w = vim.window()
@@ -111,59 +166,9 @@ local function format_text_area(vim)
   local paragraphs = {}
 
   for i = f, f + n - 1 do
-    local line = {}
-    for _, char in utf8.codes(b[i]) do
-      line[#line + 1] = char
-    end
+    local line = make_utf32_string_trim(b[i])
 
-    for j = #line, 1, -1 do
-      if is_space(line[j]) then
-        line[j] = nil
-      else
-        break
-      end
-    end
-
-    local head = {}
-    local body = {}
-    for j = 1, #line do
-      local char = line[j]
-      if #body == 0 then
-        if is_space(char) then
-          head[#head + 1] = char
-        else
-          if get_width(char) == 1 then
-            body[1] = { char }
-          else
-            body[1] = char
-          end
-        end
-      else
-        if is_space(char) then
-          body[#body + 1] = char
-        else
-          if get_width(char) == 1 then
-            local prev = body[#body]
-            if type(prev) == "table" then
-              prev[#prev + 1] = char
-            else
-              body[#body + 1] = { char }
-            end
-          else
-            local prev = body[#body]
-            if is_unbreakable(prev, char) then
-              if type(prev) == "table" then
-                prev[#prev + 1] = char
-              else
-                body[#body] = { prev, char }
-              end
-            else
-              body[#body + 1] = char
-            end
-          end
-        end
-      end
-    end
+    local head, body = parse(line)
 
     if #body == 0 then
       paragraphs[#paragraphs + 1] = { type = "separator" }
