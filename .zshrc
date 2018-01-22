@@ -20,12 +20,7 @@ then
   . "$HOME/dromozoa-dotfiles/resource"
 fi
 
-autoload -U colors
-colors
-
-PROMPT="%{$fg[red]%}%n@%m:%~%#%{$reset_color%} "
-PROMPT2="%{$fg[red]%}>%{$reset_color%} "
-SPROMPT="%{$fg[red]%}correct '%R' to '%r' [nyae]?%{$reset_color%} "
+fpath=("$HOME/dromozoa-dotfiles/zshfuncs" $fpath)
 
 setopt auto_cd
 setopt autopushd
@@ -44,6 +39,13 @@ HISTSIZE=65536
 SAVEHIST=65536
 
 alias h='history -E -i 1 | grep'
+
+autoload -U colors
+colors
+
+PROMPT="%{$fg[red]%}%n@%m:%~%#%{$reset_color%} "
+PROMPT2="%{$fg[red]%}>%{$reset_color%} "
+SPROMPT="%{$fg[red]%}correct '%R' to '%r' [nyae]?%{$reset_color%} "
 
 autoload -U compinit
 compinit
