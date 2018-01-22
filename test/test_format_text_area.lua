@@ -66,6 +66,7 @@ local vim = mock(b, {}, {
   ["v:lnum"] = 2;
   ["v:count"] = b:size() - 2;
   ["v:char"] = "";
+  ["&filetype"] = "text";
   ["&textwidth"] = 30;
 })
 
@@ -94,6 +95,7 @@ local vim = mock(b, {}, {
   ["v:lnum"] = 3;
   ["v:count"] = b:size() - 4;
   ["v:char"] = "";
+  ["&filetype"] = "text";
   ["&textwidth"] = 30;
 })
 
@@ -105,4 +107,25 @@ assert(b:text() == [[
 うえおかきく
 け
 こ
+]])
+
+local b = buffer [[
+あいうえ『 「
+おかきくけこ
+]]
+
+local vim = mock(b, {}, {
+  ["v:lnum"] = 1;
+  ["v:count"] = b:size();
+  ["v:char"] = "";
+  ["&filetype"] = "text";
+  ["&textwidth"] = 10;
+})
+
+format(vim)
+
+assert(b:text() == [[
+あいうえ
+『 「おか
+きくけこ
 ]])
