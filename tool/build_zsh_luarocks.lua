@@ -32,7 +32,7 @@ local function normalize_text(source)
 end
 
 local state
-local options = {}
+local general_options = {}
 local commands = {}
 
 local handle = assert(io.popen("luarocks help"))
@@ -42,11 +42,11 @@ for line in handle:lines() do
   elseif state == "GENERAL OPTIONS" then
     local option, text = line:match "^\t(%-.-) +(.*)"
     if option then
-      options[#options + 1] = { option, text }
+      general_options[#general_options + 1] = { option, text }
     else
       local text = line:match "^\t +(.*)"
       if text then
-        local option = options[#options]
+        local option = general_options[#general_options]
         option[2] = option[2] .. " " .. text
       end
     end
@@ -69,8 +69,8 @@ handle:close()
 io.write [[
   _arguments -C \
 ]]
-for i = 1, #options do
-  local option = options[i]
+for i = 1, #general_options do
+  local option = general_options[i]
   local text = normalize_text(option[2])
   local opt, arg = option[1]:match "^(%-.-=)<(.-)>$"
   local spec
@@ -86,7 +86,7 @@ for i = 1, #options do
   io.write("    ", shell.quote(spec), " \\\n")
 end
 io.write [[
-    ":command:->command"
+    "*:command:->command"
 ]]
 
 io.write [[

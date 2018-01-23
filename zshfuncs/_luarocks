@@ -13,7 +13,8 @@ _luarocks() {
     '--local[Use the tree in the user'\''s home directory. To enable it, see '\''luarocks help path'\''.]' \
     '--verbose[Display verbose output of commands executed.]' \
     '--timeout=[Timeout on network operations, in seconds. 0 means no timeout (wait forever). Default is 30.]:seconds' \
-    ":command:->command"
+    ": :->command" \
+    "*:: :->opt_or_arg"
 
   local -a luarocks_commands
   luarocks_commands=(
@@ -30,7 +31,7 @@ _luarocks() {
     'pack:Create a rock, packing sources or binaries.'
     'path:Return the currently configured package path.'
     'purge:Remove all installed rocks from a tree.'
-    'remove:Uninstall a rock.'
+    'remove:Uninstall a rock.:_luarocks_remove'
     'search:Query the LuaRocks servers.'
     'show:Show information about an installed rock.'
     'unpack:Unpack the contents of a rock.'
@@ -38,9 +39,25 @@ _luarocks() {
     'write_rockspec:Write a template for a rockspec file.'
   )
 
+  local ret
+  ret=0
   case x$state in
     xcommand)
-      _describe -t commands luarocks luarocks_commands
+      _describe -t commands "luarock commands" luarocks_commands
+      ;;
+    xopt_or_arg)
+      _call_function ret "_luarocks_$words[1]"
       ;;
   esac
+}
+
+(( $+functions[_luarocks_remove] )) ||
+_luarocks_remove() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  _arguments -C \
+    "--force" \
+    "--force-fast"
 }
