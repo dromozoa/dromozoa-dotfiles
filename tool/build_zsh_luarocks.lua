@@ -66,9 +66,13 @@ for line in handle:lines() do
 end
 handle:close()
 
-io.write [[
-  _arguments -C \
-]]
+local name = "__dromozoa_setup_luarocks_general_options"
+local out = assert(io.open("zshfuncs/" .. name, "w"))
+out:write(([[
+#autoload
+%s() {
+  general_options=(
+]]):format(name))
 for i = 1, #general_options do
   local option = general_options[i]
   local text = normalize_text(option[2])
@@ -83,20 +87,25 @@ for i = 1, #general_options do
   else
     spec = option[1] .. "[" .. text .. "]"
   end
-  io.write("    ", shell.quote(spec), " \\\n")
+  out:write("    ", shell.quote(spec), "\n")
 end
-io.write [[
-    "*:command:->command"
+out:write [[
+  )
+}
 ]]
 
-io.write [[
-  local -a luarocks_commands
-  luarocks_commands=(
-]]
+local name = "__dromozoa_setup_luarocks_commands"
+local out = assert(io.open("zshfuncs/" .. name, "w"))
+out:write(([[
+#autoload
+%s() {
+  commands=(
+]]):format(name))
 for i = 1, #commands do
   local command = commands[i]
-  io.write("    ", shell.quote(command[1] .. ":" .. normalize_text(command[2])), "\n")
+  out:write("    ", shell.quote(command[1] .. ":" .. normalize_text(command[2])), "\n")
 end
-io.write [[
+out:write [[
   )
+}
 ]]
