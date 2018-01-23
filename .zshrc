@@ -43,10 +43,14 @@ alias h='history -E -i 1 | grep'
 autoload -U colors
 colors
 
-PROMPT="%{$fg[red]%}%n@%m:%~%#%{$reset_color%} "
-PROMPT2="%{$fg[red]%}>%{$reset_color%} "
-SPROMPT="%{$fg[red]%}correct '%R' to '%r' [nyae]?%{$reset_color%} "
-#RPROMPT?
+prompt_color=$fg[red]
+case x$TERM in
+  xscreen) prompt_color=$fg[yellow];;
+esac
+PROMPT="%{$prompt_color%}%n@%m:%~%#%{$reset_color%} "
+PROMPT2="%{$prompt_color%}>%{$reset_color%} "
+RPROMPT=
+SPROMPT="%{$prompt_color%}correct '%R' to '%r' [nyae]?%{$reset_color%} "
 
 autoload -U compinit
 compinit
