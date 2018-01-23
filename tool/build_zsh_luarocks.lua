@@ -66,6 +66,23 @@ for line in handle:lines() do
 end
 handle:close()
 
+local name = "__dromozoa_luarocks_commands"
+local out = assert(io.open("zshfuncs/" .. name, "w"))
+out:write(([[
+#autoload
+%s() {
+  commands=(
+    $commands
+]]):format(name))
+for i = 1, #commands do
+  local command = commands[i]
+  out:write("    ", shell.quote(command[1] .. ":" .. normalize_text(command[2])), "\n")
+end
+out:write [[
+  )
+}
+]]
+
 local name = "__dromozoa_luarocks_general_options"
 local out = assert(io.open("zshfuncs/" .. name, "w"))
 out:write(([[
@@ -89,23 +106,6 @@ for i = 1, #general_options do
     spec = option[1] .. "[" .. text .. "]"
   end
   out:write("    ", shell.quote(spec), "\n")
-end
-out:write [[
-  )
-}
-]]
-
-local name = "__dromozoa_luarocks_commands"
-local out = assert(io.open("zshfuncs/" .. name, "w"))
-out:write(([[
-#autoload
-%s() {
-  commands=(
-    $commands
-]]):format(name))
-for i = 1, #commands do
-  local command = commands[i]
-  out:write("    ", shell.quote(command[1] .. ":" .. normalize_text(command[2])), "\n")
 end
 out:write [[
   )
