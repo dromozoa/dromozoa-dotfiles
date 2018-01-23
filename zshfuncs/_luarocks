@@ -5,7 +5,14 @@ _luarocks() {
   local context state state_descr line
   typeset -A opt_args
 
-  _arguments -C \
+  _arguments -C -S \
+    '--server=[Fetch rocks/rockspecs from this server (takes priority over config file)]:server' \
+    '--only-server=[Fetch rocks/rockspecs from this server only (overrides any entries in the config file)]:server' \
+    '--only-sources=[Restrict downloads to paths matching the given URL.]:url' \
+    '--tree=[Which tree to operate on.]:tree' \
+    '--local[Use the tree in the user'\''s home directory. To enable it, see '\''luarocks help path'\''.]' \
+    '--verbose[Display verbose output of commands executed.]' \
+    '--timeout=[Timeout on network operations, in seconds. 0 means no timeout (wait forever). Default is 30.]:seconds' \
     ":command:->command"
 
   local -a luarocks_commands
@@ -14,7 +21,7 @@ _luarocks() {
     'config:Query information about the LuaRocks configuration.'
     'doc:Show documentation for an installed rock.'
     'download:Download a specific rock file from a rocks server.'
-    'help:Help on commands.'
+    'help:Help on commands. Type '\''luarocks help <command>'\'' for more.'
     'install:Install a rock.'
     'lint:Check syntax of a rockspec.'
     'list:List currently installed rocks.'

@@ -46,9 +46,11 @@ colors
 PROMPT="%{$fg[red]%}%n@%m:%~%#%{$reset_color%} "
 PROMPT2="%{$fg[red]%}>%{$reset_color%} "
 SPROMPT="%{$fg[red]%}correct '%R' to '%r' [nyae]?%{$reset_color%} "
+#RPROMPT?
 
 autoload -U compinit
 compinit
+zstyle ':completion:*:default' menu select=2
 
 autoload -U history-search-end
 zle -N history-beginning-search-backward-end history-search-end
