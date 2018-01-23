@@ -1,0 +1,8 @@
+#autoload
+__dromozoa_luarocks_list_options() {
+  options=(
+    $options
+    '--outdated[List only rocks for which there is a higher version available in the rocks server.]'
+    '--porcelain[Produce machine-friendly output.]'
+  )
+}

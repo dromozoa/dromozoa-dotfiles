@@ -56,7 +56,8 @@ filetype plugin on
 nnoremap j gj
 nnoremap k gk
 
-autocmd FileType text setlocal textwidth=60 wrap
+autocmd FileType html setlocal wrap
+autocmd FileType text setlocal wrap textwidth=60
 
 if has("lua")
   let $LUA_PATH=$HOME."/dromozoa-dotfiles/?.lua;;"
