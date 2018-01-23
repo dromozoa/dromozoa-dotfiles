@@ -40,6 +40,8 @@ SAVEHIST=65536
 
 alias h='history -E -i 1 | grep'
 
+bindkey "^B" push-line-or-edit
+
 autoload -U colors
 colors
 
