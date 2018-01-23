@@ -58,6 +58,19 @@ _luarocks_help() {
   esac
 }
 
+_luarocks_list() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  __dromozoa_luarocks_general_options
+  __dromozoa_luarocks_list_options
+
+  _arguments -C \
+    $options
+}
+
 _luarocks_remove() {
   local curcontext="$curcontext"
   local context state state_descr line
