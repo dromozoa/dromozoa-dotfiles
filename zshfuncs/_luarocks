@@ -7,28 +7,40 @@ _luarocks() {
 
   local -a commands
   __dromozoa_luarocks_commands
-
   local -a options
   __dromozoa_luarocks_general_options
 
   _arguments -C \
     $options \
     ": :->command" \
-    "*:: :->opt_or_arg"
+    "*:: :->argument"
 
-  local ret
-  ret=0
+  local result
   case x$state in
-    xcommand)
-      _describe -t commands "luarock commands" commands
-      ;;
-    xopt_or_arg)
-      _call_function ret "_luarocks_$words[1]"
-      ;;
+    xcommand) _describe commands commands;;
+    xargument) _call_function result "_luarocks_$words[1]";;
   esac
 }
 
-(( $+functions[_luarocks_remove] )) ||
+_luarocks_help() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a commands
+  __dromozoa_luarocks_commands
+  local -a options
+  __dromozoa_luarocks_general_options
+
+  _arguments -C \
+    $options \
+    ": :->command"
+
+  case x$state in
+    xcommand) _describe commands commands;;
+  esac
+}
+
 _luarocks_remove() {
   local curcontext="$curcontext"
   local context state state_descr line
