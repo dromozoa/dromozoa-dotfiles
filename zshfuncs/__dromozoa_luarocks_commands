@@ -1,6 +1,7 @@
 #autoload
-__dromozoa_setup_luarocks_commands() {
+__dromozoa_luarocks_commands() {
   commands=(
+    $commands
     'build:Build/compile a rock.'
     'config:Query information about the LuaRocks configuration.'
     'doc:Show documentation for an installed rock.'

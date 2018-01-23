@@ -66,12 +66,13 @@ for line in handle:lines() do
 end
 handle:close()
 
-local name = "__dromozoa_setup_luarocks_general_options"
+local name = "__dromozoa_luarocks_general_options"
 local out = assert(io.open("zshfuncs/" .. name, "w"))
 out:write(([[
 #autoload
 %s() {
-  general_options=(
+  options=(
+    $options
 ]]):format(name))
 for i = 1, #general_options do
   local option = general_options[i]
@@ -94,12 +95,13 @@ out:write [[
 }
 ]]
 
-local name = "__dromozoa_setup_luarocks_commands"
+local name = "__dromozoa_luarocks_commands"
 local out = assert(io.open("zshfuncs/" .. name, "w"))
 out:write(([[
 #autoload
 %s() {
   commands=(
+    $commands
 ]]):format(name))
 for i = 1, #commands do
   local command = commands[i]

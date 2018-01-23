@@ -6,13 +6,13 @@ _luarocks() {
   typeset -A opt_args
 
   local -a commands
-  __dromozoa_setup_luarocks_commands
+  __dromozoa_luarocks_commands
 
-  local -a general_options
-  __dromozoa_setup_luarocks_general_options
+  local -a options
+  __dromozoa_luarocks_general_options
 
   _arguments -C \
-    $general_options \
+    $options \
     ": :->command" \
     "*:: :->opt_or_arg"
 
@@ -34,11 +34,11 @@ _luarocks_remove() {
   local context state state_descr line
   typeset -A opt_args
 
-  local -a general_options
-  __dromozoa_setup_luarocks_general_options
+  local -a options
+  __dromozoa_luarocks_general_options
 
   _arguments -C \
-    $general_options \
+    $options \
     "--force" \
     "--force-fast"
 }
