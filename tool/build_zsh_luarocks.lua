@@ -67,17 +67,23 @@ end
 handle:close()
 
 io.write [[
-  _arguments -C -S \
+  _arguments -C \
 ]]
 for i = 1, #options do
   local option = options[i]
   local text = normalize_text(option[2])
   local opt, arg = option[1]:match "^(%-.-=)<(.-)>$"
+  local spec
   if opt then
-    io.write("    ", shell.quote(opt .. "[" .. text .. "]:" .. arg), " \\\n")
+    if arg == "server" then
+      spec = opt .. "[" .. text .. "]:" .. arg .. ":_hosts"
+    else
+      spec = opt .. "[" .. text .. "]:" .. arg
+    end
   else
-    io.write("    ", shell.quote(option[1] .. "[" .. text .. "]"), " \\\n")
+    spec = option[1] .. "[" .. text .. "]"
   end
+  io.write("    ", shell.quote(spec), " \\\n")
 end
 io.write [[
     ":command:->command"
