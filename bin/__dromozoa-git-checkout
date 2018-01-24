@@ -17,4 +17,15 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-git checkout -b develop
+branch=`git branch --list "$1"`
+branch=`expr "x$branch" : 'x. \(.*\)' || :`
+case x$branch in
+  x$1) ;;
+  *)
+    branch=`git symbolic-ref --short HEAD`
+    case x$branch in
+      x$2) git branch "$1";;
+      *) echo "on branch $branch"; exit 1;;
+    esac;;
+esac
+git checkout "$1"

@@ -20,8 +20,14 @@ then
   . "$HOME/dromozoa-dotfiles/resource"
 fi
 
-PS1='\[\e[31m\]\u@\h:\W\$\[\e[m\] '
-PS2='\[\e[31m\]>\[\e[m\] '
+ps_start='\[\e[91m\]'
+ps_reset='\[\e[m\]'
+case x$TERM in
+  xscreen) ps_start='\[\e[92m\]';;
+esac
+
+PS1="$ps_start\u@\h:\W\$$ps_reset "
+PS2="$ps_start>$ps_reset "
 
 HISTCONTROL=ignoreboth
 HISTSIZE=65536
