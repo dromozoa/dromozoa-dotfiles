@@ -43,10 +43,10 @@ alias h='history -E -i 1 | grep'
 setopt noflowcontrol
 bindkey "^Q" push-line-or-edit
 
-ps_start="%F{9}"
-ps_reset="%f"
+ps_start='%{[91m%}'
+ps_reset="%{[0m%}"
 case x$TERM in
-  xscreen*) ps_start="%F{10}";;
+  xscreen) ps_start="%{[92m%}";;
 esac
 PS1="$ps_start%n@%m:%~%#$ps_reset "
 PS2="$ps_start>$ps_reset "

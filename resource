@@ -69,9 +69,3 @@ case x$uname in
   *)
     alias ls='ls -F --color=auto';;
 esac
-
-case x$TERM in
-  xscreen)
-    TERM=screen-256color
-    export TERM;;
-esac
