@@ -40,19 +40,18 @@ SAVEHIST=65536
 
 alias h='history -E -i 1 | grep'
 
-bindkey "^B" push-line-or-edit
+setopt noflowcontrol
+bindkey "^Q" push-line-or-edit
 
-autoload -U colors
-colors
-
-prompt_color=$fg[red]
+ps_start="%F{9}"
+ps_reset="%f"
 case x$TERM in
-  xscreen) prompt_color=$fg[yellow];;
+  xscreen*) ps_start="%F{10}";;
 esac
-PROMPT="%{$prompt_color%}%n@%m:%~%#%{$reset_color%} "
-PROMPT2="%{$prompt_color%}>%{$reset_color%} "
+PS1="$ps_start%n@%m:%~%#$ps_reset "
+PS2="$ps_start>$ps_reset "
 RPROMPT=
-SPROMPT="%{$prompt_color%}correct '%R' to '%r' [nyae]?%{$reset_color%} "
+SPROMPT="${ps_start}correct '%R' to '%r' [nyae]?$ps_reset "
 
 autoload -U compinit
 compinit

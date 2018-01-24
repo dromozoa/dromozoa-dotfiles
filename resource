@@ -64,7 +64,14 @@ uname=`uname`
 case x$uname in
   xDarwin)
     alias ls='ls -F -G'
-    export LSCOLORS=gxcxheheDxagadabagacad;;
+    LSCOLORS=gxcxheheDxagadabagacad
+    export LSCOLORS;;
   *)
     alias ls='ls -F --color=auto';;
+esac
+
+case x$TERM in
+  xscreen)
+    TERM=screen-256color
+    export TERM;;
 esac
