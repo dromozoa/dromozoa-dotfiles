@@ -24,24 +24,16 @@ fpath=("$HOME/dromozoa-dotfiles/zshfuncs" $fpath)
 
 setopt auto_cd
 setopt autopushd
+setopt noautoremoveslash
 setopt correct
 setopt extended_glob
 setopt extended_history
+setopt noflowcontrol
 setopt hist_expand
 setopt hist_ignore_dups
 setopt hist_verify
 setopt inc_append_history
-setopt noautoremoveslash
 setopt share_history
-
-HISTFILE=~/.zsh_history
-HISTSIZE=65536
-SAVEHIST=65536
-
-alias h='history -E -i 1 | grep'
-
-setopt noflowcontrol
-bindkey "^Q" push-line-or-edit
 
 ps_start='%{[91m%}'
 ps_reset="%{[0m%}"
@@ -53,6 +45,12 @@ PS2="$ps_start>$ps_reset "
 RPROMPT=
 SPROMPT="${ps_start}correct '%R' to '%r' [nyae]?$ps_reset "
 
+HISTFILE=~/.zsh_history
+HISTSIZE=65536
+SAVEHIST=65536
+
+alias h='history -E -i 1 | grep'
+
 autoload -U compinit
 compinit
 zstyle ':completion:*:default' menu select=2
@@ -60,8 +58,10 @@ zstyle ':completion:*:default' menu select=2
 autoload -U history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
-bindkey "^P" history-beginning-search-backward-end
+
 bindkey "^N" history-beginning-search-forward-end
+bindkey "^P" history-beginning-search-backward-end
+bindkey "^Q" push-line-or-edit
 
 if test -f "$HOME/.zshrc.local"
 then
