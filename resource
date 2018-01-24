@@ -64,7 +64,7 @@ alias git-checkout-master='git checkout master'
 alias git-checkout-develop='__dromozoa-git-checkout develop master'
 alias git-checkout-feature='__dromozoa-git-checkout feature develop'
 alias git-checkout-release='__dromozoa-git-checkout release develop'
-
+alias git-push-all-tags-dry-run='git-push-all-tags --dry-run'
 alias git-clean='git clean -d -x'
 alias git-status='git status'
 alias git-tag='git tag -m "" -a'

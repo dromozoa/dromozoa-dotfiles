@@ -17,5 +17,5 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-git push --all
-git push --tags
+git push --all "$@"
+git push --tags "$@"
