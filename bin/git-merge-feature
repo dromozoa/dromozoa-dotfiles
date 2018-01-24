@@ -19,8 +19,9 @@
 
 branch=`git symbolic-ref --short HEAD`
 case x$branch in
-  xdevelop) ;;
+  xfeature) ;;
   *) echo "on branch $branch"; exit 1;;
 esac
+git checkout develop
 git merge --no-ff -m "作業ブランチをマージ。" feature
 git branch -d feature
