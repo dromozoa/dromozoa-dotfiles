@@ -1,0 +1,258 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-dotfiles.
+--
+-- dromozoa-dotfiles is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-dotfiles is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
+
+local floor = math.floor
+
+local function encode(year, month, day)
+  if month < 3 then
+    year = year - 1
+    month = month + 13
+  else
+    month = month + 1
+  end
+  day = day + 0.5
+
+  local jd = floor(365.25 * (year + 4716)) + floor(30.6001 * month) + day - 1524.5
+  if jd >= 2299160.5 then
+    local A = floor(year / 100)
+    jd = jd + 2 - A + floor(A / 4)
+  end
+  return jd
+end
+
+local function decode(jd)
+  jd = jd + 1.5
+  local F = jd % 1
+  local A = jd - F
+  local wday = A % 7
+  if A >= 2299162 then
+    local alpha = floor((A - 1867217.25) / 36524.25)
+    A = A + 1 + alpha - floor(alpha / 4)
+  end
+  local B = A + 1523
+  local C = floor((B - 122.1) / 365.25)
+  local D = floor(365.25 * C)
+  local E = floor((B - D) / 30.6001)
+
+  local year
+  local month
+  if E < 14 then
+    year = C - 4716
+    month = E - 1
+  else
+    year = C - 4715
+    month = E - 13
+  end
+  local day = B - D - floor(30.6001 * E)
+
+  return {
+    year = year;
+    month = month;
+    day = day;
+    wday = wday;
+  }
+end
+
+local function SGR(n)
+  return "\27[" .. n .. "m"
+end
+
+local function put_sgr(item, new_sgr)
+  local sgr = item.sgr
+  if sgr then
+    sgr[#sgr + 1] = new_sgr
+  else
+    item.sgr = { new_sgr }
+  end
+end
+
+local sgr_today = SGR(1) .. SGR("48;5;238")
+local sgr_holiday = SGR(1) .. SGR(91)
+local sgr_dayoff = SGR(1) .. SGR(91)
+local sgr_sunday = SGR(91)
+local sgr_saturday = SGR(96)
+local sgr_reset = SGR(0)
+
+local holidays = {}
+local handle = assert(io.popen [[iconv -f CP932 <"$HOME/dromozoa-dotfiles/docs/syukujitsu.csv"]])
+for line in handle:lines() do
+  local year, month, day, name = line:match "^(%d+)%-(%d+)%-(%d+),(%S+)%s*$"
+  if year then
+    year = tonumber(year)
+    month = tonumber(month)
+    day = tonumber(day)
+    holidays[encode(year, month, day)] = name
+  end
+end
+handle:close()
+
+local today = os.date "*t"
+today.jd = encode(today.year, today.month, today.day)
+
+local year = ...
+year = tonumber(year)
+if not year then
+  year = today.year
+end
+
+local jdays = {}
+local jd_first = encode(year, 1, 1)
+local jd_last = encode(year + 1, 1, 1) - 1
+for jd = jd_first - 1, jd_last + 1 do
+  local item = decode(jd)
+  item.jd = jd
+  item.holiday = holidays[jd]
+  jdays[jd] = item
+end
+
+local months = {}
+for i = 1, 12 do
+  months[i] = {}
+end
+for jd = jd_first, jd_last do
+  local item = jdays[jd]
+  months[item.month][item.day] = item
+end
+
+--[[
+http://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=323AC1000000178&openerCode=1
+第三条  「国民の祝日」は、休日とする。
+２  「国民の祝日」が日曜日に当たるときは、その日後においてそ
+    の日に最も近い「国民の祝日」でない日を休日とする。
+３  その前日及び翌日が「国民の祝日」である日（「国民の祝日」
+    でない日に限る。）は、休日とする。
+]]
+
+for jd = jd_first, jd_last do
+  local item = jdays[jd]
+  if item.holiday then
+    item.dayoff = true
+    if item.wday == 0 then
+      for jd = jd + 1, jd_last + 1 do
+        local item = jdays[jd]
+        if not item.holiday then
+          item.dayoff = true
+          break
+        end
+      end
+    end
+  end
+  if not item.holiday then
+    if jdays[jd - 1].holiday and jdays[jd + 1].holiday then
+      item.dayoff = true
+    end
+  end
+end
+
+for jd = jd_first, jd_last do
+  local item = jdays[jd]
+  if item.jd == today.jd then
+    put_sgr(item, sgr_today)
+  end
+  if item.holiday then
+    put_sgr(item, sgr_holiday)
+  elseif item.dayoff then
+    put_sgr(item, sgr_dayoff)
+  else
+    local wday = item.wday
+    if wday == 0 then
+      put_sgr(item, sgr_sunday)
+    elseif wday == 6 then
+      put_sgr(item, sgr_saturday)
+    end
+  end
+end
+
+local rows = {}
+for i = 1, 24 do
+  local row = {}
+  for j = 1, 21 do
+    row[j] = false
+  end
+  rows[i] = row
+end
+
+for month = 1, 12 do
+  local days = months[month]
+  local wday = days[1].wday
+  for day = 1, #days do
+    local m = month - 1
+    local d = day + wday - 1
+    local i = floor(m / 3) * 6 + floor(d / 7) + 1
+    local j = m % 3 * 7 + d % 7 + 1
+    rows[i][j] = days[day]
+  end
+end
+
+for i = 1, #rows do
+  local row = rows[i]
+  for j = #row, 1, -1 do
+    if row[j] then
+      break
+    else
+      row[j] = nil
+    end
+  end
+end
+
+io.write((" "):rep(29), year, "\n\n")
+for i = 1, #rows do
+  if i % 6 == 1 then
+    local month = floor(i / 6) * 3 + 1
+    if month < 10 then
+      io.write(
+        ("        %d月           "):format(month),
+        ("        %d月           "):format(month + 1),
+        ("        %d月\n"):format(month + 2))
+    else
+      io.write(
+        ("        %d月          "):format(month),
+        ("        %d月          "):format(month + 1),
+        ("        %d月\n"):format(month + 2))
+    end
+    local sunday = sgr_sunday .. "日" .. sgr_reset
+    local saturday = sgr_saturday .. "土" .. sgr_reset
+    io.write(
+        sunday, " 月 火 水 木 金 ", saturday, "  ",
+        sunday, " 月 火 水 木 金 ", saturday, "  ",
+        sunday, " 月 火 水 木 金 ", saturday, "\n")
+  end
+  local row = rows[i]
+  for j = 1, #row do
+    local item = row[j]
+    if j > 1 then
+      if j % 7 == 1 then
+        io.write "  "
+      else
+        io.write " "
+      end
+    end
+    if item then
+      local sgr = item.sgr
+      if sgr then
+        io.write(table.concat(sgr), ("%2d"):format(item.day), sgr_reset)
+      else
+        io.write(("%2d"):format(item.day))
+      end
+    else
+      io.write "  "
+    end
+  end
+  io.write "\n"
+end
