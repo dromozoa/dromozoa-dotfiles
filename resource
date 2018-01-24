@@ -60,6 +60,10 @@ alias mv='mv -i'
 alias rm='rm -i'
 alias rmfr='\rm -fr'
 
+alias co-master='git checkout master'
+alias co-develop='git checkout develop'
+alias co-feature='git checkout develop'
+
 alias git-clean='git clean -d -x'
 alias git-tag='git tag -m "" -a'
 
