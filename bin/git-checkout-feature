@@ -17,17 +17,15 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-branch=`git symbolic-ref --short HEAD`
-case x$branch in
-  xdevelop) ;;
-  *) echo "on branch $branch"; exit 1;;
-esac
-
 branch=`git branch --list feature`
 branch=`expr "x$branch" : 'x. \(.*\)' || :`
-
 case x$branch in
   xfeature) ;;
-  *) git branch feature;;
+  *)
+    branch=`git symbolic-ref --short HEAD`
+    case x$branch in
+      xdevelop) git branch feature;;
+      *) echo "on branch $branch"; exit 1;;
+    esac;;
 esac
 git checkout feature
