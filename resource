@@ -60,15 +60,13 @@ alias mv='mv -i'
 alias rm='rm -i'
 alias rmfr='\rm -fr'
 
+alias git-checkout-master='git checkout master'
 alias git-checkout-develop='__dromozoa-git-checkout develop master'
 alias git-checkout-feature='__dromozoa-git-checkout feature develop'
 alias git-checkout-release='__dromozoa-git-checkout release develop'
-
-# alias co-master='git checkout master'
-# alias co-develop='git checkout develop'
-# alias co-feature='git checkout feature'
-
+alias git-push-all-tags-dry-run='git-push-all-tags --dry-run'
 alias git-clean='git clean -d -x'
+alias git-status='git status'
 alias git-tag='git tag -m "" -a'
 
 uname=`uname`

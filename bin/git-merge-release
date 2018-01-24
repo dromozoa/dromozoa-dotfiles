@@ -17,4 +17,14 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
+branch=`git symbolic-ref --short HEAD`
+case x$branch in
+  xrelease) ;;
+  *) echo "on branch $branch"; exit 1;;
+esac
+git checkout master
 git merge --no-ff -m "リリースブランチをマージ。" release
+git checkout develop
+git merge --no-ff -m "リリースブランチをマージ。" release
+git checkout master
+git branch -d release
