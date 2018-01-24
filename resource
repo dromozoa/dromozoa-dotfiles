@@ -60,6 +60,7 @@ alias mv='mv -i'
 alias rm='rm -i'
 alias rmfr='\rm -fr'
 
+alias git-clean='git clean -d -x'
 alias git-tag='git tag -m "" -a'
 
 uname=`uname`
