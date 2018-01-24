@@ -60,6 +60,8 @@ alias mv='mv -i'
 alias rm='rm -i'
 alias rmfr='\rm -fr'
 
+alias git-tag='git tag -m "" -a'
+
 uname=`uname`
 case x$uname in
   xDarwin)
