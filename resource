@@ -54,6 +54,7 @@ done
 
 alias c=clear
 alias e=exit
+alias l='ls -al'
 alias o='cd "$OLDPWD"'
 alias cp='cp -i'
 alias mv='mv -i'
