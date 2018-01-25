@@ -1,0 +1,127 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-dotfiles.
+--
+-- dromozoa-dotfiles is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-dotfiles is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
+
+local dumper = require "dromozoa.commons.dumper"
+
+local help = [[
+usage: luap [options] stat [file...]
+Available options are:
+  -e stat  execute string 'stat'
+  -i[ext]  edit file in place (makes backup if extension supplied)
+  --       stop handling options
+  -        stop handling options and execute stdin
+Available variables are:
+  _  current line
+  N  current line number
+]]
+
+local stats = {}
+local files = {}
+local inplace
+
+local i = 1
+local n = #arg
+while i <= n do
+  local this = arg[i]
+  i = i + 1
+  if this == "-e" then
+    stats[#stats + 1] = arg[i]
+    i = i + 1
+  elseif this:find "^%-+h" then
+    io.stderr:write(help)
+    os.exit()
+  elseif this:find "^%-i" then
+    inplace = this:match "^%-i(.+)" or true
+  elseif this == "--" then
+    break
+  elseif this == "-" then
+    files[#files + 1] = io.stdin
+    break
+  elseif not this:find "^%-" then
+    i = i - 1
+    break
+  else
+    io.stderr:write(("luap: unrecognized option: '%s'\n"):format(this), help)
+    os.exit(1)
+  end
+end
+
+if i <= n then
+  stats[#stats + 1] = arg[i]
+  for i = i + 1, n do
+    files[#files + 1] = arg[i]
+  end
+end
+
+if #files == 0 then
+  files[1] = io.stdin
+end
+
+local code = {}
+code[#code + 1] = [[
+return function (_, N)
+  do
+]]
+for i = 1, #stats do
+  code[#code + 1] = "    " .. stats[i] .. "\n"
+end
+code[#code + 1] = [[
+  end
+  return _
+end
+]]
+local code = table.concat(code)
+local f = assert((loadstring or load)(code))()
+
+for i = 1, #files do
+  local file = files[i]
+  local lines = {}
+
+  local handle
+  if type(file) == "string" then
+    handle = assert(io.open(file))
+  else
+    handle = file
+  end
+  for line in handle:lines() do
+    lines[#lines + 1] = line
+  end
+  if type(file) == "string" then
+    handle:close()
+    if type(inplace) == "string" then
+      assert(os.rename(file, file .. inplace))
+    end
+  end
+
+  local handle
+  if inplace then
+    handle = assert(io.open(file, "w"))
+  else
+    handle = io.stdout
+  end
+  for i = 1, #lines do
+    local result = f(lines[i], i)
+    if result ~= nil then
+      handle:write(tostring(result), "\n")
+    end
+  end
+  if inplace then
+    handle:close()
+  end
+end
