@@ -38,7 +38,7 @@ setopt share_history
 ps_start='%{[91m%}'
 ps_reset="%{[0m%}"
 case x$TERM in
-  xscreen) ps_start="%{[92m%}";;
+  xscreen*) ps_start="%{[92m%}";;
 esac
 PS1="$ps_start%n@%m:%~%#$ps_reset "
 PS2="$ps_start>$ps_reset "
