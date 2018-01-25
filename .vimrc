@@ -40,14 +40,14 @@ set ignorecase
 set incsearch
 set smartcase
 
-set nobackup
-set noswapfile
-
 set number
 set list
 set listchars=tab:__,trail:_,precedes:<,extends:>
 set laststatus=2
 set statusline=%F\ %m%r%h%w%y%{'['.&fileencoding.']['.&fileformat.']'}%=[%l,%c][U+%04B]
+
+set autowrite
+set updatetime=1000
 
 syntax enable
 colorscheme darkblue
@@ -55,6 +55,9 @@ filetype plugin on
 
 nnoremap j gj
 nnoremap k gk
+
+autocmd InsertLeave * wall
+autocmd CursorHold * wall
 
 autocmd FileType html setlocal wrap
 autocmd FileType text setlocal wrap textwidth=60
