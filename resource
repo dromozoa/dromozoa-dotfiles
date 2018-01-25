@@ -54,6 +54,7 @@ done
 
 alias c=clear
 alias e=exit
+alias l='ls -al'
 alias o='cd "$OLDPWD"'
 alias cp='cp -i'
 alias mv='mv -i'
@@ -68,6 +69,7 @@ alias git-push-all-tags-dry-run='git-push-all-tags --dry-run'
 alias git-clean='git clean -d -x'
 alias git-status='git status'
 alias git-tag='git tag -m "" -a'
+alias tig-all='tig --all'
 
 uname=`uname`
 case x$uname in
