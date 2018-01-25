@@ -37,7 +37,7 @@ backup=$here/backup-`date "+%Y-%m-%d-%H-%M-%S"`
 cd
 home=`pwd`
 
-for i in .bashrc .editrc .inputrc .screenrc .vimrc .zshrc
+for i in .bashrc .editrc .inputrc .tigrc .vimrc .zshrc
 do
   if test -h "$i"
   then
