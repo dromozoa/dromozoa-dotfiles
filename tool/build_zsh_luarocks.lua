@@ -34,26 +34,46 @@ end
 
 local function parse_help(command)
   local state
+  local option_map = {}
+  local option
   local options = {}
 
   local handle = assert(io.popen(("%s help %s"):format(shell.quote(luarocks), shell.quote(command))))
   for line in handle:lines() do
     if line:find "^%a" then
       state = line
+    elseif state == "SYNOPSIS" then
+      for opt in line:gmatch "%-[%a%-]+" do
+        option_map[opt] = true
+      end
     elseif state == "DESCRIPTION" then
-      local option, text = line:match "^\t(%-.-) +(.*)"
-      if option then
-        options[#options + 1] = { option, text }
+      local opt, text = line:match "^\t(%-.-) +(.*)"
+      if opt then
+        option_map[opt] = nil
+        option = { opt, text }
+        options[#options + 1] = option
       else
         local text = line:match "^\t +(.*)"
         if text then
-          local option = options[#options]
           option[2] = option[2] .. " " .. text
         end
       end
     end
   end
   handle:close()
+
+  -- for i = 1, #options do
+  --   options[i] = normalize_text(options[i])
+  -- end
+
+  local opts = {}
+  for opt in pairs(option_map) do
+    opts[#opts + 1] = opt
+  end
+  table.sort(opts)
+  for i = 1, #opts do
+    options[#options + 1] = { opts[i] }
+  end
 
   return options
 end
@@ -73,18 +93,24 @@ local function write_options(function_name, options)
 
   for i = 1, #options do
     local option = options[i]
-    local text = normalize_text(option[2])
-    local name, argument = option[1]:match "^(%-.-=)<(.-)>$"
+    local opt = option[1]
+    local text = option[2]
+    if text then
+      text = ("[%s]"):format(normalize_text(text))
+    else
+      text = ""
+    end
+    local name, argument = opt:match "^(%-.-=)<(.-)>$"
     local spec
     if name then
       local action = argument_map[argument]
       if action then
-        spec = ("%s[%s]:%s:%s"):format(name, text, argument, action)
+        spec = ("%s%s:%s:%s"):format(name, text, argument, action)
       else
-        spec = ("%s[%s]:%s"):format(name, text, argument)
+        spec = ("%s%s:%s"):format(name, text, argument)
       end
     else
-      spec = ("%s[%s]"):format(option[1], text)
+      spec = ("%s%s"):format(option[1], text)
     end
     out:write("    ", shell.quote(spec), "\n")
   end
@@ -151,6 +177,7 @@ write_options("__dromozoa_luarocks_general_options", general_options)
 
 local list_options = parse_help "list"
 write_options("__dromozoa_luarocks_list_options", list_options)
+print(dumper.encode(list_options, { pretty = true }))
 
 local remove_options = parse_help "remove"
 write_options("__dromozoa_luarocks_remove_options", remove_options)
