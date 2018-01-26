@@ -20,12 +20,11 @@
 branch=`git branch --list "$1"`
 branch=`expr "x$branch" : 'x. \(.*\)' || :`
 case x$branch in
-  x$1) ;;
-  *)
-    branch=`git symbolic-ref --short HEAD`
+  x)
+    branch=`git branch --remote --list "*/$1"`
+    branch=`expr "x$branch" : 'x. \(.*\)' || :`
     case x$branch in
-      x$2) git branch "$1";;
-      *) echo "on branch $branch"; exit 1;;
+      x) git branch "$1";;
     esac;;
 esac
 git checkout "$1"
