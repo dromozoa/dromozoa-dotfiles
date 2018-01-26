@@ -45,7 +45,7 @@ fi
 
 EDITOR=vim
 CPPFLAGS=-I/opt/dromozoa/include
-LDFLAGS=-L/opt/dromozoa/lib
+LDFLAGS="-L/opt/dromozoa/lib -Wl,-rpath -Wl,/opt/dromozoa/lib"
 
 for i in PATH MANPATH LANG EDITOR CPPFLAGS LDFLAGS
 do
