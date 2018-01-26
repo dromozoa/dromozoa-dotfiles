@@ -85,7 +85,7 @@ _luarocks_remove() {
   local result
   case x$state in
     xmode) __dromozoa_luarocks_mode;;
-#    xname) _call_function result "_luarocks_rockname";;
+    xname) __dromozoa_luarocks_name;;
   esac
 }
 
@@ -93,6 +93,15 @@ __dromozoa_luarocks_command() {
   local -a commands
   __dromozoa_luarocks_commands
   _describe commands commands
+}
+
+__dromozoa_luarocks_name() {
+  local -a names
+  luarocks list --porcelain | while read name version _
+  do
+    names=($names "${name}:$version")
+  done
+  _describe names names
 }
 
 __dromozoa_luarocks_mode() {
