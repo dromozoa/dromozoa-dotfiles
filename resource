@@ -49,12 +49,16 @@ fi
 
 EDITOR=vim
 
-CPPFLAGS=\
-"-I$HOME/dromozoa/include "\
-"-I/opt/dromozoa/include"
-LDFLAGS=\
-"-L$HOME/dromozoa/lib -Wl,-rpath -Wl,$HOME/dromozoa/lib "\
-"-L/opt/dromozoa/lib -Wl,-rpath -Wl,/opt/dromozoa/lib "
+CPPFLAGS="-I$HOME/dromozoa/include -I/opt/dromozoa/include"
+LDFLAGS="-L$HOME/dromozoa/lib -L/opt/dromozoa/lib"
+case x`uname` in
+  xDarwin)
+    LDFLAGS="-L$HOME/dromozoa/lib"
+    LDFLAGS="$LDFLAGS -L/opt/dromozoa/lib";;
+  *)
+    LDFLAGS="-L$HOME/dromozoa/lib -Wl,-rpath -Wl,$HOME/dromozoa/lib"
+    LDFLAGS="$LDFLAGS -L/opt/dromozoa/lib -Wl,-rpath -Wl,/opt/dromozoa/lib";;
+esac
 
 for i in PATH MANPATH LANG EDITOR CPPFLAGS LDFLAGS
 do
@@ -70,6 +74,15 @@ alias mv='mv -i'
 alias rm='rm -i'
 alias rmfr='\rm -fr'
 
+case x`uname` in
+  xDarwin)
+    alias ls='ls -F -G'
+    LSCOLORS=gxcxheheDxagadabagacad
+    export LSCOLORS;;
+  *)
+    alias ls='ls -F --color=auto';;
+esac
+
 alias git-checkout-master='git checkout master'
 alias git-checkout-develop='__dromozoa-git-checkout develop master'
 alias git-checkout-feature='__dromozoa-git-checkout feature develop'
@@ -79,13 +92,3 @@ alias git-clean='git clean -d -x'
 alias git-status='git status'
 alias git-tag='git tag -m "" -a'
 alias tig-all='tig --all'
-
-uname=`uname`
-case x$uname in
-  xDarwin)
-    alias ls='ls -F -G'
-    LSCOLORS=gxcxheheDxagadabagacad
-    export LSCOLORS;;
-  *)
-    alias ls='ls -F --color=auto';;
-esac
