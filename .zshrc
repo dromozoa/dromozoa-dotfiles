@@ -15,10 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-if test -f "$HOME/dromozoa-dotfiles/resource"
-then
-  . "$HOME/dromozoa-dotfiles/resource"
-fi
+. "$HOME/dromozoa-dotfiles/resource"
 
 fpath=("$HOME/dromozoa-dotfiles/zshfuncs" $fpath)
 
