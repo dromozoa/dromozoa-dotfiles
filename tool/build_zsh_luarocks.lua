@@ -79,6 +79,7 @@ end
 
 local argument_map = {
   server = "_hosts";
+  mode = "->mode";
 }
 
 local function write_options(function_name, options)

@@ -78,9 +78,14 @@ _luarocks_remove() {
 
   local -a options
   __dromozoa_luarocks_general_options
+  __dromozoa_luarocks_remove_options
+  local -a modes
+  modes=(all one order none)
 
   _arguments -C \
-    $options \
-    "--force" \
-    "--force-fast"
+    $options
+
+  case x$state in
+    xmode) _describe modes modes;;
+  esac
 }

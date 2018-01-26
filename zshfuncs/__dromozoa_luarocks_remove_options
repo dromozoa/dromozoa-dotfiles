@@ -2,7 +2,7 @@
 __dromozoa_luarocks_remove_options() {
   options=(
     $options
-    '--deps-mode=[How to handle dependencies]:mode'
+    '--deps-mode=[How to handle dependencies]:mode:->mode'
     '--force'
     '--force-fast'
   )
