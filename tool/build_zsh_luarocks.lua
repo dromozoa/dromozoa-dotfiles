@@ -35,7 +35,6 @@ end
 local function parse_help(command)
   local state
   local option_map = {}
-  local option
   local options = {}
 
   local handle = assert(io.popen(("%s help %s"):format(shell.quote(luarocks), shell.quote(command))))
@@ -50,11 +49,11 @@ local function parse_help(command)
       local opt, text = line:match "^\t(%-.-) +(.*)"
       if opt then
         option_map[opt] = nil
-        option = { opt, text }
-        options[#options + 1] = option
+        options[#options + 1] = { opt, text }
       else
         local text = line:match "^\t +(.*)"
         if text then
+          local option = options[#options]
           option[2] = option[2] .. " " .. text
         end
       end
@@ -62,9 +61,9 @@ local function parse_help(command)
   end
   handle:close()
 
-  -- for i = 1, #options do
-  --   options[i] = normalize_text(options[i])
-  -- end
+  for i = 1, #options do
+    options[i][2] = normalize_text(options[i][2])
+  end
 
   local opts = {}
   for opt in pairs(option_map) do
@@ -96,7 +95,7 @@ local function write_options(function_name, options)
     local opt = option[1]
     local text = option[2]
     if text then
-      text = ("[%s]"):format(normalize_text(text))
+      text = ("[%s]"):format(text)
     else
       text = ""
     end
@@ -130,9 +129,9 @@ for line in handle:lines() do
   if line:find "^%a" then
     state = line
   elseif state == "GENERAL OPTIONS" then
-    local option, text = line:match "^\t(%-.-) +(.*)"
-    if option then
-      general_options[#general_options + 1] = { option, text }
+    local opt, text = line:match "^\t(%-.-) +(.*)"
+    if opt then
+      general_options[#general_options + 1] = { opt, text }
     else
       local text = line:match "^\t +(.*)"
       if text then
@@ -156,6 +155,14 @@ for line in handle:lines() do
 end
 handle:close()
 
+for i = 1, #general_options do
+  general_options[i][2] = normalize_text(general_options[i][2])
+end
+
+for i = 1, #commands do
+  commands[i][2] = normalize_text(commands[i][2])
+end
+
 local name = "__dromozoa_luarocks_commands"
 local out = assert(io.open("zshfuncs/" .. name, "w"))
 out:write(([[
@@ -166,7 +173,7 @@ out:write(([[
 ]]):format(name))
 for i = 1, #commands do
   local command = commands[i]
-  out:write("    ", shell.quote(command[1] .. ":" .. normalize_text(command[2])), "\n")
+  out:write("    ", shell.quote(command[1] .. ":" .. command[2]), "\n")
 end
 out:write [[
   )
