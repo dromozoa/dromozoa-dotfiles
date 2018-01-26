@@ -22,8 +22,6 @@ _luarocks() {
   local context state state_descr line
   typeset -A opt_args
 
-  local -a commands
-  __dromozoa_luarocks_commands
   local -a options
   __dromozoa_luarocks_general_options
 
@@ -34,7 +32,7 @@ _luarocks() {
 
   local result
   case x$state in
-    xcommand) _describe commands commands;;
+    xcommand) __dromozoa_luarocks_command;;
     xargument) _call_function result "_luarocks_$words[1]";;
   esac
 }
@@ -44,8 +42,6 @@ _luarocks_help() {
   local context state state_descr line
   typeset -A opt_args
 
-  local -a commands
-  __dromozoa_luarocks_commands
   local -a options
   __dromozoa_luarocks_general_options
 
@@ -54,7 +50,7 @@ _luarocks_help() {
     ": :->command"
 
   case x$state in
-    xcommand) _describe commands commands;;
+    xcommand) __dromozoa_luarocks_command;;
   esac
 }
 
@@ -83,9 +79,24 @@ _luarocks_remove() {
   modes=(all one order none)
 
   _arguments -C \
-    $options
+    $options \
+    ": :->name"
 
+  local result
   case x$state in
-    xmode) _describe modes modes;;
+    xmode) __dromozoa_luarocks_mode;;
+#    xname) _call_function result "_luarocks_rockname";;
   esac
+}
+
+__dromozoa_luarocks_command() {
+  local -a commands
+  __dromozoa_luarocks_commands
+  _describe commands commands
+}
+
+__dromozoa_luarocks_mode() {
+  local -a modes
+  modes=(all one order none)
+  _describe modes modes
 }
