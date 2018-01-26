@@ -29,7 +29,7 @@ handle:close()
 local path_pattern = path:gsub("%W", "%%%1")
 
 local function normalize_text(source)
-  return source:gsub(path_pattern, "luarocks")
+  return source:gsub(path_pattern, "luarocks"):match "^([^%.]*)"
 end
 
 local function parse_help(command)
