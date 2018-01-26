@@ -22,6 +22,8 @@ umask 022
 
 PATH=\
 $HOME/dromozoa-dotfiles/bin:\
+$HOME/dromozoa53/bin:\
+$HOME/dromozoa/bin:\
 /opt/dromozoa53/bin:\
 /opt/dromozoa/bin:\
 /usr/local/bin:\
@@ -31,6 +33,8 @@ $HOME/dromozoa-dotfiles/bin:\
 /sbin
 
 MANPATH=\
+$HOME/dromozoa53/bin:\
+$HOME/dromozoa/bin:\
 /opt/dromozoa53/share/man:\
 /opt/dromozoa/share/man:\
 /usr/local/share/man:\
@@ -44,8 +48,13 @@ else
 fi
 
 EDITOR=vim
-CPPFLAGS=-I/opt/dromozoa/include
-LDFLAGS="-L/opt/dromozoa/lib -Wl,-rpath -Wl,/opt/dromozoa/lib"
+
+CPPFLAGS=\
+"-I$HOME/dromozoa/include "\
+"-I/opt/dromozoa/include"
+LDFLAGS=\
+"-L$HOME/dromozoa/lib -Wl,-rpath -Wl,$HOME/dromozoa/lib "\
+"-L/opt/dromozoa/lib -Wl,-rpath -Wl,/opt/dromozoa/lib "
 
 for i in PATH MANPATH LANG EDITOR CPPFLAGS LDFLAGS
 do
