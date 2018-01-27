@@ -79,7 +79,7 @@ end
 
 local argument_map = {
   server = "_hosts";
-  mode = "->mode";
+  mode = "(all one order none)";
 }
 
 local function write_options(function_name, options)
@@ -183,10 +183,12 @@ out:write [[
 
 write_options("__dromozoa_luarocks_general_options", general_options)
 
+local install_options = parse_help "install"
+write_options("__dromozoa_luarocks_install_options", install_options)
+print(dumper.encode(install_options, { pretty = true }))
+
 local list_options = parse_help "list"
 write_options("__dromozoa_luarocks_list_options", list_options)
-print(dumper.encode(list_options, { pretty = true }))
 
 local remove_options = parse_help "remove"
 write_options("__dromozoa_luarocks_remove_options", remove_options)
-print(dumper.encode(remove_options, { pretty = true }))

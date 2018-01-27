@@ -27,17 +27,26 @@ _luarocks() {
 
   _arguments -C \
     $options \
-    ": :->command" \
+    ": :_luarocks_command" \
     "*:: :->argument"
 
   local result
   case x$state in
-    xcommand) __dromozoa_luarocks_command;;
-    xargument) _call_function result "_luarocks_$words[1]";;
+    xargument)
+      if _call_function result "_luarocks_command_$words[1]"
+      then
+        :
+      else
+        _luarocks_command_generic "$words[1]"
+      fi;;
   esac
 }
 
-_luarocks_help() {
+_luarocks_command_generic() {
+  :
+}
+
+_luarocks_command_help() {
   local curcontext="$curcontext"
   local context state state_descr line
   typeset -A opt_args
@@ -47,14 +56,23 @@ _luarocks_help() {
 
   _arguments -C \
     $options \
-    ": :->command"
-
-  case x$state in
-    xcommand) __dromozoa_luarocks_command;;
-  esac
+    ": :_luarocks_command"
 }
 
-_luarocks_list() {
+_luarocks_command_install() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  __dromozoa_luarocks_general_options
+  __dromozoa_luarocks_install_options
+
+  _arguments -C \
+    $options
+}
+
+_luarocks_command_list() {
   local curcontext="$curcontext"
   local context state state_descr line
   typeset -A opt_args
@@ -67,7 +85,7 @@ _luarocks_list() {
     $options
 }
 
-_luarocks_remove() {
+_luarocks_command_remove() {
   local curcontext="$curcontext"
   local context state state_descr line
   typeset -A opt_args
@@ -75,37 +93,23 @@ _luarocks_remove() {
   local -a options
   __dromozoa_luarocks_general_options
   __dromozoa_luarocks_remove_options
-  local -a modes
-  modes=(all one order none)
 
   _arguments -C \
     $options \
-    ": :->name"
-
-  local result
-  case x$state in
-    xmode) __dromozoa_luarocks_mode;;
-    xname) __dromozoa_luarocks_name;;
-  esac
+    ": :_luarocks_name"
 }
 
-__dromozoa_luarocks_command() {
+_luarocks_command() {
   local -a commands
   __dromozoa_luarocks_commands
   _describe commands commands
 }
 
-__dromozoa_luarocks_name() {
+_luarocks_name() {
   local -a names
-  luarocks list --porcelain | while read name version _
+  luarocks list --porcelain | while read name _
   do
-    names=($names "${name}:$version")
+    names=($names "$name")
   done
   _describe names names
-}
-
-__dromozoa_luarocks_mode() {
-  local -a modes
-  modes=(all one order none)
-  _describe modes modes
 }
