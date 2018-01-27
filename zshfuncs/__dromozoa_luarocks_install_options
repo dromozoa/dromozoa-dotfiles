@@ -1,0 +1,9 @@
+#autoload
+__dromozoa_luarocks_install_options() {
+  options=(
+    $options
+    '--keep[Do not remove previously installed versions of the rock after installing a new one]'
+    '--only-deps[Installs only the dependencies of the rock]'
+    '--deps-mode=[How to handle dependencies]:mode:(all one order none)'
+  )
+}
