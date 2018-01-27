@@ -46,6 +46,19 @@ _luarocks_command_generic() {
   :
 }
 
+_luarocks_command_config() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  __dromozoa_luarocks_general_options
+  __dromozoa_luarocks_config_options
+
+  _arguments -C \
+    $options
+}
+
 _luarocks_command_help() {
   local curcontext="$curcontext"
   local context state state_descr line
@@ -80,6 +93,19 @@ _luarocks_command_list() {
   local -a options
   __dromozoa_luarocks_general_options
   __dromozoa_luarocks_list_options
+
+  _arguments -C \
+    $options
+}
+
+_luarocks_command_make() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  __dromozoa_luarocks_general_options
+  __dromozoa_luarocks_make_options
 
   _arguments -C \
     $options

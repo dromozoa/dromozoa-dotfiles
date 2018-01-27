@@ -28,8 +28,15 @@ local path, version = handle:read():match"^(.-/luarocks) (%d[%d%.]+)$"
 handle:close()
 local path_pattern = path:gsub("%W", "%%%1")
 
-local function normalize_text(source)
-  return source:gsub(path_pattern, "luarocks"):match "^([^%.]*)"
+local function normalize_text(text)
+  text = text:gsub(path_pattern, "luarocks")
+  if text:find "%.%s" then
+    return text:match "^(.-)%.%s"
+  elseif text:find "%.$" then
+    return text:sub(1, -2)
+  else
+    return text
+  end
 end
 
 local function parse_help(command)
@@ -183,12 +190,18 @@ out:write [[
 
 write_options("__dromozoa_luarocks_general_options", general_options)
 
-local install_options = parse_help "install"
-write_options("__dromozoa_luarocks_install_options", install_options)
-print(dumper.encode(install_options, { pretty = true }))
+local options = parse_help "config"
+write_options("__dromozoa_luarocks_config_options", options)
+print(dumper.encode(options, { pretty = true }))
 
-local list_options = parse_help "list"
-write_options("__dromozoa_luarocks_list_options", list_options)
+local options = parse_help "install"
+write_options("__dromozoa_luarocks_install_options", options)
 
-local remove_options = parse_help "remove"
-write_options("__dromozoa_luarocks_remove_options", remove_options)
+local options = parse_help "list"
+write_options("__dromozoa_luarocks_list_options", options)
+
+local options = parse_help "make"
+write_options("__dromozoa_luarocks_make_options", options)
+
+local options = parse_help "remove"
+write_options("__dromozoa_luarocks_remove_options", options)
