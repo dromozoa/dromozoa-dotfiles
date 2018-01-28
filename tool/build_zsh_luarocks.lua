@@ -49,7 +49,7 @@ local function parse_help(command)
     if line:find "^%a" then
       state = line
     elseif state == "SYNOPSIS" then
-      for opt in line:gmatch "%-[%a%-]+" do
+      for opt in line:gmatch "%-[%a%-%=%<%>]+" do
         option_map[opt] = true
       end
     elseif state == "DESCRIPTION" then
@@ -192,10 +192,18 @@ write_options("__dromozoa_luarocks_general_options", general_options)
 
 local options = parse_help "config"
 write_options("__dromozoa_luarocks_config_options", options)
-print(dumper.encode(options, { pretty = true }))
+
+local options = parse_help "doc"
+write_options("__dromozoa_luarocks_doc_options", options)
+
+local options = parse_help "download"
+write_options("__dromozoa_luarocks_download_options", options)
 
 local options = parse_help "install"
 write_options("__dromozoa_luarocks_install_options", options)
+
+-- local options = parse_help "lint"
+-- write_options("__dromozoa_luarocks_lint_options", options)
 
 local options = parse_help "list"
 write_options("__dromozoa_luarocks_list_options", options)
