@@ -198,10 +198,12 @@ write_options("__dromozoa_luarocks_doc_options", options)
 
 local options = parse_help "download"
 write_options("__dromozoa_luarocks_download_options", options)
-print(dumper.encode(options, { pretty = true }))
 
 local options = parse_help "install"
 write_options("__dromozoa_luarocks_install_options", options)
+
+-- local options = parse_help "lint"
+-- write_options("__dromozoa_luarocks_lint_options", options)
 
 local options = parse_help "list"
 write_options("__dromozoa_luarocks_list_options", options)
