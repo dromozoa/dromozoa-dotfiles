@@ -19,7 +19,7 @@
 
 local title = ...
 
-if os.getenv "TERM":find "^SCREEN" then
+if os.getenv "TERM":find "^screen" then
   io.write("\27k", title, "\27\\")
 else
   io.write("\27]0;", title, "\7")
