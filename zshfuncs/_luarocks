@@ -59,6 +59,20 @@ _luarocks_command_config() {
     $options
 }
 
+_luarocks_command_doc() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  __dromozoa_luarocks_general_options
+  __dromozoa_luarocks_doc_options
+
+  _arguments -C \
+    $options \
+    ": :_luarocks_name"
+}
+
 _luarocks_command_help() {
   local curcontext="$curcontext"
   local context state state_descr line
