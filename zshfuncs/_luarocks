@@ -22,43 +22,105 @@ _luarocks() {
   local context state state_descr line
   typeset -A opt_args
 
-  local -a commands
-  __dromozoa_luarocks_commands
   local -a options
   __dromozoa_luarocks_general_options
 
   _arguments -C \
     $options \
-    ": :->command" \
+    ": :_luarocks_command" \
     "*:: :->argument"
 
   local result
   case x$state in
-    xcommand) _describe commands commands;;
-    xargument) _call_function result "_luarocks_$words[1]";;
+    xargument)
+      if _call_function result "_luarocks_command_$words[1]"
+      then
+        :
+      else
+        _luarocks_command_generic "$words[1]"
+      fi;;
   esac
 }
 
-_luarocks_help() {
+_luarocks_command_generic() {
   local curcontext="$curcontext"
   local context state state_descr line
   typeset -A opt_args
 
-  local -a commands
-  __dromozoa_luarocks_commands
+  local -a options
+  __dromozoa_luarocks_general_options
+
+  _arguments -C \
+    $options
+}
+
+_luarocks_command_config() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  __dromozoa_luarocks_general_options
+  __dromozoa_luarocks_config_options
+
+  _arguments -C \
+    $options
+}
+
+_luarocks_command_doc() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  __dromozoa_luarocks_general_options
+  __dromozoa_luarocks_doc_options
+
+  _arguments -C \
+    $options \
+    ": :_luarocks_name"
+}
+
+_luarocks_command_download() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  __dromozoa_luarocks_general_options
+  __dromozoa_luarocks_download_options
+
+  _arguments -C \
+    $options
+}
+
+_luarocks_command_help() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
   local -a options
   __dromozoa_luarocks_general_options
 
   _arguments -C \
     $options \
-    ": :->command"
-
-  case x$state in
-    xcommand) _describe commands commands;;
-  esac
+    ": :_luarocks_command"
 }
 
-_luarocks_list() {
+_luarocks_command_install() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  __dromozoa_luarocks_general_options
+  __dromozoa_luarocks_install_options
+
+  _arguments -C \
+    $options
+}
+
+_luarocks_command_list() {
   local curcontext="$curcontext"
   local context state state_descr line
   typeset -A opt_args
@@ -71,16 +133,62 @@ _luarocks_list() {
     $options
 }
 
-_luarocks_remove() {
+_luarocks_command_lint() {
   local curcontext="$curcontext"
   local context state state_descr line
   typeset -A opt_args
 
   local -a options
   __dromozoa_luarocks_general_options
+  __dromozoa_luarocks_list_options
 
   _arguments -C \
     $options \
-    "--force" \
-    "--force-fast"
+    ": :_luarocks_rockspec"
+}
+
+_luarocks_command_make() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  __dromozoa_luarocks_general_options
+  __dromozoa_luarocks_make_options
+
+  _arguments -C \
+    $options
+}
+
+_luarocks_command_remove() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  __dromozoa_luarocks_general_options
+  __dromozoa_luarocks_remove_options
+
+  _arguments -C \
+    $options \
+    ": :_luarocks_name"
+}
+
+_luarocks_command() {
+  local -a commands
+  __dromozoa_luarocks_commands
+  _describe commands commands
+}
+
+_luarocks_name() {
+  local -a names
+  luarocks list --porcelain | while read name _
+  do
+    names=($names "$name")
+  done
+  _describe names names
+}
+
+_luarocks_rockspec() {
+  _files -g "*.rockspec"
 }

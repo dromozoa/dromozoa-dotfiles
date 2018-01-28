@@ -28,22 +28,35 @@ local path, version = handle:read():match"^(.-/luarocks) (%d[%d%.]+)$"
 handle:close()
 local path_pattern = path:gsub("%W", "%%%1")
 
-local function normalize_text(source)
-  return source:gsub(path_pattern, "luarocks")
+local function normalize_text(text)
+  text = text:gsub(path_pattern, "luarocks")
+  if text:find "%.%s" then
+    return text:match "^(.-)%.%s"
+  elseif text:find "%.$" then
+    return text:sub(1, -2)
+  else
+    return text
+  end
 end
 
 local function parse_help(command)
   local state
+  local option_map = {}
   local options = {}
 
   local handle = assert(io.popen(("%s help %s"):format(shell.quote(luarocks), shell.quote(command))))
   for line in handle:lines() do
     if line:find "^%a" then
       state = line
+    elseif state == "SYNOPSIS" then
+      for opt in line:gmatch "%-[%a%-%=%<%>]+" do
+        option_map[opt] = true
+      end
     elseif state == "DESCRIPTION" then
-      local option, text = line:match "^\t(%-.-) +(.*)"
-      if option then
-        options[#options + 1] = { option, text }
+      local opt, text = line:match "^\t(%-.-) +(.*)"
+      if opt then
+        option_map[opt] = nil
+        options[#options + 1] = { opt, text }
       else
         local text = line:match "^\t +(.*)"
         if text then
@@ -55,11 +68,25 @@ local function parse_help(command)
   end
   handle:close()
 
+  for i = 1, #options do
+    options[i][2] = normalize_text(options[i][2])
+  end
+
+  local opts = {}
+  for opt in pairs(option_map) do
+    opts[#opts + 1] = opt
+  end
+  table.sort(opts)
+  for i = 1, #opts do
+    options[#options + 1] = { opts[i] }
+  end
+
   return options
 end
 
 local argument_map = {
   server = "_hosts";
+  mode = "(all one order none)";
 }
 
 local function write_options(function_name, options)
@@ -73,18 +100,24 @@ local function write_options(function_name, options)
 
   for i = 1, #options do
     local option = options[i]
-    local text = normalize_text(option[2])
-    local name, argument = option[1]:match "^(%-.-=)<(.-)>$"
+    local opt = option[1]
+    local text = option[2]
+    if text then
+      text = ("[%s]"):format(text)
+    else
+      text = ""
+    end
+    local name, argument = opt:match "^(%-.-=)<(.-)>$"
     local spec
     if name then
       local action = argument_map[argument]
       if action then
-        spec = ("%s[%s]:%s:%s"):format(name, text, argument, action)
+        spec = ("%s%s:%s:%s"):format(name, text, argument, action)
       else
-        spec = ("%s[%s]:%s"):format(name, text, argument)
+        spec = ("%s%s:%s"):format(name, text, argument)
       end
     else
-      spec = ("%s[%s]"):format(option[1], text)
+      spec = ("%s%s"):format(option[1], text)
     end
     out:write("    ", shell.quote(spec), "\n")
   end
@@ -104,9 +137,9 @@ for line in handle:lines() do
   if line:find "^%a" then
     state = line
   elseif state == "GENERAL OPTIONS" then
-    local option, text = line:match "^\t(%-.-) +(.*)"
-    if option then
-      general_options[#general_options + 1] = { option, text }
+    local opt, text = line:match "^\t(%-.-) +(.*)"
+    if opt then
+      general_options[#general_options + 1] = { opt, text }
     else
       local text = line:match "^\t +(.*)"
       if text then
@@ -130,6 +163,14 @@ for line in handle:lines() do
 end
 handle:close()
 
+for i = 1, #general_options do
+  general_options[i][2] = normalize_text(general_options[i][2])
+end
+
+for i = 1, #commands do
+  commands[i][2] = normalize_text(commands[i][2])
+end
+
 local name = "__dromozoa_luarocks_commands"
 local out = assert(io.open("zshfuncs/" .. name, "w"))
 out:write(([[
@@ -140,7 +181,7 @@ out:write(([[
 ]]):format(name))
 for i = 1, #commands do
   local command = commands[i]
-  out:write("    ", shell.quote(command[1] .. ":" .. normalize_text(command[2])), "\n")
+  out:write("    ", shell.quote(command[1] .. ":" .. command[2]), "\n")
 end
 out:write [[
   )
@@ -149,9 +190,26 @@ out:write [[
 
 write_options("__dromozoa_luarocks_general_options", general_options)
 
-local list_options = parse_help "list"
-write_options("__dromozoa_luarocks_list_options", list_options)
+local options = parse_help "config"
+write_options("__dromozoa_luarocks_config_options", options)
 
-local remove_options = parse_help "remove"
-write_options("__dromozoa_luarocks_remove_options", remove_options)
-print(dumper.encode(remove_options, { pretty = true }))
+local options = parse_help "doc"
+write_options("__dromozoa_luarocks_doc_options", options)
+
+local options = parse_help "download"
+write_options("__dromozoa_luarocks_download_options", options)
+
+local options = parse_help "install"
+write_options("__dromozoa_luarocks_install_options", options)
+
+-- local options = parse_help "lint"
+-- write_options("__dromozoa_luarocks_lint_options", options)
+
+local options = parse_help "list"
+write_options("__dromozoa_luarocks_list_options", options)
+
+local options = parse_help "make"
+write_options("__dromozoa_luarocks_make_options", options)
+
+local options = parse_help "remove"
+write_options("__dromozoa_luarocks_remove_options", options)

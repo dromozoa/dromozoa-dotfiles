@@ -1,0 +1,8 @@
+#autoload
+__dromozoa_luarocks_doc_options() {
+  options=(
+    $options
+    '--home[Open the home page of project]'
+    '--list[List documentation files only]'
+  )
+}
