@@ -76,3 +76,7 @@ alias tig-all='tig --all'
 alias 51='resource_path_v=51; . "$HOME/dromozoa-dotfiles/resource-path"; hash -r'
 alias 52='resource_path_v=52; . "$HOME/dromozoa-dotfiles/resource-path"; hash -r'
 alias 53='resource_path_v=53; . "$HOME/dromozoa-dotfiles/resource-path"; hash -r'
+
+hostname=`hostname`
+hostname=`expr "x$hostname" : 'x\([^.]*\)' || :`
+title "$hostname"
