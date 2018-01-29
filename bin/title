@@ -19,6 +19,12 @@
 
 local title = ...
 
+if not title then
+  local handle = assert(io.popen "hostname")
+  title = handle:read("*l"):match "^[^%.]*"
+  handle:close()
+end
+
 if os.getenv "TERM":find "^screen" then
   io.write("\27k", title, "\27\\")
 else
