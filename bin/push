@@ -19,4 +19,14 @@
 
 local message = ...
 
+local in_terminal_multiplexer = os.getenv "TERM":find "^screen"
+if in_terminal_multiplexer then
+  -- DCS
+  io.write "\27P"
+end
+-- iTerm2 notification
 io.write("\27]9;", message, "\7")
+if in_terminal_multiplexer then
+  -- ST
+  io.write "\27\\"
+end
