@@ -18,15 +18,18 @@
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 local message = ...
+if not message then
+  message = io.read "*a"
+end
 
-local in_terminal_multiplexer = os.getenv "TERM":find "^screen"
-if in_terminal_multiplexer then
+local screen = os.getenv "TERM":find "^screen"
+if screen then
   -- DCS
   io.write "\27P"
 end
 -- iTerm2 notification
 io.write("\27]9;", message, "\7")
-if in_terminal_multiplexer then
+if screen then
   -- ST
   io.write "\27\\"
 end
