@@ -18,7 +18,6 @@
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 local title = ...
-
 if not title then
   local handle = assert(io.popen "hostname")
   title = handle:read("*l"):match "^[^%.]*"
