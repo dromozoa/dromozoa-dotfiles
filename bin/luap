@@ -22,17 +22,20 @@ local dumper = require "dromozoa.commons.dumper"
 local help = [[
 usage: luap [options] stat [file...]
 Available options are:
-  -e stat  execute string 'stat'
-  -i[ext]  edit file in place (makes backup if extension supplied)
-  --       stop handling options
-  -        stop handling options and execute stdin
+  -e stat   execute string 'stat'
+  -d delim  split into fields by delimiter 'delim'
+  -i[ext]   edit file in place (makes backup if extension supplied)
+  --        stop handling options
+  -         stop handling options and execute stdin
 Available variables are:
   _  current line
   N  current line number
+  F  fields
 ]]
 
 local stats = {}
 local files = {}
+local delim
 local inplace
 
 local i = 1
@@ -46,6 +49,9 @@ while i <= n do
   elseif this:find "^%-+h" then
     io.stderr:write(help)
     os.exit()
+  elseif this:find "^%-d" then
+    delim = arg[i]
+    i = i + 1
   elseif this:find "^%-i" then
     inplace = this:match "^%-i(.+)" or true
   elseif this == "--" then
@@ -75,7 +81,7 @@ end
 
 local code = {}
 code[#code + 1] = [[
-return function (_, N)
+return function (_, N, F)
   do
 ]]
 for i = 1, #stats do
@@ -116,7 +122,23 @@ for i = 1, #files do
     handle = io.stdout
   end
   for i = 1, #lines do
-    local result = f(lines[i], i)
+    local fields
+    if delim then
+      fields = {}
+      local line = lines[i]
+      local i = 1
+      while true do
+        local j = line:find(delim, i, true)
+        if j then
+          fields[#fields + 1] = line:sub(i, j - 1)
+          i = j + 1
+        else
+          fields[#fields + 1] = line:sub(i)
+          break
+        end
+      end
+    end
+    local result = f(lines[i], i, fields)
     if result ~= nil then
       handle:write(tostring(result), "\n")
     end
