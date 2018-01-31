@@ -1,5 +1,3 @@
-#! /bin/sh -e
-
 # Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
 # This file is part of dromozoa-dotfiles.
@@ -17,42 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-if (unset CDPATH) >/dev/null 2>&1
+echo .bash_profile
+
+if test -f "$HOME/.bashrc"
 then
-  unset CDPATH
+  . "$HOME/.bashrc"
 fi
-
-fn_dirname() {
-  expr "x$1" : 'x\(.*[^/]\)//*[^/][^/]*/*$' \
-    '|' "x$1" : 'x\(//\)[^/]' \
-    '|' "x$1" : 'x\(//\)$' \
-    '|' "x$1" : 'x\(/\)' \
-    '|' .
-}
-
-here=`fn_dirname "$0"`
-here=`(cd "$here" && pwd)`
-backup=$here/backup-`date "+%Y-%m-%d-%H-%M-%S"`
-
-cd
-home=`pwd`
-
-for i in \
-  .bash_profile .bashrc .bash_logout \
-  .zshenv .zprofile .zshrc .zlogout \
-  .editrc .inputrc .tigrc .vimrc
-do
-  if test -h "$i"
-  then
-    link=`readlink "$home/$i"`
-    echo "unlink $home/$i -> "$link""
-    rm -f "$i"
-  elif test -f "$i"
-  then
-    echo "move $home/$i -> $backup"
-    mkdir -p "$backup"
-    mv -f "$i" "$backup"
-  fi
-  echo "link $home/$i -> $here/$i"
-  ln -s "$here/$i" "$i"
-done

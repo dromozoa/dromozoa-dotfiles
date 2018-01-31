@@ -15,23 +15,4 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-if test -f "$HOME/dromozoa-dotfiles/_resource"
-then
-  . "$HOME/dromozoa-dotfiles/_resource"
-fi
-
-ps_start='\[\e[91m\]'
-ps_reset='\[\e[m\]'
-case x$TERM in
-  xscreen) ps_start='\[\e[92m\]';;
-esac
-
-PS1="$ps_start\u@\h:\W\$$ps_reset "
-PS2="$ps_start>$ps_reset "
-
-HISTCONTROL=ignoreboth
-HISTSIZE=65536
-HISTFILESIZE=65536
-HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
-
-alias h='history | grep'
+echo .bash_logout

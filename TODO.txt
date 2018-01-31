@@ -1,7 +1,6 @@
 TODO
 
 .zlogoutによるウィンドウの書き換え
-$ZDOTDIRの使用
 ユーティリティと関数の名前のリファクタリング
 screenの一括ウィンドウ作成
 git-commit-rename-file
@@ -10,3 +9,4 @@ git-commit-move-file
 DONE
 
 PATH書き換えで古いパスを消さない
+$ZDOTDIRの使用 => 使用しない
