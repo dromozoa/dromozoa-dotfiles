@@ -41,7 +41,8 @@ for i in .bashrc .editrc .inputrc .tigrc .vimrc .zshrc
 do
   if test -h "$i"
   then
-    echo "unlink $home/$i"
+    link=`readlink "$home/$i"`
+    echo "unlink $home/$i -> "$link""
     rm -f "$i"
   elif test -f "$i"
   then
