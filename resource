@@ -91,21 +91,13 @@ alias git-status='git status'
 alias git-tag='git tag -m "" -a'
 alias tig-all='tig --all'
 
-#__dromozoa_resource_path() {
-#  p=:$1
-#  while :
-#  do
-#    item=`expr "x$p" : 'x:\([^:]*\)' '|' "x$p" : 'x\(:\)'`
-#    echo "$item"
-#    p=`expr "x$p" : 'x:[^:]*\(.*\)' || :`
-#    case x$p in
-#      x) break;;
-#    esac
-#  done
-#}
-#
-#alias 51='resource_path_v=51; . "$HOME/dromozoa-dotfiles/resource-path"; hash -r'
-#alias 52='resource_path_v=52; . "$HOME/dromozoa-dotfiles/resource-path"; hash -r'
-#alias 53='resource_path_v=53; . "$HOME/dromozoa-dotfiles/resource-path"; hash -r'
+_dromozoa_path() {
+  PATH=`_dromozoa_path_impl "$PATH" "$1"`
+  MANPATH=`_dromozoa_path_impl "$MANPATH" "$1"`
+  export PATH MANPATH
+  hash -r
+}
 
-title || :
+alias 51='_dromozoa_path 51'
+alias 52='_dromozoa_path 52'
+alias 53='_dromozoa_path 53'
