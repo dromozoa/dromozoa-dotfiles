@@ -16,3 +16,8 @@
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 echo .zlogout
+
+if test -f "$HOME/dromozoa-dotfiles/_logout"
+then
+  . "$HOME/dromozoa-dotfiles/_logout"
+fi
