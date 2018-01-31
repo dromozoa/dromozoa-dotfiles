@@ -19,7 +19,25 @@
 
 umask 022
 
-. "$HOME/dromozoa-dotfiles/resource-path"
+PATH=\
+$HOME/dromozoa-dotfiles/bin:\
+$HOME/dromozoa53/bin:\
+$HOME/dromozoa/bin:\
+/opt/dromozoa53/bin:\
+/opt/dromozoa/bin:\
+/usr/local/bin:\
+/usr/bin:\
+/bin:\
+/usr/sbin:\
+/sbin
+
+MANPATH=\
+$HOME/dromozoa53/bin:\
+$HOME/dromozoa/bin:\
+/opt/dromozoa53/share/man:\
+/opt/dromozoa/share/man:\
+/usr/local/share/man:\
+/usr/share/man
 
 if (locale -a | grep -iE 'ja_JP\.UTF-?8') >/dev/null 2>&1
 then
@@ -64,17 +82,30 @@ case x`uname` in
 esac
 
 alias git-checkout-master='git checkout master'
-alias git-checkout-develop='__dromozoa-git-checkout develop master'
-alias git-checkout-feature='__dromozoa-git-checkout feature develop'
-alias git-checkout-release='__dromozoa-git-checkout release develop'
+alias git-checkout-develop='_dromozoa_git_checkout develop master'
+alias git-checkout-feature='_dromozoa_git_checkout feature develop'
+alias git-checkout-release='_dromozoa_git_checkout release develop'
 alias git-push-all-tags-dry-run='git-push-all-tags --dry-run'
 alias git-clean='git clean -d -x'
 alias git-status='git status'
 alias git-tag='git tag -m "" -a'
 alias tig-all='tig --all'
 
-alias 51='resource_path_v=51; . "$HOME/dromozoa-dotfiles/resource-path"; hash -r'
-alias 52='resource_path_v=52; . "$HOME/dromozoa-dotfiles/resource-path"; hash -r'
-alias 53='resource_path_v=53; . "$HOME/dromozoa-dotfiles/resource-path"; hash -r'
+#__dromozoa_resource_path() {
+#  p=:$1
+#  while :
+#  do
+#    item=`expr "x$p" : 'x:\([^:]*\)' '|' "x$p" : 'x\(:\)'`
+#    echo "$item"
+#    p=`expr "x$p" : 'x:[^:]*\(.*\)' || :`
+#    case x$p in
+#      x) break;;
+#    esac
+#  done
+#}
+#
+#alias 51='resource_path_v=51; . "$HOME/dromozoa-dotfiles/resource-path"; hash -r'
+#alias 52='resource_path_v=52; . "$HOME/dromozoa-dotfiles/resource-path"; hash -r'
+#alias 53='resource_path_v=53; . "$HOME/dromozoa-dotfiles/resource-path"; hash -r'
 
 title || :
