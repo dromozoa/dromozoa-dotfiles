@@ -19,5 +19,9 @@
 
 . "$HOME/dromozoa-dotfiles/_environ"
 
-_dromozoa_push_title 2>/dev/null
+# push title
+case x$TERM in
+  xxterm*) printf '\33[22;0t';;
+esac
+
 title 2>/dev/null
