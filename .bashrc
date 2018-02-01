@@ -23,7 +23,7 @@ case x$TERM in
   xscreen) ps_start='\[\e[92m\]';;
 esac
 
-PS1="$ps_start\u@\h:\W\$$ps_reset "
+PS1="$ps_start\u@\h:\w\$$ps_reset "
 PS2="$ps_start>$ps_reset "
 
 HISTCONTROL=ignoreboth
