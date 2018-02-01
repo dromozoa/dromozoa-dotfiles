@@ -1,4 +1,4 @@
-# vim: filetype=sh:
+#! /bin/sh -e
 
 # Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
@@ -17,11 +17,20 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-. "$HOME/dromozoa-dotfiles/_environ"
-
-# push title
-case x$TERM in
-  xxterm*) printf '\33[22;0t';;
+case x$1 in
+  x) message=`cat`;;
+  *) message=$1;;
 esac
 
-title 2>/dev/null
+# DCS
+case x$TERM in
+  xscreen*) printf '\33P';;
+esac
+
+# iTerm2 notification
+printf '\33]9;%s\7' "$message"
+
+# ST
+case x$TERM in
+  xscreen*) printf '\33\\';;
+esac
