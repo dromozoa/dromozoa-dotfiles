@@ -19,4 +19,26 @@
 
 echo _environ
 
-umask 022
+PATH=\
+$HOME/dromozoa-dotfiles/bin:\
+$HOME/prefixes/dromozoa53/bin:\
+$HOME/prefixes/dromozoa/bin:\
+/opt/dromozoa53/bin:\
+/opt/dromozoa/bin:\
+/usr/local/bin:\
+/usr/bin:\
+/bin:\
+/usr/sbin:\
+/sbin
+
+MANPATH=\
+$HOME/prefixes/dromozoa53/bin:\
+$HOME/prefixes/dromozoa/bin:\
+/opt/dromozoa53/share/man:\
+/opt/dromozoa/share/man:\
+/usr/local/share/man:\
+/usr/share/man
+
+LANG=C.UTF-8
+
+export PATH MANPATH LANG

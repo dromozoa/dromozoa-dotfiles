@@ -19,25 +19,10 @@
 
 echo _resource
 
-PATH=\
-$HOME/dromozoa-dotfiles/bin:\
-$HOME/dromozoa53/bin:\
-$HOME/dromozoa/bin:\
-/opt/dromozoa53/bin:\
-/opt/dromozoa/bin:\
-/usr/local/bin:\
-/usr/bin:\
-/bin:\
-/usr/sbin:\
-/sbin
-
-MANPATH=\
-$HOME/dromozoa53/bin:\
-$HOME/dromozoa/bin:\
-/opt/dromozoa53/share/man:\
-/opt/dromozoa/share/man:\
-/usr/local/share/man:\
-/usr/share/man
+if test -f "$HOME/dromozoa-dotfiles/_environ"
+then
+  . "$HOME/dromozoa-dotfiles/_environ"
+fi
 
 if (locale -a | grep -iE 'ja_JP\.UTF-?8') >/dev/null 2>&1
 then
@@ -48,15 +33,18 @@ fi
 
 EDITOR=vim
 
-CPPFLAGS="-I$HOME/dromozoa/include -I/opt/dromozoa/include"
-LDFLAGS="-L$HOME/dromozoa/lib -L/opt/dromozoa/lib"
-case x`uname` in
-  xDarwin)
-    LDFLAGS="-L$HOME/dromozoa/lib"
-    LDFLAGS="$LDFLAGS -L/opt/dromozoa/lib";;
+CPPFLAGS=\
+"-I$HOME/prefixes/dromozoa/include "\
+"-I/opt/dromozoa/include"
+
+LDFLAGS=\
+"-L$HOME/prefixes/dromozoa/lib "\
+"-L/opt/dromozoa/lib"
+case x`uname 2>&1 || :` in
+  xDarwin) ;;
   *)
-    LDFLAGS="-L$HOME/dromozoa/lib -Wl,-rpath -Wl,$HOME/dromozoa/lib"
-    LDFLAGS="$LDFLAGS -L/opt/dromozoa/lib -Wl,-rpath -Wl,/opt/dromozoa/lib";;
+    LDFLAGS="$LDFLAGS -Wl,-rpath -Wl,$HOME/prefixes/dromozoa/lib"
+    LDFLAGS="$LDFLAGS -Wl,-rpath -Wl,/opt/dromozoa/lib";;
 esac
 
 export LANG EDITOR CPPFLAGS LDFLAGS
