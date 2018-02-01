@@ -32,15 +32,17 @@ setopt hist_verify
 setopt inc_append_history
 setopt share_history
 
-ps_start='%{[91m%}'
-ps_reset="%{[0m%}"
-case x$TERM in
-  xscreen*) ps_start="%{[92m%}";;
-esac
-PS1="$ps_start%n@%m:%~%#$ps_reset "
-PS2="$ps_start>$ps_reset "
-RPROMPT=
-SPROMPT="${ps_start}correct '%R' to '%r' [nyae]?$ps_reset "
+() {
+  local start='%{[91m%}'
+  local reset="%{[0m%}"
+  case x$TERM in
+    xscreen*) start="%{[92m%}";;
+  esac
+  PS1="$start%n@%m:%~%#$reset "
+  PS2="$start>$reset "
+  RPROMPT=
+  SPROMPT="${start}correct '%R' to '%r' [nyae]?$reset "
+}
 
 HISTFILE=~/.zsh_history
 HISTSIZE=65536

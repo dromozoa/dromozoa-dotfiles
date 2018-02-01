@@ -1,5 +1,5 @@
 #autoload
-__dromozoa_luarocks_make_options() {
+_dromozoa_luarocks_make_options() {
   options=(
     $options
     '--pack-binary-rock[Do not install rock]'

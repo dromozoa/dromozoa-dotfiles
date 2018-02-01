@@ -23,7 +23,7 @@ _luarocks() {
   typeset -A opt_args
 
   local -a options
-  __dromozoa_luarocks_general_options
+  _dromozoa_luarocks_general_options
 
   _arguments -C \
     $options \
@@ -48,7 +48,7 @@ _luarocks_command_generic() {
   typeset -A opt_args
 
   local -a options
-  __dromozoa_luarocks_general_options
+  _dromozoa_luarocks_general_options
 
   _arguments -C \
     $options
@@ -60,8 +60,8 @@ _luarocks_command_config() {
   typeset -A opt_args
 
   local -a options
-  __dromozoa_luarocks_general_options
-  __dromozoa_luarocks_config_options
+  _dromozoa_luarocks_general_options
+  _dromozoa_luarocks_config_options
 
   _arguments -C \
     $options
@@ -73,8 +73,8 @@ _luarocks_command_doc() {
   typeset -A opt_args
 
   local -a options
-  __dromozoa_luarocks_general_options
-  __dromozoa_luarocks_doc_options
+  _dromozoa_luarocks_general_options
+  _dromozoa_luarocks_doc_options
 
   _arguments -C \
     $options \
@@ -87,8 +87,8 @@ _luarocks_command_download() {
   typeset -A opt_args
 
   local -a options
-  __dromozoa_luarocks_general_options
-  __dromozoa_luarocks_download_options
+  _dromozoa_luarocks_general_options
+  _dromozoa_luarocks_download_options
 
   _arguments -C \
     $options
@@ -100,7 +100,7 @@ _luarocks_command_help() {
   typeset -A opt_args
 
   local -a options
-  __dromozoa_luarocks_general_options
+  _dromozoa_luarocks_general_options
 
   _arguments -C \
     $options \
@@ -113,8 +113,8 @@ _luarocks_command_install() {
   typeset -A opt_args
 
   local -a options
-  __dromozoa_luarocks_general_options
-  __dromozoa_luarocks_install_options
+  _dromozoa_luarocks_general_options
+  _dromozoa_luarocks_install_options
 
   _arguments -C \
     $options
@@ -126,8 +126,8 @@ _luarocks_command_list() {
   typeset -A opt_args
 
   local -a options
-  __dromozoa_luarocks_general_options
-  __dromozoa_luarocks_list_options
+  _dromozoa_luarocks_general_options
+  _dromozoa_luarocks_list_options
 
   _arguments -C \
     $options
@@ -139,8 +139,8 @@ _luarocks_command_lint() {
   typeset -A opt_args
 
   local -a options
-  __dromozoa_luarocks_general_options
-  __dromozoa_luarocks_list_options
+  _dromozoa_luarocks_general_options
+  _dromozoa_luarocks_list_options
 
   _arguments -C \
     $options \
@@ -153,8 +153,8 @@ _luarocks_command_make() {
   typeset -A opt_args
 
   local -a options
-  __dromozoa_luarocks_general_options
-  __dromozoa_luarocks_make_options
+  _dromozoa_luarocks_general_options
+  _dromozoa_luarocks_make_options
 
   _arguments -C \
     $options
@@ -166,8 +166,8 @@ _luarocks_command_remove() {
   typeset -A opt_args
 
   local -a options
-  __dromozoa_luarocks_general_options
-  __dromozoa_luarocks_remove_options
+  _dromozoa_luarocks_general_options
+  _dromozoa_luarocks_remove_options
 
   _arguments -C \
     $options \
@@ -176,7 +176,7 @@ _luarocks_command_remove() {
 
 _luarocks_command() {
   local -a commands
-  __dromozoa_luarocks_commands
+  _dromozoa_luarocks_commands
   _describe commands commands
 }
 

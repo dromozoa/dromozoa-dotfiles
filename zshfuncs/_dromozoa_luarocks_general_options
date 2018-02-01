@@ -1,5 +1,5 @@
 #autoload
-__dromozoa_luarocks_general_options() {
+_dromozoa_luarocks_general_options() {
   options=(
     $options
     '--server=[Fetch rocks/rockspecs from this server (takes priority over config file)]:server:_hosts'

@@ -171,7 +171,7 @@ for i = 1, #commands do
   commands[i][2] = normalize_text(commands[i][2])
 end
 
-local name = "__dromozoa_luarocks_commands"
+local name = "_dromozoa_luarocks_commands"
 local out = assert(io.open("zshfuncs/" .. name, "w"))
 out:write(([[
 #autoload
@@ -188,28 +188,28 @@ out:write [[
 }
 ]]
 
-write_options("__dromozoa_luarocks_general_options", general_options)
+write_options("_dromozoa_luarocks_general_options", general_options)
 
 local options = parse_help "config"
-write_options("__dromozoa_luarocks_config_options", options)
+write_options("_dromozoa_luarocks_config_options", options)
 
 local options = parse_help "doc"
-write_options("__dromozoa_luarocks_doc_options", options)
+write_options("_dromozoa_luarocks_doc_options", options)
 
 local options = parse_help "download"
-write_options("__dromozoa_luarocks_download_options", options)
+write_options("_dromozoa_luarocks_download_options", options)
 
 local options = parse_help "install"
-write_options("__dromozoa_luarocks_install_options", options)
+write_options("_dromozoa_luarocks_install_options", options)
 
 -- local options = parse_help "lint"
--- write_options("__dromozoa_luarocks_lint_options", options)
+-- write_options("_dromozoa_luarocks_lint_options", options)
 
 local options = parse_help "list"
-write_options("__dromozoa_luarocks_list_options", options)
+write_options("_dromozoa_luarocks_list_options", options)
 
 local options = parse_help "make"
-write_options("__dromozoa_luarocks_make_options", options)
+write_options("_dromozoa_luarocks_make_options", options)
 
 local options = parse_help "remove"
-write_options("__dromozoa_luarocks_remove_options", options)
+write_options("_dromozoa_luarocks_remove_options", options)

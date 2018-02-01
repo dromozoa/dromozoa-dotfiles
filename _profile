@@ -19,5 +19,5 @@
 
 . "$HOME/dromozoa-dotfiles/_environ"
 
-_dromozoa_push_title 2>/dev/null || :
-title 2>/dev/null || :
+_dromozoa_push_title 2>/dev/null
+title 2>/dev/null

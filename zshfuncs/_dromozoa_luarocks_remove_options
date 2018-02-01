@@ -1,5 +1,5 @@
 #autoload
-__dromozoa_luarocks_remove_options() {
+_dromozoa_luarocks_remove_options() {
   options=(
     $options
     '--deps-mode=[How to handle dependencies]:mode:(all one order none)'
