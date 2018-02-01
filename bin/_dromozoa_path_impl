@@ -25,8 +25,8 @@ while :
 do
   item=`expr "x$source" : 'x:\([^:]*\)' || :`
   case x$item in
-    x$HOME/dromozoa5?/bin)
-      item=$HOME/dromozoa$version/bin;;
+    x$HOME/prefixes/dromozoa5?/bin)
+      item=$HOME/prefixes/dromozoa$version/bin;;
     x/opt/dromozoa5?/bin)
       item=/opt/dromozoa$version/bin;;
   esac
