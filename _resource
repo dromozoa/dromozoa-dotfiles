@@ -70,6 +70,13 @@ alias git-push-all-tags-dry-run='git-push-all-tags --dry-run'
 alias git-clean='git clean -d -x'
 alias git-status='git status'
 alias git-tag='git tag -m "" -a'
+
+alias git-commit-preapre='git commit -m "リリース準備。"'
+alias git-commit-refactoring='git commit -m "リファクタリング。"'
+alias git-commit-release='git commit -m "リリースメッセージを設定。"'
+alias git-commit-rename-file='git commit -m "ファイル名を変更。"'
+alias git-commit-move-file='git commit -m "ファイルを移動。"'
+
 alias tig-all='tig --all'
 
 alias 51='PATH=`_dromozoa_path "$PATH" 51`; MANPATH=`_dromozoa_path "$PATH" 51`; export PATH MANPATH; hash -r'
