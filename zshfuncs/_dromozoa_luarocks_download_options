@@ -1,5 +1,5 @@
 #autoload
-__dromozoa_luarocks_download_options() {
+_dromozoa_luarocks_download_options() {
   options=(
     $options
     '--all[Download all files if there are multiple matches]'

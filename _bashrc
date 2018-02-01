@@ -19,14 +19,17 @@
 
 . "$HOME/dromozoa-dotfiles/_resource"
 
-ps_start='\[\e[91m\]'
-ps_reset='\[\e[m\]'
-case x$TERM in
-  xscreen) ps_start='\[\e[92m\]';;
-esac
-
-PS1="$ps_start\u@\h:\w\$$ps_reset "
-PS2="$ps_start>$ps_reset "
+_dromozoa_prompt() {
+  local start='\[\e[91m\]'
+  local reset='\[\e[m\]'
+  case x$TERM in
+    xscreen) start='\[\e[92m\]';;
+  esac
+  PS1="$start\u@\h:\w\$$reset "
+  PS2="$start>$reset "
+}
+_dromozoa_prompt
+unset -f _dromozoa_prompt
 
 HISTCONTROL=ignoreboth
 HISTSIZE=65536

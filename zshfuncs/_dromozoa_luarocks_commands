@@ -1,5 +1,5 @@
 #autoload
-__dromozoa_luarocks_commands() {
+_dromozoa_luarocks_commands() {
   commands=(
     $commands
     'build:Build/compile a rock'

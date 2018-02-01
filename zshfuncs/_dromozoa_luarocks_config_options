@@ -1,5 +1,5 @@
 #autoload
-__dromozoa_luarocks_config_options() {
+_dromozoa_luarocks_config_options() {
   options=(
     $options
     '--lua-incdir[Path to Lua header files]'

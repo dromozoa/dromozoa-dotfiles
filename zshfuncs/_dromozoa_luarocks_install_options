@@ -1,5 +1,5 @@
 #autoload
-__dromozoa_luarocks_install_options() {
+_dromozoa_luarocks_install_options() {
   options=(
     $options
     '--keep[Do not remove previously installed versions of the rock after installing a new one]'
