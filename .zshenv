@@ -15,9 +15,4 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-echo .zshenv
-
-if test -f "$HOME/dromozoa-dotfiles/_environ"
-then
-  . "$HOME/dromozoa-dotfiles/_environ"
-fi
+. "$HOME/dromozoa-dotfiles/_environ"

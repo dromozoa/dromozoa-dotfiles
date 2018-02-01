@@ -15,17 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-echo .bashrc
-
-if test -f "$HOME/dromozoa-dotfiles/_environ"
-then
-  . "$HOME/dromozoa-dotfiles/_environ"
-fi
-
-if test -f "$HOME/dromozoa-dotfiles/_resource"
-then
-  . "$HOME/dromozoa-dotfiles/_resource"
-fi
+. "$HOME/dromozoa-dotfiles/_resource"
 
 ps_start='\[\e[91m\]'
 ps_reset='\[\e[m\]'
