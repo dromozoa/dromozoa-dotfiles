@@ -1,4 +1,4 @@
-# vim: filetype=sh:
+#! /bin/sh -e
 
 # Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
@@ -17,33 +17,24 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-case x$resource_path_v in
-  x) resource_path_v=53;;
-esac
+source=:$1
+version=$2
+result=
 
-PATH=\
-$HOME/dromozoa-dotfiles/bin:\
-$HOME/dromozoa$resource_path_v/bin:\
-$HOME/dromozoa/bin:\
-/opt/dromozoa$resource_path_v/bin:\
-/opt/dromozoa/bin:\
-/usr/local/bin:\
-/usr/bin:\
-/bin:\
-/usr/sbin:\
-/sbin
+while :
+do
+  item=`expr "x$source" : 'x:\([^:]*\)' || :`
+  case x$item in
+    x$HOME/prefixes/dromozoa5?/bin)
+      item=$HOME/prefixes/dromozoa$version/bin;;
+    x/opt/dromozoa5?/bin)
+      item=/opt/dromozoa$version/bin;;
+  esac
+  result=$result:$item
+  source=`expr "x$source" : 'x:[^:]*\(.*\)' || :`
+  case x$source in
+    x) break;;
+  esac
+done
 
-MANPATH=\
-$HOME/dromozoa$resource_path_v/bin:\
-$HOME/dromozoa/bin:\
-/opt/dromozoa$resource_path_v/share/man:\
-/opt/dromozoa/share/man:\
-/usr/local/share/man:\
-/usr/share/man
-
-if (unset resource_path_v) >/dev/null 2>&1
-then
-  unset resource_path_v
-fi
-
-export PATH MANPATH
+expr "x$result" : 'x:\(.*\)' || :

@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-. "$HOME/dromozoa-dotfiles/resource"
+. "$HOME/dromozoa-dotfiles/_resource"
 
 fpath=("$HOME/dromozoa-dotfiles/zshfuncs" $fpath)
 

@@ -15,7 +15,4 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-case x$PS1 in
-  x) . "$HOME/dromozoa-dotfiles/_environ";;
-  *) . "$HOME/dromozoa-dotfiles/_bashrc";;
-esac
+. "$HOME/dromozoa-dotfiles/_environ"

@@ -37,11 +37,15 @@ backup=$here/backup-`date "+%Y-%m-%d-%H-%M-%S"`
 cd
 home=`pwd`
 
-for i in .bashrc .editrc .inputrc .tigrc .vimrc .zshrc
+for i in \
+  .bash_profile .bashrc .bash_logout \
+  .zshenv .zprofile .zshrc .zlogout \
+  .editrc .inputrc .screenrc .tigrc .vimrc
 do
   if test -h "$i"
   then
-    echo "unlink $home/$i"
+    link=`readlink "$home/$i"`
+    echo "unlink $home/$i -> "$link""
     rm -f "$i"
   elif test -f "$i"
   then
