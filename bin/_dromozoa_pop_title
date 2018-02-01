@@ -17,16 +17,6 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-local title = ...
-if not title then
-  local handle = assert(io.popen "hostname")
-  title = handle:read("*l"):match "^[^%.]*"
-  handle:close()
-end
-
-local term = os.getenv "TERM"
-if term:find "^xterm" then
-  io.write("\27]0;", title, "\7")
-elseif term:find "^screen" then
-  io.write("\27k", title, "\27\\")
+if os.getenv "TERM":find "^xterm" then
+  io.write "\27[23;0t"
 end
