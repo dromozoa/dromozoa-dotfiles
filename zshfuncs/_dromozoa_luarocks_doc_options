@@ -1,5 +1,5 @@
 #autoload
-__dromozoa_luarocks_doc_options() {
+_dromozoa_luarocks_doc_options() {
   options=(
     $options
     '--home[Open the home page of project]'
