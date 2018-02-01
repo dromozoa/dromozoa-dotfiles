@@ -17,6 +17,26 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-echo _environ
+PATH=\
+$HOME/dromozoa-dotfiles/bin:\
+$HOME/prefixes/dromozoa53/bin:\
+$HOME/prefixes/dromozoa/bin:\
+/opt/dromozoa53/bin:\
+/opt/dromozoa/bin:\
+/usr/local/bin:\
+/usr/bin:\
+/bin:\
+/usr/sbin:\
+/sbin
 
-umask 022
+MANPATH=\
+$HOME/prefixes/dromozoa53/bin:\
+$HOME/prefixes/dromozoa/bin:\
+/opt/dromozoa53/share/man:\
+/opt/dromozoa/share/man:\
+/usr/local/share/man:\
+/usr/share/man
+
+LANG=C.UTF-8
+
+export PATH MANPATH LANG
