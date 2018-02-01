@@ -1,6 +1,5 @@
 TODO
 
-ユーティリティと関数の名前のリファクタリング
 screenの一括ウィンドウ作成
 
 DONE
@@ -12,3 +11,4 @@ screenのシェルの設定
 screenの表示の設定
 git-commit-rename-file
 git-commit-move-file
+ユーティリティと関数の名前のリファクタリング
