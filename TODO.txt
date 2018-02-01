@@ -4,6 +4,7 @@ screenの一括ウィンドウ作成
 screenの順序のいれかえ
   $WINDOWとscreen -X number
 補完関数の拡充
+  関数定義の再考
 
 DONE
 
