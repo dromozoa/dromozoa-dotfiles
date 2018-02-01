@@ -1,8 +1,8 @@
 TODO
 
 screenの一括ウィンドウ作成
-bash, zshでローカル変数を利用
 補完関数の拡充
 
 DONE
 
+bash, zshでローカル変数を利用
