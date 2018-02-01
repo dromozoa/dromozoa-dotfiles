@@ -1,8 +1,11 @@
 TODO
 
 screenの一括ウィンドウ作成
+screenの順序のいれかえ
+  $WINDOWとscreen -X number
 補完関数の拡充
 
 DONE
 
 bash, zshでローカル変数を利用
+escape sequenceをshとprintfで書く
