@@ -40,7 +40,7 @@ home=`pwd`
 for i in \
   .bash_profile .bashrc .bash_logout \
   .zshenv .zprofile .zshrc .zlogout \
-  .editrc .inputrc .tigrc .vimrc
+  .editrc .inputrc .screenrc .tigrc .vimrc
 do
   if test -h "$i"
   then
