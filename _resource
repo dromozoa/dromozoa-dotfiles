@@ -17,8 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-echo _resource
-
 if test -f "$HOME/dromozoa-dotfiles/_environ"
 then
   . "$HOME/dromozoa-dotfiles/_environ"
@@ -42,9 +40,7 @@ LDFLAGS=\
 "-L/opt/dromozoa/lib"
 case x`uname 2>&1 || :` in
   xDarwin) ;;
-  *)
-    LDFLAGS="$LDFLAGS -Wl,-rpath -Wl,$HOME/prefixes/dromozoa/lib"
-    LDFLAGS="$LDFLAGS -Wl,-rpath -Wl,/opt/dromozoa/lib";;
+  *) LDFLAGS="$LDFLAGS -Wl,-rpath -Wl,$HOME/prefixes/dromozoa/lib $LDFLAGS -Wl,-rpath -Wl,/opt/dromozoa/lib";;
 esac
 
 export LANG EDITOR CPPFLAGS LDFLAGS
