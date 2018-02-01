@@ -2,8 +2,6 @@ TODO
 
 ユーティリティと関数の名前のリファクタリング
 screenの一括ウィンドウ作成
-git-commit-rename-file
-git-commit-move-file
 
 DONE
 
@@ -12,3 +10,5 @@ $ZDOTDIRの使用 => 使用しない
 .zlogoutによるウィンドウの書き換え
 screenのシェルの設定
 screenの表示の設定
+git-commit-rename-file
+git-commit-move-file
