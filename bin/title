@@ -21,6 +21,7 @@ case x$1 in
   x) title=`hostname`; title=`expr "x$title" : 'x\([^.]*\)' || :`;;
   *) title=$1;;
 esac
+
 case x$TERM in
   xxterm*) printf '\33]0;%s\7' "$title";;
   xscreen*) printf '\33k%s\33\\' "$title";;

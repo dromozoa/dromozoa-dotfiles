@@ -1,35 +1,36 @@
-#! /usr/bin/env lua
+#! /bin/sh -e
 
--- Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
---
--- This file is part of dromozoa-dotfiles.
---
--- dromozoa-dotfiles is free software: you can redistribute it and/or modify
--- it under the terms of the GNU General Public License as published by
--- the Free Software Foundation, either version 3 of the License, or
--- (at your option) any later version.
---
--- dromozoa-dotfiles is distributed in the hope that it will be useful,
--- but WITHOUT ANY WARRANTY; without even the implied warranty of
--- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--- GNU General Public License for more details.
---
--- You should have received a copy of the GNU General Public License
--- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
+# Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+#
+# This file is part of dromozoa-dotfiles.
+#
+# dromozoa-dotfiles is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# dromozoa-dotfiles is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-local message = ...
-if not message then
-  message = io.read "*a"
-end
+case x$1 in
+  x) message=`cat`;;
+  *) message=$1;;
+esac
 
-local screen = os.getenv "TERM":find "^screen"
-if screen then
-  -- DCS
-  io.write "\27P"
-end
--- iTerm2 notification
-io.write("\27]9;", message, "\7")
-if screen then
-  -- ST
-  io.write "\27\\"
-end
+# DCS
+case x$TERM in
+  xscreen*) printf '\33P';;
+esac
+
+# iTerm2 notification
+printf '\33]9;%s\7' "$message"
+
+# ST
+case x$TERM in
+  xscreen*) printf '\33\\';;
+esac
