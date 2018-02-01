@@ -32,7 +32,7 @@ setopt hist_verify
 setopt inc_append_history
 setopt share_history
 
-() {
+_dromozoa_prompt() {
   local start='%{[91m%}'
   local reset="%{[0m%}"
   case x$TERM in
@@ -43,6 +43,8 @@ setopt share_history
   RPROMPT=
   SPROMPT="${start}correct '%R' to '%r' [nyae]?$reset "
 }
+_dromozoa_prompt
+unfunction _dromozoa_prompt
 
 HISTFILE=~/.zsh_history
 HISTSIZE=65536
