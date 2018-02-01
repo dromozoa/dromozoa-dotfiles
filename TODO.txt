@@ -1,14 +1,8 @@
 TODO
 
 screenの一括ウィンドウ作成
+bash, zshでローカル変数を利用
+補完関数の拡充
 
 DONE
 
-PATH書き換えで古いパスを消さない
-$ZDOTDIRの使用 => 使用しない
-.zlogoutによるウィンドウの書き換え
-screenのシェルの設定
-screenの表示の設定
-git-commit-rename-file
-git-commit-move-file
-ユーティリティと関数の名前のリファクタリング
