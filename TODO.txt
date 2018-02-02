@@ -5,6 +5,20 @@ screenの順序のいれかえ
   $WINDOWとscreen -X number
 補完関数の拡充
   関数定義の再考
+vimのコマンド実行のパス
+設定ファイルディレクトリ
+  .paths.d ???
+  .resource.d
+  .bashrc.d
+  .zshrc.d
+_dromozoa_pathのリファクタリング
+  名前変更
+  変数名変更
+  path_helperのような機能
+バッファへのコピータイミングを検討する
+git-commit-remove-file
+git-commit-add-document
+git-commit-update-document
 
 DONE
 
