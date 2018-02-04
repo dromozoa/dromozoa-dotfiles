@@ -62,19 +62,32 @@ case x`uname` in
     alias ls='ls -F --color=auto';;
 esac
 
-alias git-checkout-master='git checkout master'
-alias git-checkout-develop='_dromozoa_git_checkout develop master'
-alias git-checkout-feature='_dromozoa_git_checkout feature develop'
-alias git-checkout-release='_dromozoa_git_checkout release develop'
+# git
 alias git-push-all-tags-dry-run='git-push-all-tags --dry-run'
 alias git-clean='git clean -d -x'
 alias git-status='git status'
 alias git-tag='git tag -m "" -a'
-alias git-commit-preapre='git commit -m "リリース準備。"'
+
+# git checkout
+alias git-checkout-master='git checkout master'
+alias git-checkout-develop='_dromozoa_git_checkout develop master'
+alias git-checkout-feature='_dromozoa_git_checkout feature develop'
+alias git-checkout-release='_dromozoa_git_checkout release develop'
+
+# git commit
 alias git-commit-refactoring='git commit -m "リファクタリング。"'
+alias git-commit-preapre='git commit -m "リリース準備。"'
 alias git-commit-release='git commit -m "リリースメッセージを設定。"'
+
+# git commit file
 alias git-commit-rename-file='git commit -m "ファイル名を変更。"'
 alias git-commit-move-file='git commit -m "ファイルを移動。"'
+alias git-commit-remove-file='git commit -m "ファイルを削除。"'
+
+# git commit document
+alias git-commit-add-document='git commit -m "文書を追加。"'
+alias git-commit-update-document='git commit -m "文書を更新。"'
+
 alias tig-all='tig --all'
 
 alias 51='PATH=`_dromozoa_path "$PATH" 51`; MANPATH=`_dromozoa_path "$PATH" 51`; export PATH MANPATH; hash -r'
