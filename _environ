@@ -30,8 +30,8 @@ $HOME/prefixes/dromozoa/bin:\
 /sbin
 
 MANPATH=\
-$HOME/prefixes/dromozoa53/bin:\
-$HOME/prefixes/dromozoa/bin:\
+$HOME/prefixes/dromozoa53/share/man:\
+$HOME/prefixes/dromozoa/share/man:\
 /opt/dromozoa53/share/man:\
 /opt/dromozoa/share/man:\
 /usr/local/share/man:\

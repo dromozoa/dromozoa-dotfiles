@@ -22,9 +22,9 @@ case x$1 in
   *) message="[ERROR] $1";;
 esac
 
-if test -t 1
+if test -t 2
 then
-  printf '\33[33m%s\33[0m\n' "$message"
+  printf '\33[33m%s\33[0m\n' "$message" >&2
 else
-  printf '%s\n' "$message"
+  printf '%s\n' "$message" >&2
 fi

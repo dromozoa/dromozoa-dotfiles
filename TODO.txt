@@ -1,10 +1,6 @@
 TODO
 
 .zshenv (_environ) のための前処理
-_dromozoa_pathのリファクタリング
-  名前変更
-  変数名変更
-  path_helperのような機能
 screenの一括ウィンドウ作成
 screenの順序のいれかえ
   $WINDOWとscreen -X number
@@ -32,3 +28,8 @@ Vimのバッファへのコピータイミングを検討する
 git-addを考える
   .git-ignoreを除外して、追加できる？
   => The git add command will not add ignored files by default.
+
+_dromozoa_pathのリファクタリング
+  名前変更
+  変数名変更
+  path_helperのような機能
