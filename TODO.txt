@@ -1,9 +1,6 @@
 TODO
 
 .zshenv (_environ) のための前処理
-Vimのバッファへのコピータイミングを検討する
-git-addを考える
-  .git-ignoreを除外して、追加できる？
 _dromozoa_pathのリファクタリング
   名前変更
   変数名変更
@@ -20,7 +17,6 @@ vimのコマンド実行のパス
   .bashrc.d
   .zshrc.d
 
-
 DONE
 
 bash, zshでローカル変数を利用
@@ -29,3 +25,10 @@ git-commit-remove-file
 git-commit-add-document
 git-commit-update-document
 git-push-all-tagsでfeature*ブランチがないかチェックする
+
+Vimのバッファへのコピータイミングを検討する
+  => そのままにする
+
+git-addを考える
+  .git-ignoreを除外して、追加できる？
+  => The git add command will not add ignored files by default.
