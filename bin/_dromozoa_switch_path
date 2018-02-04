@@ -1,0 +1,63 @@
+#! /bin/sh -e
+
+# Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+#
+# This file is part of dromozoa-dotfiles.
+#
+# dromozoa-dotfiles is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# dromozoa-dotfiles is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
+
+case x$1 in
+  x51|x52|x53) version=$1;;
+  *) _dromozoa_error "unsupported version"; exit 1;;
+esac
+
+path=:$PATH
+result=
+while :
+do
+  item=`expr "x$path" : 'x:\([^:]*\)' || :`
+  case x$item in
+    x$HOME/prefixes/dromozoa5?/bin)
+      item=$HOME/prefixes/dromozoa$version/bin;;
+    x/opt/dromozoa5?/bin)
+      item=/opt/dromozoa$version/bin;;
+  esac
+  result=$result:$item
+  path=`expr "x$path" : 'x:[^:]*\(.*\)' || :`
+  case x$path in
+    x) break;;
+  esac
+done
+path=`expr "x$result" : 'x:\(.*\)' || :`
+
+manpath=:$MANPATH
+result=
+while :
+do
+  item=`expr "x$manpath" : 'x:\([^:]*\)' || :`
+  case x$item in
+    x$HOME/prefixes/dromozoa5?/share/man)
+      item=$HOME/prefixes/dromozoa$version/share/man;;
+    x/opt/dromozoa5?/share/man)
+      item=/opt/dromozoa$version/share/man;;
+  esac
+  result=$result:$item
+  manpath=`expr "x$manpath" : 'x:[^:]*\(.*\)' || :`
+  case x$manpath in
+    x) break;;
+  esac
+done
+manpath=`expr "x$result" : 'x:\(.*\)' || :`
+
+printf 'PATH="%s"; export PATH; MANPATH="%s"; export MANPATH; hash -r;\n' "$path" "$manpath"
