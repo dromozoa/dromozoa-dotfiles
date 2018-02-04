@@ -17,14 +17,14 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-branch=`git symbolic-ref --short HEAD`
-case x$branch in
-  xrelease) ;;
-  *) _dromozoa_error "on branch $branch"; exit 1;;
+case x$1 in
+  x) message="[ERROR]";;
+  *) message="[ERROR] $1";;
 esac
-git checkout master
-git merge --no-ff -m "リリースブランチをマージ。" release
-git checkout develop
-git merge --no-ff -m "リリースブランチをマージ。" release
-git checkout master
-git branch -d release
+
+if test -t 1
+then
+  printf '\33[33m%s\33[0m\n' "$message"
+else
+  printf '%s\n' "$message"
+fi

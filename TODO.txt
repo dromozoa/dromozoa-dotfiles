@@ -1,6 +1,5 @@
 TODO
 
-git-push-all-tagsでfeature*ブランチがないかチェックする
 .zshenv (_environ) のための前処理
 Vimのバッファへのコピータイミングを検討する
 git-addを考える
@@ -29,3 +28,4 @@ escape sequenceをshとprintfで書く
 git-commit-remove-file
 git-commit-add-document
 git-commit-update-document
+git-push-all-tagsでfeature*ブランチがないかチェックする
