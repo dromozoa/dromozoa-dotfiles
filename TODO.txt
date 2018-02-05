@@ -8,6 +8,7 @@ screenの順序のいれかえ
 
 vimで囲む
 updateなどの更新用ユーティリティ
+ssh/config用のユーティリティ
 
 DONE
 
