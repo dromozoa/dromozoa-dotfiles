@@ -1,4 +1,4 @@
-TODO
+[TODO]
 
 screenの一括ウィンドウ作成
 screenの順序のいれかえ
@@ -7,10 +7,12 @@ screenの順序のいれかえ
   関数定義の再考
 
 vimで囲む
+  vimのテキストオブジェクト
+
 updateなどの更新用ユーティリティ
 ssh/config用のユーティリティ
 
-DONE
+[DONE]
 
 bash, zshでローカル変数を利用
 escape sequenceをshとprintfで書く
