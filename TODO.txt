@@ -13,6 +13,11 @@ vimのコマンド実行のパス
   .bashrc.d
   .zshrc.d
 
+exec zsh -lするときにタイトル書き換えをしないオプションを用
+意する
+
+vimで囲む
+
 DONE
 
 bash, zshでローカル変数を利用
