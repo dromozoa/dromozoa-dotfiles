@@ -1,16 +1,13 @@
 TODO
 
-.zshenvが多少重くなってもよいことにする
-.zshenv (_environ) のための前処理
 screenの一括ウィンドウ作成
 screenの順序のいれかえ
   $WINDOWとscreen -X number
 補完関数の拡充
   関数定義の再考
-vimのコマンド実行のパス
-
 
 vimで囲む
+updateなどの更新用ユーティリティ
 
 DONE
 
@@ -40,3 +37,7 @@ exec zsh -lするときにタイトル書き換えをしないオプションを
 設定ファイルディレクトリ
   .zshenv.d
   .zshrc.d
+  => vimのコマンド実行のパスは.zshenv.dの利用で解決
+
+.zshenv (_environ) のための前処理
+  .zshenvが多少重くなってもよいことにする
