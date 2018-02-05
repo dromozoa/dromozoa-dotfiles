@@ -1,5 +1,6 @@
 TODO
 
+.zshenvが多少重くなってもよいことにする
 .zshenv (_environ) のための前処理
 screenの一括ウィンドウ作成
 screenの順序のいれかえ
@@ -12,9 +13,6 @@ vimのコマンド実行のパス
   .resource.d
   .bashrc.d
   .zshrc.d
-
-exec zsh -lするときにタイトル書き換えをしないオプションを用
-意する
 
 vimで囲む
 
@@ -38,3 +36,8 @@ _dromozoa_pathのリファクタリング
   名前変更
   変数名変更
   path_helperのような機能
+
+exec zsh -lするときにタイトル書き換えをしないオプションを用
+意する
+  => exec zshでインタラクティブでじゅうぶん
+
