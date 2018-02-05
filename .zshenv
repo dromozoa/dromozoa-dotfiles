@@ -32,3 +32,8 @@ _dromozoa_zshenv_d() {
 }
 _dromozoa_zshenv_d
 unfunction _dromozoa_zshenv_d
+
+if test -f "$HOME/.zshenv.local"
+then
+  . "$HOME/.zshenv.local"
+fi
