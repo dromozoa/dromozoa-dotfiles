@@ -1,22 +1,13 @@
 TODO
 
-.zshenv (_environ) のための前処理
 screenの一括ウィンドウ作成
 screenの順序のいれかえ
   $WINDOWとscreen -X number
 補完関数の拡充
   関数定義の再考
-vimのコマンド実行のパス
-設定ファイルディレクトリ
-  .paths.d ???
-  .resource.d
-  .bashrc.d
-  .zshrc.d
-
-exec zsh -lするときにタイトル書き換えをしないオプションを用
-意する
 
 vimで囲む
+updateなどの更新用ユーティリティ
 
 DONE
 
@@ -38,3 +29,15 @@ _dromozoa_pathのリファクタリング
   名前変更
   変数名変更
   path_helperのような機能
+
+exec zsh -lするときにタイトル書き換えをしないオプションを用
+意する
+  => exec zshでインタラクティブでじゅうぶん
+
+設定ファイルディレクトリ
+  .zshenv.d
+  .zshrc.d
+  => vimのコマンド実行のパスは.zshenv.dの利用で解決
+
+.zshenv (_environ) のための前処理
+  .zshenvが多少重くなってもよいことにする

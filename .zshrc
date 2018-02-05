@@ -64,6 +64,22 @@ bindkey "^N" history-beginning-search-forward-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^Q" push-line-or-edit
 
+_dromozoa_zshrc_d() {
+  unsetopt local_options nomatch
+  if test -d "$HOME/.zshrc.d"
+  then
+    for i in "$HOME/.zshrc.d/"*
+    do
+      if test -f "$i"
+      then
+        . "$i"
+      fi
+    done
+  fi
+}
+_dromozoa_zshrc_d
+unfunction _dromozoa_zshrc_d
+
 if test -f "$HOME/.zshrc.local"
 then
   . "$HOME/.zshrc.local"
