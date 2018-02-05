@@ -17,4 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-_dromozoa_pop_title 2>/dev/null
+# pop title
+case x$TERM in
+  xxterm*) printf '\33[23;0t';;
+esac

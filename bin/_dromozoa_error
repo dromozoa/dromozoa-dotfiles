@@ -17,24 +17,14 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-source=:$1
-version=$2
-result=
+case x$1 in
+  x) message="[ERROR]";;
+  *) message="[ERROR] $1";;
+esac
 
-while :
-do
-  item=`expr "x$source" : 'x:\([^:]*\)' || :`
-  case x$item in
-    x$HOME/prefixes/dromozoa5?/bin)
-      item=$HOME/prefixes/dromozoa$version/bin;;
-    x/opt/dromozoa5?/bin)
-      item=/opt/dromozoa$version/bin;;
-  esac
-  result=$result:$item
-  source=`expr "x$source" : 'x:[^:]*\(.*\)' || :`
-  case x$source in
-    x) break;;
-  esac
-done
-
-expr "x$result" : 'x:\(.*\)' || :
+if test -t 2
+then
+  printf '\33[33m%s\33[0m\n' "$message" >&2
+else
+  printf '%s\n' "$message" >&2
+fi

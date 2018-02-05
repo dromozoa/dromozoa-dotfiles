@@ -15,6 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-hardstatus alwayslastline '%-w%{= yk}%50>%n %t%{-}%+w'
-shell -zsh
+hardstatus alwayslastline '%-w%{= yk}%50>%n %t%{-}%+w%<'
+shell -$SHELL
 startup_message off

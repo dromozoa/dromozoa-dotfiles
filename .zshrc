@@ -32,7 +32,7 @@ setopt hist_verify
 setopt inc_append_history
 setopt share_history
 
-() {
+_dromozoa_prompt() {
   local start='%{[91m%}'
   local reset="%{[0m%}"
   case x$TERM in
@@ -43,6 +43,8 @@ setopt share_history
   RPROMPT=
   SPROMPT="${start}correct '%R' to '%r' [nyae]?$reset "
 }
+_dromozoa_prompt
+unfunction _dromozoa_prompt
 
 HISTFILE=~/.zsh_history
 HISTSIZE=65536
@@ -61,6 +63,22 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "^N" history-beginning-search-forward-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^Q" push-line-or-edit
+
+_dromozoa_zshrc_d() {
+  unsetopt local_options nomatch
+  if test -d "$HOME/.zshrc.d"
+  then
+    for i in "$HOME/.zshrc.d/"*
+    do
+      if test -f "$i"
+      then
+        . "$i"
+      fi
+    done
+  fi
+}
+_dromozoa_zshrc_d
+unfunction _dromozoa_zshrc_d
 
 if test -f "$HOME/.zshrc.local"
 then

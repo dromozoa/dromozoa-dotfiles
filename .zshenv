@@ -16,3 +16,24 @@
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 . "$HOME/dromozoa-dotfiles/_environ"
+
+_dromozoa_zshenv_d() {
+  unsetopt local_options nomatch
+  if test -d "$HOME/.zshenv.d"
+  then
+    for i in "$HOME/.zshenv.d/"*
+    do
+      if test -f "$i"
+      then
+        . "$i"
+      fi
+    done
+  fi
+}
+_dromozoa_zshenv_d
+unfunction _dromozoa_zshenv_d
+
+if test -f "$HOME/.zshenv.local"
+then
+  . "$HOME/.zshenv.local"
+fi

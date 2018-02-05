@@ -20,7 +20,7 @@
 branch=`git symbolic-ref --short HEAD`
 case x$branch in
   xfeature) ;;
-  *) echo "on branch $branch"; exit 1;;
+  *) _dromozoa_error "on branch $branch"; exit 1;;
 esac
 git checkout develop
 git merge --no-ff -m "作業ブランチをマージ。" feature
