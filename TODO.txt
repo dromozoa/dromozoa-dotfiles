@@ -8,11 +8,7 @@ screenの順序のいれかえ
 補完関数の拡充
   関数定義の再考
 vimのコマンド実行のパス
-設定ファイルディレクトリ
-  .paths.d ???
-  .resource.d
-  .bashrc.d
-  .zshrc.d
+
 
 vimで囲む
 
@@ -41,3 +37,6 @@ exec zsh -lするときにタイトル書き換えをしないオプションを
 意する
   => exec zshでインタラクティブでじゅうぶん
 
+設定ファイルディレクトリ
+  .zshenv.d
+  .zshrc.d
