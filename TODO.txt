@@ -44,3 +44,7 @@ exec zsh -lするときにタイトル書き換えをしないオプションを
 
 .zshenv (_environ) のための前処理
   .zshenvが多少重くなってもよいことにする
+
+.zshenv.dの読み直しのタイミング
+  .zshrcが常に_zshenvを読みこむように修正
+
