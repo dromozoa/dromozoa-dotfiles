@@ -90,7 +90,7 @@ local sgr_saturday = SGR(96)
 local sgr_reset = SGR(0)
 
 local holidays = {}
-local handle = assert(io.popen [[iconv -f CP932 <"$HOME/dromozoa-dotfiles/docs/syukujitsu.csv"]])
+local handle = assert(io.popen [[cat "$HOME/dromozoa-dotfiles/docs"/syukujitsu-*.csv | iconv -f CP932]])
 for line in handle:lines() do
   local year, month, day, name = line:match "^(%d+)%-(%d+)%-(%d+),(%S+)%s*$"
   if year then
