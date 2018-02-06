@@ -61,10 +61,8 @@ autocmd CursorHold * wall
 
 autocmd FileType html setlocal wrap
 autocmd FileType text setlocal textwidth=60
-autocmd FileType markdown setlocal textwidth=60
 
 if has("lua")
   let $LUA_PATH=$HOME."/dromozoa-dotfiles/?.lua;;"
   autocmd FileType text setlocal formatexpr=dromozoa#format()
-  autocmd FileType markdown setlocal formatexpr=dromozoa#format()
 endif
