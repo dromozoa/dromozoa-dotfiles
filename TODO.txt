@@ -11,6 +11,8 @@ vimで囲む
 
 updateなどの更新用ユーティリティ
 ssh/config用のユーティリティ
+ssh多重接続について
+autosshやmoshに似た機能の検討
 
 [DONE]
 
