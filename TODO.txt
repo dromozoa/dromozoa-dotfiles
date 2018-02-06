@@ -1,4 +1,4 @@
-TODO
+[TODO]
 
 screenの一括ウィンドウ作成
 screenの順序のいれかえ
@@ -7,10 +7,12 @@ screenの順序のいれかえ
   関数定義の再考
 
 vimで囲む
+  vimのテキストオブジェクト
+
 updateなどの更新用ユーティリティ
 ssh/config用のユーティリティ
 
-DONE
+[DONE]
 
 bash, zshでローカル変数を利用
 escape sequenceをshとprintfで書く
@@ -42,3 +44,7 @@ exec zsh -lするときにタイトル書き換えをしないオプションを
 
 .zshenv (_environ) のための前処理
   .zshenvが多少重くなってもよいことにする
+
+.zshenv.dの読み直しのタイミング
+  .zshrcが常に_zshenvを読みこむように修正
+
