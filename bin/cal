@@ -26,10 +26,19 @@ local function SGR(n)
 end
 
 local sgr_today = SGR(1) .. SGR("48;5;238")
-local sgr_holiday = SGR(1) .. SGR(91)
-local sgr_dayoff = SGR(1) .. SGR(91)
-local sgr_sunday = SGR(91)
-local sgr_saturday = SGR(96)
+local sgr_holiday = {
+  ["祝日"] = SGR(1) .. SGR(91);
+  ["休日"] = SGR(1) .. SGR(91);
+}
+local sgr_wday = {
+  [0] = SGR(91);
+  [1] = "";
+  [2] = "";
+  [3] = "";
+  [4] = "";
+  [5] = "";
+  [6] = SGR(96);
+}
 local sgr_reset = SGR(0)
 
 local today = os.date "*t"
@@ -43,11 +52,11 @@ end
 
 local rows = {}
 for i = 1, 24 do
-  local row = {}
+  local items = {}
   for j = 1, 21 do
-    row[j] = false
+    items[j] = false
   end
-  rows[i] = row
+  rows[i] = items
 end
 
 local min_jdn = calendar.date_to_jdn(year,  1,  1)
@@ -65,39 +74,44 @@ for jdn = min_jdn, max_jdn do
     sgr = sgr_today
   end
   if holiday then
-    if holiday.kind == "祝日" then
-      sgr = sgr .. sgr_holiday
-    else
-      sgr = sgr .. sgr_dayoff
-    end
+    sgr = sgr .. sgr_holiday[holiday.kind]
   else
-    if wday == 0 then
-      sgr = sgr .. sgr_sunday
-    elseif wday == 6 then
-      sgr = sgr .. sgr_saturday
-    end
+    sgr = sgr .. sgr_wday[wday]
   end
 
   local m = month - 1
-  local d = day + first_wday - 1
+  local d = first_wday + day - 1
   local i = floor(m / 3) * 6 + floor(d / 7) + 1
   local j = m % 3 * 7 + d % 7 + 1
   rows[i][j] = {
-    year = year;
-    month = month;
     day = day;
-    wday = wday;
     sgr = sgr;
   }
 end
 
 for i = 1, #rows do
-  local row = rows[i]
-  for j = #row, 1, -1 do
-    if row[j] then
+  local items = rows[i]
+  for j = #items, 1, -1 do
+    if items[j] then
       break
     else
-      row[j] = nil
+      items[j] = nil
+    end
+  end
+end
+
+local names = { "日", "月", "火", "水", "木", "金", "土" }
+local function write_week_title(out)
+  for i = 1, #names do
+    local name = names[i]
+    if i > 1 then
+      out:write " "
+    end
+    local sgr = sgr_wday[i - 1]
+    if sgr == "" then
+      out:write(name)
+    else
+      out:write(sgr, name, sgr_reset)
     end
   end
 end
@@ -117,16 +131,17 @@ for i = 1, #rows do
         ("        %d月          "):format(month + 1),
         ("        %d月\n"):format(month + 2))
     end
-    local sunday = sgr_sunday .. "日" .. sgr_reset
-    local saturday = sgr_saturday .. "土" .. sgr_reset
-    io.write(
-        sunday, " 月 火 水 木 金 ", saturday, "  ",
-        sunday, " 月 火 水 木 金 ", saturday, "  ",
-        sunday, " 月 火 水 木 金 ", saturday, "\n")
+    write_week_title(io.stdout)
+    io.write "  "
+    write_week_title(io.stdout)
+    io.write "  "
+    write_week_title(io.stdout)
+    io.write "\n"
   end
-  local row = rows[i]
-  for j = 1, #row do
-    local item = row[j]
+
+  local items = rows[i]
+  for j = 1, #items do
+    local item = items[j]
     if j > 1 then
       if j % 7 == 1 then
         io.write "  "
@@ -136,10 +151,10 @@ for i = 1, #rows do
     end
     if item then
       local sgr = item.sgr
-      if sgr ~= "" then
-        io.write(sgr, ("%2d"):format(item.day), sgr_reset)
-      else
+      if sgr == "" then
         io.write(("%2d"):format(item.day))
+      else
+        io.write(sgr, ("%2d"):format(item.day), sgr_reset)
       end
     else
       io.write "  "
