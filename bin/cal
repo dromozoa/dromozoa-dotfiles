@@ -41,17 +41,24 @@ if not year then
   year = today.year
 end
 
-local min_jdn = calendar.date_to_jdn(year,  1,  1)
-local max_jdn = calendar.date_to_jdn(year, 12, 31)
-
-local months = {}
-for month = 1, 12 do
-  months[month] = {}
+local rows = {}
+for i = 1, 24 do
+  local row = {}
+  for j = 1, 21 do
+    row[j] = false
+  end
+  rows[i] = row
 end
 
+local min_jdn = calendar.date_to_jdn(year,  1,  1)
+local max_jdn = calendar.date_to_jdn(year, 12, 31)
+local first_wday
 for jdn = min_jdn, max_jdn do
   local year, month, day, wday = calendar.jdn_to_date(jdn)
   local holiday = calendar.is_holiday(year, month, day)
+  if day == 1 then
+    first_wday = wday
+  end
 
   local sgr = ""
   if jdn == today_jdn then
@@ -71,34 +78,17 @@ for jdn = min_jdn, max_jdn do
     end
   end
 
-  months[month][day] = {
+  local m = month - 1
+  local d = day + first_wday - 1
+  local i = floor(m / 3) * 6 + floor(d / 7) + 1
+  local j = m % 3 * 7 + d % 7 + 1
+  rows[i][j] = {
     year = year;
     month = month;
     day = day;
     wday = wday;
     sgr = sgr;
   }
-end
-
-local rows = {}
-for i = 1, 24 do
-  local row = {}
-  for j = 1, 21 do
-    row[j] = false
-  end
-  rows[i] = row
-end
-
-for month = 1, 12 do
-  local days = months[month]
-  local wday = days[1].wday
-  for day = 1, #days do
-    local m = month - 1
-    local d = day + wday - 1
-    local i = floor(m / 3) * 6 + floor(d / 7) + 1
-    local j = m % 3 * 7 + d % 7 + 1
-    rows[i][j] = days[day]
-  end
 end
 
 for i = 1, #rows do
