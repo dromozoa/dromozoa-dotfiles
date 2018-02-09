@@ -18,23 +18,24 @@
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 . "$HOME/dromozoa-dotfiles/_environ"
-. "$HOME/dromozoa-dotfiles/_resource"
 
-_dromozoa_prompt() {
-  local start='\[\e[91m\]'
-  local reset='\[\e[m\]'
-  case x$TERM in
-    xscreen) start='\[\e[92m\]';;
-  esac
-  PS1="$start\u@\h:\w\$$reset "
-  PS2="$start>$reset "
+_dromozoa_zshenv_d() {
+  unsetopt local_options nomatch
+  if test -d "$HOME/.zshenv.d"
+  then
+    for i in "$HOME/.zshenv.d/"*
+    do
+      if test -f "$i"
+      then
+        . "$i"
+      fi
+    done
+  fi
 }
-_dromozoa_prompt
-unset -f _dromozoa_prompt
+_dromozoa_zshenv_d
+unfunction _dromozoa_zshenv_d
 
-HISTCONTROL=ignoreboth
-HISTSIZE=65536
-HISTFILESIZE=65536
-HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
-
-alias h='history | grep'
+if test -f "$HOME/.zshenv.local"
+then
+  . "$HOME/.zshenv.local"
+fi
