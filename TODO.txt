@@ -3,6 +3,7 @@
 補完関数の拡充
   関数定義の再考
   luarocks upload
+  dromozoa-bootの補完
 
 screenの一括ウィンドウ作成
 screenの順序のいれかえ
