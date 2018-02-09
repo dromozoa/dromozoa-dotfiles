@@ -3,11 +3,11 @@ _dromozoa_luarocks_options() {
   options=(
     $options
     '--local[Use the tree in the user'\''s home directory. To enable it, see '\''luarocks help path'\''.]'
-    '--only-server=[Fetch rocks/rockspecs from this server only (overrides any entries in the config file)]:server'
-    '--only-sources=[Restrict downloads to paths matching the given URL.]:url'
-    '--server=[Fetch rocks/rockspecs from this server (takes priority over config file)]:server'
+    '--only-server=[Fetch rocks/rockspecs from this server only (overrides any entries in the config file)]:server:_hosts'
+    '--only-sources=[Restrict downloads to paths matching the given URL.]:url:_urls'
+    '--server=[Fetch rocks/rockspecs from this server (takes priority over config file)]:server:_hosts'
     '--timeout=[Timeout on network operations, in seconds. 0 means no timeout (wait forever). Default is 30.]:seconds'
-    '--tree=[Which tree to operate on.]:path'
+    '--tree=[Which tree to operate on.]:path:_files'
     '--verbose[Display verbose output of commands executed.]'
   )
 
@@ -92,7 +92,7 @@ _dromozoa_luarocks_options() {
       options=(
         $options
         '--old-versions[Keep the highest-numbered version of each rock and remove the other ones. By default it only removes old versions if they are not needed as dependencies. This can be overridden with the flag --force.]'
-        '--tree=:path'
+        '--tree=:path:_files'
       )
       ;;
     xremove)
@@ -141,11 +141,11 @@ _dromozoa_luarocks_options() {
       options=(
         $options
         '--detailed=[A longer description string.]:text'
-        '--homepage=[Project homepage.]:url'
+        '--homepage=[Project homepage.]:url:_urls'
         '--lib=[A comma-separated list of libraries that C files need to link to.]:library'
         '--license=[A license string, such as "MIT/X11" or "GNU GPL v3".]:text'
         '--lua-version=[Supported Lua versions. Accepted values are "5.1", "5.2", "5.3", "5.1,5.2", "5.2,5.3", or "5.1,5.2,5.3".]:vers'
-        '--output=[Write the rockspec with the given filename. If not given, a file is written in the current directory with a filename based on given name and version.]:file'
+        '--output=[Write the rockspec with the given filename. If not given, a file is written in the current directory with a filename based on given name and version.]:file:_files'
         '--rockspec-format=[Rockspec format version, such as "1.0" or "1.1".]:ver'
         '--summary=[A short one-line description summary.]:text'
         '--tag=[Tag to use. Will attempt to extract version number from it.]:tag'

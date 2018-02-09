@@ -82,12 +82,14 @@ local function make_option(opt)
     option = option .. "="
   end
   if desc then
-    option = option .. "[" .. opt.desc .. "]"
+    assert(not desc:find "]")
+    option = option .. "[" .. desc .. "]"
   end
   if arg ~= true then
     option = option .. ":" .. arg
   end
-  if name == "deps-mode" then
+  if arg == "mode" then
+    assert(name == "deps-mode")
     option = option .. ":(("
     for i = 1, #deps_modes do
       local deps_mode = deps_modes[i]
@@ -96,11 +98,17 @@ local function make_option(opt)
       if i > 1 then
         option = option .. " "
       end
+      assert(not desc:find [["]])
       option = option .. mode .. [[\:"]] .. desc .. [["]]
     end
     option = option .. "))"
+  elseif arg == "file" or arg == "path" then
+    option = option .. ":_files"
+  elseif arg == "server" then
+    option = option .. ":_hosts"
+  elseif arg == "url" then
+    option = option .. ":_urls"
   end
-
   return option
 end
 
