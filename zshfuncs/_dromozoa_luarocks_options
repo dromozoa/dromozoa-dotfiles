@@ -3,11 +3,11 @@ _dromozoa_luarocks_options() {
   options=(
     $options
     '--local[Use the tree in the user'\''s home directory. To enable it, see '\''luarocks help path'\''.]'
-    '--only-server=[Fetch rocks/rockspecs from this server only (overrides any entries in the config file)]'
-    '--only-sources=[Restrict downloads to paths matching the given URL.]'
-    '--server=[Fetch rocks/rockspecs from this server (takes priority over config file)]'
-    '--timeout=[Timeout on network operations, in seconds. 0 means no timeout (wait forever). Default is 30.]'
-    '--tree=[Which tree to operate on.]'
+    '--only-server=[Fetch rocks/rockspecs from this server only (overrides any entries in the config file)]:server'
+    '--only-sources=[Restrict downloads to paths matching the given URL.]:url'
+    '--server=[Fetch rocks/rockspecs from this server (takes priority over config file)]:server'
+    '--timeout=[Timeout on network operations, in seconds. 0 means no timeout (wait forever). Default is 30.]:seconds'
+    '--tree=[Which tree to operate on.]:path'
     '--verbose[Display verbose output of commands executed.]'
   )
 
@@ -15,8 +15,8 @@ _dromozoa_luarocks_options() {
     xbuild)
       options=(
         $options
-        '--branch=[Override the `source.branch` field in the loaded rockspec. Allows to specify a different branch to  fetch. Particularly for SCM rocks.]'
-        '--deps-mode=[How to handle dependencies.]'
+        '--branch=[Override the `source.branch` field in the loaded rockspec. Allows to specify a different branch to  fetch. Particularly for SCM rocks.]:branch-name'
+        '--deps-mode=[How to handle dependencies.]:mode:((all\:"use all trees from the rocks_trees list for finding dependencies" one\:"use only the current tree (possibly set with --tree)" order\:"use trees based on order (use the current tree and all trees below it on the rocks_trees list)" none\:"ignore dependencies altogether."))'
         '--keep[Do not remove previously installed versions of the rock after building a new one. This behavior can be made permanent by setting keep_other_versions=true in the configuration file.]'
         '--only-deps[Installs only the dependencies of the rock.]'
         '--pack-binary-rock[Do not install rock. Instead, produce a .rock file with the contents of compilation in the current directory.]'
@@ -44,7 +44,7 @@ _dromozoa_luarocks_options() {
       options=(
         $options
         '--all[Download all files if there are multiple matches.]'
-        '--arch=[Download rock for a specific architecture.]'
+        '--arch=[Download rock for a specific architecture.]:arch'
         '--rockspec[Download .rockspec if available.]'
         '--source[Download .src.rock if available.]'
       )
@@ -52,7 +52,7 @@ _dromozoa_luarocks_options() {
     xinstall)
       options=(
         $options
-        '--deps-mode=[How to handle dependencies.]'
+        '--deps-mode=[How to handle dependencies.]:mode:((all\:"use all trees from the rocks_trees list for finding dependencies" one\:"use only the current tree (possibly set with --tree)" order\:"use trees based on order (use the current tree and all trees below it on the rocks_trees list)" none\:"ignore dependencies altogether."))'
         '--keep[Do not remove previously installed versions of the rock after installing a new one. This behavior can be made permanent by setting keep_other_versions=true in the configuration file.]'
         '--only-deps[Installs only the dependencies of the rock.]'
       )
@@ -67,7 +67,7 @@ _dromozoa_luarocks_options() {
     xmake)
       options=(
         $options
-        '--branch=[Override the `source.branch` field in the loaded rockspec. Allows to specify a different branch to  fetch. Particularly for SCM rocks.]'
+        '--branch=[Override the `source.branch` field in the loaded rockspec. Allows to specify a different branch to  fetch. Particularly for SCM rocks.]:branch-name'
         '--keep[Do not remove previously installed versions of the rock after installing a new one. This behavior can be made permanent by setting keep_other_versions=true in the configuration file.]'
         '--pack-binary-rock[Do not install rock. Instead, produce a .rock file with the contents of compilation in the current directory.]'
       )
@@ -75,7 +75,7 @@ _dromozoa_luarocks_options() {
     xnew_version)
       options=(
         $options
-        '--tag=[(no description)]'
+        '--tag=:tag'
       )
       ;;
     xpath)
@@ -92,15 +92,15 @@ _dromozoa_luarocks_options() {
       options=(
         $options
         '--old-versions[Keep the highest-numbered version of each rock and remove the other ones. By default it only removes old versions if they are not needed as dependencies. This can be overridden with the flag --force.]'
-        '--tree=[(no description)]'
+        '--tree=:path'
       )
       ;;
     xremove)
       options=(
         $options
-        '--deps-mode=[How to handle dependencies.]'
-        '--force[(no description)]'
-        '--force-fast[(no description)]'
+        '--deps-mode=[How to handle dependencies.]:mode:((all\:"use all trees from the rocks_trees list for finding dependencies" one\:"use only the current tree (possibly set with --tree)" order\:"use trees based on order (use the current tree and all trees below it on the rocks_trees list)" none\:"ignore dependencies altogether."))'
+        '--force'
+        '--force-fast'
       )
       ;;
     xsearch)
@@ -132,7 +132,7 @@ _dromozoa_luarocks_options() {
     xupload)
       options=(
         $options
-        '--api-key=[Give it an API key. It will be stored for subsequent uses.]'
+        '--api-key=[Give it an API key. It will be stored for subsequent uses.]:key'
         '--force[Replace existing rockspec if the same revision of a module already exists. This should be used only  in case of upload mistakes: when updating a rockspec, increment the revision number instead.]'
         '--skip-pack[Do not pack and send source rock.]'
       )
@@ -140,15 +140,15 @@ _dromozoa_luarocks_options() {
     xwrite_rockspec)
       options=(
         $options
-        '--detailed=[A longer description string.]'
-        '--homepage=[Project homepage.]'
-        '--lib=[A comma-separated list of libraries that C files need to link to.]'
-        '--license=[A license string, such as "MIT/X11" or "GNU GPL v3".]'
-        '--lua-version=[Supported Lua versions. Accepted values are "5.1", "5.2", "5.3", "5.1,5.2", "5.2,5.3", or "5.1,5.2,5.3".]'
-        '--output=[Write the rockspec with the given filename. If not given, a file is written in the current directory with a filename based on given name and version.]'
-        '--rockspec-format=[Rockspec format version, such as "1.0" or "1.1".]'
-        '--summary=[A short one-line description summary.]'
-        '--tag=[Tag to use. Will attempt to extract version number from it.]'
+        '--detailed=[A longer description string.]:text'
+        '--homepage=[Project homepage.]:url'
+        '--lib=[A comma-separated list of libraries that C files need to link to.]:library'
+        '--license=[A license string, such as "MIT/X11" or "GNU GPL v3".]:text'
+        '--lua-version=[Supported Lua versions. Accepted values are "5.1", "5.2", "5.3", "5.1,5.2", "5.2,5.3", or "5.1,5.2,5.3".]:vers'
+        '--output=[Write the rockspec with the given filename. If not given, a file is written in the current directory with a filename based on given name and version.]:file'
+        '--rockspec-format=[Rockspec format version, such as "1.0" or "1.1".]:ver'
+        '--summary=[A short one-line description summary.]:text'
+        '--tag=[Tag to use. Will attempt to extract version number from it.]:tag'
       )
       ;;
   esac

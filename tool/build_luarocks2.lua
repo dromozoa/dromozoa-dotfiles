@@ -31,6 +31,8 @@ util.printout = function (...)
   printout_buffer[#printout_buffer + 1] = table.concat({...}, "\t")
 end
 
+local deps_modes = {}
+
 local function parse_help(content)
   local paragraphs = {}
   local paragraph
@@ -68,18 +70,37 @@ local function each_option(options)
   end)
 end
 
-local function make_option_string(opt)
-  local option = "--" .. opt.name
+local function make_option(opt)
+  local name = opt.name
   local arg = opt.arg
+  local desc = opt.desc
+
+  local option = "--" .. opt.name
   if arg ~= true then
     arg = arg:gsub([[^"(.-)"$]], "%1")
     arg = arg:gsub([[^%<(.-)%>$]], "%1")
     option = option .. "="
   end
-  option = option .. "[" .. opt.desc .. "]"
-  if arg ~= true then
-    -- option = option .. ":" .. arg
+  if desc then
+    option = option .. "[" .. opt.desc .. "]"
   end
+  if arg ~= true then
+    option = option .. ":" .. arg
+  end
+  if name == "deps-mode" then
+    option = option .. ":(("
+    for i = 1, #deps_modes do
+      local deps_mode = deps_modes[i]
+      local mode = deps_mode.mode
+      local desc = deps_mode.desc
+      if i > 1 then
+        option = option .. " "
+      end
+      option = option .. mode .. [[\:"]] .. desc .. [["]]
+    end
+    option = option .. "))"
+  end
+
   return option
 end
 
@@ -168,7 +189,6 @@ for i = 1, #names do
     options[name] = {
       name = name;
       arg = assert(supported_flags[name]);
-      desc = "(no description)";
     }
   end
 
@@ -186,6 +206,24 @@ for i = 1, #names do
   end
 end
 
+local indent
+for line in util.deps_mode_help():gmatch "[^\n]*" do
+  local sp, mode, desc = line:match "^( +)%* (%w+) %- (.*)"
+  if sp then
+    indent = #sp + 2
+    deps_modes[#deps_modes + 1] = {
+      mode = mode;
+      desc = desc;
+    }
+  else
+    local sp, desc = line:match "^( +)(.*)"
+    if sp and #sp == indent then
+      local deps_mode = deps_modes[#deps_modes]
+      deps_mode.desc = deps_mode.desc .. " " .. desc
+    end
+  end
+end
+
 local out = assert(io.open("zshfuncs/_dromozoa_luarocks_options", "w"))
 out:write [[
 #autoload
@@ -197,7 +235,7 @@ _dromozoa_luarocks_options() {
 for opt in each_option(general_options) do
   out:write(([[
     %s
-]]):format(shell.quote(make_option_string(opt))))
+]]):format(shell.quote(make_option(opt))))
 end
 
 out:write [[
@@ -220,7 +258,7 @@ for i = 1, #names do
     for opt in each_option(options) do
       out:write(([[
         %s
-]]):format(shell.quote(make_option_string(opt))))
+]]):format(shell.quote(make_option(opt))))
     end
 
       out:write [[
