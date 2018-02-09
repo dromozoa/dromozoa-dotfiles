@@ -16,6 +16,7 @@
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 local util = require "luarocks.util"
+local shell = require "dromozoa.commons.shell"
 
 program_description = "(no program description)"
 
@@ -52,6 +53,34 @@ local function parse_help(content)
     paragraphs[i] = table.concat(paragraphs[i], " ")
   end
   return paragraphs
+end
+
+local function each_option(options)
+  local names = {}
+  for name in pairs(options) do
+    names[#names + 1] = name
+  end
+  table.sort(names)
+  return coroutine.wrap(function ()
+    for i = 1, #names do
+      coroutine.yield(options[names[i]])
+    end
+  end)
+end
+
+local function make_option_string(opt)
+  local option = "--" .. opt.name
+  local arg = opt.arg
+  if arg ~= true then
+    arg = arg:gsub([[^"(.-)"$]], "%1")
+    arg = arg:gsub([[^%<(.-)%>$]], "%1")
+    option = option .. "="
+  end
+  option = option .. "[" .. opt.desc .. "]"
+  if arg ~= true then
+    -- option = option .. ":" .. arg
+  end
+  return option
 end
 
 local filename = assert(package.searchpath("luarocks.util", package.path))
@@ -115,6 +144,7 @@ for i = 1, #printout_buffer do
       local name, desc = paragraph:match "^%-%-(%S+)%s+(.*)$"
       name = name:gsub("=.*", "")
       general_options[name] = {
+        name = name;
         arg = assert(supported_flags[name]);
         desc = desc;
       }
@@ -125,7 +155,6 @@ end
 for i = 1, #names do
   local name = names[i]
   local module = modules[name]
-  local summary = assert(module.help_summary)
   local arguments = module.help_arguments
   if arguments == nil then
     arguments = "<argument>"
@@ -137,6 +166,7 @@ for i = 1, #names do
 
   for name in arguments:gmatch "%-%-([%w%-]+)" do
     options[name] = {
+      name = name;
       arg = assert(supported_flags[name]);
       desc = "(no description)";
     }
@@ -149,8 +179,84 @@ for i = 1, #names do
     local name, desc = paragraph:match "^%-%-(%S+)%s+(.*)$"
     name = name:gsub("=.*", "")
     options[name] = {
+      name = name;
       arg = assert(supported_flags[name]);
       desc = desc;
     }
   end
 end
+
+local out = assert(io.open("zshfuncs/_dromozoa_luarocks_options", "w"))
+out:write [[
+#autoload
+_dromozoa_luarocks_options() {
+  options=(
+    $options
+]]
+
+for opt in each_option(general_options) do
+  out:write(([[
+    %s
+]]):format(shell.quote(make_option_string(opt))))
+end
+
+out:write [[
+  )
+
+  case x$1 in
+]]
+
+for i = 1, #names do
+  local name = names[i]
+  local module = modules[name]
+  local options = module.options
+  if next(options) ~= nil then
+    out:write(([[
+    x%s)
+      options=(
+        $options
+]]):format(name))
+
+    for opt in each_option(options) do
+      out:write(([[
+        %s
+]]):format(shell.quote(make_option_string(opt))))
+    end
+
+      out:write [[
+      )
+      ;;
+]]
+  end
+end
+
+out:write [[
+  esac
+}
+]]
+
+out:close()
+
+local out = assert(io.open("zshfuncs/_dromozoa_luarocks_commands", "w"))
+out:write [[
+#autoload
+_dromozoa_luarocks_commands() {
+  commands=(
+    $commands
+]]
+
+for i = 1, #names do
+  local name = names[i]
+  local module = modules[name]
+  local summary = assert(module.help_summary)
+  out:write(([[
+    %s
+]]):format(shell.quote(name .. ":" .. summary)))
+end
+
+out:write [[
+  )
+}
+]]
+
+out:close()
