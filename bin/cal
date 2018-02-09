@@ -17,93 +17,32 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
+local calendar = require "dromozoa.calendar"
+
 local floor = math.floor
-
-local function encode(year, month, day)
-  if month < 3 then
-    year = year - 1
-    month = month + 13
-  else
-    month = month + 1
-  end
-  day = day + 0.5
-
-  local jd = floor(365.25 * (year + 4716)) + floor(30.6001 * month) + day - 1524.5
-  if jd >= 2299160.5 then
-    local A = floor(year / 100)
-    jd = jd + 2 - A + floor(A / 4)
-  end
-  return jd
-end
-
-local function decode(jd)
-  jd = jd + 1.5
-  local F = jd % 1
-  local A = jd - F
-  local wday = A % 7
-  if A >= 2299162 then
-    local alpha = floor((A - 1867217.25) / 36524.25)
-    A = A + 1 + alpha - floor(alpha / 4)
-  end
-  local B = A + 1523
-  local C = floor((B - 122.1) / 365.25)
-  local D = floor(365.25 * C)
-  local E = floor((B - D) / 30.6001)
-
-  local year
-  local month
-  if E < 14 then
-    year = C - 4716
-    month = E - 1
-  else
-    year = C - 4715
-    month = E - 13
-  end
-  local day = B - D - floor(30.6001 * E)
-
-  return {
-    year = year;
-    month = month;
-    day = day;
-    wday = wday;
-  }
-end
 
 local function SGR(n)
   return "\27[" .. n .. "m"
 end
 
-local function put_sgr(item, new_sgr)
-  local sgr = item.sgr
-  if sgr then
-    sgr[#sgr + 1] = new_sgr
-  else
-    item.sgr = { new_sgr }
-  end
-end
-
 local sgr_today = SGR(1) .. SGR("48;5;238")
-local sgr_holiday = SGR(1) .. SGR(91)
-local sgr_dayoff = SGR(1) .. SGR(91)
-local sgr_sunday = SGR(91)
-local sgr_saturday = SGR(96)
+local sgr_holiday = {
+  ["祝日"] = SGR(1) .. SGR(91);
+  ["休日"] = SGR(1) .. SGR(91);
+}
+local sgr_wday = {
+  [0] = SGR(91);
+  [1] = "";
+  [2] = "";
+  [3] = "";
+  [4] = "";
+  [5] = "";
+  [6] = SGR(96);
+}
 local sgr_reset = SGR(0)
 
-local holidays = {}
-local handle = assert(io.popen [[cat "$HOME/dromozoa-dotfiles/docs"/syukujitsu-*.csv | iconv -f CP932]])
-for line in handle:lines() do
-  local year, month, day, name = line:match "^(%d+)%-(%d+)%-(%d+),(%S+)%s*$"
-  if year then
-    year = tonumber(year)
-    month = tonumber(month)
-    day = tonumber(day)
-    holidays[encode(year, month, day)] = name
-  end
-end
-handle:close()
-
 local today = os.date "*t"
-today.jd = encode(today.year, today.month, today.day)
+local today_jdn = calendar.date_to_jdn(today.year, today.month, today.day)
 
 local year = ...
 year = tonumber(year)
@@ -111,102 +50,68 @@ if not year then
   year = today.year
 end
 
-local jdays = {}
-local jd_first = encode(year, 1, 1)
-local jd_last = encode(year + 1, 1, 1) - 1
-for jd = jd_first - 1, jd_last + 1 do
-  local item = decode(jd)
-  item.jd = jd
-  item.holiday = holidays[jd]
-  jdays[jd] = item
-end
-
-local months = {}
-for i = 1, 12 do
-  months[i] = {}
-end
-for jd = jd_first, jd_last do
-  local item = jdays[jd]
-  months[item.month][item.day] = item
-end
-
---[[
-http://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=323AC1000000178&openerCode=1
-第三条  「国民の祝日」は、休日とする。
-２  「国民の祝日」が日曜日に当たるときは、その日後においてそ
-    の日に最も近い「国民の祝日」でない日を休日とする。
-３  その前日及び翌日が「国民の祝日」である日（「国民の祝日」
-    でない日に限る。）は、休日とする。
-]]
-
-for jd = jd_first, jd_last do
-  local item = jdays[jd]
-  if item.holiday then
-    item.dayoff = true
-    if item.wday == 0 then
-      for jd = jd + 1, jd_last + 1 do
-        local item = jdays[jd]
-        if not item.holiday then
-          item.dayoff = true
-          break
-        end
-      end
-    end
-  end
-  if not item.holiday then
-    if jdays[jd - 1].holiday and jdays[jd + 1].holiday then
-      item.dayoff = true
-    end
-  end
-end
-
-for jd = jd_first, jd_last do
-  local item = jdays[jd]
-  if item.jd == today.jd then
-    put_sgr(item, sgr_today)
-  end
-  if item.holiday then
-    put_sgr(item, sgr_holiday)
-  elseif item.dayoff then
-    put_sgr(item, sgr_dayoff)
-  else
-    local wday = item.wday
-    if wday == 0 then
-      put_sgr(item, sgr_sunday)
-    elseif wday == 6 then
-      put_sgr(item, sgr_saturday)
-    end
-  end
-end
-
 local rows = {}
 for i = 1, 24 do
-  local row = {}
+  local items = {}
   for j = 1, 21 do
-    row[j] = false
+    items[j] = false
   end
-  rows[i] = row
+  rows[i] = items
 end
 
-for month = 1, 12 do
-  local days = months[month]
-  local wday = days[1].wday
-  for day = 1, #days do
-    local m = month - 1
-    local d = day + wday - 1
-    local i = floor(m / 3) * 6 + floor(d / 7) + 1
-    local j = m % 3 * 7 + d % 7 + 1
-    rows[i][j] = days[day]
+local min_jdn = calendar.date_to_jdn(year,  1,  1)
+local max_jdn = calendar.date_to_jdn(year, 12, 31)
+local first_wday
+for jdn = min_jdn, max_jdn do
+  local year, month, day, wday = calendar.jdn_to_date(jdn)
+  local holiday = calendar.is_holiday(year, month, day)
+  if day == 1 then
+    first_wday = wday
   end
+
+  local sgr = ""
+  if jdn == today_jdn then
+    sgr = sgr_today
+  end
+  if holiday then
+    sgr = sgr .. sgr_holiday[holiday.kind]
+  else
+    sgr = sgr .. sgr_wday[wday]
+  end
+
+  local m = month - 1
+  local d = first_wday + day - 1
+  local i = floor(m / 3) * 6 + floor(d / 7) + 1
+  local j = m % 3 * 7 + d % 7 + 1
+  rows[i][j] = {
+    day = day;
+    sgr = sgr;
+  }
 end
 
 for i = 1, #rows do
-  local row = rows[i]
-  for j = #row, 1, -1 do
-    if row[j] then
+  local items = rows[i]
+  for j = #items, 1, -1 do
+    if items[j] then
       break
     else
-      row[j] = nil
+      items[j] = nil
+    end
+  end
+end
+
+local names = { "日", "月", "火", "水", "木", "金", "土" }
+local function write_week_title(out)
+  for i = 1, #names do
+    local name = names[i]
+    if i > 1 then
+      out:write " "
+    end
+    local sgr = sgr_wday[i - 1]
+    if sgr == "" then
+      out:write(name)
+    else
+      out:write(sgr, name, sgr_reset)
     end
   end
 end
@@ -226,16 +131,17 @@ for i = 1, #rows do
         ("        %d月          "):format(month + 1),
         ("        %d月\n"):format(month + 2))
     end
-    local sunday = sgr_sunday .. "日" .. sgr_reset
-    local saturday = sgr_saturday .. "土" .. sgr_reset
-    io.write(
-        sunday, " 月 火 水 木 金 ", saturday, "  ",
-        sunday, " 月 火 水 木 金 ", saturday, "  ",
-        sunday, " 月 火 水 木 金 ", saturday, "\n")
+    write_week_title(io.stdout)
+    io.write "  "
+    write_week_title(io.stdout)
+    io.write "  "
+    write_week_title(io.stdout)
+    io.write "\n"
   end
-  local row = rows[i]
-  for j = 1, #row do
-    local item = row[j]
+
+  local items = rows[i]
+  for j = 1, #items do
+    local item = items[j]
     if j > 1 then
       if j % 7 == 1 then
         io.write "  "
@@ -245,10 +151,10 @@ for i = 1, #rows do
     end
     if item then
       local sgr = item.sgr
-      if sgr then
-        io.write(table.concat(sgr), ("%2d"):format(item.day), sgr_reset)
-      else
+      if sgr == "" then
         io.write(("%2d"):format(item.day))
+      else
+        io.write(sgr, ("%2d"):format(item.day), sgr_reset)
       end
     else
       io.write "  "

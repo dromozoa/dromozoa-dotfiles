@@ -27,6 +27,7 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
 alias rmfr='\rm -fr'
+alias vi=vim
 
 case x`uname` in
   xDarwin)
@@ -48,6 +49,7 @@ alias git-checkout-feature='_dromozoa_git_checkout feature develop'
 alias git-checkout-release='_dromozoa_git_checkout release develop'
 
 # commit
+alias git-commit-new-repository='git commit -m "レポジトリを作成。"'
 alias git-commit-refactoring='git commit -m "リファクタリング。"'
 alias git-commit-preapre='git commit -m "リリース準備。"'
 alias git-commit-release='git commit -m "リリースメッセージを設定。"'

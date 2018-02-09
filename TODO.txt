@@ -1,10 +1,12 @@
 [TODO]
 
+補完関数の拡充
+  関数定義の再考
+  luarocks upload
+
 screenの一括ウィンドウ作成
 screenの順序のいれかえ
   $WINDOWとscreen -X number
-補完関数の拡充
-  関数定義の再考
 
 vimで囲む
   vimのテキストオブジェクト
@@ -15,43 +17,9 @@ ssh多重接続について
 autosshやmoshに似た機能の検討
 
 テキストのフォーマットで問題が発生する場合を検討する。
+  三点リーダで問題が発生する？
 テキストのフォーマットをリファクタリングする
 
-カレンダーを切り出す
+メモをとるためのツール。
 
 [DONE]
-
-bash, zshでローカル変数を利用
-escape sequenceをshとprintfで書く
-git-commit-remove-file
-git-commit-add-document
-git-commit-update-document
-git-push-all-tagsでfeature*ブランチがないかチェックする
-
-Vimのバッファへのコピータイミングを検討する
-  => そのままにする
-
-git-addを考える
-  .git-ignoreを除外して、追加できる？
-  => The git add command will not add ignored files by default.
-
-_dromozoa_pathのリファクタリング
-  名前変更
-  変数名変更
-  path_helperのような機能
-
-exec zsh -lするときにタイトル書き換えをしないオプションを用
-意する
-  => exec zshでインタラクティブでじゅうぶん
-
-設定ファイルディレクトリ
-  .zshenv.d
-  .zshrc.d
-  => vimのコマンド実行のパスは.zshenv.dの利用で解決
-
-.zshenv (_environ) のための前処理
-  .zshenvが多少重くなってもよいことにする
-
-.zshenv.dの読み直しのタイミング
-  .zshrcが常に_zshenvを読みこむように修正
-
