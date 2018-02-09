@@ -17,8 +17,41 @@
 
 local util = require "luarocks.util"
 
+program_description = "(no program description)"
+
 util.this_program = function ()
   return "luarocks"
+end
+
+local state = 1
+
+local printout_buffer
+util.printout = function (...)
+  printout_buffer[#printout_buffer + 1] = table.concat({...}, "\t")
+end
+
+local function parse_help(content)
+  local paragraphs = {}
+  local paragraph
+  local state = 1
+  for line in content:gmatch "[^\n]*" do
+    if line:find "^%s*%-%-" then
+      state = 2
+      paragraph = { (line:gsub("^%s*", "")) }
+      paragraphs[#paragraphs + 1] = paragraph
+    elseif state == 2 then
+      if line:find "^%s*$" then
+        state = 1
+        paragraph = nil
+      else
+        paragraph[#paragraph + 1] = line:gsub("^%s*", "")
+      end
+    end
+  end
+  for i = 1, #paragraphs do
+    paragraphs[i] = table.concat(paragraphs[i], " ")
+  end
+  return paragraphs
 end
 
 local filename = assert(package.searchpath("luarocks.util", package.path))
@@ -63,6 +96,32 @@ for name, module in pairs(commands) do
 end
 table.sort(names)
 
+printout_buffer = {}
+modules.help.command()
+
+local general_options = {}
+
+local state = 1
+for i = 1, #printout_buffer do
+  local buffer = printout_buffer[i]
+  if buffer == "\nGENERAL OPTIONS" then
+    state = 2
+  elseif buffer == "\nVARIABLES" then
+    state = 1
+  elseif state >= 2 then
+    local paragraphs = parse_help(buffer)
+    for j = 1, #paragraphs do
+      local paragraph = paragraphs[j]
+      local name, desc = paragraph:match "^%-%-(%S+)%s+(.*)$"
+      name = name:gsub("=.*", "")
+      general_options[name] = {
+        arg = assert(supported_flags[name]);
+        desc = desc;
+      }
+    end
+  end
+end
+
 for i = 1, #names do
   local name = names[i]
   local module = modules[name]
@@ -73,41 +132,21 @@ for i = 1, #names do
   end
   local help = module.help
 
-  -- print(name, summary)
-  -- print(name, arguments)
-  print(("="):rep(40) .. " [" .. name .. "]")
-  print(arguments)
-  -- print(help)
-
   local options = {}
   module.options = options
 
-  local paragraphs = {}
-  local paragraph
-
-  local state = 1
-  for line in help:gmatch "[^\n]*" do
-    -- print(line)
-    if line:find "^%-%-" then
-      state = 2
-      paragraph = { line }
-      paragraphs[#paragraphs + 1] = paragraph
-    elseif state == 2 then
-      if line:find "^%s*$" then
-        state = 1
-        paragraph = nil
-      else
-        paragraph[#paragraph + 1] = line:gsub("^%s*", "")
-      end
-    end
+  for name in arguments:gmatch "%-%-([%w%-]+)" do
+    options[name] = {
+      arg = assert(supported_flags[name]);
+      desc = "(no description)";
+    }
   end
 
+  local paragraphs = parse_help(help)
   for j = 1, #paragraphs do
-    local text = table.concat(paragraphs[j], " ")
-    text = text:gsub("^(%-%-deps%-mode.-%.).*", "%1")
-    -- print(("#"):rep(60))
-    -- print(text)
-    local name, desc = text:match "^%-%-(%S+)%s+(.*)$"
+    local paragraph = paragraphs[j]
+    paragraph = paragraph:gsub("^(%-%-deps%-mode.-%.).*", "%1")
+    local name, desc = paragraph:match "^%-%-(%S+)%s+(.*)$"
     name = name:gsub("=.*", "")
     options[name] = {
       arg = assert(supported_flags[name]);
