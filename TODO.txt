@@ -1,7 +1,5 @@
 [TODO]
 
-dromozoa-calendarを使うようにcalを修正。
-
 screenの一括ウィンドウ作成
 screenの順序のいれかえ
   $WINDOWとscreen -X number
@@ -12,15 +10,13 @@ screenの順序のいれかえ
 vimで囲む
   vimのテキストオブジェクト
 
-vimでコピーが効かないときがある問題
-  => vimでなくviで起動している？
-
 updateなどの更新用ユーティリティ
 ssh/config用のユーティリティ
 ssh多重接続について
 autosshやmoshに似た機能の検討
 
 テキストのフォーマットで問題が発生する場合を検討する。
+  三点リーダで問題が発生する？
 テキストのフォーマットをリファクタリングする
 
 [DONE]
@@ -60,3 +56,9 @@ exec zsh -lするときにタイトル書き換えをしないオプションを
   .zshrcが常に_zshenvを読みこむように修正
 
 カレンダーを切り出す
+
+dromozoa-calendarを使うようにcalを修正。
+
+vimでコピーが効かないときがある問題
+  => vimでなくviで起動している？
+  => viをvimにエイリアスする
