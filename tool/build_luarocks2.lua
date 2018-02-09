@@ -55,15 +55,15 @@ local function parse_help(content)
   return paragraphs
 end
 
-local function each_option(options)
+local function each_option(opts)
   local names = {}
-  for name in pairs(options) do
+  for name in pairs(opts) do
     names[#names + 1] = name
   end
   table.sort(names)
   return coroutine.wrap(function ()
     for i = 1, #names do
-      coroutine.yield(options[names[i]])
+      coroutine.yield(opts[names[i]])
     end
   end)
 end
@@ -155,7 +155,7 @@ table.sort(names)
 printout_buffer = {}
 modules.help.command()
 
-local general_options = {}
+local general_opts = {}
 
 local state = 1
 for i = 1, #printout_buffer do
@@ -170,7 +170,7 @@ for i = 1, #printout_buffer do
       local paragraph = paragraphs[j]
       local name, desc = paragraph:match "^%-%-(%S+)%s+(.*)$"
       name = name:gsub("=.*", "")
-      general_options[name] = {
+      general_opts[name] = {
         name = name;
         arg = assert(supported_flags[name]);
         desc = desc;
@@ -188,15 +188,15 @@ for i = 1, #names do
   end
   local help = module.help
 
-  local options = {}
+  local opts = {}
   local args = {}
-  module.options = options
+  module.opts = opts
   module.args = args
 
   for item in arguments:gmatch "[%w%-<=>_]+" do
     local name = item:match "^%-%-([%w%-]+)"
     if name then
-      options[name] = {
+      opts[name] = {
         name = name;
         arg = assert(supported_flags[name]);
       }
@@ -212,7 +212,7 @@ for i = 1, #names do
     paragraph = paragraph:gsub("^(%-%-deps%-mode.-%.).*", "%1")
     local name, desc = paragraph:match "^%-%-(%S+)%s+(.*)$"
     name = name:gsub("=.*", "")
-    options[name] = {
+    opts[name] = {
       name = name;
       arg = assert(supported_flags[name]);
       desc = desc;
@@ -246,7 +246,7 @@ _dromozoa_luarocks_options() {
     $options
 ]]
 
-for opt in each_option(general_options) do
+for opt in each_option(general_opts) do
   out:write(([[
     %s
 ]]):format(shell.quote(make_option(opt))))
@@ -261,15 +261,15 @@ out:write [[
 for i = 1, #names do
   local name = names[i]
   local module = modules[name]
-  local options = module.options
-  if next(options) ~= nil then
+  local opts = module.opts
+  if next(opts) ~= nil then
     out:write(([[
     x%s)
       options=(
         $options
 ]]):format(name))
 
-    for opt in each_option(options) do
+    for opt in each_option(opts) do
       out:write(([[
         %s
 ]]):format(shell.quote(make_option(opt))))
