@@ -190,5 +190,10 @@ _luarocks_name() {
 }
 
 _luarocks_rockspec() {
-  _files -g "*.rockspec"
+  local -a rockspecs
+  for rockspec in *.rockspec
+  do
+    rockspecs=($rockspecs "$rockspec")
+  done
+  _describe rockspecs rockspecs
 }
