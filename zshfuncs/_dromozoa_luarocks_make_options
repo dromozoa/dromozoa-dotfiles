@@ -1,9 +1,0 @@
-#autoload
-_dromozoa_luarocks_make_options() {
-  options=(
-    $options
-    '--pack-binary-rock[Do not install rock]'
-    '--keep[Do not remove previously installed versions of the rock after installing a new one]'
-    '--branch=[Override the `source.branch` field in the loaded rockspec]:name'
-  )
-}

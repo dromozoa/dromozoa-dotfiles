@@ -1,9 +1,0 @@
-#autoload
-_dromozoa_luarocks_search_options() {
-  options=(
-    $options
-    '--source[Return only rockspecs and source rocks, to be used with the "build" command]'
-    '--binary[Return only pure Lua and binary rocks (rocks that can be used with the "install" command without requiring a C toolchain)]'
-    '--all[List all contents of the server that are suitable to this platform, do not filter by name]'
-  )
-}

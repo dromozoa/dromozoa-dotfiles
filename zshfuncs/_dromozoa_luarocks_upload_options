@@ -1,9 +1,0 @@
-#autoload
-_dromozoa_luarocks_upload_options() {
-  options=(
-    $options
-    '--skip-pack[Do not pack and send source rock]'
-    '--api-key=[Give it an API key]:key'
-    '--force[Replace existing rockspec if the same revision of a module already exists]'
-  )
-}
