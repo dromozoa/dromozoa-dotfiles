@@ -160,6 +160,32 @@ _luarocks_command_make() {
     $options
 }
 
+_luarocks_command_path() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  _dromozoa_luarocks_general_options
+  _dromozoa_luarocks_path_options
+
+  _arguments -C \
+    $options
+}
+
+_luarocks_command_purge() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  _dromozoa_luarocks_general_options
+  _dromozoa_luarocks_purge_options
+
+  _arguments -C \
+    $options
+}
+
 _luarocks_command_remove() {
   local curcontext="$curcontext"
   local context state state_descr line
@@ -172,6 +198,60 @@ _luarocks_command_remove() {
   _arguments -C \
     $options \
     ": :_luarocks_name"
+}
+
+_luarocks_command_search() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  _dromozoa_luarocks_general_options
+  _dromozoa_luarocks_search_options
+
+  _arguments -C \
+    $options
+}
+
+_luarocks_command_show() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  _dromozoa_luarocks_general_options
+  _dromozoa_luarocks_show_options
+
+  _arguments -C \
+    $options \
+    ": :_luarocks_name"
+}
+
+_luarocks_command_unpack() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  _dromozoa_luarocks_general_options
+  _dromozoa_luarocks_unpack_options
+
+  _arguments -C \
+    $options
+}
+
+_luarocks_command_upload() {
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  _dromozoa_luarocks_general_options
+  _dromozoa_luarocks_upload_options
+
+  _arguments -C \
+    $options \
+    ": :_luarocks_rockspec"
 }
 
 _luarocks_command() {

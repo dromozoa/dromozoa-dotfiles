@@ -1,0 +1,8 @@
+#autoload
+_dromozoa_luarocks_purge_options() {
+  options=(
+    $options
+    '--old-versions[Keep the highest-numbered version of each rock and remove the other ones]'
+    '--tree=:tree'
+  )
+}

@@ -1,0 +1,7 @@
+#autoload
+_dromozoa_luarocks_unpack_options() {
+  options=(
+    $options
+    '--force[Unpack files even if the output directory already exists]'
+  )
+}

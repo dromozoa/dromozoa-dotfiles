@@ -1,0 +1,13 @@
+#autoload
+_dromozoa_luarocks_show_options() {
+  options=(
+    $options
+    '--home[home page of project]'
+    '--modules[all modules provided by this package as used by require()]'
+    '--deps[packages this package depends on]'
+    '--rockspec[the full path of the rockspec file]'
+    '--mversion[the package version]'
+    '--rock-tree[local tree where rock is installed]'
+    '--rock-dir[data directory of the installed rock]'
+  )
+}

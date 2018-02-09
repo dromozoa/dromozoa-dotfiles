@@ -61,7 +61,9 @@ local function parse_help(command)
         local text = line:match "^\t +(.*)"
         if text then
           local option = options[#options]
-          option[2] = option[2] .. " " .. text
+          if option then
+            option[2] = option[2] .. " " .. text
+          end
         end
       end
     end
@@ -202,8 +204,7 @@ write_options("_dromozoa_luarocks_download_options", options)
 local options = parse_help "install"
 write_options("_dromozoa_luarocks_install_options", options)
 
--- local options = parse_help "lint"
--- write_options("_dromozoa_luarocks_lint_options", options)
+-- lint
 
 local options = parse_help "list"
 write_options("_dromozoa_luarocks_list_options", options)
@@ -211,5 +212,28 @@ write_options("_dromozoa_luarocks_list_options", options)
 local options = parse_help "make"
 write_options("_dromozoa_luarocks_make_options", options)
 
+-- new_version
+-- pack
+
+local options = parse_help "path"
+write_options("_dromozoa_luarocks_path_options", options)
+
+local options = parse_help "purge"
+write_options("_dromozoa_luarocks_purge_options", options)
+
 local options = parse_help "remove"
 write_options("_dromozoa_luarocks_remove_options", options)
+
+local options = parse_help "search"
+write_options("_dromozoa_luarocks_search_options", options)
+
+local options = parse_help "show"
+write_options("_dromozoa_luarocks_show_options", options)
+
+local options = parse_help "unpack"
+write_options("_dromozoa_luarocks_unpack_options", options)
+
+local options = parse_help "upload"
+write_options("_dromozoa_luarocks_upload_options", options)
+
+-- write_rockspec
