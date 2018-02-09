@@ -189,19 +189,21 @@ for i = 1, #names do
   local help = module.help
 
   local options = {}
+  local args = {}
   module.options = options
+  module.args = args
 
-  -- print(name, arguments)
-
-  for item in arguments:gmatch "[%w%-<=>]+" do
+  for item in arguments:gmatch "[%w%-<=>_]+" do
     local name = item:match "^%-%-([%w%-]+)"
     if name then
       options[name] = {
         name = name;
         arg = assert(supported_flags[name]);
       }
+    else
+      local name = assert(item:match "^<([^>]*)>$")
+      args[#args + 1] = name
     end
-    -- print("", item)
   end
 
   local paragraphs = parse_help(help)
