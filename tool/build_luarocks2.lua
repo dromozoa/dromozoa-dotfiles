@@ -24,8 +24,6 @@ util.this_program = function ()
   return "luarocks"
 end
 
-local state = 1
-
 local printout_buffer
 util.printout = function (...)
   printout_buffer[#printout_buffer + 1] = table.concat({...}, "\t")
