@@ -288,48 +288,6 @@ out:write [[
 
 out:close()
 
-local out = assert(io.open("zshfuncs/_dromozoa_luarocks_arguments", "w"))
-out:write [[
-#autoload
-_dromozoa_luarocks_arguments() {
-]]
-
-for i = 1, #names do
-  local name = names[i]
-  local module = modules[name]
-  local args = module.args
-
-  print(name)
-
-  local arguments = {}
-  for i = 1, #args do
-    local arg = args[i]
-    print("", arg)
-    if arg == "command" then
-      arguments[#arguments + 1] = "command"
-    elseif arg == "rockspec" then
-      arguments[#arguments + 1] = "rockspec"
-    end
-  end
-  if name == "doc" or name == "remove" then
-    arguments[#arguments + 1] = "installed_rock"
-  end
-
-  print("==", table.unpack(arguments))
-
---[=[
-  out:write(([[
-    %s
-]]):format(shell.quote(name .. ":" .. summary)))
-]=]
-end
-
-out:write [[
-}
-]]
-
-out:close()
-
 local out = assert(io.open("zshfuncs/_dromozoa_luarocks_commands", "w"))
 out:write [[
 #autoload
