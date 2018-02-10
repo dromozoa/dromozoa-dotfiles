@@ -292,8 +292,8 @@ local out = assert(io.open("zshfuncs/_dromozoa_luarocks_commands", "w"))
 out:write [[
 #autoload
 _dromozoa_luarocks_commands() {
-  commands=(
-    $commands
+  arguments=(
+    $arguments
 ]]
 
 for i = 1, #names do
@@ -307,6 +307,32 @@ end
 
 out:write [[
   )
+}
+]]
+
+out:close()
+
+local out = assert(io.open("zshfuncs/_dromozoa_luarocks_arguments", "w"))
+out:write [[
+#autoload
+_dromozoa_luarocks_arguments() {
+  case x$1 in
+]]
+
+for i = 1, #names do
+  local name = names[i]
+  local module = modules[name]
+  local args = module.args
+  if next(args) ~= nil then
+    out:write(([[
+    x%s)
+      arguments=($arguments %s);;
+]]):format(name, shell.quote(": :_luarocks_arguments " .. table.concat(args, " "))))
+  end
+end
+
+out:write [[
+  esac
 }
 ]]
 

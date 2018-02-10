@@ -24,18 +24,15 @@ _luarocks() {
 
   local -a options
   _dromozoa_luarocks_options
+
   _arguments -C \
     $options \
-    ": :_luarocks_commands" \
+    ": :_luarocks_arguments command" \
     "*:: :->argument"
 
   case x$state in
     xargument)
-      local command=$words[1]
-      case x$command in
-        xhelp) _luarocks_command_help "$command";;
-        *) _luarocks_command "$command";;
-      esac;;
+      _luarocks_command "$words[1]";;
   esac
 }
 
@@ -46,38 +43,33 @@ _luarocks_command() {
 
   local -a options
   _dromozoa_luarocks_options "$1"
-  _arguments -C \
-    $options \
-    ": :_luarocks_arguments"
-}
 
-_luarocks_command_help() {
-  local curcontext="$curcontext"
-  local context state state_descr line
-  typeset -A opt_args
+  local -a arguments
+  _dromozoa_luarocks_arguments "$1"
 
-  local -a options
-  _dromozoa_luarocks_options "$1"
-  _arguments -C \
-    $options \
-    ": :_luarocks_commands"
-}
-
-_luarocks_commands() {
-  local -a commands
-  _dromozoa_luarocks_commands
-  _describe commands commands
+  _arguments -C $options $arguments
 }
 
 _luarocks_arguments() {
+  local i j k
   local -a arguments
-  luarocks list --porcelain | while read item _
+
+  for i in "$@"
   do
-    arguments=($arguments "$item")
+    case x$i in
+      xcommand)
+        _dromozoa_luarocks_commands;;
+      xname)
+        luarocks list --porcelain | while read j k
+        do
+          arguments=($arguments "$j")
+        done;;
+      xrock)
+        arguments=($arguments *.rock);;
+      xrockspec)
+        arguments=($arguments *.rockspec);;
+    esac
   done
-  for item in *.rock*
-  do
-    arguments=($arguments "$item")
-  done
+
   _describe arguments arguments
 }

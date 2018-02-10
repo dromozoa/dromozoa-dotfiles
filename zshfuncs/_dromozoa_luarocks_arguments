@@ -1,0 +1,39 @@
+#autoload
+_dromozoa_luarocks_arguments() {
+  case x$1 in
+    xbuild)
+      arguments=($arguments ': :_luarocks_arguments rockspec rock name version');;
+    xconfig)
+      arguments=($arguments ': :_luarocks_arguments flag');;
+    xdoc)
+      arguments=($arguments ': :_luarocks_arguments argument');;
+    xdownload)
+      arguments=($arguments ': :_luarocks_arguments name version');;
+    xhelp)
+      arguments=($arguments ': :_luarocks_arguments command');;
+    xinstall)
+      arguments=($arguments ': :_luarocks_arguments rock name version');;
+    xlint)
+      arguments=($arguments ': :_luarocks_arguments rockspec');;
+    xlist)
+      arguments=($arguments ': :_luarocks_arguments filter');;
+    xmake)
+      arguments=($arguments ': :_luarocks_arguments rockspec');;
+    xnew_version)
+      arguments=($arguments ': :_luarocks_arguments package rockspec new_version new_url');;
+    xpack)
+      arguments=($arguments ': :_luarocks_arguments rockspec name version');;
+    xremove)
+      arguments=($arguments ': :_luarocks_arguments name version');;
+    xsearch)
+      arguments=($arguments ': :_luarocks_arguments name version');;
+    xshow)
+      arguments=($arguments ': :_luarocks_arguments argument');;
+    xunpack)
+      arguments=($arguments ': :_luarocks_arguments rock name version');;
+    xupload)
+      arguments=($arguments ': :_luarocks_arguments rockspec');;
+    xwrite_rockspec)
+      arguments=($arguments ': :_luarocks_arguments name version url path');;
+  esac
+}
