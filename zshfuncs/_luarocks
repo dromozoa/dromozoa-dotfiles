@@ -23,172 +23,53 @@ _luarocks() {
   typeset -A opt_args
 
   local -a options
-  _dromozoa_luarocks_general_options
+  _dromozoa_luarocks_options
 
   _arguments -C \
     $options \
-    ": :_luarocks_command" \
+    ": :_luarocks_arguments command" \
     "*:: :->argument"
 
-  local result
   case x$state in
     xargument)
-      if _call_function result "_luarocks_command_$words[1]"
-      then
-        :
-      else
-        _luarocks_command_generic "$words[1]"
-      fi;;
+      _luarocks_command "$words[1]";;
   esac
 }
 
-_luarocks_command_generic() {
-  local curcontext="$curcontext"
-  local context state state_descr line
-  typeset -A opt_args
-
-  local -a options
-  _dromozoa_luarocks_general_options
-
-  _arguments -C \
-    $options
-}
-
-_luarocks_command_config() {
-  local curcontext="$curcontext"
-  local context state state_descr line
-  typeset -A opt_args
-
-  local -a options
-  _dromozoa_luarocks_general_options
-  _dromozoa_luarocks_config_options
-
-  _arguments -C \
-    $options
-}
-
-_luarocks_command_doc() {
-  local curcontext="$curcontext"
-  local context state state_descr line
-  typeset -A opt_args
-
-  local -a options
-  _dromozoa_luarocks_general_options
-  _dromozoa_luarocks_doc_options
-
-  _arguments -C \
-    $options \
-    ": :_luarocks_name"
-}
-
-_luarocks_command_download() {
-  local curcontext="$curcontext"
-  local context state state_descr line
-  typeset -A opt_args
-
-  local -a options
-  _dromozoa_luarocks_general_options
-  _dromozoa_luarocks_download_options
-
-  _arguments -C \
-    $options
-}
-
-_luarocks_command_help() {
-  local curcontext="$curcontext"
-  local context state state_descr line
-  typeset -A opt_args
-
-  local -a options
-  _dromozoa_luarocks_general_options
-
-  _arguments -C \
-    $options \
-    ": :_luarocks_command"
-}
-
-_luarocks_command_install() {
-  local curcontext="$curcontext"
-  local context state state_descr line
-  typeset -A opt_args
-
-  local -a options
-  _dromozoa_luarocks_general_options
-  _dromozoa_luarocks_install_options
-
-  _arguments -C \
-    $options
-}
-
-_luarocks_command_list() {
-  local curcontext="$curcontext"
-  local context state state_descr line
-  typeset -A opt_args
-
-  local -a options
-  _dromozoa_luarocks_general_options
-  _dromozoa_luarocks_list_options
-
-  _arguments -C \
-    $options
-}
-
-_luarocks_command_lint() {
-  local curcontext="$curcontext"
-  local context state state_descr line
-  typeset -A opt_args
-
-  local -a options
-  _dromozoa_luarocks_general_options
-  _dromozoa_luarocks_list_options
-
-  _arguments -C \
-    $options \
-    ": :_luarocks_rockspec"
-}
-
-_luarocks_command_make() {
-  local curcontext="$curcontext"
-  local context state state_descr line
-  typeset -A opt_args
-
-  local -a options
-  _dromozoa_luarocks_general_options
-  _dromozoa_luarocks_make_options
-
-  _arguments -C \
-    $options
-}
-
-_luarocks_command_remove() {
-  local curcontext="$curcontext"
-  local context state state_descr line
-  typeset -A opt_args
-
-  local -a options
-  _dromozoa_luarocks_general_options
-  _dromozoa_luarocks_remove_options
-
-  _arguments -C \
-    $options \
-    ": :_luarocks_name"
-}
-
 _luarocks_command() {
-  local -a commands
-  _dromozoa_luarocks_commands
-  _describe commands commands
+  local curcontext="$curcontext"
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a options
+  _dromozoa_luarocks_options "$1"
+
+  local -a arguments
+  _dromozoa_luarocks_arguments "$1"
+
+  _arguments -C $options $arguments
 }
 
-_luarocks_name() {
-  local -a names
-  luarocks list --porcelain | while read name _
+_luarocks_arguments() {
+  local i j k
+  local -a arguments
+
+  for i in "$@"
   do
-    names=($names "$name")
+    case x$i in
+      xcommand)
+        _dromozoa_luarocks_commands;;
+      xname)
+        luarocks list --porcelain | while read j k
+        do
+          arguments=($arguments "$j")
+        done;;
+      xrock)
+        arguments=($arguments *.rock);;
+      xrockspec)
+        arguments=($arguments *.rockspec);;
+    esac
   done
-  _describe names names
-}
 
-_luarocks_rockspec() {
-  _files -g "*.rockspec"
+  _describe arguments arguments
 }
