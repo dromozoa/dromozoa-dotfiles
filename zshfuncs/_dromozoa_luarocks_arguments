@@ -2,38 +2,106 @@
 _dromozoa_luarocks_arguments() {
   case x$1 in
     xbuild)
-      arguments=($arguments ': :_luarocks_arguments rockspec rock name version');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ rockspec rock name version'
+      )
+      ;;
     xconfig)
-      arguments=($arguments ': :_luarocks_arguments flag');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ flag'
+      )
+      ;;
     xdoc)
-      arguments=($arguments ': :_luarocks_arguments argument');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ argument'
+      )
+      ;;
     xdownload)
-      arguments=($arguments ': :_luarocks_arguments name version');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ name version'
+      )
+      ;;
     xhelp)
-      arguments=($arguments ': :_luarocks_arguments command');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ command'
+      )
+      ;;
     xinstall)
-      arguments=($arguments ': :_luarocks_arguments rock name version');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ rock name version'
+      )
+      ;;
     xlint)
-      arguments=($arguments ': :_luarocks_arguments rockspec');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ rockspec'
+      )
+      ;;
     xlist)
-      arguments=($arguments ': :_luarocks_arguments filter');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ filter'
+      )
+      ;;
     xmake)
-      arguments=($arguments ': :_luarocks_arguments rockspec');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ rockspec'
+      )
+      ;;
     xnew_version)
-      arguments=($arguments ': :_luarocks_arguments package rockspec new_version new_url');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ package rockspec new_version new_url'
+      )
+      ;;
     xpack)
-      arguments=($arguments ': :_luarocks_arguments rockspec name version');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ rockspec name version'
+      )
+      ;;
     xremove)
-      arguments=($arguments ': :_luarocks_arguments name version');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ name version'
+      )
+      ;;
     xsearch)
-      arguments=($arguments ': :_luarocks_arguments name version');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ name version'
+      )
+      ;;
     xshow)
-      arguments=($arguments ': :_luarocks_arguments argument');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ argument'
+      )
+      ;;
     xunpack)
-      arguments=($arguments ': :_luarocks_arguments rock name version');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ rock name version'
+      )
+      ;;
     xupload)
-      arguments=($arguments ': :_luarocks_arguments rockspec');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ rockspec'
+      )
+      ;;
     xwrite_rockspec)
-      arguments=($arguments ': :_luarocks_arguments name version url path');;
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ name version url path'
+      )
+      ;;
   esac
 }

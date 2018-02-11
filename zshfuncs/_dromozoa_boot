@@ -1,4 +1,4 @@
-#compdef luarocks
+#compdef dromozoa-boot
 
 # Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
@@ -17,42 +17,22 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-_luarocks() {
+_dromozoa_boot() {
   local curcontext="$curcontext"
   local context state state_descr line
   typeset -A opt_args
-
-  local -a options
-  _dromozoa_luarocks_options
 
   _arguments -C \
-    $options \
-    ": :_luarocks_arguments __MARKER__ command" \
-    "*:: :->argument"
-
-  case x$state in
-    xargument)
-      _luarocks_command "$words[1]";;
-  esac
+    '(- *)'{-h,--help} \
+    '(- *)'{-l,--list} \
+    '(-k --insecure)'{-k,--insecure} \
+    '(-p --prefix)'{-p,--prefix=}':prefix:_files' \
+    '*:: :_dromozoa_boot_packages __MARKER__ $words'
 }
 
-_luarocks_command() {
-  local curcontext="$curcontext"
-  local context state state_descr line
-  typeset -A opt_args
-
-  local -a options
-  _dromozoa_luarocks_options "$1"
-
-  local -a arguments
-  _dromozoa_luarocks_arguments "$1"
-
-  _arguments -C $options $arguments
-}
-
-_luarocks_arguments() {
-  local i j k
-  local -a arguments
+_dromozoa_boot_packages() {
+  local i j dummy skip
+  local -a packages
 
   for i in "$@"
   do
@@ -62,22 +42,21 @@ _luarocks_arguments() {
     esac
   done
 
-  for i in "$@"
+  (./dromozoa-boot --list 2>/dev/null || :) | while read i dummy
   do
-    case x$i in
-      xcommand)
-        _dromozoa_luarocks_commands;;
-      xname)
-        luarocks list --porcelain | while read j k
-        do
-          arguments=($arguments "$j")
-        done;;
-      xrock)
-        arguments=($arguments *.rock);;
-      xrockspec)
-        arguments=($arguments *.rockspec);;
+    skip=
+    for j in "$@"
+    do
+      if test "x$i" = "x$j"
+      then
+        skip=true
+        break
+      fi
+    done
+    case x$skip in
+      x) packages=($packages "$i");;
     esac
   done
 
-  _describe arguments arguments
+  _describe packages packages
 }

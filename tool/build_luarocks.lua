@@ -326,8 +326,12 @@ for i = 1, #names do
   if next(args) ~= nil then
     out:write(([[
     x%s)
-      arguments=($arguments %s);;
-]]):format(name, shell.quote(": :_luarocks_arguments " .. table.concat(args, " "))))
+      arguments=(
+        $arguments
+        %s
+      )
+      ;;
+]]):format(name, shell.quote(": :_luarocks_arguments __MARKER__ " .. table.concat(args, " "))))
   end
 end
 
