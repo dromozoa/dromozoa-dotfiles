@@ -17,6 +17,7 @@
 
 set runtimepath+=~/dromozoa-dotfiles/vimfiles
 
+set ambiwidth=double
 set fileformats=unix,dos,mac
 set fileencodings=ucs-bom,utf-8,utf-16,sjis,euc-jp
 
