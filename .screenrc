@@ -18,3 +18,4 @@
 hardstatus alwayslastline '%-w%{= yk}%50>%n %t%{-}%+w%<'
 shell -$SHELL
 startup_message off
+cjkwidth on
