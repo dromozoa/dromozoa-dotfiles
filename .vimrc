@@ -32,37 +32,37 @@ if exists("&breakindent")
   set breakindent
 endif
 
-set clipboard=unnamed
-set modelines=5
-set wildmode=list:longest
-
-set hlsearch
-set ignorecase
-set incsearch
-set smartcase
-
 set number
 set list
 set listchars=tab:__,trail:_,precedes:<,extends:>
 set laststatus=2
 set statusline=%F\ %m%r%h%w%y%{'['.&fileencoding.']['.&fileformat.']'}%=[%l,%c][U+%04B]
 
+set hlsearch
+set ignorecase
+set incsearch
+set smartcase
+
 set autowrite
 set updatetime=1000
+autocmd InsertLeave * wall
+autocmd CursorHold * wall
+
+set clipboard=unnamed
+set modelines=5
+set wildmode=list:longest
+
+packadd! matchit
 
 syntax enable
 colorscheme darkblue
 filetype plugin on
 
-nnoremap j gj
-nnoremap k gk
-
-autocmd InsertLeave * wall
-autocmd CursorHold * wall
-
 autocmd FileType text setlocal textwidth=60
-
 if has("lua")
   let $LUA_PATH=$HOME."/dromozoa-dotfiles/?.lua;;"
   autocmd FileType text setlocal formatexpr=dromozoa#format()
 endif
+
+nnoremap j gj
+nnoremap k gk
