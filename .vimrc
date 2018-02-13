@@ -48,6 +48,7 @@ set updatetime=1000
 autocmd InsertLeave * wall
 autocmd CursorHold * wall
 
+set debug=msg
 set clipboard=unnamed
 set modelines=5
 set wildmode=list:longest
