@@ -60,7 +60,6 @@ nnoremap k gk
 autocmd InsertLeave * wall
 autocmd CursorHold * wall
 
-autocmd FileType html setlocal wrap
 autocmd FileType text setlocal textwidth=60
 
 if has("lua")
