@@ -243,6 +243,8 @@ local function format_text(vim)
   local c = vim.eval "v:char"
   local text_width = vim.eval "&textwidth"
 
+  -- TODO 末尾以外にv:charが挿入される場合に対応する
+
   local paragraphs = {}
   local m = f + n - 1
   for i = f, m do
