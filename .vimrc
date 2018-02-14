@@ -53,7 +53,9 @@ set clipboard=unnamed
 set modelines=5
 set wildmode=list:longest
 
-packadd! matchit
+if exists(":packadd")
+  packadd! matchit
+endif
 
 syntax enable
 colorscheme darkblue
