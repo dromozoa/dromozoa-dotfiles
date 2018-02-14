@@ -68,7 +68,7 @@ _luarocks_arguments() {
       xcommand)
         _dromozoa_luarocks_commands;;
       xname)
-        luarocks list --porcelain | while read j k
+        luarocks list --porcelain 2>/dev/null | while read j k
         do
           arguments=($arguments "$j")
         done;;
