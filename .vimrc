@@ -44,7 +44,7 @@ set incsearch
 set smartcase
 
 set autowrite
-set updatetime=1000
+set updatetime=200
 autocmd InsertLeave * wall
 autocmd CursorHold * wall
 
