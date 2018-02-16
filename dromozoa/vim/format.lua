@@ -52,10 +52,10 @@ local function is_line_end_prohibited(this)
 end
 
 local function is_unbreakable(prev, this)
-  if type(prev) == "table" then
+  while type(prev) == "table" do
     prev = prev[#prev]
   end
-  if type(this) == "table" then
+  while type(this) == "table" do
     this = this[1]
   end
   if jlreq.is_unbreakable(prev) and jlreq.is_unbreakable(this) then
@@ -90,20 +90,12 @@ local function get_width(this)
   end
 end
 
-local function encode_utf32(source)
-  local result = { utf8.codepoint(source, 1, #source) }
-  for i = #result, 1, -1 do
-    if is_space(result[i]) then
-      result[i] = nil
-    else
-      break
-    end
-  end
-  return result
-end
-
 local function decode_utf32(source)
   return utf8.char(unpack(source))
+end
+
+local function is_word(this)
+  return type(this) == "table" and this.class == "word"
 end
 
 local function parse(source)
@@ -116,7 +108,10 @@ local function parse(source)
         head[#head + 1] = char
       else
         if get_width(char) == 1 then
-          body[1] = { char }
+          body[1] = {
+            class = "word";
+            char;
+          }
         else
           body[1] = char
         end
@@ -127,17 +122,24 @@ local function parse(source)
       else
         local prev = body[#body]
         if get_width(char) == 1 then
-          if type(prev) == "table" then
+          if is_word(prev) then
             prev[#prev + 1] = char
           else
-            body[#body + 1] = { char }
+            body[#body + 1] = {
+              class = "word";
+              char;
+            }
           end
         else
           if is_unbreakable(prev, char) then
-            if type(prev) == "table" then
+            if is_word(prev) then
               prev[#prev + 1] = char
             else
-              body[#body] = { prev, char }
+              body[#body] = {
+                class = "word";
+                prev;
+                char;
+              }
             end
           else
             body[#body + 1] = char
@@ -153,12 +155,12 @@ local function unparse(source)
   local result = {}
   for i = 1, #source do
     local this = source[i]
-    if type(this) == "number" then
-      result[#result + 1] = this
-    else
+    if is_word(this) then
       for j = 1, #this do
         result[#result + 1] = this[j]
       end
+    else
+      result[#result + 1] = this
     end
   end
   return result
@@ -242,27 +244,64 @@ local function format_text(vim)
   local n = vim.eval "v:count"
   local c = vim.eval "v:char"
   local text_width = vim.eval "&textwidth"
-
-  -- TODO 末尾以外にv:charが挿入される場合に対応する
+  local col = w.col
 
   local paragraphs = {}
   local m = f + n - 1
   for i = f, m do
+    -- UTF-8 to UTF-32
     local s = b[i]
-    if i == m then
-      s = s .. c
+    local line
+    if i == m and c ~= "" then
+      local col = w.col
+      if col >= #s then
+        line = { utf8.codepoint(s, 1, #s) }
+        line[#line + 1] = {
+          class = "char";
+          inserted = true;
+          utf8.codepoint(c);
+        }
+      else
+        line = {}
+        for j, char in utf8.codes(s) do
+          if j == col then
+            line[#line + 1] = {
+              class = "char";
+              inserted = true;
+              utf8.codepoint(c);
+            }
+          end
+          line[#line + 1] = char
+        end
+      end
+    else
+      line = { utf8.codepoint(s, 1, #s) }
     end
-    local line = encode_utf32(s)
+
+    -- chomp
+    for j = #line, 1, -1 do
+      if is_space(line[j]) then
+        line[j] = nil
+      else
+        break
+      end
+    end
+
     local head, body = parse(line)
     if #body == 0 then
-      paragraphs[#paragraphs + 1] = { type = "separator" }
+      paragraphs[#paragraphs + 1] = { class = "separator" }
     else
       local paragraph = paragraphs[#paragraphs]
-      if not paragraph or paragraph.type == "separator" then
-        paragraphs[#paragraphs + 1] = { type = "paragraph", head = head, body = body }
+      if not paragraph or paragraph.class == "separator" then
+        paragraphs[#paragraphs + 1] = {
+          class = "paragraph";
+          head = head;
+          body = body;
+        }
       else
         local pbody = paragraph.body
-        if type(pbody[#pbody]) == "table" and type(body[1]) == "table" then
+        -- TODO unbreakable同士で問題になる？
+        if is_word(pbody[#pbody]) and is_word(body[1]) then
           pbody[#pbody + 1] = 0x20
         end
         for j = 1, #body do
@@ -274,7 +313,7 @@ local function format_text(vim)
 
   for i = 1, #paragraphs do
     local paragraph = paragraphs[i]
-    if paragraph.type == "paragraph" then
+    if paragraph.class == "paragraph" then
       local lines = format(paragraph.head, paragraph.body, text_width)
       for j = 1, #lines do
         lines[j] = unparse(lines[j])
@@ -283,33 +322,33 @@ local function format_text(vim)
     end
   end
 
-  if c ~= "" then
-    local lines = paragraphs[#paragraphs].lines
-    local line = lines[#lines]
-    assert(utf8.codepoint(c) == line[#line])
-    line[#line] = nil
-  end
-
+  local result_col = 1
   local result = {}
   for i = 1, #paragraphs do
     local paragraph = paragraphs[i]
-    if paragraph.type == "separator" then
+    if paragraph.class == "separator" then
       result[#result + 1] = ""
     else
-      local head = decode_utf32(paragraph.head)
+      local head = utf8.char(unpack(paragraph.head))
       local lines = paragraph.lines
       for j = 1, #lines do
-        result[#result + 1] = head .. decode_utf32(lines[j])
+        local line = lines[j]
+        local result_line = head
+        for k = 1, #line do
+          local char = line[k]
+          if type(char) == "table" and char.inserted then
+            result_col = #result_line + 1
+          else
+            result_line = result_line .. utf8.char(char)
+          end
+        end
+        result[#result + 1] = result_line
       end
     end
   end
 
   w.line = update_buffer(result, b, f, n)
-  if c == "" then
-    w.col = 1
-  else
-    w.col = #result[#result] + 1
-  end
+  w.col = result_col
 
   return "0"
 end
