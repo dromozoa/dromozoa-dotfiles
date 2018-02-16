@@ -1,0 +1,55 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-dotfiles.
+--
+-- dromozoa-dotfiles is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-dotfiles is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
+
+local loadstring = loadstring or load
+
+local filename = ...
+
+local handle = assert(io.open(filename))
+local code = handle:read("*a")
+handle:close()
+
+assert(loadstring(code))()
+assert(filename == package .. "-" .. version .. ".rockspec", "invalid filename")
+
+if build.type == "builtin" then
+  local v = version:gsub("%-%d+$", "")
+  assert(source.url == "https://github.com/dromozoa/" .. package .. "/archive/v" .. v .. ".tar.gz", "invalid source.url")
+  assert(source.file == package .. "-" .. v .. ".tar.gz", "invalid source.file")
+
+  local map = {}
+  local handle = assert(io.popen("find dromozoa -name '*.lua'"))
+  for source in handle:lines() do
+    map[source:gsub("%.lua$", ""):gsub("/", ".")] = source
+  end
+  handle:close()
+
+  for module, source in pairs(build.modules) do
+    assert(module == source:gsub("%.lua$", ""):gsub("/", "."), "invalid module " .. module)
+    assert(map[module], "source " .. source .. " not found")
+    map[module] = nil
+  end
+
+  if next(map) ~= nil then
+    for module, source in pairs(map) do
+      io.write(("    [\"%s\"] = \"%s\";\n"):format(module, source))
+    end
+    error("not registered modules\n")
+  end
+end
