@@ -19,6 +19,14 @@
 
 local loadstring = loadstring or load
 
+local function write_error(...)
+  io.stderr:write("\27[33m[ERROR] ", table.concat({...}),  "\27[0m\n")
+end
+
+local function source_to_module(source)
+  return source:gsub("%.lua$", ""):gsub("/", ".")
+end
+
 local filename = ...
 
 local handle = assert(io.open(filename))
@@ -26,30 +34,66 @@ local code = handle:read("*a")
 handle:close()
 
 assert(loadstring(code))()
-assert(filename == package .. "-" .. version .. ".rockspec", "invalid filename")
+
+if not version:find "%-1$" then
+  write_error("invalid version ", version)
+end
+if filename ~= package .. "-" .. version .. ".rockspec" then
+  write_error("invalid filename ", filename)
+end
+
+local ver = version:gsub("%-1$", "")
 
 if build.type == "builtin" then
-  local v = version:gsub("%-%d+$", "")
-  assert(source.url == "https://github.com/dromozoa/" .. package .. "/archive/v" .. v .. ".tar.gz", "invalid source.url")
-  assert(source.file == package .. "-" .. v .. ".tar.gz", "invalid source.file")
+  if source.url ~= "https://github.com/dromozoa/" .. package .. "/archive/v" .. ver .. ".tar.gz" then
+    write_error("invalid source.url ", source.url)
+  end
+  if source.file ~= package .. "-" .. ver .. ".tar.gz" then
+    write_error("invalid source.file ", source.file)
+  end
 
-  local map = {}
+  local modules = {}
+  local sources = {}
+
   local handle = assert(io.popen("find dromozoa -name '*.lua'"))
   for source in handle:lines() do
-    map[source:gsub("%.lua$", ""):gsub("/", ".")] = source
+    local module = source_to_module(source)
+    modules[#modules + 1] = {
+      module = module;
+      source = source;
+    }
+    sources[source] = true
   end
   handle:close()
 
+  table.sort(modules, function (a, b)
+    return a.module < b.module
+  end)
+
   for module, source in pairs(build.modules) do
-    assert(module == source:gsub("%.lua$", ""):gsub("/", "."), "invalid module " .. module)
-    assert(map[module], "source " .. source .. " not found")
-    map[module] = nil
+    if module ~= source_to_module(source) then
+      write_error("invalid module ", module)
+    end
+    if not sources[source] then
+      write_error(source, " not found")
+    end
+    sources[source] = nil
   end
 
-  if next(map) ~= nil then
-    for module, source in pairs(map) do
-      io.write(("    [\"%s\"] = \"%s\";\n"):format(module, source))
+  if next(sources) ~= nil then
+    write_error "not enough modules"
+    io.write [[
+build = {
+  type = "builtin";
+  modules = {
+]]
+    for i = 1, #modules do
+      local item = modules[i]
+      io.write(("    [\"%s\"] = \"%s\";\n"):format(item.module, item.source))
     end
-    error("not registered modules\n")
+    io.write [[
+  };
+}
+]]
   end
 end
