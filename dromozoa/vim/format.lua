@@ -110,6 +110,7 @@ local function parse(source)
         if get_width(char) == 1 then
           body[1] = {
             class = "word";
+            narrow = true;
             char;
           }
         else
@@ -127,6 +128,7 @@ local function parse(source)
           else
             body[#body + 1] = {
               class = "word";
+              narrow = true;
               char;
             }
           end
@@ -137,6 +139,7 @@ local function parse(source)
             else
               body[#body] = {
                 class = "word";
+                wide = true;
                 prev;
                 char;
               }
@@ -300,8 +303,9 @@ local function format_text(vim)
         }
       else
         local pbody = paragraph.body
-        -- TODO unbreakable同士で問題になる？
-        if is_word(pbody[#pbody]) and is_word(body[1]) then
+        local a = pbody[#pbody]
+        local b = body[1]
+        if is_word(a) and a.narrow and is_word(b) and b.narrow then
           pbody[#pbody + 1] = 0x20
         end
         for j = 1, #body do
