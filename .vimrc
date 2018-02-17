@@ -58,8 +58,10 @@ if exists(":packadd")
 endif
 
 syntax enable
-colorscheme darkblue
 filetype plugin on
+
+colorscheme darkblue
+highlight Underlined ctermfg=LightBlue
 
 autocmd FileType text setlocal textwidth=60
 if has("lua")
