@@ -18,12 +18,7 @@
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 _luarocks_check() {
-  local curcontext="$curcontext"
-  local context state state_descr line
-  typeset -A opt_args
-
-  _arguments -C \
-    "*:: :_luarocks_check_rockspecs"
+  _arguments "*:: :_luarocks_check_rockspecs"
 }
 
 _luarocks_check_rockspecs() {
