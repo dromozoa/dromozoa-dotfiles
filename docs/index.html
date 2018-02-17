@@ -72,6 +72,31 @@
   </tr>
 </table>
 
+<h2>Zshの補完</h2>
+
+<p>
+（Zshマニュアル <a href="Completion-System.html">Completion System</a> より）
+</p>
+
+<h3><code>_arguments</code>と変数の局所化</h3>
+
+<p>
+<code>-C</code>オプションを付けると、<code>-&gt;state</code>形式のアクションで<code>curcontext</code>変数が変更される。呼びだし元の関数に変更された値を渡さないように、関数の先頭でローカル変数を宣言し、現在の値で初期化する。
+</p>
+
+<pre>local curcontext="$curcontext"</pre>
+
+<p>
+<code>$state</code>と<code>$state_descr</code>に加えて、<code>_arguments</code>はグローバル変数<code>context, line, opt_args</code>も設定する。さらに、<code>PREFIX</code>や<code>words</code>のような特殊変数の変更をリセットしない。これにより、これらの変数をリセットするか変更を伝播するかという選択肢が、呼びだす関数に提供される。
+</p>
+
+<p>
+<code>-&gt;string</code>を含むアクションをひとつでも指定するならば、<code>_arguments</code>を呼びだす関数は、適切にローカル変数を宣言するべきである。
+</p>
+
+<pre>local context state state_descr line
+typeset -A opt_args</pre>
+
 </div>
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
