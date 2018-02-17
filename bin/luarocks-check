@@ -1,0 +1,99 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-dotfiles.
+--
+-- dromozoa-dotfiles is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-dotfiles is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
+
+local loadstring = loadstring or load
+
+local function write_error(...)
+  io.stderr:write("\27[33m[ERROR] ", table.concat({...}),  "\27[0m\n")
+end
+
+local function source_to_module(source)
+  return source:gsub("%.lua$", ""):gsub("/", ".")
+end
+
+local filename = ...
+
+local handle = assert(io.open(filename))
+local code = handle:read("*a")
+handle:close()
+
+assert(loadstring(code))()
+
+if not version:find "%-1$" then
+  write_error("invalid version ", version)
+end
+if filename ~= package .. "-" .. version .. ".rockspec" then
+  write_error("invalid filename ", filename)
+end
+
+local ver = version:gsub("%-1$", "")
+
+if build.type == "builtin" then
+  if source.url ~= "https://github.com/dromozoa/" .. package .. "/archive/v" .. ver .. ".tar.gz" then
+    write_error("invalid source.url ", source.url)
+  end
+  if source.file ~= package .. "-" .. ver .. ".tar.gz" then
+    write_error("invalid source.file ", source.file)
+  end
+
+  local modules = {}
+  local sources = {}
+
+  local handle = assert(io.popen("find dromozoa -name '*.lua'"))
+  for source in handle:lines() do
+    local module = source_to_module(source)
+    modules[#modules + 1] = {
+      module = module;
+      source = source;
+    }
+    sources[source] = true
+  end
+  handle:close()
+
+  table.sort(modules, function (a, b)
+    return a.module < b.module
+  end)
+
+  for module, source in pairs(build.modules) do
+    if module ~= source_to_module(source) then
+      write_error("invalid module ", module)
+    end
+    if not sources[source] then
+      write_error(source, " not found")
+    end
+    sources[source] = nil
+  end
+
+  if next(sources) ~= nil then
+    write_error "not enough modules"
+    io.write [[
+build = {
+  type = "builtin";
+  modules = {
+]]
+    for i = 1, #modules do
+      local item = modules[i]
+      io.write(("    [\"%s\"] = \"%s\";\n"):format(item.module, item.source))
+    end
+    io.write [[
+  };
+}
+]]
+  end
+end

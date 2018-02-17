@@ -44,3 +44,27 @@ foo bar baz XXXX foo
 
 vim: set textwidth=20:
 ]])
+
+local b = buffer [[
+「ほ」と「ま」の間に「ア」を挿入するテストを行う
+
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめも
+
+]]
+
+local w = {
+  line = 3;
+  col = 91;
+}
+
+local vim = mock(b, w, {
+  ["v:lnum"] = 3;
+  ["v:count"] = 1;
+  ["v:char"] = "ア";
+  ["&filetype"] = "text";
+  ["&textwidth"] = 60;
+})
+
+format(vim)
+print(w.line, w.col)
+assert(w.col == 1)
