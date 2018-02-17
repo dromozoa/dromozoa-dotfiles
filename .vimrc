@@ -44,7 +44,7 @@ set incsearch
 set smartcase
 
 set autowrite
-set updatetime=1000
+set updatetime=200
 autocmd InsertLeave * wall
 autocmd CursorHold * wall
 
@@ -53,7 +53,9 @@ set clipboard=unnamed
 set modelines=5
 set wildmode=list:longest
 
-packadd! matchit
+if exists(":packadd")
+  packadd! matchit
+endif
 
 syntax enable
 colorscheme darkblue
