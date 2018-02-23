@@ -16,15 +16,14 @@
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 local utf8 = require "dromozoa.utf8"
-local east_asian_width = require "dromozoa.ucd.east_asian_width"
-local is_white_space = require "dromozoa.ucd.is_white_space"
+local ucd = require "dromozoa.ucd"
 local jlreq = require "dromozoa.vim.jlreq"
 
 local unpack = table.unpack or unpack
 
 local function is_space(this)
   if type(this) == "number" then
-    return is_white_space(this) and this ~= 0x3000
+    return ucd.is_white_space(this) and this ~= 0x3000
   else
     for i = 1, #this do
       if not is_space(this[i]) then
@@ -80,7 +79,7 @@ local east_asian_width_map = {
 
 local function get_width(this)
   if type(this) == "number" then
-    return east_asian_width_map[east_asian_width(this)]
+    return east_asian_width_map[ucd.east_asian_width(this)]
   else
     local width = 0
     for i = 1, #this do
