@@ -25,12 +25,16 @@ local function is_space(this)
   if type(this) == "number" then
     return ucd.is_white_space(this) and this ~= 0x3000
   else
-    for i = 1, #this do
-      if not is_space(this[i]) then
-        return false
+    if this.class == "char" then
+      return is_space(this[1])
+    else
+      for i = 1, #this do
+        if not is_space(this[i]) then
+          return false
+        end
       end
+      return true
     end
-    return true
   end
 end
 
@@ -46,13 +50,21 @@ local function is_line_end_prohibited(this)
   if type(this) == "number" then
     return text.is_line_end_prohibited(this)
   else
-    return is_line_end_prohibited(this[#this])
+    if this.class == "char" then
+      return is_line_end_prohibited(this[1])
+    else
+      return is_line_end_prohibited(this[#this])
+    end
   end
 end
 
 local function is_unbreakable(prev, this)
   while type(prev) == "table" do
-    prev = prev[#prev]
+    if prev.class == "char" then
+      prev = prev[1]
+    else
+      prev = prev[#prev]
+    end
   end
   while type(this) == "table" do
     this = this[1]
@@ -81,16 +93,16 @@ local function get_width(this)
   if type(this) == "number" then
     return east_asian_width_map[ucd.east_asian_width(this)]
   else
-    local width = 0
-    for i = 1, #this do
-      width = width + get_width(this[i])
+    if this.class == "char" then
+      return get_width(this[1])
+    else
+      local width = 0
+      for i = 1, #this do
+        width = width + get_width(this[i])
+      end
+      return width
     end
-    return width
   end
-end
-
-local function decode_utf32(source)
-  return utf8.char(unpack(source))
 end
 
 local function is_word(this)
