@@ -15,9 +15,9 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-local utf8 = require "dromozoa.utf8"
+local text = require "dromozoa.text"
 local ucd = require "dromozoa.ucd"
-local jlreq = require "dromozoa.vim.jlreq"
+local utf8 = require "dromozoa.utf8"
 
 local unpack = table.unpack or unpack
 
@@ -36,7 +36,7 @@ end
 
 local function is_line_start_prohibited(this)
   if type(this) == "number" then
-    return jlreq.is_line_start_prohibited(this)
+    return text.is_line_start_prohibited(this)
   else
     return is_line_start_prohibited(this[1])
   end
@@ -44,7 +44,7 @@ end
 
 local function is_line_end_prohibited(this)
   if type(this) == "number" then
-    return jlreq.is_line_end_prohibited(this)
+    return text.is_line_end_prohibited(this)
   else
     return is_line_end_prohibited(this[#this])
   end
@@ -57,7 +57,7 @@ local function is_unbreakable(prev, this)
   while type(this) == "table" do
     this = this[1]
   end
-  if jlreq.is_unbreakable(prev) and jlreq.is_unbreakable(this) then
+  if text.is_inseparable(prev) and text.is_inseparable(this) then
     if prev == this then
       return this == 0x2014 or this == 0x2026 or this == 0x2025
     else

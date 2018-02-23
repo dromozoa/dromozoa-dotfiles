@@ -16,14 +16,14 @@
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 local utf8 = require "dromozoa.utf8"
-local jlreq = require "dromozoa.vim.jlreq"
+local text = require "dromozoa.text"
 
-assert(jlreq.is_class(utf8.codepoint("「"), 1))
-assert(not jlreq.is_class(utf8.codepoint("」"), 1))
-assert(not jlreq.is_class(utf8.codepoint("「"), 2))
-assert(jlreq.is_class(utf8.codepoint("」"), 2))
-assert(jlreq.is_class(utf8.codepoint("」"), 1, 2))
-assert(not jlreq.is_class(utf8.codepoint("あ"), 1, 2))
-assert(jlreq.is_line_start_prohibited(utf8.codepoint("、")))
-assert(jlreq.is_line_start_prohibited(utf8.codepoint("。")))
-assert(jlreq.is_line_end_prohibited(utf8.codepoint("「")))
+assert(text.is_line_end_prohibited(utf8.codepoint("「")))
+assert(not text.is_line_start_prohibited(utf8.codepoint("「")))
+assert(not text.is_line_end_prohibited(utf8.codepoint("」")))
+assert(text.is_line_start_prohibited(utf8.codepoint("」")))
+assert(not text.is_line_end_prohibited(utf8.codepoint("あ")))
+assert(not text.is_line_start_prohibited(utf8.codepoint("あ")))
+assert(text.is_line_start_prohibited(utf8.codepoint("、")))
+assert(text.is_line_start_prohibited(utf8.codepoint("。")))
+assert(text.is_inseparable(utf8.codepoint("…")))
