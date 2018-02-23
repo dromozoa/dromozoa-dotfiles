@@ -21,30 +21,44 @@ local builder = require "dromozoa.ucd.builder"
 
 local source_filename = "docs/jlreq.json"
 
-local check = {}
+local names = {
+  is_line_start_prohibited = { 2, 3, 4, 5, 6, 7, 9, 10, 11, 29 };
+  is_line_end_prohibited = { 1, 28 };
+  is_inseparable = { 8 };
+}
+
+local builders = {};
+for k, v in pairs(names) do
+  local _ = builder(false)
+  v._ = _
+  for i = 1, #v do
+    builders[v[i]] = _
+  end
+end
 
 local source = assert(json.decode(assert(read_file(source_filename))))
 for i = 1, #source do
   local class = source[i]
   local id = tonumber(class.id:match "^cl%-(%d+)", 10)
-  local name = class.name
-  local data = class.data
-
-  local code_filename = ("dromozoa/vim/jlreq/is_cl%02d.lua"):format(id)
-  local _ = builder(false)
-
-  for j = 1, #data do
-    local item = data[j]
-    local code = item.code
-
-    if code:find "^%x+$" then
-      local code = tonumber(code, 16)
-      _:range(code, code, true)
-    else
-      -- ignore combining character
+  local _ = builders[id]
+  if _ then
+    local data = class.data
+    for j = 1, #data do
+      local item = data[j]
+      local code = item.code
+      if code:find "^%x+$" then
+        local code = tonumber(code, 16)
+        _:range(code, code, true)
+      else
+        io.write("ignore combining character sequence ", code, "\n")
+      end
     end
   end
+end
 
-  local out = assert(io.open(code_filename, "w"))
+for k, v in pairs(names) do
+  local _ = v._
+  local result_filename = ("dromozoa/text/%s.lua"):format(k)
+  local out = assert(io.open(result_filename, "w"))
   _.compile(out, _:build()):close()
 end
