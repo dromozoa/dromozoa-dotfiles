@@ -63,6 +63,7 @@ filetype plugin on
 colorscheme darkblue
 highlight Underlined ctermfg=LightBlue
 
+autocmd FileType html setlocal wrap
 autocmd FileType text setlocal textwidth=60
 if has("lua")
   let $LUA_PATH=$HOME."/dromozoa-dotfiles/?.lua;;"
