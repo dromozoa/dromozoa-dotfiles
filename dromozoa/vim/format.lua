@@ -287,7 +287,6 @@ local function format_text(vim)
             if type(prev) == "number" then
               line[#line] = {
                 class = "char";
-                combining = true;
                 prev;
                 code;
               }
@@ -318,7 +317,6 @@ local function format_text(vim)
             if type(prev) == "number" then
               line[#line] = {
                 class = "char";
-                combining = true;
                 prev;
                 code;
               }
@@ -338,7 +336,6 @@ local function format_text(vim)
           if type(prev) == "number" then
             line[#line] = {
               class = "char";
-              combining = true;
               prev;
               code;
             }
