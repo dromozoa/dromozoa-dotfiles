@@ -33,6 +33,24 @@ local function is_combining_mark(code)
   return ucd.general_category(code):find "^M"
 end
 
+local function get_head_code(this)
+  while type(this) == "table" do
+    this = this[1]
+  end
+  return this
+end
+
+local function get_tail_code(this)
+  while type(this) == "table" do
+    if this.class == "char" then
+      this = this[1]
+    else
+      this = this[#this]
+    end
+  end
+  return this
+end
+
 local function is_space(this)
   if type(this) == "number" then
     return ucd.is_white_space(this) and this ~= 0x3000
@@ -51,23 +69,11 @@ local function is_space(this)
 end
 
 local function is_line_start_prohibited(this)
-  if type(this) == "number" then
-    return text.is_line_start_prohibited(this)
-  else
-    return is_line_start_prohibited(this[1])
-  end
+  return text.is_line_start_prohibited(get_head_code(this))
 end
 
 local function is_line_end_prohibited(this)
-  if type(this) == "number" then
-    return text.is_line_end_prohibited(this)
-  else
-    if this.class == "char" then
-      return is_line_end_prohibited(this[1])
-    else
-      return is_line_end_prohibited(this[#this])
-    end
-  end
+  return text.is_line_end_prohibited(get_tail_code(this))
 end
 
 local east_asian_width_map = {
@@ -95,26 +101,18 @@ local function get_width(this)
   end
 end
 
-local function is_unbreakable(prev, this)
-  while type(prev) == "table" do
-    if prev.class == "char" then
-      prev = prev[1]
-    else
-      prev = prev[#prev]
-    end
-  end
-  while type(this) == "table" do
-    this = this[1]
-  end
-  if text.is_prefixed_abbreviation(prev) and get_width(this) == 1 then
+local function is_unbreakable(that, this)
+  that = get_tail_code(that)
+  this = get_head_code(this)
+  if text.is_prefixed_abbreviation(that) and get_width(this) == 1 then
     return true
-  elseif get_width(prev) == 1 and text.is_postfixed_abbreviation(this) then
+  elseif get_width(that) == 1 and text.is_postfixed_abbreviation(this) then
     return true
-  elseif text.is_inseparable(prev) and text.is_inseparable(this) then
-    if prev == this then
+  elseif text.is_inseparable(that) and text.is_inseparable(this) then
+    if that == this then
       return this == 0x2014 or this == 0x2026 or this == 0x2025
     else
-      return (prev == 0x3033 or prev == 0x3034) and this == 0x3035
+      return (that == 0x3033 or that == 0x3034) and this == 0x3035
     end
   else
     return false
@@ -147,20 +145,20 @@ local function parse(source)
       if is_space(char) then
         body[#body + 1] = char
       else
-        local prev = body[#body]
-        if is_unbreakable(prev, char) then
-          if is_word(prev) then
-            prev[#prev + 1] = char
+        local that = body[#body]
+        if is_unbreakable(that, char) then
+          if is_word(that) then
+            that[#that + 1] = char
           else
             body[#body] = {
               class = "word";
-              prev;
+              that;
               char;
             }
           end
         elseif get_width(char) == 1 then
-          if is_word(prev) then
-            prev[#prev + 1] = char
+          if is_word(that) then
+            that[#that + 1] = char
           else
             body[#body + 1] = {
               class = "word";
@@ -294,15 +292,15 @@ local function format_text(vim)
         inserted_char = nil
       end
       if is_combining_mark(code) then
-        local prev = line[#line]
-        if type(prev) == "number" then
+        local that = line[#line]
+        if type(that) == "number" then
           line[#line] = {
             class = "char";
-            prev;
+            that;
             code;
           }
         else
-          prev[#prev + 1] = code
+          that[#that + 1] = code
         end
       else
         line[#line + 1] = code
@@ -333,16 +331,14 @@ local function format_text(vim)
           body = body;
         }
       else
-        local pbody = paragraph.body
-        local a = pbody[#pbody]
-        local buffer = body[1]
-        if is_word(a) and is_word(buffer) then
-          if get_width(a[#a]) == 1 and get_width(buffer[1]) == 1 then
-            pbody[#pbody + 1] = 0x20
-          end
+        local that_body = paragraph.body
+        local that = that_body[#that_body]
+        local this = body[1]
+        if is_word(that) and get_width(get_tail_code(that)) == 1 and is_word(this) and get_width(get_head_code(this)) == 1 then
+          that_body[#that_body + 1] = 0x20
         end
         for j = 1, #body do
-          pbody[#pbody + 1] = body[j]
+          that_body[#that_body + 1] = body[j]
         end
       end
     end
@@ -360,11 +356,11 @@ local function format_text(vim)
   end
 
   local result_col = 1
-  local result = {}
+  local result_lines = {}
   for i = 1, #paragraphs do
     local paragraph = paragraphs[i]
     if paragraph.class == "separator" then
-      result[#result + 1] = ""
+      result_lines[#result_lines + 1] = ""
     else
       local head = utf8.char(unpack(paragraph.head))
       local lines = paragraph.lines
@@ -383,12 +379,12 @@ local function format_text(vim)
             result_line = result_line .. utf8.char(char)
           end
         end
-        result[#result + 1] = result_line
+        result_lines[#result_lines + 1] = result_line
       end
     end
   end
 
-  window.line = update_buffer(result, buffer, f, n)
+  window.line = update_buffer(result_lines, buffer, f, n)
   window.col = result_col
 
   return "0"
