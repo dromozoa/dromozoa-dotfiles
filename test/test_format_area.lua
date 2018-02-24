@@ -15,9 +15,12 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
+local utf8 = require "dromozoa.utf8"
 local format = require "dromozoa.vim.format"
 local mock = require "dromozoa.vim.mock"
 local buffer = require "dromozoa.vim.mock.buffer"
+
+------------------------------------------------------------
 
 local b = buffer [[
 あいうえお
@@ -78,6 +81,8 @@ for i = 1, b:size() do
   assert(not b[i]:find "%s$")
 end
 
+------------------------------------------------------------
+
 local b = buffer [[
 あ
 い
@@ -109,6 +114,8 @@ assert(b:text() == [[
 こ
 ]])
 
+------------------------------------------------------------
+
 local b = buffer [[
 あいうえ『 「
 おかきくけこ
@@ -129,6 +136,8 @@ assert(b:text() == [[
 『 「おか
 きくけこ
 ]])
+
+------------------------------------------------------------
 
 local b = buffer [[
 三点リーダーの間に空白が入らないかテストを行う
@@ -154,3 +163,26 @@ assert(b:text() == [[
 …………
 ]])
 
+------------------------------------------------------------
+
+local data = {}
+for i = 1, 80 do
+  -- KATAKANA LETTER KA
+  -- COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK
+  data[i] = utf8.char(0x304B, 0x309A)
+end
+local b = buffer(table.concat(data))
+
+local vim = mock(b, {}, {
+  ["v:lnum"] = 1;
+  ["v:count"] = b:size();
+  ["v:char"] = "";
+  ["&filetype"] = "text";
+  ["&textwidth"] = 60;
+})
+
+format(vim)
+
+local line1 = table.concat(data, "", 1, 30) .. "\n"
+local line2 = table.concat(data, "", 1, 20) .. "\n"
+assert(b:text() == line1 .. line1 .. line2)

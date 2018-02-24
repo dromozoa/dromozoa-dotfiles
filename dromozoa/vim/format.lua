@@ -21,6 +21,11 @@ local utf8 = require "dromozoa.utf8"
 
 local unpack = table.unpack or unpack
 
+local function is_combining_mark(code)
+  local category = ucd.general_category(code)
+  return category == "Mn" or category == "Mc" or category == "Me"
+end
+
 local function is_space(this)
   if type(this) == "number" then
     return ucd.is_white_space(this) and this ~= 0x3000
@@ -265,11 +270,28 @@ local function format_text(vim)
   for i = f, m do
     -- UTF-8 to UTF-32
     local s = b[i]
-    local line
+    local line = {}
+
     if i == m and c ~= "" then
       local col = w.col
       if col >= #s then
-        line = { utf8.codepoint(s, 1, #s) }
+        for _, code in utf8.codes(s) do
+          if is_combining_mark(code) then
+            local prev = line[#line]
+            if type(prev) == "number" then
+              line[#line] = {
+                class = "char";
+                combining = true;
+                prev;
+                code;
+              }
+            else
+              prev[#prev + 1] = code
+            end
+          else
+            line[#line + 1] = code
+          end
+        end
         line[#line + 1] = {
           class = "char";
           inserted = true;
@@ -277,7 +299,7 @@ local function format_text(vim)
         }
       else
         line = {}
-        for j, char in utf8.codes(s) do
+        for j, code in utf8.codes(s) do
           if j == col then
             line[#line + 1] = {
               class = "char";
@@ -285,11 +307,42 @@ local function format_text(vim)
               utf8.codepoint(c);
             }
           end
-          line[#line + 1] = char
+          if is_combining_mark(code) then
+            local prev = line[#line]
+            if type(prev) == "number" then
+              line[#line] = {
+                class = "char";
+                combining = true;
+                prev;
+                code;
+              }
+            else
+              prev[#prev + 1] = code
+            end
+          else
+            line[#line + 1] = code
+          end
+
         end
       end
     else
-      line = { utf8.codepoint(s, 1, #s) }
+      for _, code in utf8.codes(s) do
+        if is_combining_mark(code) then
+          local prev = line[#line]
+          if type(prev) == "number" then
+            line[#line] = {
+              class = "char";
+              combining = true;
+              prev;
+              code;
+            }
+          else
+            prev[#prev + 1] = code
+          end
+        else
+          line[#line + 1] = code
+        end
+      end
     end
 
     -- chomp
@@ -351,8 +404,12 @@ local function format_text(vim)
         local result_line = head
         for k = 1, #line do
           local char = line[k]
-          if type(char) == "table" and char.inserted then
-            result_col = #result_line + 1
+          if type(char) == "table" then
+            if char.inserted then
+              result_col = #result_line + 1
+            else
+              result_line = result_line .. utf8.char(unpack(char))
+            end
           else
             result_line = result_line .. utf8.char(char)
           end
