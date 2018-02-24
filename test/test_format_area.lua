@@ -186,3 +186,29 @@ format(vim)
 local line1 = table.concat(data, "", 1, 30) .. "\n"
 local line2 = table.concat(data, "", 1, 20) .. "\n"
 assert(b:text() == line1 .. line1 .. line2)
+
+------------------------------------------------------------
+
+local b = buffer [[
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふ  №1 へほ
+
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふ 27℃ へほ
+]]
+
+local vim = mock(b, {}, {
+  ["v:lnum"] = 1;
+  ["v:count"] = b:size();
+  ["v:char"] = "";
+  ["&filetype"] = "text";
+  ["&textwidth"] = 60;
+})
+
+format(vim)
+
+assert(b:text() == [[
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふ
+№1 へほ
+
+あいうえおかきくけこさしすせそたちつてとなにぬねのはひふ
+27℃ へほ
+]])

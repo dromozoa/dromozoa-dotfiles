@@ -70,28 +70,6 @@ local function is_line_end_prohibited(this)
   end
 end
 
-local function is_unbreakable(prev, this)
-  while type(prev) == "table" do
-    if prev.class == "char" then
-      prev = prev[1]
-    else
-      prev = prev[#prev]
-    end
-  end
-  while type(this) == "table" do
-    this = this[1]
-  end
-  if text.is_inseparable(prev) and text.is_inseparable(this) then
-    if prev == this then
-      return this == 0x2014 or this == 0x2026 or this == 0x2025
-    else
-      return (prev == 0x3033 or prev == 0x3034) and this == 0x3035
-    end
-  else
-    return false
-  end
-end
-
 local east_asian_width_map = {
   ["N"]  = 1; -- neutral
   ["Na"] = 1; -- narrow
@@ -117,6 +95,32 @@ local function get_width(this)
   end
 end
 
+local function is_unbreakable(prev, this)
+  while type(prev) == "table" do
+    if prev.class == "char" then
+      prev = prev[1]
+    else
+      prev = prev[#prev]
+    end
+  end
+  while type(this) == "table" do
+    this = this[1]
+  end
+  if text.is_prefixed_abbreviation(prev) and get_width(this) == 1 then
+    return true
+  elseif get_width(prev) == 1 and text.is_postfixed_abbreviation(this) then
+    return true
+  elseif text.is_inseparable(prev) and text.is_inseparable(this) then
+    if prev == this then
+      return this == 0x2014 or this == 0x2026 or this == 0x2025
+    else
+      return (prev == 0x3033 or prev == 0x3034) and this == 0x3035
+    end
+  else
+    return false
+  end
+end
+
 local function is_word(this)
   return type(this) == "table" and this.class == "word"
 end
@@ -133,7 +137,6 @@ local function parse(source)
         if get_width(char) == 1 then
           body[1] = {
             class = "word";
-            narrow = true;
             char;
           }
         else
@@ -145,31 +148,27 @@ local function parse(source)
         body[#body + 1] = char
       else
         local prev = body[#body]
-        if get_width(char) == 1 then
+        if is_unbreakable(prev, char) then
+          if is_word(prev) then
+            prev[#prev + 1] = char
+          else
+            body[#body] = {
+              class = "word";
+              prev;
+              char;
+            }
+          end
+        elseif get_width(char) == 1 then
           if is_word(prev) then
             prev[#prev + 1] = char
           else
             body[#body + 1] = {
               class = "word";
-              narrow = true;
               char;
             }
           end
         else
-          if is_unbreakable(prev, char) then
-            if is_word(prev) then
-              prev[#prev + 1] = char
-            else
-              body[#body] = {
-                class = "word";
-                wide = true;
-                prev;
-                char;
-              }
-            end
-          else
-            body[#body + 1] = char
-          end
+          body[#body + 1] = char
         end
       end
     end
@@ -376,8 +375,10 @@ local function format_text(vim)
         local pbody = paragraph.body
         local a = pbody[#pbody]
         local b = body[1]
-        if is_word(a) and a.narrow and is_word(b) and b.narrow then
-          pbody[#pbody + 1] = 0x20
+        if is_word(a) and is_word(b) then
+          if get_width(a[#a]) == 1 and get_width(b[1]) == 1 then
+            pbody[#pbody + 1] = 0x20
+          end
         end
         for j = 1, #body do
           pbody[#pbody + 1] = body[j]
