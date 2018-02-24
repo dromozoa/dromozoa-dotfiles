@@ -21,9 +21,16 @@ local utf8 = require "dromozoa.utf8"
 
 local unpack = table.unpack or unpack
 
+--[[
+https://www.unicode.org/reports/tr44/#General_Category_Values
+| Abbr | Long            | Description                                       |
+|------|-----------------|---------------------------------------------------|
+| Mn   | Nonspacing_Mark | a nonspacing combining mark (zero advance width)  |
+| Mc   | Spacing_Mark    | a spacing combining mark (positive advance width) |
+| Me   | Enclosing_Mark  | an enclosing combining mark                       |
+]]
 local function is_combining_mark(code)
-  local category = ucd.general_category(code)
-  return category == "Mn" or category == "Mc" or category == "Me"
+  return ucd.general_category(code):find "^M"
 end
 
 local function is_space(this)
