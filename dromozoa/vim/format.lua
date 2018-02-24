@@ -15,58 +15,65 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
+local text = require "dromozoa.text"
+local ucd = require "dromozoa.ucd"
 local utf8 = require "dromozoa.utf8"
-local east_asian_width = require "dromozoa.ucd.east_asian_width"
-local is_white_space = require "dromozoa.ucd.is_white_space"
-local jlreq = require "dromozoa.vim.jlreq"
 
 local unpack = table.unpack or unpack
 
+--[[
+https://www.unicode.org/reports/tr44/#General_Category_Values
+| Abbr | Long            | Description                                       |
+|------|-----------------|---------------------------------------------------|
+| Mn   | Nonspacing_Mark | a nonspacing combining mark (zero advance width)  |
+| Mc   | Spacing_Mark    | a spacing combining mark (positive advance width) |
+| Me   | Enclosing_Mark  | an enclosing combining mark                       |
+]]
+local function is_combining_mark(code)
+  return ucd.general_category(code):find "^M"
+end
+
+local function get_head_code(this)
+  while type(this) == "table" do
+    this = this[1]
+  end
+  return this
+end
+
+local function get_tail_code(this)
+  while type(this) == "table" do
+    if this.class == "char" then
+      this = this[1]
+    else
+      this = this[#this]
+    end
+  end
+  return this
+end
+
 local function is_space(this)
   if type(this) == "number" then
-    return is_white_space(this) and this ~= 0x3000
+    return ucd.is_white_space(this) and this ~= 0x3000
   else
-    for i = 1, #this do
-      if not is_space(this[i]) then
-        return false
+    if this.class == "char" then
+      return is_space(this[1])
+    else
+      for i = 1, #this do
+        if not is_space(this[i]) then
+          return false
+        end
       end
+      return true
     end
-    return true
   end
 end
 
 local function is_line_start_prohibited(this)
-  if type(this) == "number" then
-    return jlreq.is_line_start_prohibited(this)
-  else
-    return is_line_start_prohibited(this[1])
-  end
+  return text.is_line_start_prohibited(get_head_code(this))
 end
 
 local function is_line_end_prohibited(this)
-  if type(this) == "number" then
-    return jlreq.is_line_end_prohibited(this)
-  else
-    return is_line_end_prohibited(this[#this])
-  end
-end
-
-local function is_unbreakable(prev, this)
-  while type(prev) == "table" do
-    prev = prev[#prev]
-  end
-  while type(this) == "table" do
-    this = this[1]
-  end
-  if jlreq.is_unbreakable(prev) and jlreq.is_unbreakable(this) then
-    if prev == this then
-      return this == 0x2014 or this == 0x2026 or this == 0x2025
-    else
-      return (prev == 0x3033 or prev == 0x3034) and this == 0x3035
-    end
-  else
-    return false
-  end
+  return text.is_line_end_prohibited(get_tail_code(this))
 end
 
 local east_asian_width_map = {
@@ -80,18 +87,36 @@ local east_asian_width_map = {
 
 local function get_width(this)
   if type(this) == "number" then
-    return east_asian_width_map[east_asian_width(this)]
+    return east_asian_width_map[ucd.east_asian_width(this)]
   else
-    local width = 0
-    for i = 1, #this do
-      width = width + get_width(this[i])
+    if this.class == "char" then
+      return get_width(this[1])
+    else
+      local width = 0
+      for i = 1, #this do
+        width = width + get_width(this[i])
+      end
+      return width
     end
-    return width
   end
 end
 
-local function decode_utf32(source)
-  return utf8.char(unpack(source))
+local function is_unbreakable(that, this)
+  that = get_tail_code(that)
+  this = get_head_code(this)
+  if text.is_prefixed_abbreviation(that) and get_width(this) == 1 then
+    return true
+  elseif get_width(that) == 1 and text.is_postfixed_abbreviation(this) then
+    return true
+  elseif text.is_inseparable(that) and text.is_inseparable(this) then
+    if that == this then
+      return this == 0x2014 or this == 0x2026 or this == 0x2025
+    else
+      return (that == 0x3033 or that == 0x3034) and this == 0x3035
+    end
+  else
+    return false
+  end
 end
 
 local function is_word(this)
@@ -110,7 +135,6 @@ local function parse(source)
         if get_width(char) == 1 then
           body[1] = {
             class = "word";
-            narrow = true;
             char;
           }
         else
@@ -121,32 +145,28 @@ local function parse(source)
       if is_space(char) then
         body[#body + 1] = char
       else
-        local prev = body[#body]
-        if get_width(char) == 1 then
-          if is_word(prev) then
-            prev[#prev + 1] = char
+        local that = body[#body]
+        if is_unbreakable(that, char) then
+          if is_word(that) then
+            that[#that + 1] = char
+          else
+            body[#body] = {
+              class = "word";
+              that;
+              char;
+            }
+          end
+        elseif get_width(char) == 1 then
+          if is_word(that) then
+            that[#that + 1] = char
           else
             body[#body + 1] = {
               class = "word";
-              narrow = true;
               char;
             }
           end
         else
-          if is_unbreakable(prev, char) then
-            if is_word(prev) then
-              prev[#prev + 1] = char
-            else
-              body[#body] = {
-                class = "word";
-                wide = true;
-                prev;
-                char;
-              }
-            end
-          else
-            body[#body + 1] = char
-          end
+          body[#body + 1] = char
         end
       end
     end
@@ -216,72 +236,81 @@ local function format(head, body, text_width)
   return result
 end
 
-local function update_buffer(source, b, f, n)
+local function update_buffer(source, buffer, f, n)
   local m = #source
   if n < m then
     local x = f - 1
     for i = 1, n do
-      b[x + i] = source[i]
+      buffer[x + i] = source[i]
     end
     local x = f - 2
     for i = n + 1, m do
-      b:insert(source[i], x + i)
+      buffer:insert(source[i], x + i)
     end
   else
     local x = f - 1
     for i = 1, m do
-      b[x + i] = source[i]
+      buffer[x + i] = source[i]
     end
     local x = f + m
     for i = m + 1, n do
-      b[x] = nil
+      buffer[x] = nil
     end
   end
   return f + m - 1
 end
 
 local function format_text(vim)
-  local b = vim.buffer()
-  local w = vim.window()
+  local buffer = vim.buffer()
+  local window = vim.window()
   local f = vim.eval "v:lnum"
   local n = vim.eval "v:count"
-  local c = vim.eval "v:char"
+  local inserted = vim.eval "v:char"
   local text_width = vim.eval "&textwidth"
-  local col = w.col
+  local col = window.col
 
   local paragraphs = {}
   local m = f + n - 1
   for i = f, m do
-    -- UTF-8 to UTF-32
-    local s = b[i]
-    local line
-    if i == m and c ~= "" then
-      local col = w.col
-      if col >= #s then
-        line = { utf8.codepoint(s, 1, #s) }
-        line[#line + 1] = {
-          class = "char";
-          inserted = true;
-          utf8.codepoint(c);
-        }
-      else
-        line = {}
-        for j, char in utf8.codes(s) do
-          if j == col then
-            line[#line + 1] = {
-              class = "char";
-              inserted = true;
-              utf8.codepoint(c);
-            }
-          end
-          line[#line + 1] = char
-        end
-      end
-    else
-      line = { utf8.codepoint(s, 1, #s) }
+    local s = buffer[i]
+    local line = {}
+
+    local inserted_col
+    local inserted_char
+    if i == m and inserted ~= "" then
+      inserted_col = window.col
+      inserted_char = {
+        class = "char";
+        inserted = true;
+        utf8.codepoint(inserted);
+      }
     end
 
-    -- chomp
+    for j, code in utf8.codes(s) do
+      if j == inserted_col then
+        line[#line + 1] = inserted_char
+        inserted_char = nil
+      end
+      if is_combining_mark(code) then
+        local that = line[#line]
+        if type(that) == "number" then
+          line[#line] = {
+            class = "char";
+            that;
+            code;
+          }
+        else
+          that[#that + 1] = code
+        end
+      else
+        line[#line + 1] = code
+      end
+    end
+
+    if inserted_char then
+      line[#line + 1] = inserted_char
+    end
+
     for j = #line, 1, -1 do
       if is_space(line[j]) then
         line[j] = nil
@@ -302,14 +331,14 @@ local function format_text(vim)
           body = body;
         }
       else
-        local pbody = paragraph.body
-        local a = pbody[#pbody]
-        local b = body[1]
-        if is_word(a) and a.narrow and is_word(b) and b.narrow then
-          pbody[#pbody + 1] = 0x20
+        local that_body = paragraph.body
+        local that = that_body[#that_body]
+        local this = body[1]
+        if is_word(that) and get_width(get_tail_code(that)) == 1 and is_word(this) and get_width(get_head_code(this)) == 1 then
+          that_body[#that_body + 1] = 0x20
         end
         for j = 1, #body do
-          pbody[#pbody + 1] = body[j]
+          that_body[#that_body + 1] = body[j]
         end
       end
     end
@@ -327,11 +356,11 @@ local function format_text(vim)
   end
 
   local result_col = 1
-  local result = {}
+  local result_lines = {}
   for i = 1, #paragraphs do
     local paragraph = paragraphs[i]
     if paragraph.class == "separator" then
-      result[#result + 1] = ""
+      result_lines[#result_lines + 1] = ""
     else
       local head = utf8.char(unpack(paragraph.head))
       local lines = paragraph.lines
@@ -340,19 +369,23 @@ local function format_text(vim)
         local result_line = head
         for k = 1, #line do
           local char = line[k]
-          if type(char) == "table" and char.inserted then
-            result_col = #result_line + 1
+          if type(char) == "table" then
+            if char.inserted then
+              result_col = #result_line + 1
+            else
+              result_line = result_line .. utf8.char(unpack(char))
+            end
           else
             result_line = result_line .. utf8.char(char)
           end
         end
-        result[#result + 1] = result_line
+        result_lines[#result_lines + 1] = result_line
       end
     end
   end
 
-  w.line = update_buffer(result, b, f, n)
-  w.col = result_col
+  window.line = update_buffer(result_lines, buffer, f, n)
+  window.col = result_col
 
   return "0"
 end
@@ -360,8 +393,6 @@ end
 return function (vim)
   local filetype = vim.eval "&filetype"
   if filetype == "text" then
-    return format_text(vim)
-  elseif filetype == "markdown" then
     return format_text(vim)
   end
   return "1"

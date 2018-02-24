@@ -97,6 +97,39 @@
 <pre>local context state state_descr line
 typeset -A opt_args</pre>
 
+<h2>日本語テキスト処理</h2>
+
+<h3>文字間での分割の可否</h3>
+
+<p>
+（日本語組版処理の要件 <a href="https://www.w3.org/TR/jlreq/ja/#possibilities_for_linebreaking_between_characters">附属書C</a>より）
+</p>
+
+<ol>
+  <li>前の文字が文字クラス1, 12, 28である。</li>
+  <li>後の文字が文字クラス2〜7, 9〜11, 20, 29である。</li>
+</ol>
+
+<p>
+1または2が成立するとき、おおまかに分割不可であると言える。
+1と2の条件がどちらも満たされるとき、分割不可であるか、配置が禁止されているかは表に記述されている。
+</p>
+
+<p>
+ところで、文字クラス2〜7, 9〜11, 29は<a href="https://www.w3.org/TR/jlreq/ja/#characters_not_starting_a_line">行頭禁則</a>の対象であり、文字クラス1, 28は<a href="https://www.w3.org/TR/jlreq/ja/#characters_not_ending_a_line">行末禁則</a>の対象である。
+行頭禁則と行末禁則が実装されているとき、前の文字が文字クラス12であるか、後の文字が文字クラス20であるかを考慮することになる。
+</p>
+
+<p>
+注記を考慮して実装は以下を分割不可とした。
+</p>
+
+<ul>
+  <li>分離禁止文字（文字クラス8）の所定の組み合わせ</li>
+  <li>前置省略記号（文字クラス12）に前置された欧文文字列</li>
+  <li>後置省略記号（文字クラス13）に後置された欧文文字列</li>
+</ul>
+
 </div>
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
