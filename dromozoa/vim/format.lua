@@ -277,18 +277,21 @@ local function format_text(vim)
     local s = buffer[i]
     local line = {}
 
-    local col
+    local inserted_col
+    local inserted_char
     if i == m and inserted ~= "" then
-      col = window.col
+      inserted_col = window.col
+      inserted_char = {
+        class = "char";
+        inserted = true;
+        utf8.codepoint(inserted);
+      }
     end
 
     for j, code in utf8.codes(s) do
-      if j == col then
-        line[#line + 1] = {
-          class = "char";
-          inserted = true;
-          utf8.codepoint(inserted);
-        }
+      if j == inserted_col then
+        line[#line + 1] = inserted_char
+        inserted_char = nil
       end
       if is_combining_mark(code) then
         local prev = line[#line]
@@ -306,12 +309,8 @@ local function format_text(vim)
       end
     end
 
-    if col and col >= #s then
-      line[#line + 1] = {
-        class = "char";
-        inserted = true;
-        utf8.codepoint(inserted);
-      }
+    if inserted_char then
+      line[#line + 1] = inserted_char
     end
 
     for j = #line, 1, -1 do
