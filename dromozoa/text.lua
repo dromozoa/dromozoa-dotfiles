@@ -19,4 +19,6 @@ return {
   is_inseparable = require "dromozoa.text.is_inseparable";
   is_line_end_prohibited = require "dromozoa.text.is_line_end_prohibited";
   is_line_start_prohibited = require "dromozoa.text.is_line_start_prohibited";
+  is_postfixed_abbreviation = require "dromozoa.text.is_postfixed_abbreviation";
+  is_prefixed_abbreviation = require "dromozoa.text.is_prefixed_abbreviation";
 }

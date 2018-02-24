@@ -25,6 +25,8 @@ local names = {
   is_line_start_prohibited = { 2, 3, 4, 5, 6, 7, 9, 10, 11, 29 };
   is_line_end_prohibited = { 1, 28 };
   is_inseparable = { 8 };
+  is_prefixed_abbreviation = { 12 };
+  is_postfixed_abbreviation = { 13 };
 }
 
 local builders = {};
