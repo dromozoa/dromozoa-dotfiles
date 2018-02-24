@@ -238,117 +238,82 @@ local function format(head, body, text_width)
   return result
 end
 
-local function update_buffer(source, b, f, n)
+local function update_buffer(source, buffer, f, n)
   local m = #source
   if n < m then
     local x = f - 1
     for i = 1, n do
-      b[x + i] = source[i]
+      buffer[x + i] = source[i]
     end
     local x = f - 2
     for i = n + 1, m do
-      b:insert(source[i], x + i)
+      buffer:insert(source[i], x + i)
     end
   else
     local x = f - 1
     for i = 1, m do
-      b[x + i] = source[i]
+      buffer[x + i] = source[i]
     end
     local x = f + m
     for i = m + 1, n do
-      b[x] = nil
+      buffer[x] = nil
     end
   end
   return f + m - 1
 end
 
 local function format_text(vim)
-  local b = vim.buffer()
-  local w = vim.window()
+  local buffer = vim.buffer()
+  local window = vim.window()
   local f = vim.eval "v:lnum"
   local n = vim.eval "v:count"
-  local c = vim.eval "v:char"
+  local inserted = vim.eval "v:char"
   local text_width = vim.eval "&textwidth"
-  local col = w.col
+  local col = window.col
 
   local paragraphs = {}
   local m = f + n - 1
   for i = f, m do
-    -- UTF-8 to UTF-32
-    local s = b[i]
+    local s = buffer[i]
     local line = {}
 
-    if i == m and c ~= "" then
-      local col = w.col
-      if col >= #s then
-        for _, code in utf8.codes(s) do
-          if is_combining_mark(code) then
-            local prev = line[#line]
-            if type(prev) == "number" then
-              line[#line] = {
-                class = "char";
-                prev;
-                code;
-              }
-            else
-              prev[#prev + 1] = code
-            end
-          else
-            line[#line + 1] = code
-          end
-        end
+    local col
+    if i == m and inserted ~= "" then
+      col = window.col
+    end
+
+    for j, code in utf8.codes(s) do
+      if j == col then
         line[#line + 1] = {
           class = "char";
           inserted = true;
-          utf8.codepoint(c);
+          utf8.codepoint(inserted);
         }
-      else
-        line = {}
-        for j, code in utf8.codes(s) do
-          if j == col then
-            line[#line + 1] = {
-              class = "char";
-              inserted = true;
-              utf8.codepoint(c);
-            }
-          end
-          if is_combining_mark(code) then
-            local prev = line[#line]
-            if type(prev) == "number" then
-              line[#line] = {
-                class = "char";
-                prev;
-                code;
-              }
-            else
-              prev[#prev + 1] = code
-            end
-          else
-            line[#line + 1] = code
-          end
-
-        end
       end
-    else
-      for _, code in utf8.codes(s) do
-        if is_combining_mark(code) then
-          local prev = line[#line]
-          if type(prev) == "number" then
-            line[#line] = {
-              class = "char";
-              prev;
-              code;
-            }
-          else
-            prev[#prev + 1] = code
-          end
+      if is_combining_mark(code) then
+        local prev = line[#line]
+        if type(prev) == "number" then
+          line[#line] = {
+            class = "char";
+            prev;
+            code;
+          }
         else
-          line[#line + 1] = code
+          prev[#prev + 1] = code
         end
+      else
+        line[#line + 1] = code
       end
     end
 
-    -- chomp
+    if col and col >= #s then
+      line[#line + 1] = {
+        class = "char";
+        inserted = true;
+        utf8.codepoint(inserted);
+      }
+    end
+
     for j = #line, 1, -1 do
       if is_space(line[j]) then
         line[j] = nil
@@ -371,9 +336,9 @@ local function format_text(vim)
       else
         local pbody = paragraph.body
         local a = pbody[#pbody]
-        local b = body[1]
-        if is_word(a) and is_word(b) then
-          if get_width(a[#a]) == 1 and get_width(b[1]) == 1 then
+        local buffer = body[1]
+        if is_word(a) and is_word(buffer) then
+          if get_width(a[#a]) == 1 and get_width(buffer[1]) == 1 then
             pbody[#pbody + 1] = 0x20
           end
         end
@@ -424,8 +389,8 @@ local function format_text(vim)
     end
   end
 
-  w.line = update_buffer(result, b, f, n)
-  w.col = result_col
+  window.line = update_buffer(result, buffer, f, n)
+  window.col = result_col
 
   return "0"
 end
