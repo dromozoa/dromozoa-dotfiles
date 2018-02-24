@@ -429,8 +429,6 @@ return function (vim)
   local filetype = vim.eval "&filetype"
   if filetype == "text" then
     return format_text(vim)
-  elseif filetype == "markdown" then
-    return format_text(vim)
   end
   return "1"
 end
