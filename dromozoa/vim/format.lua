@@ -125,23 +125,29 @@ end
 
 local function parse(source)
   local head = {}
+  local item = {}
   local body = {}
 
   local n = #source
   if n > 0 then
     local i = 1
-    local this
-
     while i <= n do
-      this = source[i]
-      i = i + 1
+      local this = source[i]
       if is_space(this) then
         head[#head + 1] = this
       else
         break
       end
+      i = i + 1
     end
 
+--    if i + 2 <= n
+--        and ucd.general_category(get_head_code(source[i])) == "Nd"
+--        and get_head_code(source[i + 1]) == 0x2E
+--        and get_head_code(source[i + 2]) == 0x20 then
+--    end
+
+    local this = source[i]
     if get_width(this) == 1 then
       body[1] = {
         class = "word";
@@ -150,10 +156,10 @@ local function parse(source)
     else
       body[1] = this
     end
+    i = i + 1
 
     while i <= n do
-      this = source[i]
-      i = i + 1
+      local this = source[i]
       if is_space(this) then
         body[#body + 1] = this
       else
@@ -181,6 +187,7 @@ local function parse(source)
           body[#body + 1] = this
         end
       end
+      i = i + 1
     end
   end
 
@@ -344,6 +351,7 @@ local function format_text(vim)
           body = body;
         }
       else
+        -- TODO check item
         local that_body = paragraph.body
         local that = that_body[#that_body]
         local this = body[1]
