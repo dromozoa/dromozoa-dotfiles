@@ -126,51 +126,53 @@ end
 local function parse(source)
   local head = {}
   local body = {}
+
   for i = 1, #source do
-    local char = source[i]
+    local this = source[i]
     if #body == 0 then
-      if is_space(char) then
-        head[#head + 1] = char
+      if is_space(this) then
+        head[#head + 1] = this
       else
-        if get_width(char) == 1 then
+        if get_width(this) == 1 then
           body[1] = {
             class = "word";
-            char;
+            this;
           }
         else
-          body[1] = char
+          body[1] = this
         end
       end
     else
-      if is_space(char) then
-        body[#body + 1] = char
+      if is_space(this) then
+        body[#body + 1] = this
       else
         local that = body[#body]
-        if is_unbreakable(that, char) then
+        if is_unbreakable(that, this) then
           if is_word(that) then
-            that[#that + 1] = char
+            that[#that + 1] = this
           else
             body[#body] = {
               class = "word";
               that;
-              char;
+              this;
             }
           end
-        elseif get_width(char) == 1 then
+        elseif get_width(this) == 1 then
           if is_word(that) then
-            that[#that + 1] = char
+            that[#that + 1] = this
           else
             body[#body + 1] = {
               class = "word";
-              char;
+              this;
             }
           end
         else
-          body[#body + 1] = char
+          body[#body + 1] = this
         end
       end
     end
   end
+
   return head, body
 end
 
