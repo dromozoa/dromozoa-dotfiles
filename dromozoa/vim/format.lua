@@ -216,8 +216,11 @@ local function unparse(source)
   return result
 end
 
-local function format(head, body, text_width)
+local function format(head, body, item, text_width)
   local max_width = text_width - get_width(head)
+  if item then
+    max_width = max_width - get_width(item)
+  end
   local result = {}
   local width = 0
   for i = 1, #body do
@@ -375,7 +378,7 @@ local function format_text(vim)
   for i = 1, #paragraphs do
     local paragraph = paragraphs[i]
     if paragraph.class == "paragraph" then
-      local lines = format(paragraph.head, paragraph.body, text_width)
+      local lines = format(paragraph.head, paragraph.body, paragraph.item, text_width)
       for j = 1, #lines do
         lines[j] = unparse(lines[j])
       end
