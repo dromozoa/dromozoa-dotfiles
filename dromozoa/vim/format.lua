@@ -127,7 +127,10 @@ local function parse(source)
   local head = {}
   local body = {}
 
-  for i = 1, #source do
+  local i = 1
+  local n = #source
+
+  while i <= n do
     local this = source[i]
     if #body == 0 then
       if is_space(this) then
@@ -171,6 +174,7 @@ local function parse(source)
         end
       end
     end
+    i = i + 1
   end
 
   return head, body
