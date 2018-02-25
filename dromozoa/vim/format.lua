@@ -126,52 +126,81 @@ end
 local function parse(source)
   local head = {}
   local body = {}
-  for i = 1, #source do
-    local char = source[i]
-    if #body == 0 then
-      if is_space(char) then
-        head[#head + 1] = char
+  local item = {}
+
+  local n = #source
+  if n > 0 then
+    local i = 1
+    while i <= n do
+      local this = source[i]
+      if is_space(this) then
+        head[#head + 1] = this
       else
-        if get_width(char) == 1 then
-          body[1] = {
-            class = "word";
-            char;
-          }
-        else
-          body[1] = char
-        end
+        break
       end
-    else
-      if is_space(char) then
-        body[#body + 1] = char
+      i = i + 1
+    end
+
+    if i + 2 <= n then
+      local a = source[i]
+      local b = source[i + 1]
+      local c = source[i + 2]
+
+      if ucd.general_category(get_head_code(a)) == "Nd" and get_head_code(b) == 0x2E and get_head_code(c) == 0x20 then
+        item[1] = a
+        item[2] = b
+        item[3] = c
+        i = i + 3
+      end
+    end
+
+    if i <= n then
+      local this = source[i]
+      if get_width(this) == 1 then
+        body[1] = {
+          class = "word";
+          this;
+        }
+      else
+        body[1] = this
+      end
+      i = i + 1
+    end
+
+    while i <= n do
+      local this = source[i]
+      if is_space(this) then
+        body[#body + 1] = this
       else
         local that = body[#body]
-        if is_unbreakable(that, char) then
+        if is_unbreakable(that, this) then
           if is_word(that) then
-            that[#that + 1] = char
+            that[#that + 1] = this
           else
             body[#body] = {
               class = "word";
               that;
-              char;
+              this;
             }
           end
-        elseif get_width(char) == 1 then
+        elseif get_width(this) == 1 then
           if is_word(that) then
-            that[#that + 1] = char
+            that[#that + 1] = this
           else
             body[#body + 1] = {
               class = "word";
-              char;
+              this;
             }
           end
         else
-          body[#body + 1] = char
+          body[#body + 1] = this
         end
       end
+      i = i + 1
     end
   end
-  return head, body
+
+  return head, body, item
 end
 
 local function unparse(source)
@@ -189,8 +218,8 @@ local function unparse(source)
   return result
 end
 
-local function format(head, body, text_width)
-  local max_width = text_width - get_width(head)
+local function format(head, body, item, text_width)
+  local max_width = text_width - get_width(head) - get_width(item)
   local result = {}
   local width = 0
   for i = 1, #body do
@@ -205,13 +234,13 @@ local function format(head, body, text_width)
         line[#line + 1] = this
       else
         local line1 = result[#result]
-        local items = {}
+        local buffer = {}
 
         for j = #line1, 1, -1 do
           local this = line1[j]
           if is_space(this) or is_line_end_prohibited(this) then
             line1[j] = nil
-            items[#items + 1] = this
+            buffer[#buffer + 1] = this
           else
             break
           end
@@ -219,8 +248,8 @@ local function format(head, body, text_width)
 
         width = 0
         local line2 = {}
-        for j = #items, 1, -1 do
-          local this = items[j]
+        for j = #buffer, 1, -1 do
+          local this = buffer[j]
           if #line2 > 0 or not is_space(this) then
             width = width + get_width(this)
             line2[#line2 + 1] = this
@@ -319,16 +348,17 @@ local function format_text(vim)
       end
     end
 
-    local head, body = parse(line)
+    local head, body, item = parse(line)
     if #body == 0 then
       paragraphs[#paragraphs + 1] = { class = "separator" }
     else
       local paragraph = paragraphs[#paragraphs]
-      if not paragraph or paragraph.class == "separator" then
+      if not paragraph or paragraph.class == "separator" or #item > 0 then
         paragraphs[#paragraphs + 1] = {
           class = "paragraph";
           head = head;
           body = body;
+          item = item;
         }
       else
         local that_body = paragraph.body
@@ -347,7 +377,7 @@ local function format_text(vim)
   for i = 1, #paragraphs do
     local paragraph = paragraphs[i]
     if paragraph.class == "paragraph" then
-      local lines = format(paragraph.head, paragraph.body, text_width)
+      local lines = format(paragraph.head, paragraph.body, paragraph.item, text_width)
       for j = 1, #lines do
         lines[j] = unparse(lines[j])
       end
@@ -363,20 +393,39 @@ local function format_text(vim)
       result_lines[#result_lines + 1] = ""
     else
       local head = utf8.char(unpack(paragraph.head))
+      local item = paragraph.item
       local lines = paragraph.lines
       for j = 1, #lines do
-        local line = lines[j]
-        local result_line = head
-        for k = 1, #line do
-          local char = line[k]
-          if type(char) == "table" then
-            if char.inserted then
-              result_col = #result_line + 1
-            else
-              result_line = result_line .. utf8.char(unpack(char))
+        local line = {}
+
+        if #item > 0 then
+          if j == 1 then
+            for k = 1, #item do
+              line[#line + 1] = item[k]
             end
           else
-            result_line = result_line .. utf8.char(char)
+            for k = 1, get_width(item) do
+              line[#line + 1] = 0x20
+            end
+          end
+        end
+
+        local source_line = lines[j]
+        for i = 1, #source_line do
+          line[#line + 1] = source_line[i]
+        end
+
+        local result_line = head
+        for k = 1, #line do
+          local this = line[k]
+          if type(this) == "table" then
+            if this.inserted then
+              result_col = #result_line + 1
+            else
+              result_line = result_line .. utf8.char(unpack(this))
+            end
+          else
+            result_line = result_line .. utf8.char(this)
           end
         end
         result_lines[#result_lines + 1] = result_line
