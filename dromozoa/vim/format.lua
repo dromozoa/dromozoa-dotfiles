@@ -126,7 +126,7 @@ end
 local function parse(source)
   local head = {}
   local body = {}
-  local item
+  local item = {}
 
   local n = #source
   if n > 0 then
@@ -147,7 +147,9 @@ local function parse(source)
       local c = source[i + 2]
 
       if ucd.general_category(get_head_code(a)) == "Nd" and get_head_code(b) == 0x2E and get_head_code(c) == 0x20 then
-        item = { a, b, c }
+        item[1] = a
+        item[2] = b
+        item[3] = c
         i = i + 3
       end
     end
@@ -217,10 +219,7 @@ local function unparse(source)
 end
 
 local function format(head, body, item, text_width)
-  local max_width = text_width - get_width(head)
-  if item then
-    max_width = max_width - get_width(item)
-  end
+  local max_width = text_width - get_width(head) - get_width(item)
   local result = {}
   local width = 0
   for i = 1, #body do
@@ -354,7 +353,7 @@ local function format_text(vim)
       paragraphs[#paragraphs + 1] = { class = "separator" }
     else
       local paragraph = paragraphs[#paragraphs]
-      if not paragraph or paragraph.class == "separator" or item then
+      if not paragraph or paragraph.class == "separator" or #item > 0 then
         paragraphs[#paragraphs + 1] = {
           class = "paragraph";
           head = head;
@@ -394,20 +393,39 @@ local function format_text(vim)
       result_lines[#result_lines + 1] = ""
     else
       local head = utf8.char(unpack(paragraph.head))
+      local item = paragraph.item
       local lines = paragraph.lines
       for j = 1, #lines do
-        local line = lines[j]
-        local result_line = head
-        for k = 1, #line do
-          local char = line[k]
-          if type(char) == "table" then
-            if char.inserted then
-              result_col = #result_line + 1
-            else
-              result_line = result_line .. utf8.char(unpack(char))
+        local line = {}
+
+        if #item > 0 then
+          if j == 1 then
+            for k = 1, #item do
+              line[#line + 1] = item[k]
             end
           else
-            result_line = result_line .. utf8.char(char)
+            for k = 1, get_width(item) do
+              line[#line + 1] = 0x20
+            end
+          end
+        end
+
+        local source_line = lines[j]
+        for i = 1, #source_line do
+          line[#line + 1] = source_line[i]
+        end
+
+        local result_line = head
+        for k = 1, #line do
+          local this = line[k]
+          if type(this) == "table" then
+            if this.inserted then
+              result_col = #result_line + 1
+            else
+              result_line = result_line .. utf8.char(unpack(this))
+            end
+          else
+            result_line = result_line .. utf8.char(this)
           end
         end
         result_lines[#result_lines + 1] = result_line
