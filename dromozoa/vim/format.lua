@@ -125,8 +125,8 @@ end
 
 local function parse(source)
   local head = {}
-  local item = {}
   local body = {}
+  local item
 
   local n = #source
   if n > 0 then
@@ -141,22 +141,29 @@ local function parse(source)
       i = i + 1
     end
 
---    if i + 2 <= n
---        and ucd.general_category(get_head_code(source[i])) == "Nd"
---        and get_head_code(source[i + 1]) == 0x2E
---        and get_head_code(source[i + 2]) == 0x20 then
---    end
+    if i + 2 <= n then
+      local a = source[i]
+      local b = source[i + 1]
+      local c = source[i + 2]
 
-    local this = source[i]
-    if get_width(this) == 1 then
-      body[1] = {
-        class = "word";
-        this;
-      }
-    else
-      body[1] = this
+      if ucd.general_category(get_head_code(a)) == "Nd" and get_head_code(b) == 0x2E and get_head_code(c) == 0x20 then
+        item = { a, b, c }
+        i = i + 3
+      end
     end
-    i = i + 1
+
+    if i <= n then
+      local this = source[i]
+      if get_width(this) == 1 then
+        body[1] = {
+          class = "word";
+          this;
+        }
+      else
+        body[1] = this
+      end
+      i = i + 1
+    end
 
     while i <= n do
       local this = source[i]
@@ -191,7 +198,7 @@ local function parse(source)
     end
   end
 
-  return head, body
+  return head, body, item
 end
 
 local function unparse(source)
@@ -225,13 +232,13 @@ local function format(head, body, text_width)
         line[#line + 1] = this
       else
         local line1 = result[#result]
-        local items = {}
+        local buffer = {}
 
         for j = #line1, 1, -1 do
           local this = line1[j]
           if is_space(this) or is_line_end_prohibited(this) then
             line1[j] = nil
-            items[#items + 1] = this
+            buffer[#buffer + 1] = this
           else
             break
           end
@@ -239,8 +246,8 @@ local function format(head, body, text_width)
 
         width = 0
         local line2 = {}
-        for j = #items, 1, -1 do
-          local this = items[j]
+        for j = #buffer, 1, -1 do
+          local this = buffer[j]
           if #line2 > 0 or not is_space(this) then
             width = width + get_width(this)
             line2[#line2 + 1] = this
@@ -339,19 +346,19 @@ local function format_text(vim)
       end
     end
 
-    local head, body = parse(line)
+    local head, body, item = parse(line)
     if #body == 0 then
       paragraphs[#paragraphs + 1] = { class = "separator" }
     else
       local paragraph = paragraphs[#paragraphs]
-      if not paragraph or paragraph.class == "separator" then
+      if not paragraph or paragraph.class == "separator" or item then
         paragraphs[#paragraphs + 1] = {
           class = "paragraph";
           head = head;
           body = body;
+          item = item;
         }
       else
-        -- TODO check item
         local that_body = paragraph.body
         local that = that_body[#that_body]
         local this = body[1]
