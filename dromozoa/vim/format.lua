@@ -127,57 +127,59 @@ local function parse(source)
   local head = {}
   local body = {}
 
-  local i = 1
   local n = #source
+  if n > 0 then
+    local i = 1
+    local this
 
-  while i <= n do
-    local this = source[i]
-    i = i + 1
-
-    if is_space(this) then
-      head[#head + 1] = this
-    else
-      if get_width(this) == 1 then
-        body[1] = {
-          class = "word";
-          this;
-        }
+    while i <= n do
+      this = source[i]
+      i = i + 1
+      if is_space(this) then
+        head[#head + 1] = this
       else
-        body[1] = this
+        break
       end
-      break
     end
-  end
 
-  while i <= n do
-    local this = source[i]
-    i = i + 1
-
-    if is_space(this) then
-      body[#body + 1] = this
+    if get_width(this) == 1 then
+      body[1] = {
+        class = "word";
+        this;
+      }
     else
-      local that = body[#body]
-      if is_unbreakable(that, this) then
-        if is_word(that) then
-          that[#that + 1] = this
-        else
-          body[#body] = {
-            class = "word";
-            that;
-            this;
-          }
-        end
-      elseif get_width(this) == 1 then
-        if is_word(that) then
-          that[#that + 1] = this
-        else
-          body[#body + 1] = {
-            class = "word";
-            this;
-          }
-        end
-      else
+      body[1] = this
+    end
+
+    while i <= n do
+      this = source[i]
+      i = i + 1
+      if is_space(this) then
         body[#body + 1] = this
+      else
+        local that = body[#body]
+        if is_unbreakable(that, this) then
+          if is_word(that) then
+            that[#that + 1] = this
+          else
+            body[#body] = {
+              class = "word";
+              that;
+              this;
+            }
+          end
+        elseif get_width(this) == 1 then
+          if is_word(that) then
+            that[#that + 1] = this
+          else
+            body[#body + 1] = {
+              class = "word";
+              this;
+            }
+          end
+        else
+          body[#body + 1] = this
+        end
       end
     end
   end
