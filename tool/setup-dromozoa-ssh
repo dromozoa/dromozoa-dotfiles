@@ -1,0 +1,42 @@
+#! /bin/sh -e
+
+# Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+#
+# This file is part of dromozoa-dotfiles.
+#
+# dromozoa-dotfiles is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# dromozoa-dotfiles is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
+
+case x$1 in
+  x) echo "usage: $0 host port"; exit 1;;
+  *) host=$1;;
+esac
+
+case x$2 in
+  x) echo "usage: $0 host port"; exit 1;;
+  *) port=$2;;
+esac
+
+d=$HOME/.config/systemd/user
+mkdir -p "$d"
+f="$d/dromozoa-ssh-$host.service"
+
+cat <<EOH >"$f.new"
+[Service]
+ExecStart = %h/dromozoa-dotfiles/bin/_dromozoa-ssh -R $port:localhost:22 $host
+Restart = always
+[Install]
+WantedBy = multi-user.target
+EOH
+
+mv "$f.new" "$f"
