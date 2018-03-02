@@ -29,7 +29,8 @@ esac
 
 d=$HOME/.config/systemd/user
 mkdir -p "$d"
-f="$d/dromozoa-ssh-$host.service"
+u=dromozoa-ssh-$host.service
+f=$d/$u
 
 cat <<EOH >"$f.new"
 [Service]
@@ -40,3 +41,22 @@ WantedBy = default.target
 EOH
 
 mv "$f.new" "$f"
+
+user=`id -u -n`
+if test -f "/var/lib/systemd/linger/$user"
+then
+  :
+else
+  cat <<EOH
+# enable lingering
+sudo loginctl enable-linger $user
+EOH
+fi
+
+cat <<EOH
+# enable and start
+systemctl --user daemon-reload
+systemctl --user status $u
+systemctl --user enable $u
+systemctl --user start $u
+EOH
