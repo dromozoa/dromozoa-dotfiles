@@ -36,7 +36,7 @@ cat <<EOH >"$f.new"
 ExecStart = %h/dromozoa-dotfiles/bin/_dromozoa-ssh -R $port:localhost:22 $host
 Restart = always
 [Install]
-WantedBy = multi-user.target
+WantedBy = default.target
 EOH
 
 mv "$f.new" "$f"
