@@ -29,12 +29,12 @@ esac
 
 d=$HOME/.config/systemd/user
 mkdir -p "$d"
-u=dromozoa-ssh-$host.service
+u=dromozoa_ssh_tunnel_$host.service
 f=$d/$u
 
 cat <<EOH >"$f.new"
 [Service]
-ExecStart = %h/dromozoa-dotfiles/bin/_dromozoa-ssh -R $port:localhost:22 $host
+ExecStart = %h/dromozoa-dotfiles/bin/_dromozoa_ssh_tunnel -R $port:localhost:22 $host
 Restart = always
 [Install]
 WantedBy = default.target
