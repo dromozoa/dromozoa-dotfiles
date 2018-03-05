@@ -18,11 +18,13 @@
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 case x$1 in
-  x) file=;;
-  *) file=$1;;
+  x) base64=;;
+  *)
+    dir=`dirname "$1"`
+    dir=`(cd "$dir" && pwd)`
+    source=$dir/`basename "$1"`
+    base64=`printf '%s' "$source" | base64`;;
 esac
-
-file=`printf '%s' "$file" | base64`
 
 # DCS
 case x$TERM in
@@ -30,7 +32,7 @@ case x$TERM in
 esac
 
 # iTerm2 set background image file
-printf '\33]1337;SetBackgroundImageFile=%s\7' "$file"
+printf '\33]1337;SetBackgroundImageFile=%s\7' "$base64"
 
 # ST
 case x$TERM in
