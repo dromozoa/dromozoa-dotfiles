@@ -22,7 +22,6 @@ _dromozoa_boot() {
     '(- *)'{-h,--help} \
     '(- *)'{-l,--list} \
     '(-k --insecure)'{-k,--insecure} \
-    '--no-check' \
     '(-p --prefix)'{-p,--prefix=}':prefix:_files' \
     '*:: :_dromozoa_boot_packages __MARKER__ $words'
 }

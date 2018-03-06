@@ -25,3 +25,4 @@ case x$TERM in
 esac
 
 title 2>/dev/null
+iterm2-background 2>/dev/null

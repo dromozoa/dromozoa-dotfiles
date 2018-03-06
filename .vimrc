@@ -61,6 +61,7 @@ syntax enable
 filetype plugin on
 
 colorscheme darkblue
+highlight Normal ctermbg=none
 highlight Underlined ctermfg=LightBlue
 
 autocmd FileType html setlocal wrap

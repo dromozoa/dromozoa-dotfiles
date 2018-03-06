@@ -17,26 +17,10 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-case x$1 in
-  x) echo "usage: $0 host port"; exit 1;;
-  *) host=$1;;
-esac
-
-case x$2 in
-  x) echo "usage: $0 host port"; exit 1;;
-  *) port=$2;;
-esac
-
-d=$HOME/.config/systemd/user
-mkdir -p "$d"
-f="$d/dromozoa-ssh-$host.service"
-
-cat <<EOH >"$f.new"
-[Service]
-ExecStart = %h/dromozoa-dotfiles/bin/_dromozoa-ssh -R $port:localhost:22 $host
-Restart = always
-[Install]
-WantedBy = multi-user.target
-EOH
-
-mv "$f.new" "$f"
+git branch $2 | while read line
+do
+  line=`expr "x$line" : 'x\* \(.*\)' '|' "x$line" : 'x\(.*\)'`
+  case x$line in
+    x$1) echo "$line";;
+  esac
+done

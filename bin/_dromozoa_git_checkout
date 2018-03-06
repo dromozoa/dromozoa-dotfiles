@@ -17,12 +17,10 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-branch=`git branch --list "$1"`
-branch=`expr "x$branch" : 'x. \(.*\)' || :`
+branch=`_dromozoa_git_branch_list "$1"`
 case x$branch in
   x)
-    branch=`git branch --remote --list "*/$1"`
-    branch=`expr "x$branch" : 'x. \(.*\)' || :`
+    branch=`_dromozoa_git_branch_list "origin/$1" -r`
     case x$branch in
       x) git branch "$1";;
     esac;;
