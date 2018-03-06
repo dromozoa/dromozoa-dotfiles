@@ -1,40 +1,108 @@
-#! /bin/sh -e
+#! /usr/bin/env lua
 
-# Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
-#
-# This file is part of dromozoa-dotfiles.
-#
-# dromozoa-dotfiles is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# dromozoa-dotfiles is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
+-- Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-dotfiles.
+--
+-- dromozoa-dotfiles is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-dotfiles is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-case x$1 in
-  x) base64=;;
-  *)
-    dir=`dirname "$1"`
-    dir=`(cd "$dir" && pwd)`
-    source=$dir/`basename "$1"`
-    base64=`printf '%s' "$source" | base64`;;
-esac
+local byte = string.byte
+local concat = table.concat
 
-# DCS
-case x$TERM in
-  xscreen*) printf '\33P';;
-esac
+local base64_encode_table = {
+  [62] = "+";
+  [63] = "/";
+}
 
-# iTerm2 set background image file
-printf '\33]1337;SetBackgroundImageFile=%s\7' "$base64"
+for i = 0, 25 do
+  base64_encode_table[i] = string.char(i + 65)
+end
+for i = 26, 51 do
+  base64_encode_table[i] = string.char(i + 71)
+end
+for i = 52, 61 do
+  base64_encode_table[i] = string.char(i - 4)
+end
 
-# ST
-case x$TERM in
-  xscreen*) printf '\33\\';;
-esac
+local function base64_encode(source)
+  local n = #source
+  local buffer = {}
+  local i = 1
+
+  for j = 3, n, 3 do
+    local a, b, c = byte(source, j - 2, j)
+    local a = a * 65536 + b * 256 + c
+    local d = a % 64
+    local a = (a - d) / 64
+    local c = a % 64
+    local a = (a - c) / 64
+    local b = a % 64
+    local a = (a - b) / 64
+    buffer[i] = base64_encode_table[a]
+    buffer[i + 1] = base64_encode_table[b]
+    buffer[i + 2] = base64_encode_table[c]
+    buffer[i + 3] = base64_encode_table[d]
+    i = i + 4
+  end
+
+  local j = n % 3
+  if j > 0 then
+    local a, b = byte(source, n + 1 - j, n)
+    if b then
+      local a = a * 1024 + b * 4
+      local c = a % 64
+      local a = (a - c) / 64
+      local b = a % 64
+      local a = (a - b) / 64
+      buffer[i] = base64_encode_table[a]
+      buffer[i + 1] = base64_encode_table[b]
+      buffer[i + 2] = base64_encode_table[c]
+      buffer[i + 3] = "="
+    else
+      local a = a * 16
+      local b = a % 64
+      local a = (a - b) / 64
+      buffer[i] = base64_encode_table[a]
+      buffer[i + 1] = base64_encode_table[b]
+      buffer[i + 2] = "=="
+    end
+  end
+
+  return concat(buffer)
+end
+
+local filename = ...
+
+if not filename then
+  local handle = assert(io.popen "hostname")
+  local hostname = assert(handle:read "*l":match "^([^%.]*)")
+  handle:close()
+  filename = "/Users/moyu/Pictures/termbg/" .. hostname .. ".png"
+end
+filename = base64_encode(filename)
+
+local term = os.getenv "TERM"
+
+-- DCS
+if term:find "^screen" then
+  io.write "\27P"
+end
+
+-- iTerm2 set background image file
+io.write("\27]1337;SetBackgroundImageFile=", filename, "\7")
+
+-- ST
+if term:find "^screen" then
+  io.write "\27\\"
+end
