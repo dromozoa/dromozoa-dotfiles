@@ -23,29 +23,34 @@ local encode_base64 = require "dromozoa.encode_base64"
 
 local filename = ...
 local data
+local name
 if filename then
   local handle = assert(io.open(filename, "rb"))
   data = handle:read "*a"
   handle:close()
+  name = "name=" .. encode_base64(filename) .. ";"
 else
   data = io.read "*a"
+  name = ""
 end
+
+local size = #data
+local payload = "\27]1337;File=" .. name .. "size=" .. #data .. ";inline=1:" .. encode_base64(data) .. "\7"
 
 local term = os.getenv "TERM"
 
--- DCS
-if term:find "^screen" then
-  io.write "\27P"
-end
+local N = 512
+local n = #payload
+for i = 1, n, N do
+  -- DCS
+  if term:find "^screen" then
+    io.write "\27P"
+  end
 
--- iTerm2 background image file
-io.write "\27]1337;File="
-if filename then
-  io.write("name=", encode_base64(filename), ";")
-end
-io.write("size=", #data, ";inline=1:", encode_base64(data), "\7")
+  io.write(payload:sub(i, i + N - 1))
 
--- ST
-if term:find "^screen" then
-  io.write "\27\\"
+  -- ST
+  if term:find "^screen" then
+    io.write "\27\\"
+  end
 end
