@@ -24,7 +24,6 @@ local encode_base64 = require "dromozoa.encode_base64"
 local help = [[
 Usage: iterm2-file [options] [filename]
 Avairable options are:
-  -h      --help
   -i      --inline
   -w ARG  --width=ARG   ARG=N|Npx|N%|auto
   -h ARG  --height=ARG  ARG=N|Npx|N%|auto
@@ -47,7 +46,7 @@ while i <= n do
     i = i + 1
   elseif this == "-s" or this == "--not-preserve-aspect-ratio" then
     options[#options + 1] = "preserveAspectRatio=0"
-  elseif this == "-h" or this == "--help" then
+  elseif this == "--help" then
     io.stderr:write(help)
     os.exit()
   elseif this == "--" then
