@@ -21,36 +21,36 @@ package.path = os.getenv("HOME") .. "/dromozoa-dotfiles/?.lua;" .. package.path
 
 local encode_base64 = require "dromozoa.encode_base64"
 
-local filename = ...
+local command, filename = ...
+
+local inline
 local data
 local name
+
+if command == "image" then
+  inline = ";inline=1"
+else
+  inline = ""
+end
+
 if filename then
   local handle = assert(io.open(filename, "rb"))
   data = handle:read "*a"
   handle:close()
-  name = "name=" .. encode_base64(filename) .. ";"
+  name = ";name=" .. encode_base64(filename)
 else
   data = io.read "*a"
   name = ""
 end
-
-local size = #data
-local payload = "\27]1337;File=" .. name .. "size=" .. #data .. ";inline=1:" .. encode_base64(data) .. "\7"
+local size = "size=" .. #data
 
 local term = os.getenv "TERM"
-
-local N = 512
-local n = #payload
-for i = 1, n, N do
-  -- DCS
-  if term:find "^screen" then
-    io.write "\27P"
+if term:find "^screen" then
+  local payload = "\27]1337;File=" .. size .. name .. inline .. ":" .. encode_base64(data) .. "\7"
+  for i = 1, #payload, 512 do
+    -- DCS, ST
+    io.write("\27P", payload:sub(i, i + 511), "\27\\")
   end
-
-  io.write(payload:sub(i, i + N - 1))
-
-  -- ST
-  if term:find "^screen" then
-    io.write "\27\\"
-  end
+else
+  io.write("\27]1337;File=", size, name, inline, ":", encode_base64(data), "\7")
 end
