@@ -84,11 +84,13 @@ end
 
 local filename = ...
 
-if filename then
-  filename = base64_encode(filename)
-else
-  filename = ""
+if not filename then
+  local handle = assert(io.popen "hostname")
+  local hostname = assert(handle:read "*l":match "^([^%.]*)")
+  handle:close()
+  filename = "/Users/moyu/Pictures/termbg/" .. hostname .. ".png"
 end
+filename = base64_encode(filename)
 
 local term = os.getenv "TERM"
 
