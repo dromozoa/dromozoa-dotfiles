@@ -21,36 +21,70 @@ package.path = os.getenv("HOME") .. "/dromozoa-dotfiles/?.lua;" .. package.path
 
 local encode_base64 = require "dromozoa.encode_base64"
 
-local command, filename = ...
+local help = [[
+Usage: iterm2-file [options] [filename]
+Avairable options are:
+  -h      --help
+  -i      --inline
+  -w ARG  --width=ARG   ARG=N|Npx|N%|auto
+  -h ARG  --height=ARG  ARG=N|Npx|N%|auto
+  -s      --not-preserve-aspect-ratio
+]]
 
-local inline
-local data
-local name
-
-if command == "image" then
-  inline = ";inline=1"
-else
-  inline = ""
+local options = {}
+local i = 1
+local n = #arg
+while i <= n do
+  local this = arg[i]
+  i = i + 1
+  if this == "-i" or this == "--inline" then
+    options[#options + 1] = "inline=1"
+  elseif this == "-w" or this == "--width" then
+    options[#options + 1] = "width=" .. arg[i]
+    i = i + 1
+  elseif this == "-h" or this == "--height" then
+    options[#options + 1] = "height=" .. arg[i]
+    i = i + 1
+  elseif this == "-s" or this == "--not-preserve-aspect-ratio" then
+    options[#options + 1] = "preserveAspectRatio=0"
+  elseif this == "-h" or this == "--help" then
+    io.stderr:write(help)
+    os.exit()
+  elseif this == "--" then
+    break
+  elseif this:find "^%-" then
+    local name, value = this:match "^%-%-(.-)=(.*)"
+    if name == "width" or name == "height" then
+      options[#options + 1] = name .. "=" .. value
+    else
+      io.stderr:write(("iterm2-file unrecognized option '%s'\n"):format(this), help)
+      os.exit(1)
+    end
+  else
+    i = i - 1
+    break
+  end
 end
 
+local data
+local filename = arg[i]
 if filename then
   local handle = assert(io.open(filename, "rb"))
   data = handle:read "*a"
   handle:close()
-  name = ";name=" .. encode_base64(filename)
+  options[#options + 1] = "name=" .. encode_base64(filename)
 else
   data = io.read "*a"
-  name = ""
 end
-local size = "size=" .. #data
+options[#options + 1] = "size=" .. #data
 
 local term = os.getenv "TERM"
 if term:find "^screen" then
-  local payload = "\27]1337;File=" .. size .. name .. inline .. ":" .. encode_base64(data) .. "\7"
+  local payload = "\27]1337;File=" .. table.concat(options, ";") .. ":" .. encode_base64(data) .. "\7"
   for i = 1, #payload, 512 do
     -- DCS, ST
     io.write("\27P", payload:sub(i, i + 511), "\27\\")
   end
 else
-  io.write("\27]1337;File=", size, name, inline, ":", encode_base64(data), "\7")
+  io.write("\27]1337;File=", table.concat(options, ";"), ":", encode_base64(data), "\7")
 end
