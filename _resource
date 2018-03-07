@@ -65,6 +65,8 @@ alias git-commit-update-document='git commit -m "文書を更新。"'
 
 alias tig-all='tig --all'
 
+alias imgcat='iterm2-file --inline'
+
 alias 51='eval `_dromozoa_switch_path 51`'
 alias 52='eval `_dromozoa_switch_path 52`'
 alias 53='eval `_dromozoa_switch_path 53`'
