@@ -21,6 +21,8 @@ package.path = os.getenv("HOME") .. "/dromozoa-dotfiles/?.lua;" .. package.path
 
 local encode_base64 = require "dromozoa.encode_base64"
 
+local unpack = table.unpack or unpack
+
 local help = [[
 Usage: iterm2-file [options] [filename]...
 Avairable options are:
@@ -30,11 +32,13 @@ Avairable options are:
   -s      --not-preserve-aspect-ratio
   -t      --cursor-top
   -b      --cursor-bottom
+  -p      --print-filename
 ]]
 
-local cursor
-
+local term = os.getenv "TERM"
 local options = {}
+local print_filename
+
 local i = 1
 local n = #arg
 while i <= n do
@@ -54,12 +58,14 @@ while i <= n do
     io.stderr:write(help)
     os.exit()
   elseif this == "-t" or this == "--cursor-top" then
-    cursor = "\27[1;1H"
+    io.write "\27[1;1H"
   elseif this == "-b" or this == "--cursor-bottom" then
     local handle = assert(io.popen "tput lines")
     local lines = assert(handle:read "*n")
     handle:close()
-    cursor = "\27[" .. lines .. ";1H"
+    io.write("\27[", lines, ";1H")
+  elseif this == "-p" or this == "--print-filename" then
+    print_filename = true
   elseif this == "--" then
     break
   elseif this:find "^%-" then
@@ -76,12 +82,10 @@ while i <= n do
   end
 end
 
-local term = os.getenv "TERM"
-
 local function write(filename)
-  local opts = {}
+  local buffer = { "\27]1337;File=" }
   for i = 1, #options do
-    opts[i] = options[i]
+    buffer[#buffer + 1] = options[i] .. ";"
   end
 
   local data
@@ -89,26 +93,29 @@ local function write(filename)
     local handle = assert(io.open(filename, "rb"))
     data = handle:read "*a"
     handle:close()
-    opts[#opts + 1] = "name=" .. encode_base64(filename)
+    buffer[#buffer + 1] = "name=" .. encode_base64(filename) .. ";"
   else
     data = io.read "*a"
   end
-  opts[#opts + 1] = "size=" .. #data
+  buffer[#buffer + 1] = "size=" .. #data .. ":"
+  buffer[#buffer + 1] = encode_base64(data)
+  buffer[#buffer + 1] = "\7"
+  if filename and print_filename then
+    buffer[#buffer + 1] = "\n" .. filename
+  end
+  buffer[#buffer + 1] = "\n"
 
   if term:find "^screen" then
-    local payload = "\27]1337;File=" .. table.concat(opts, ";") .. ":" .. encode_base64(data) .. "\7\n"
+    local payload = table.concat(buffer)
     for i = 1, #payload, 512 do
       -- DCS, ST
       io.write("\27P", payload:sub(i, i + 511), "\27\\")
     end
   else
-    io.write("\27]1337;File=", table.concat(opts, ";"), ":", encode_base64(data), "\7\n")
+    io.write(unpack(buffer))
   end
 end
 
-if cursor then
-  io.write(cursor)
-end
 write(arg[i])
 for i = i + 1, #arg do
   write(arg[i])
