@@ -1,0 +1,122 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-dotfiles.
+--
+-- dromozoa-dotfiles is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-dotfiles is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
+
+package.path = os.getenv("HOME") .. "/dromozoa-dotfiles/?.lua;" .. package.path
+
+local encode_base64 = require "dromozoa.encode_base64"
+
+local unpack = table.unpack or unpack
+
+local help = [[
+Usage: iterm2-file [options] [filename]...
+Avairable options are:
+  -i      --inline
+  -w ARG  --width=ARG   ARG=N|Npx|N%|auto
+  -h ARG  --height=ARG  ARG=N|Npx|N%|auto
+  -s      --not-preserve-aspect-ratio
+  -t      --cursor-top
+  -b      --cursor-bottom
+  -p      --print-filename
+]]
+
+local term = os.getenv "TERM"
+local options = {}
+local print_filename
+
+local i = 1
+local n = #arg
+while i <= n do
+  local this = arg[i]
+  i = i + 1
+  if this == "-i" or this == "--inline" then
+    options[#options + 1] = "inline=1"
+  elseif this == "-w" or this == "--width" then
+    options[#options + 1] = "width=" .. arg[i]
+    i = i + 1
+  elseif this == "-h" or this == "--height" then
+    options[#options + 1] = "height=" .. arg[i]
+    i = i + 1
+  elseif this == "-s" or this == "--not-preserve-aspect-ratio" then
+    options[#options + 1] = "preserveAspectRatio=0"
+  elseif this == "--help" then
+    io.stderr:write(help)
+    os.exit()
+  elseif this == "-t" or this == "--cursor-top" then
+    io.write "\27[1;1H"
+  elseif this == "-b" or this == "--cursor-bottom" then
+    local handle = assert(io.popen "tput lines")
+    local lines = assert(handle:read "*n")
+    handle:close()
+    io.write("\27[", lines, ";1H")
+  elseif this == "-p" or this == "--print-filename" then
+    print_filename = true
+  elseif this == "--" then
+    break
+  elseif this:find "^%-" then
+    local name, value = this:match "^%-%-(.-)=(.*)"
+    if name == "width" or name == "height" then
+      options[#options + 1] = name .. "=" .. value
+    else
+      io.stderr:write(("iterm2-file unrecognized option '%s'\n"):format(this), help)
+      os.exit(1)
+    end
+  else
+    i = i - 1
+    break
+  end
+end
+
+local function write(filename)
+  local buffer = { "\27]1337;File=" }
+  for i = 1, #options do
+    buffer[#buffer + 1] = options[i] .. ";"
+  end
+
+  local data
+  if filename then
+    local handle = assert(io.open(filename, "rb"))
+    data = handle:read "*a"
+    handle:close()
+    buffer[#buffer + 1] = "name=" .. encode_base64(filename) .. ";"
+  else
+    data = io.read "*a"
+  end
+  buffer[#buffer + 1] = "size=" .. #data .. ":"
+  buffer[#buffer + 1] = encode_base64(data)
+  buffer[#buffer + 1] = "\7"
+  if filename and print_filename then
+    buffer[#buffer + 1] = "\n" .. filename
+  end
+  buffer[#buffer + 1] = "\n"
+
+  if term:find "^screen" then
+    local payload = table.concat(buffer)
+    for i = 1, #payload, 512 do
+      -- DCS, ST
+      io.write("\27P", payload:sub(i, i + 511), "\27\\")
+    end
+  else
+    io.write(unpack(buffer))
+  end
+end
+
+write(arg[i])
+for i = i + 1, #arg do
+  write(arg[i])
+end

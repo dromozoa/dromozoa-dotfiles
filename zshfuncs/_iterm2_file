@@ -1,3 +1,5 @@
+#compdef iterm2-file
+
 # Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
 # This file is part of dromozoa-dotfiles.
@@ -15,8 +17,14 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-hardstatus alwayslastline '%-w%{= yk}%50>%n %t%{-}%+w%<'
-shell -$SHELL
-startup_message off
-cjkwidth on
-maptimeout 0
+_iterm2_file() {
+  _arguments \
+    '(- *)--help' \
+    '(-i --inline)'{-i,--inline} \
+    '(-w --width)'{-w,--width=}':' \
+    '(-h --height)'{-h,--height=}':' \
+    '(-s --no-preserve-aspect-ratio)'{-p,--no-preserve-aspect-ratio} \
+    '(-t --cursor-top)'{-t,--cursor-top} \
+    '(-b --cursor-bottom)'{-b,--cursor-bottom} \
+    '*:: :_files'
+}
