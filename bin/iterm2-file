@@ -28,7 +28,11 @@ Avairable options are:
   -w ARG  --width=ARG   ARG=N|Npx|N%|auto
   -h ARG  --height=ARG  ARG=N|Npx|N%|auto
   -s      --not-preserve-aspect-ratio
+  -t      --cursor-top
+  -b      --cursor-bottom
 ]]
+
+local cursor
 
 local options = {}
 local i = 1
@@ -49,6 +53,13 @@ while i <= n do
   elseif this == "--help" then
     io.stderr:write(help)
     os.exit()
+  elseif this == "-t" or this == "--cursor-top" then
+    cursor = "\27[1;1H"
+  elseif this == "-b" or this == "--cursor-bottom" then
+    local handle = assert(io.popen "tput lines")
+    local lines = assert(handle:read "*n")
+    handle:close()
+    cursor = "\27[" .. lines .. ";1H"
   elseif this == "--" then
     break
   elseif this:find "^%-" then
@@ -77,6 +88,10 @@ else
 end
 options[#options + 1] = "size=" .. #data
 
+if cursor then
+  io.write(cursor)
+end
+
 local term = os.getenv "TERM"
 if term:find "^screen" then
   local payload = "\27]1337;File=" .. table.concat(options, ";") .. ":" .. encode_base64(data) .. "\7"
@@ -85,5 +100,5 @@ if term:find "^screen" then
     io.write("\27P", payload:sub(i, i + 511), "\27\\")
   end
 else
-  io.write("\27]1337;File=", table.concat(options, ";"), ":", encode_base64(data), "\7")
+  io.write("\27]1337;File=", table.concat(options, ";"), ":", encode_base64(data), "\7\n")
 end

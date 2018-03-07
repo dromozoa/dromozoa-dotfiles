@@ -24,5 +24,7 @@ _iterm2_file() {
     '(-w --width)'{-w,--width=}':' \
     '(-h --height)'{-h,--height=}':' \
     '(-s --no-preserve-aspect-ratio)'{-p,--no-preserve-aspect-ratio} \
+    '(-t --cursor-top)'{-t,--cursor-top} \
+    '(-b --cursor-bottom)'{-b,--cursor-bottom} \
     '*:: :_files'
 }
