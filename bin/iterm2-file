@@ -22,7 +22,7 @@ package.path = os.getenv("HOME") .. "/dromozoa-dotfiles/?.lua;" .. package.path
 local encode_base64 = require "dromozoa.encode_base64"
 
 local help = [[
-Usage: iterm2-file [options] [filename]
+Usage: iterm2-file [options] [filename]...
 Avairable options are:
   -i      --inline
   -w ARG  --width=ARG   ARG=N|Npx|N%|auto
@@ -76,29 +76,40 @@ while i <= n do
   end
 end
 
-local data
-local filename = arg[i]
-if filename then
-  local handle = assert(io.open(filename, "rb"))
-  data = handle:read "*a"
-  handle:close()
-  options[#options + 1] = "name=" .. encode_base64(filename)
-else
-  data = io.read "*a"
+local term = os.getenv "TERM"
+
+local function write(filename)
+  local opts = {}
+  for i = 1, #options do
+    opts[i] = options[i]
+  end
+
+  local data
+  if filename then
+    local handle = assert(io.open(filename, "rb"))
+    data = handle:read "*a"
+    handle:close()
+    opts[#opts + 1] = "name=" .. encode_base64(filename)
+  else
+    data = io.read "*a"
+  end
+  opts[#opts + 1] = "size=" .. #data
+
+  if term:find "^screen" then
+    local payload = "\27]1337;File=" .. table.concat(opts, ";") .. ":" .. encode_base64(data) .. "\7\n"
+    for i = 1, #payload, 512 do
+      -- DCS, ST
+      io.write("\27P", payload:sub(i, i + 511), "\27\\")
+    end
+  else
+    io.write("\27]1337;File=", table.concat(opts, ";"), ":", encode_base64(data), "\7\n")
+  end
 end
-options[#options + 1] = "size=" .. #data
 
 if cursor then
   io.write(cursor)
 end
-
-local term = os.getenv "TERM"
-if term:find "^screen" then
-  local payload = "\27]1337;File=" .. table.concat(options, ";") .. ":" .. encode_base64(data) .. "\7"
-  for i = 1, #payload, 512 do
-    -- DCS, ST
-    io.write("\27P", payload:sub(i, i + 511), "\27\\")
-  end
-else
-  io.write("\27]1337;File=", table.concat(options, ";"), ":", encode_base64(data), "\7\n")
+write(arg[i])
+for i = i + 1, #arg do
+  write(arg[i])
 end
