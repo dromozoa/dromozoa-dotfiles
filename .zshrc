@@ -80,8 +80,3 @@ _dromozoa_zshrc_d() {
 }
 _dromozoa_zshrc_d
 unfunction _dromozoa_zshrc_d
-
-if test -f "$HOME/.zshrc.local"
-then
-  . "$HOME/.zshrc.local"
-fi
