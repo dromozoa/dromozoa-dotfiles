@@ -21,26 +21,51 @@ package.path = os.getenv("HOME") .. "/dromozoa-dotfiles/?.lua;" .. package.path
 
 local encode_base64 = require "dromozoa.encode_base64"
 
-local filename = ...
-
-if not filename then
-  local handle = assert(io.popen "hostname")
-  local hostname = assert(handle:read "*l":match "^([^%.]*)")
-  handle:close()
-  filename = "/Users/moyu/Pictures/termbg/" .. hostname .. ".png"
-end
+local unpack = table.unpack or unpack
 
 local term = os.getenv "TERM"
 
--- DCS
-if term:find "^screen" then
-  io.write "\27P"
+local function set(filename)
+  if not filename then
+    local handle = assert(io.popen "hostname")
+    local hostname = assert(handle:read "*l":match "^([^%.]*)")
+    handle:close()
+    filename = "/Users/moyu/Pictures/termbg/" .. hostname .. ".png"
+  end
+
+  local buffer = {
+    "\27]1337;SetBackgroundImageFile=";
+    encode_base64(filename);
+    "\7";
+  }
+
+  -- DCS
+  if term:find "^screen" then
+    local payload = table.concat(buffer)
+    for i = 1, #payload, 512 do
+      io.write("\27P", payload:sub(i, i + 511), "\27\\")
+    end
+  else
+    io.write(unpack(buffer))
+  end
 end
 
--- iTerm2 background image file
-io.write("\27]1337;SetBackgroundImageFile=", encode_base64(filename), "\7")
+local function random(n)
+  local handle = assert(io.open("/dev/urandom", "rb"))
+  local m = math.floor(0x100000000 / n) * n
+  while true do
+    local a, b, c, d = handle:read(4):byte(1, 4)
+    local v = a * 0x1000000 + b * 0x10000 + c * 0x100 + d
+    if v < m then
+      handle:close()
+      return v % n + 1
+    end
+  end
+end
 
--- ST
-if term:find "^screen" then
-  io.write "\27\\"
+local n = #arg
+if n < 2 then
+  set(arg[1])
+else
+  set(arg[random(n)])
 end

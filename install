@@ -22,7 +22,7 @@ then
   unset CDPATH
 fi
 
-fn_dirname() {
+dromozoa_dirname() {
   expr "x$1" : 'x\(.*[^/]\)//*[^/][^/]*/*$' \
     '|' "x$1" : 'x\(//\)[^/]' \
     '|' "x$1" : 'x\(//\)$' \
@@ -30,12 +30,16 @@ fn_dirname() {
     '|' .
 }
 
-here=`fn_dirname "$0"`
+dromozoa_link() {
+  echo "link $1 -> $here/$1"
+  ln -s "$here/$1" "$1"
+}
+
+here=`dromozoa_dirname "$0"`
 here=`(cd "$here" && pwd)`
 backup=$here/backup-`date "+%Y-%m-%d-%H-%M-%S"`
 
 cd
-home=`pwd`
 
 for i in \
   .bash_profile .bashrc .bash_logout \
@@ -44,15 +48,21 @@ for i in \
 do
   if test -h "$i"
   then
-    link=`readlink "$home/$i"`
-    echo "unlink $home/$i -> "$link""
-    rm -f "$i"
-  elif test -f "$i"
-  then
-    echo "move $home/$i -> $backup"
-    mkdir -p "$backup"
-    mv -f "$i" "$backup"
+    link=`readlink "$i"`
+    case x$link in
+      x$here/$i);;
+      *)
+        echo "unlink $i -> $link"
+        rm -f "$i"
+        dromozoa_link "$i";;
+    esac
+  else
+    if test -f "$i"
+    then
+      echo "move $i -> $backup"
+      mkdir -p "$backup"
+      mv -f "$i" "$backup"
+    fi
+    dromozoa_link "$i"
   fi
-  echo "link $home/$i -> $here/$i"
-  ln -s "$here/$i" "$i"
 done

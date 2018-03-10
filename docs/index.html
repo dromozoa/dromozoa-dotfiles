@@ -130,6 +130,25 @@ typeset -A opt_args</pre>
   <li>後置省略記号（文字クラス13）に後置された欧文文字列</li>
 </ul>
 
+<h2>NeuG</h2>
+
+<p>
+NeuGの使い方を参照し、RaspbianからNeuGを使う。
+</p>
+
+<p>
+ejectをインストールし、USBメモリとして動いているNeuGを取り出す。
+</p>
+
+<pre>sudo apt-get -y install eject
+sudo eject /dev/sda</pre>
+
+<p>
+CRC32フィルタ+SHA256フィルタで動かす。
+</p>
+
+<pre>stty -F /dev/ttyACM0 -parenb</pre>
+
 </div>
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
