@@ -1,0 +1,190 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-dotfiles.
+--
+-- dromozoa-dotfiles is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-dotfiles is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
+
+package.path = os.getenv("HOME") .. "/dromozoa-dotfiles/?.lua;" .. package.path
+
+local shell = require "dromozoa.shell"
+
+local help = [[
+Usage: screen-windows [options]
+Avairable options are:
+  -e      --edit
+  -l      --list
+  -s ARG  --session=ARG
+]]
+
+local command
+local session
+
+local function list(out)
+  local command = { "_dromozoa_screen_windows" }
+  if session then
+    command[#command + 1] = "-S"
+    command[#command + 1] = shell.quote(session)
+  end
+  local windows = {}
+  local handle = assert(io.popen(table.concat(command, " ")))
+  for line in handle:lines() do
+    local number, flag, title = assert(line:match "^(%d+)\t([^\t]*)\t(.*)")
+    windows[#windows + 1] = {
+      number = tonumber(number);
+      flag = flag;
+      title = title;
+    }
+  end
+  handle:close()
+
+  table.sort(windows, function (a, b) return a.number < b.number end)
+  for i = 1, #windows do
+    local window = windows[i]
+    local flag = window.flag
+    out:write(("%4d%1s %s\n"):format(window.number, flag, window.title))
+  end
+
+  return windows
+end
+
+local function edit()
+  local filename = os.tmpname()
+  local handle = assert(io.open(filename, "w"))
+  local cur_windows = list(handle)
+  handle:close()
+
+  local editor = os.getenv "EDITOR"
+  if not editor then
+    editor = "vi"
+  end
+
+  assert(os.execute(editor .. " " .. shell.quote(filename)))
+
+  local new_windows = {}
+  local handle = assert(io.open(filename))
+  for line in handle:lines() do
+    if not line:find "^%s*$" or not line:find "^%s*#" then
+      local number, flag, title = assert(line:match "^%s*(%d+)(.) (.*)")
+      new_windows[#new_windows + 1] = {
+        number = tonumber(number);
+        flag = flag;
+        title = title;
+      }
+    end
+  end
+  handle:close()
+
+  assert(os.remove(filename))
+
+  local n = #cur_windows
+  assert(n == #new_windows)
+
+  local cur_map = {}
+  local tmp_map = {}
+
+  local map = {}
+  for i = 1, n do
+    local cur_win = cur_windows[i]
+    local cur_num = cur_win.number
+    cur_map[cur_num] = cur_win
+    tmp_map[cur_num] = cur_win
+  end
+
+  local command = { "screen" }
+  if session then
+    command[#command + 1] = "-S"
+    command[#command + 1] = shell.quote(session)
+  end
+  command[#command + 1] = "-X"
+
+  for i = 1, n do
+    local new_win = new_windows[i]
+    local new_num = i - 1
+    local cur_win = cur_map[new_win.number]
+    local cur_num = cur_win.number
+    if new_num ~= cur_num then
+      assert(os.execute(table.concat(command, " ") .. " select " .. cur_num))
+      assert(os.execute(table.concat(command, " ") .. " number " .. new_num))
+      cur_win.number = new_num
+      local tmp_win = tmp_map[new_num]
+      if tmp_win then
+        tmp_win.number = cur_num
+      end
+      tmp_map[cur_num] = tmp_win
+      tmp_map[new_num] = cur_win
+    end
+  end
+
+  local number
+  for i = 1, n do
+    local new_win = new_windows[i]
+    local new_num = i - 1
+    local new_title = new_win.title
+    local cur_win = cur_map[new_win.number]
+    if cur_win.title ~= new_title then
+      assert(os.execute(table.concat(command, " ") .. " select " .. new_num))
+      assert(os.execute(table.concat(command, " ") .. " title " .. shell.quote(new_title)))
+      cur_win.title = title
+    end
+
+    if new_win.flag == "*" then
+      number = new_num
+    end
+  end
+
+  if number then
+    assert(os.execute(table.concat(command, " ") .. " select " .. number))
+  end
+
+  assert(os.execute(table.concat(command, " ") .. " redisplay"))
+end
+
+local i = 1
+local n = #arg
+while i <= n do
+  local this = arg[i]
+  i = i + 1
+  if this == "-e" or this == "--edit" then
+    command = "edit"
+  elseif this == "-l" or this == "--list" then
+    command = "list"
+  elseif this == "-s" or this == "--session" then
+    session = arg[i]
+    i = i + 1
+  elseif this == "-h" or this == "--help" then
+    io.stderr:write(help)
+    os.exit()
+  elseif this == "--" then
+    break
+  elseif this:find "^%-" then
+    local name, value = this:match "^%-%-(.-)=(.*)"
+    if name == "session" then
+      session = value
+    else
+      io.stderr:write(("screen-windows unrecognized option '%s'\n"):format(this), help)
+      os.exit(1)
+    end
+  else
+    i = i -1
+    break
+  end
+end
+
+if command == "edit" then
+  edit()
+else
+  list(io.stdout)
+end
