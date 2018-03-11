@@ -20,4 +20,4 @@ shell -$SHELL
 startup_message off
 cjkwidth on
 maptimeout 0
-msgminwait 1
+msgminwait 0
