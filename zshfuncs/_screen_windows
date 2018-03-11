@@ -31,10 +31,11 @@ _screen_windows_sessions() {
 
   (screen -ls 2>/dev/null || :) | while read session state
   do
-    if test "x$state" = "x(Detached)" || test "x$state" = "x(Attached)"
-    then
-      sessions=($sessions $session)
-    fi
+    state=`expr "x$state" : 'x(\(.*tached\))' || :`
+    case x$state in
+      x) ;;
+      *) sessions=($sessions $session);;
+    esac
   done
 
   _describe sessions sessions
