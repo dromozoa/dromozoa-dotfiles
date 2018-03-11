@@ -49,13 +49,14 @@ do
   if test -h "$i"
   then
     link=`readlink "$i"`
-    case x$link in
-      x$here/$i);;
-      *)
-        echo "unlink $i -> $link"
-        rm -f "$i"
-        dromozoa_link "$i";;
-    esac
+    if test "x$link" = "x$here/$i"
+    then
+      :
+    else
+      echo "unlink $i -> $link"
+      rm -f "$i"
+      dromozoa_link "$i"
+    fi
   else
     if test -f "$i"
     then
