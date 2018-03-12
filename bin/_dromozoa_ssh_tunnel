@@ -21,8 +21,8 @@ while :
 do
   if ssh -N \
     -o ExitOnForwardFailure=yes \
-    -o ServerAliveCountMax=3 \
     -o ServerAliveInterval=30 \
+    -o ServerAliveCountMax=3 \
     -o TCPKeepAlive=no \
     "$@"
   then
