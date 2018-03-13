@@ -149,6 +149,27 @@ CRC32フィルタ+SHA256フィルタで動かす。
 
 <pre>stty -F /dev/ttyACM0 -parenb</pre>
 
+<h2>インスタンスのユニーク情報取得</h2>
+
+<h3>GNU/Linux</h3>
+
+<p>
+<code>/sys/class/dmi/id/product_uuid</code>を参照する。
+準仮想化の場合は<code>/sys/hypervisor/uuid</code>を参照する必要があるかもしれない。
+</p>
+
+<h3>AWS EC2</h3>
+
+<p>
+<code>http://169.254.169.254/latest/meta-data/instance-id</code>でインスタンスIDを取得できる。
+</p>
+
+<h3>Raspbian</h3>
+
+<p>
+<code>/proc/cpuinfo</code>に<code>Serial</code>という項目がある。
+</p>
+
 </div>
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({

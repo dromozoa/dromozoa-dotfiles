@@ -53,7 +53,7 @@ CPPFLAGS=\
 LDFLAGS=\
 "-L$HOME/prefixes/dromozoa/lib "\
 "-L/opt/dromozoa/lib"
-case x`uname 2>&1 || :` in
+case x`uname` in
   xDarwin) ;;
   *) LDFLAGS="$LDFLAGS -Wl,-rpath -Wl,$HOME/prefixes/dromozoa/lib $LDFLAGS -Wl,-rpath -Wl,/opt/dromozoa/lib";;
 esac
