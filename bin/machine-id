@@ -50,7 +50,11 @@ int main(int ac, char* av[]) {
 EOH
   if gcc $CPPFLAGS $LDFLAGS -g -O2 "$name.c" -o "$name" >/dev/null 2>&1
   then
-    "./$name"
+    id=`"./$name" 2>/dev/null || :`
+    case x$id in
+      x) ;;
+      *) echo "darwin:$id";;
+    esac
   fi
 }
 
@@ -70,7 +74,7 @@ dromozoa_machine_id() {
     id=`expr "x$line" : 'xSerial[^:]*: \(.*\)' || :`
     case x$id in
       x) ;;
-      *) echo "$id"; return;;
+      *) echo "serial:$id"; return;;
     esac
   done
 }
