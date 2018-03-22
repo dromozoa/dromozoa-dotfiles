@@ -22,12 +22,16 @@ then
   unset CDPATH
 fi
 
+LANG=C
+LC_ALL=C
+export LANG LC_ALL
+
 dromozoa_dirname() {
-  expr "x$1" : 'x\(.*[^/]\)//*[^/][^/]*/*$' \
-    '|' "x$1" : 'x\(//\)[^/]' \
-    '|' "x$1" : 'x\(//\)$' \
-    '|' "x$1" : 'x\(/\)' \
-    '|' .
+  expr  "X$1" : '\(X.*[^/]\)//*[^/][^/]*/*$' \
+    '|' "X$1" : '\(X//\)[^/]' \
+    '|' "X$1" : '\(X//\)$' \
+    '|' "X$1" : '\(X/\)' \
+    '|' X. | sed 's/^.//'
 }
 
 dromozoa_link() {
@@ -49,7 +53,7 @@ do
   if test -h "$i"
   then
     link=`readlink "$i"`
-    if test "x$link" = "x$here/$i"
+    if test "X$link" = "X$here/$i"
     then
       :
     else
