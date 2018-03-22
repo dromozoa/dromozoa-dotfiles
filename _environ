@@ -37,24 +37,20 @@ $HOME/prefixes/dromozoa/share/man:\
 /usr/local/share/man:\
 /usr/share/man
 
-if (locale -a | grep -iE 'ja_JP\.UTF-?8') >/dev/null 2>&1
-then
-  LANG=ja_JP.UTF-8
-else
-  LANG=C.UTF-8
-fi
+LANG=`locale -a | sed -n '/^ja_JP\.[Uu][Tt][Ff]-*8$/p'`
+case X$LANG in
+  X) LANG=`locale -a | sed -n '/^C\.[Uu][Tt][Ff]-*8$/p'`;;
+esac
+case X$LANG in
+  X) LANG=C;;
+esac
 
 EDITOR=vim
 
-CPPFLAGS=\
-"-I$HOME/prefixes/dromozoa/include "\
-"-I/opt/dromozoa/include"
-
-LDFLAGS=\
-"-L$HOME/prefixes/dromozoa/lib "\
-"-L/opt/dromozoa/lib"
-case x`uname` in
-  xDarwin) ;;
+CPPFLAGS="-I$HOME/prefixes/dromozoa/include -I/opt/dromozoa/include"
+LDFLAGS="-L$HOME/prefixes/dromozoa/lib -L/opt/dromozoa/lib"
+case X`uname` in
+  XDarwin) ;;
   *) LDFLAGS="$LDFLAGS -Wl,-rpath -Wl,$HOME/prefixes/dromozoa/lib $LDFLAGS -Wl,-rpath -Wl,/opt/dromozoa/lib";;
 esac
 
