@@ -60,7 +60,6 @@ _luarocks_arguments() {
 
   for i in "$@"
   do
-    printf '[%s]' "$i" >>/tmp/test.log
     case X$i in
       Xcommand)
         _dromozoa_luarocks_commands;;
@@ -75,7 +74,6 @@ _luarocks_arguments() {
         arguments=($arguments *.rockspec);;
     esac
   done
-  printf '\n' >> /tmp/test.log
 
   _describe arguments arguments
 }

@@ -11,8 +11,8 @@ _dromozoa_luarocks_options() {
     '--verbose[Display verbose output of commands executed.]'
   )
 
-  case x$1 in
-    xbuild)
+  case X$1 in
+    Xbuild)
       options=(
         $options
         '--branch=[Override the `source.branch` field in the loaded rockspec. Allows to specify a different branch to  fetch. Particularly for SCM rocks.]:branch-name'
@@ -22,7 +22,7 @@ _dromozoa_luarocks_options() {
         '--pack-binary-rock[Do not install rock. Instead, produce a .rock file with the contents of compilation in the current directory.]'
       )
       ;;
-    xconfig)
+    Xconfig)
       options=(
         $options
         '--lua-incdir[Path to Lua header files.]'
@@ -33,14 +33,14 @@ _dromozoa_luarocks_options() {
         '--user-config[Location of the user config file.]'
       )
       ;;
-    xdoc)
+    Xdoc)
       options=(
         $options
         '--home[Open the home page of project.]'
         '--list[List documentation files only.]'
       )
       ;;
-    xdownload)
+    Xdownload)
       options=(
         $options
         '--all[Download all files if there are multiple matches.]'
@@ -49,7 +49,7 @@ _dromozoa_luarocks_options() {
         '--source[Download .src.rock if available.]'
       )
       ;;
-    xinstall)
+    Xinstall)
       options=(
         $options
         '--deps-mode=[How to handle dependencies.]:mode:((all\:"use all trees from the rocks_trees list for finding dependencies" one\:"use only the current tree (possibly set with --tree)" order\:"use trees based on order (use the current tree and all trees below it on the rocks_trees list)" none\:"ignore dependencies altogether."))'
@@ -57,14 +57,14 @@ _dromozoa_luarocks_options() {
         '--only-deps[Installs only the dependencies of the rock.]'
       )
       ;;
-    xlist)
+    Xlist)
       options=(
         $options
         '--outdated[List only rocks for which there is a higher version available in the rocks server.]'
         '--porcelain[Produce machine-friendly output.]'
       )
       ;;
-    xmake)
+    Xmake)
       options=(
         $options
         '--branch=[Override the `source.branch` field in the loaded rockspec. Allows to specify a different branch to  fetch. Particularly for SCM rocks.]:branch-name'
@@ -72,13 +72,13 @@ _dromozoa_luarocks_options() {
         '--pack-binary-rock[Do not install rock. Instead, produce a .rock file with the contents of compilation in the current directory.]'
       )
       ;;
-    xnew_version)
+    Xnew_version)
       options=(
         $options
         '--tag=:tag'
       )
       ;;
-    xpath)
+    Xpath)
       options=(
         $options
         '--append[Appends the paths to the existing paths. Default is to prefix the LR paths to the existing paths.]'
@@ -88,14 +88,14 @@ _dromozoa_luarocks_options() {
         '--lr-path[Exports the Lua path (not formatted as shell command)]'
       )
       ;;
-    xpurge)
+    Xpurge)
       options=(
         $options
         '--old-versions[Keep the highest-numbered version of each rock and remove the other ones. By default it only removes old versions if they are not needed as dependencies. This can be overridden with the flag --force.]'
         '--tree=:path:_files'
       )
       ;;
-    xremove)
+    Xremove)
       options=(
         $options
         '--deps-mode=[How to handle dependencies.]:mode:((all\:"use all trees from the rocks_trees list for finding dependencies" one\:"use only the current tree (possibly set with --tree)" order\:"use trees based on order (use the current tree and all trees below it on the rocks_trees list)" none\:"ignore dependencies altogether."))'
@@ -103,7 +103,7 @@ _dromozoa_luarocks_options() {
         '--force-fast'
       )
       ;;
-    xsearch)
+    Xsearch)
       options=(
         $options
         '--all[List all contents of the server that are suitable to this platform, do not filter by name.]'
@@ -111,7 +111,7 @@ _dromozoa_luarocks_options() {
         '--source[Return only rockspecs and source rocks, to be used with the "build" command.]'
       )
       ;;
-    xshow)
+    Xshow)
       options=(
         $options
         '--deps[packages this package depends on]'
@@ -123,13 +123,13 @@ _dromozoa_luarocks_options() {
         '--rockspec[the full path of the rockspec file]'
       )
       ;;
-    xunpack)
+    Xunpack)
       options=(
         $options
         '--force[Unpack files even if the output directory already exists.]'
       )
       ;;
-    xupload)
+    Xupload)
       options=(
         $options
         '--api-key=[Give it an API key. It will be stored for subsequent uses.]:key'
@@ -137,7 +137,7 @@ _dromozoa_luarocks_options() {
         '--skip-pack[Do not pack and send source rock.]'
       )
       ;;
-    xwrite_rockspec)
+    Xwrite_rockspec)
       options=(
         $options
         '--detailed=[A longer description string.]:text'
