@@ -63,7 +63,7 @@ dromozoa_machine_id() {
   id=`cat /sys/hypervisor/uuid 2>/dev/null || :`
   case X$id in
     X) ;;
-    *) echo "hypervisor/$id"; return;;
+    *) echo "hypervisor:$id"; return;;
   esac
   cat /proc/cpuinfo | while read line
   do
