@@ -40,7 +40,7 @@ int main(int ac, char* av[]) {
   uuid_clear(id);
   struct timespec wait = { 0, 0 };
   if (gethostuuid(id, &wait) == -1) {
-    return 0;
+    return 1;
   }
   uuid_string_t s = { 0 };
   uuid_unparse(id, s);
@@ -63,16 +63,14 @@ dromozoa_machine_id() {
   id=`cat /sys/hypervisor/uuid 2>/dev/null || :`
   case X$id in
     X) ;;
-    *) echo "hypervisor/$id"; return;;
+    *) echo "hypervisor:$id"; return;;
   esac
-  cat /proc/cpuinfo | while read line
-  do
-    id=`expr "x$line" : 'xSerial[^:]*:\( .*\)' | sed 's/^.//'`
-    case X$id in
-      X) ;;
-      *) echo "cpu-serial:$id"; return;;
-    esac
-  done
+  id=`cat /proc/cpuinfo 2>/dev/null | sed -n '/^Serial[^:]*: /p'`
+  case X$id in
+    X) ;;
+    *) id=`expr "X$id" : 'XSerial[^:]*:\( .*\)' | sed 's/^.//'`; echo "cpu-serial:$id"; return;;
+  esac
+  exit 1
 }
 
 case X`uname` in
