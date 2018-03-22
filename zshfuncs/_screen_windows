@@ -29,13 +29,12 @@ _screen_windows_sessions() {
   local session state
   local -a sessions
 
-  (screen -ls 2>/dev/null || :) | while read session state
+  screen -ls 2>/dev/null | while read session state
   do
-    state=`expr "x$state" : 'x(\(.*tached\))' || :`
-    case x$state in
-      x) ;;
-      *) sessions=($sessions $session);;
-    esac
+    if expr "X$state" : 'X(.*tached)' >/dev/null
+    then
+      sessions=($sessions $session)
+    fi
   done
 
   _describe sessions sessions
