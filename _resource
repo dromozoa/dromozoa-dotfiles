@@ -29,8 +29,8 @@ alias rm='rm -i'
 alias rmfr='\rm -fr'
 alias vi=vim
 
-case x`uname` in
-  xDarwin)
+case X`uname` in
+  XDarwin)
     alias ls='ls -F -G'
     LSCOLORS=gxcxheheDxagadabagacad
     export LSCOLORS;;

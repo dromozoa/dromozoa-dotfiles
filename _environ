@@ -37,9 +37,9 @@ $HOME/prefixes/dromozoa/share/man:\
 /usr/local/share/man:\
 /usr/share/man
 
-LANG=`locale -a | sed -n '/^ja_JP\.[Uu][Tt][Ff]-*8$/p'`
+LANG=`locale -a 2>&1 | sed -n '/^ja_JP\.[Uu][Tt][Ff]-*8$/p'`
 case X$LANG in
-  X) LANG=`locale -a | sed -n '/^C\.[Uu][Tt][Ff]-*8$/p'`;;
+  X) LANG=`locale -a 2>&1 | sed -n '/^C\.[Uu][Tt][Ff]-*8$/p'`;;
 esac
 case X$LANG in
   X) LANG=C;;
