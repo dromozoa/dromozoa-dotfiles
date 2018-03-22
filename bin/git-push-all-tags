@@ -18,9 +18,9 @@
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 branch=`_dromozoa_git_branch_list feature`
-case x$branch in
-  x) ;;
-  *) _dromozoa_error "unmerged branch feature"; exit 1;;
+case X$branch in
+  X) ;;
+  *) _dromozoa_error "unmerged branch feature";;
 esac
 git push --all "$@"
 git push --tags "$@"

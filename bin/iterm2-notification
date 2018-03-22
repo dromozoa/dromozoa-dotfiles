@@ -17,20 +17,20 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-case x$1 in
-  x) message=`cat`;;
+case X$1 in
+  X) message=`cat`;;
   *) message=$1;;
 esac
 
 # DCS
-case x$TERM in
-  xscreen*) printf '\33P';;
+case X$TERM in
+  Xscreen*) printf '\33P';;
 esac
 
 # iTerm2 notification
 printf '\33]9;%s\7' "$message"
 
 # ST
-case x$TERM in
-  xscreen*) printf '\33\\';;
+case X$TERM in
+  Xscreen*) printf '\33\\';;
 esac

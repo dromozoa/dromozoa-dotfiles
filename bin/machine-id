@@ -18,12 +18,12 @@
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 dromozoa_machine_id_darwin() {
-  case x$TMPDIR in
-    x) TMPDIR=/tmp;;
+  case X$TMPDIR in
+    X) TMPDIR=/tmp;;
   esac
   tmp=`(umask 077 && mktemp -d "$TMPDIR/dromozoa-XXXXXX" 2>/dev/null || :)`
-  case x$tmp in
-    x) tmp=$TMPDIR/dromozoa-$$-$RANDOM; (umask 077 && mkdir "$tmp");;
+  case X$tmp in
+    X) tmp=$TMPDIR/dromozoa-$$-$RANDOM; (umask 077 && mkdir "$tmp");;
   esac
   cd "$tmp"
   tmp=`pwd`
@@ -40,47 +40,43 @@ int main(int ac, char* av[]) {
   uuid_clear(id);
   struct timespec wait = { 0, 0 };
   if (gethostuuid(id, &wait) == -1) {
-    return 1;
+    return 0;
   }
   uuid_string_t s = { 0 };
   uuid_unparse(id, s);
-  printf("%s\n", s);
+  printf("darwin:%s\n", s);
   return 0;
 }
 EOH
   if gcc $CPPFLAGS $LDFLAGS -g -O2 "$name.c" -o "$name" >/dev/null 2>&1
   then
-    id=`"./$name" 2>/dev/null || :`
-    case x$id in
-      x) ;;
-      *) echo "darwin:$id";;
-    esac
+    "./$name"
   fi
 }
 
 dromozoa_machine_id() {
   id=`cat /sys/class/dmi/id/product_uuid 2>/dev/null || :`
-  case x$id in
-    x) ;;
-    *) echo "$id"; return;;
+  case X$id in
+    X) ;;
+    *) echo "dmi-product:$id"; return;;
   esac
   id=`cat /sys/hypervisor/uuid 2>/dev/null || :`
-  case x$id in
-    x) ;;
-    *) echo "$id"; return;;
+  case X$id in
+    X) ;;
+    *) echo "hypervisor/$id"; return;;
   esac
   cat /proc/cpuinfo | while read line
   do
-    id=`expr "x$line" : 'xSerial[^:]*: \(.*\)' || :`
-    case x$id in
-      x) ;;
-      *) echo "serial:$id"; return;;
+    id=`expr "x$line" : 'xSerial[^:]*:\( .*\)' | sed 's/^.//'`
+    case X$id in
+      X) ;;
+      *) echo "cpu-serial:$id"; return;;
     esac
   done
 }
 
-case x`uname` in
-  xDarwin)
+case X`uname` in
+  XDarwin)
     dromozoa_machine_id_darwin;;
   *)
     dromozoa_machine_id;;

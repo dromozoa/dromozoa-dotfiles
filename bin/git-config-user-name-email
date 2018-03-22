@@ -17,8 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-case x$1 in
-  x) email=moyu@dromozoa.com;;
+case X$1 in
+  X) email=moyu@dromozoa.com;;
   *) email=$1;;
 esac
 git config user.name "Tomoyuki Fujimori"
