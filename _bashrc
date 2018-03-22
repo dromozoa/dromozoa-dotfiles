@@ -23,8 +23,8 @@
 _dromozoa_prompt() {
   local start='\[\e[91m\]'
   local reset='\[\e[m\]'
-  case x$TERM in
-    xscreen) start='\[\e[92m\]';;
+  case X$TERM in
+    Xscreen*) start='\[\e[92m\]';;
   esac
   PS1="$start\u@\h:\w\$$reset "
   PS2="$start>$reset "

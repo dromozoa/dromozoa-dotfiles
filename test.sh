@@ -17,8 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-case x$1 in
-  x) lua=lua;;
+case X$1 in
+  X) lua=lua;;
   *) lua=$1;;
 esac
 
