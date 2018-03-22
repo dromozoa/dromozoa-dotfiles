@@ -17,13 +17,13 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-case x$1 in
-  x) echo "usage: $0 user [group]"; exit 1;;
+case X$1 in
+  X) echo "usage: $0 user [group]"; exit 1;;
   *) u=$1;;
 esac
 
-case x$2 in
-  x) g=wheel;;
+case X$2 in
+  X) g=wheel;;
   *) g=$2;;
 esac
 
