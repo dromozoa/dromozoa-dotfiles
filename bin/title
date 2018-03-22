@@ -17,12 +17,35 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-case x$1 in
-  x) title=`hostname`; title=`expr "x$title" : 'x\([^.]*\)' || :`;;
+term=
+while :
+do
+  case X$# in
+    X0) break;;
+  esac
+  case X$1 in
+    X-x|X--xterm)
+      shift; term=xterm;;
+    X--)
+      shift; break;;
+    X-*)
+      _dromozoa_error "unrecognized option $1";;
+    *)
+      break;;
+  esac
+done
+
+case X$1 in
+  X) title=`hostname`; title=`expr "X$title" : '\(X[^.]*\)' '|' "X$title" | sed 's/^.//'`;;
   *) title=$1;;
 esac
 
-case x$TERM in
-  xxterm*) printf '\33]0;%s\7' "$title";;
-  xscreen*) printf '\33k%s\33\\' "$title";;
+case X$TERM in
+  Xxterm*)
+    printf '\33]0;%s\7' "$title";;
+  Xscreen*)
+    case X$term in
+      X) printf '\33k%s\33\\' "$title";;
+      *) printf '\33P\33]0;%s\7\33\\' "$title";;
+    esac;;
 esac

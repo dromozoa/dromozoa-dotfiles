@@ -17,47 +17,43 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-case x$1 in
-  x51|x52|x53) version=$1;;
-  *) _dromozoa_error "unsupported version"; exit 1;;
+case X$1 in
+  X51|X52|X53) version=$1;;
+  *) _dromozoa_error "unsupported version";;
 esac
 
 path=:$PATH
 result=
 while :
 do
-  item=`expr "x$path" : 'x:\([^:]*\)' || :`
-  case x$item in
-    x$HOME/prefixes/dromozoa5?/bin)
-      item=$HOME/prefixes/dromozoa$version/bin;;
-    x/opt/dromozoa5?/bin)
-      item=/opt/dromozoa$version/bin;;
+  i=`expr "X$path" : 'X\(:[^:]*\)' | sed 's/^.//'`
+  j=`expr "X$i" : '\(X.*\)/dromozoa5[0-9]/bin$' | sed 's/^.//'`
+  case X$j in
+    X) result=$result:$i;;
+    *) result=$result:$j/dromozoa$version/bin;;
   esac
-  result=$result:$item
-  path=`expr "x$path" : 'x:[^:]*\(.*\)' || :`
-  case x$path in
-    x) break;;
+  path=`expr "X$path" : 'X:[^:]*\(:.*\)' '|' X`
+  case X$path in
+    XX) break;;
   esac
 done
-path=`expr "x$result" : 'x:\(.*\)' || :`
+path=`echo "$result" | sed 's/^.//'`
 
 manpath=:$MANPATH
 result=
 while :
 do
-  item=`expr "x$manpath" : 'x:\([^:]*\)' || :`
-  case x$item in
-    x$HOME/prefixes/dromozoa5?/share/man)
-      item=$HOME/prefixes/dromozoa$version/share/man;;
-    x/opt/dromozoa5?/share/man)
-      item=/opt/dromozoa$version/share/man;;
+  i=`expr "X$manpath" : 'X\(:[^:]*\)' | sed 's/^.//'`
+  j=`expr "X$i" : '\(X.*\)/dromozoa5[0-9]/share/man$' | sed 's/^.//'`
+  case X$j in
+    X) result=$result:$i;;
+    *) result=$result:$j/dromozoa$version/share/man;;
   esac
-  result=$result:$item
-  manpath=`expr "x$manpath" : 'x:[^:]*\(.*\)' || :`
-  case x$manpath in
-    x) break;;
+  manpath=`expr "X$manpath" : 'X:[^:]*\(:.*\)' '|' X`
+  case X$manpath in
+    XX) break;;
   esac
 done
-manpath=`expr "x$result" : 'x:\(.*\)' || :`
+manpath=`echo "$result" | sed 's/^.//'`
 
 printf 'PATH="%s"; export PATH; MANPATH="%s"; export MANPATH; hash -r;\n' "$path" "$manpath"

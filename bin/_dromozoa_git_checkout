@@ -18,11 +18,11 @@
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 branch=`_dromozoa_git_branch_list "$1"`
-case x$branch in
-  x)
+case X$branch in
+  X)
     branch=`_dromozoa_git_branch_list "origin/$1" -r`
-    case x$branch in
-      x) git branch "$1";;
+    case X$branch in
+      X) git branch "$1";;
     esac;;
 esac
 git checkout "$1"

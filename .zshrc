@@ -36,8 +36,8 @@ setopt share_history
 _dromozoa_prompt() {
   local start='%{[91m%}'
   local reset="%{[0m%}"
-  case x$TERM in
-    xscreen*) start="%{[92m%}";;
+  case X$TERM in
+    Xscreen*) start="%{[92m%}";;
   esac
   PS1="$start%n@%m:%~%#$reset "
   PS2="$start>$reset "

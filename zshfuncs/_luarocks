@@ -30,8 +30,8 @@ _luarocks() {
     ": :_luarocks_arguments __MARKER__ command" \
     "*:: :->argument"
 
-  case x$state in
-    xargument)
+  case X$state in
+    Xargument)
       _luarocks_command "$words[1]";;
   esac
 }
@@ -53,24 +53,24 @@ _luarocks_arguments() {
   for i in "$@"
   do
     shift
-    case x$i in
-      x__MARKER__) break;;
+    case X$i in
+      X__MARKER__) break;;
     esac
   done
 
   for i in "$@"
   do
-    case x$i in
-      xcommand)
+    case X$i in
+      Xcommand)
         _dromozoa_luarocks_commands;;
-      xname)
-        (luarocks list --porcelain 2>/dev/null || :) | while read j k
+      Xname)
+        luarocks list --porcelain 2>/dev/null | while read j k
         do
           arguments=($arguments "$j")
         done;;
-      xrock)
+      Xrock)
         arguments=($arguments *.rock);;
-      xrockspec)
+      Xrockspec)
         arguments=($arguments *.rockspec);;
     esac
   done

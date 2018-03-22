@@ -1,0 +1,81 @@
+#! /bin/sh -e
+
+# Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+#
+# This file is part of dromozoa-dotfiles.
+#
+# dromozoa-dotfiles is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# dromozoa-dotfiles is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
+
+dromozoa_machine_id_darwin() {
+  case X$TMPDIR in
+    X) TMPDIR=/tmp;;
+  esac
+  tmp=`(umask 077 && mktemp -d "$TMPDIR/dromozoa-XXXXXX" 2>/dev/null || :)`
+  case X$tmp in
+    X) tmp=$TMPDIR/dromozoa-$$-$RANDOM; (umask 077 && mkdir "$tmp");;
+  esac
+  cd "$tmp"
+  tmp=`pwd`
+  trap "(cd / && rm -fr '$tmp')" 0
+
+  name=dromozoa-machine-id
+  cat <<EOH >"$name.c"
+#include <stdio.h>
+#include <unistd.h>
+#include <uuid/uuid.h>
+
+int main(int ac, char* av[]) {
+  uuid_t id;
+  uuid_clear(id);
+  struct timespec wait = { 0, 0 };
+  if (gethostuuid(id, &wait) == -1) {
+    return 1;
+  }
+  uuid_string_t s = { 0 };
+  uuid_unparse(id, s);
+  printf("darwin:%s\n", s);
+  return 0;
+}
+EOH
+  if gcc $CPPFLAGS $LDFLAGS -g -O2 "$name.c" -o "$name" >/dev/null 2>&1
+  then
+    "./$name"
+  fi
+}
+
+dromozoa_machine_id() {
+  id=`cat /sys/class/dmi/id/product_uuid 2>/dev/null || :`
+  case X$id in
+    X) ;;
+    *) echo "dmi-product:$id"; return;;
+  esac
+  id=`cat /sys/hypervisor/uuid 2>/dev/null || :`
+  case X$id in
+    X) ;;
+    *) echo "hypervisor:$id"; return;;
+  esac
+  id=`cat /proc/cpuinfo 2>/dev/null | sed -n '/^Serial[^:]*: /p'`
+  case X$id in
+    X) ;;
+    *) id=`expr "X$id" : 'XSerial[^:]*:\( .*\)' | sed 's/^.//'`; echo "cpu-serial:$id"; return;;
+  esac
+  exit 1
+}
+
+case X`uname` in
+  XDarwin)
+    dromozoa_machine_id_darwin;;
+  *)
+    dromozoa_machine_id;;
+esac

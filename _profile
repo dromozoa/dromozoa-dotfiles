@@ -19,10 +19,12 @@
 
 . "$HOME/dromozoa-dotfiles/_environ"
 
-# push title
-case x$TERM in
-  xxterm*) printf '\33[22;0t';;
+case X$TERM in
+  Xxterm*)
+    # push title
+    printf '\33[22;0t'
+    title 2>/dev/null
+    iterm2-background 2>/dev/null;;
+  Xscreen*)
+    title 2>/dev/null;;
 esac
-
-title 2>/dev/null
-iterm2-background 2>/dev/null
