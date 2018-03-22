@@ -18,7 +18,7 @@
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 n=`screen "$@" -Q number`
-n=`expr "x$n" : 'x\([0-9]*\)' || :`
+n=`expr "X$n" : '\(X[0-9]*\)' | sed 's/^.//'`
 t=`screen "$@" -Q title`
 printf '%d\t*\t%s\n' "$n" "$t"
 
@@ -26,12 +26,11 @@ while :
 do
   screen "$@" -X next
   i=`screen "$@" -Q number`
-  i=`expr "x$i" : 'x\([0-9]*\)' || :`
-
-  case x$i in
-    x$n) break;;
-  esac
-
+  i=`expr "X$i" : '\(X[0-9]*\)' | sed 's/^.//'`
+  if test "X$i" = "X$n"
+  then
+    break
+  fi
   t=`screen "$@" -Q title`
   printf '%d\t\t%s\n' "$i" "$t"
 done

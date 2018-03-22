@@ -19,8 +19,9 @@
 
 git branch $2 | while read line
 do
-  line=`expr "x$line" : 'x\* \(.*\)' '|' "x$line" : 'x\(.*\)'`
-  case x$line in
-    x$1) echo "$line";;
-  esac
+  branch=`expr "X$line" : 'X\*\( .*\)' '|' "X$line" | sed 's/^.//'`
+  if test "X$branch" = "X$1"
+  then
+    echo "$branch"
+  fi
 done

@@ -17,13 +17,13 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-case x$1 in
-  x) echo "usage: $0 host port"; exit 1;;
+case X$1 in
+  X) echo "usage: $0 host port"; exit 1;;
   *) host=$1;;
 esac
 
-case x$2 in
-  x) echo "usage: $0 host port"; exit 1;;
+case X$2 in
+  X) echo "usage: $0 host port"; exit 1;;
   *) port=$2;;
 esac
 

@@ -33,8 +33,8 @@ _dromozoa_boot_packages() {
   for i in "$@"
   do
     shift
-    case x$i in
-      x__MARKER__) break;;
+    case X$i in
+      X__MARKER__) break;;
     esac
   done
 
@@ -43,14 +43,14 @@ _dromozoa_boot_packages() {
     skip=
     for j in "$@"
     do
-      if test "x$i" = "x$j"
+      if test "X$i" = "X$j"
       then
         skip=true
         break
       fi
     done
-    case x$skip in
-      x) packages=($packages "$i");;
+    case X$skip in
+      X) packages=($packages "$i");;
     esac
   done
 

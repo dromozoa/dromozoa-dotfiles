@@ -254,7 +254,7 @@ end
 out:write [[
   )
 
-  case x$1 in
+  case X$1 in
 ]]
 
 for i = 1, #names do
@@ -263,7 +263,7 @@ for i = 1, #names do
   local opts = module.opts
   if next(opts) ~= nil then
     out:write(([[
-    x%s)
+    X%s)
       options=(
         $options
 ]]):format(name))
@@ -316,7 +316,7 @@ local out = assert(io.open("zshfuncs/_dromozoa_luarocks_arguments", "w"))
 out:write [[
 #autoload
 _dromozoa_luarocks_arguments() {
-  case x$1 in
+  case X$1 in
 ]]
 
 for i = 1, #names do
@@ -325,7 +325,7 @@ for i = 1, #names do
   local args = module.args
   if next(args) ~= nil then
     out:write(([[
-    x%s)
+    X%s)
       arguments=(
         $arguments
         %s

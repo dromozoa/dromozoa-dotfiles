@@ -18,9 +18,9 @@
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 branch=`git symbolic-ref HEAD`
-case x$branch in
-  x*/release) ;;
-  *) _dromozoa_error "on branch $branch"; exit 1;;
+case X$branch in
+  X*/release) ;;
+  *) _dromozoa_error "on branch $branch";;
 esac
 git checkout master
 git merge --no-ff -m "リリースブランチをマージ。" release
