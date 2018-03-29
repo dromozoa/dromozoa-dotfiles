@@ -73,3 +73,5 @@ endif
 
 nnoremap j gj
 nnoremap k gk
+nnoremap <C-p> :bprev<CR>
+nnoremap <C-n> :bnext<CR>
