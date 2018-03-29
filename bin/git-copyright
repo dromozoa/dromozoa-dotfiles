@@ -17,7 +17,18 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
+LANG=C
+LC_ALL=C
+export LANG LC_ALL
+
+case X$1 in
+  X) author="Tomoyuki Fujimori";;
+  *) author=$1;;
+esac
+
 git ls-files | while read i
 do
-  printf '"%s"\n' "$i"
+  copyright=`sed -n "/Copyright (C) .* $author/p" <"$i"`
+  years=`git log --author="$author" --date="format:%Y" --format="%ad" "$i" | sort | uniq`
+  printf '%s\n  %s\n  %s\n' "$i" "$copyright" "$years"
 done
