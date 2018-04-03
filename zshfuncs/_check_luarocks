@@ -1,4 +1,4 @@
-#compdef luarocks-check
+#compdef check-luarocks
 
 # Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
@@ -17,11 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-_luarocks_check() {
-  _arguments "*:: :_luarocks_check_rockspecs"
+_check_luarocks() {
+  _arguments "*:: :_check_luarocks_rockspecs"
 }
 
-_luarocks_check_rockspecs() {
+_check_luarocks_rockspecs() {
   local -a rockspecs
   rockspecs=(*.rockspec)
   _describe rockspecs rockspecs
