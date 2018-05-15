@@ -22,15 +22,16 @@ fpath=("$HOME/dromozoa-dotfiles/zshfuncs" $fpath)
 
 setopt auto_cd
 setopt autopushd
-setopt noautoremoveslash
 setopt correct
 setopt extended_glob
 setopt extended_history
-setopt noflowcontrol
 setopt hist_expand
 setopt hist_ignore_dups
+setopt hist_reduce_blanks
 setopt hist_verify
 setopt inc_append_history
+setopt noautoremoveslash
+setopt noflowcontrol
 setopt share_history
 
 _dromozoa_prompt() {
@@ -50,6 +51,7 @@ unfunction _dromozoa_prompt
 HISTFILE=~/.zsh_history
 HISTSIZE=65536
 SAVEHIST=65536
+CORRECT_IGNORE=_*
 
 alias h='history -E -i 1 | grep'
 
