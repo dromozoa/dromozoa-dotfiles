@@ -20,12 +20,12 @@ local png = require "dromozoa.png"
 
 local mode = ...
 
---[[
-for code = 0x2580, 0x259F do
-  local char = utf8.char(code)
-  io.write(("U+%04X %s%s%s%s\n"):format(code, char, char, char, char))
+if mode == "char" then
+  for code = 0x2580, 0x259F do
+    local char = utf8.char(code)
+    io.write(("U+%04X %s%s%s%s\n"):format(code, char, char, char, char))
+  end
 end
-]]
 
 --[[
 local TL = utf8.char(0x2598)
