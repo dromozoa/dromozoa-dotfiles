@@ -15,16 +15,18 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
+local ucd = require "dromozoa.ucd"
 local utf8 = require "dromozoa.utf8"
 local png = require "dromozoa.png"
 
-local mode = ...
+local mode, filename = ...
 
 if mode == "char" then
   for code = 0x2580, 0x259F do
     local char = utf8.char(code)
-    io.write(("U+%04X %s%s%s%s\n"):format(code, char, char, char, char))
+    io.write(("U+%04X %2s %s%s%s%s\n"):format(code, ucd.east_asian_width(code), char, char, char, char))
   end
+  os.exit()
 end
 
 --[[
@@ -49,7 +51,7 @@ local LOWER_HALF_BLOCK = utf8.char(0x2584)
 ]]
 
 local reader = assert(png.reader())
-local handle = assert(io.open("docs/lena_std.png", "rb"))
+local handle = assert(io.open(filename, "rb"))
 assert(reader:set_read_fn(function (n)
   return handle:read(n)
 end))
@@ -58,19 +60,21 @@ assert(reader:read_png(png.PNG_TRANSFORM_EXPAND + (png.PNG_TRANSFORM_SCALE_16 or
 
 local width = assert(reader:get_image_width())
 local height = assert(reader:get_image_height())
+local pixel = " "
+if width == height then
+  pixel = "  "
+end
 
 if mode == "24bit" then
   for y = 1, height do
     local row = assert(reader:get_row(y))
     for i = 1, width * 4, 4 do
       local r, g, b = row:byte(i, i + 2)
-      io.write(("\27[48;2;%d;%d;%dm  "):format(r, g, b))
+      io.write(("\27[48;2;%d;%d;%dm"):format(r, g, b), pixel)
     end
     io.write "\27[0m\n"
   end
-end
-
-if mode == "8bit" then
+elseif mode == "8bit" then
   for y = 1, height do
     local row = assert(reader:get_row(y))
     for i = 1, width * 4, 4 do
@@ -78,7 +82,7 @@ if mode == "8bit" then
       r = math.floor(r * 6 / 256)
       g = math.floor(g * 6 / 256)
       b = math.floor(b * 6 / 256)
-      io.write("\27[48;5;", 16 + r * 36 + 6 * g + b, "m  ")
+      io.write("\27[48;5;", 16 + r * 36 + 6 * g + b, "m", pixel)
     end
     io.write "\27[0m\n"
   end
