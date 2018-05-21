@@ -67,6 +67,9 @@ alias git-commit-update-document='git commit -m "文書を更新。"'
 alias git-commit-add-test='git commit -m "テストを追加。"'
 alias git-commit-modify-test='git commit -m "テストを修正。"'
 
+# commit copyright
+alias git-commit-update-copyright='git commit -m "著作権表記を更新。"'
+
 alias tig-all='tig --all'
 
 alias imgcat='iterm2-file --inline'

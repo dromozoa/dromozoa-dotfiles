@@ -30,7 +30,7 @@ end
 local filename = ...
 
 local handle = assert(io.open(filename))
-local code = handle:read("*a")
+local code = handle:read "*a"
 handle:close()
 
 assert(loadstring(code))()
@@ -55,7 +55,7 @@ if build.type == "builtin" then
   local modules = {}
   local sources = {}
 
-  local handle = assert(io.popen("find dromozoa -name '*.lua'"))
+  local handle = assert(io.popen "find dromozoa -name '*.lua'")
   for source in handle:lines() do
     local module = source_to_module(source)
     modules[#modules + 1] = {

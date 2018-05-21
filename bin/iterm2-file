@@ -17,7 +17,7 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-package.path = os.getenv("HOME") .. "/dromozoa-dotfiles/?.lua;" .. package.path
+package.path = os.getenv "HOME" .. "/dromozoa-dotfiles/?.lua;" .. package.path
 
 local encode_base64 = require "dromozoa.encode_base64"
 
@@ -38,6 +38,7 @@ Avairable options are:
 local term = os.getenv "TERM"
 local options = {}
 local print_filename
+local height
 
 local i = 1
 local n = #arg
@@ -51,6 +52,9 @@ while i <= n do
     i = i + 1
   elseif this == "-h" or this == "--height" then
     options[#options + 1] = "height=" .. arg[i]
+    if arg[i]:find "^%d+$" then
+      height = tonumber(arg[i])
+    end
     i = i + 1
   elseif this == "-s" or this == "--not-preserve-aspect-ratio" then
     options[#options + 1] = "preserveAspectRatio=0"
@@ -106,6 +110,14 @@ local function write(filename)
   buffer[#buffer + 1] = "\n"
 
   if term:find "^screen" then
+    if height then
+      for i = 1, height do
+        io.write "\n"
+      end
+      -- DCS, CUU
+      io.write("\27P\27[", height, "A\27\\")
+    end
+
     local payload = table.concat(buffer)
     for i = 1, #payload, 512 do
       -- DCS, ST
