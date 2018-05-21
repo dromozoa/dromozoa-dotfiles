@@ -17,7 +17,7 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-package.path = os.getenv("HOME") .. "/dromozoa-dotfiles/?.lua;" .. package.path
+package.path = os.getenv "HOME" .. "/dromozoa-dotfiles/?.lua;" .. package.path
 
 local shell = require "dromozoa.shell"
 

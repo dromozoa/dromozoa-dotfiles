@@ -25,7 +25,7 @@ local function SGR(n)
   return "\27[" .. n .. "m"
 end
 
-local sgr_today = SGR(1) .. SGR("48;5;238")
+local sgr_today = SGR(1) .. SGR "48;5;238"
 local sgr_holiday = {
   ["祝日"] = SGR(1) .. SGR(91);
   ["休日"] = SGR(1) .. SGR(91);

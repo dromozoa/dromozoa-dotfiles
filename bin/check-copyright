@@ -17,13 +17,13 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-package.path = os.getenv("HOME") .. "/dromozoa-dotfiles/?.lua;" .. package.path
+package.path = os.getenv "HOME" .. "/dromozoa-dotfiles/?.lua;" .. package.path
 
 local shell = require "dromozoa.shell"
 
 local author = "Tomoyuki Fujimori"
 
-local handle = assert(io.popen("git ls-files -z"))
+local handle = assert(io.popen "git ls-files -z")
 local content = handle:read "*a"
 handle:close()
 for file in content:gmatch "(.-)%z" do
