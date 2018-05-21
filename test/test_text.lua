@@ -18,12 +18,12 @@
 local utf8 = require "dromozoa.utf8"
 local text = require "dromozoa.text"
 
-assert(text.is_line_end_prohibited(utf8.codepoint("「")))
-assert(not text.is_line_start_prohibited(utf8.codepoint("「")))
-assert(not text.is_line_end_prohibited(utf8.codepoint("」")))
-assert(text.is_line_start_prohibited(utf8.codepoint("」")))
-assert(not text.is_line_end_prohibited(utf8.codepoint("あ")))
-assert(not text.is_line_start_prohibited(utf8.codepoint("あ")))
-assert(text.is_line_start_prohibited(utf8.codepoint("、")))
-assert(text.is_line_start_prohibited(utf8.codepoint("。")))
-assert(text.is_inseparable(utf8.codepoint("…")))
+assert(text.is_line_end_prohibited(utf8.codepoint "「"))
+assert(not text.is_line_start_prohibited(utf8.codepoint "「"))
+assert(not text.is_line_end_prohibited(utf8.codepoint "」"))
+assert(text.is_line_start_prohibited(utf8.codepoint "」"))
+assert(not text.is_line_end_prohibited(utf8.codepoint "あ"))
+assert(not text.is_line_start_prohibited(utf8.codepoint "あ"))
+assert(text.is_line_start_prohibited(utf8.codepoint "、"))
+assert(text.is_line_start_prohibited(utf8.codepoint "。"))
+assert(text.is_inseparable(utf8.codepoint "…"))

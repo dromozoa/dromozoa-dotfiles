@@ -26,9 +26,9 @@ local function test_buffer(out)
 %s
 ]]):format(#b, table.concat(b, "\n")))
 
-  b:insert("INSERT 1")
-  b:insert("INSERT 2")
-  b:insert("INSERT 3")
+  b:insert "INSERT 1"
+  b:insert "INSERT 2"
+  b:insert "INSERT 3"
 
   b:insert("INSERT 4", 0)
   b:insert("INSERT 5", 0)
