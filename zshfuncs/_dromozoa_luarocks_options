@@ -2,7 +2,9 @@
 _dromozoa_luarocks_options() {
   options=(
     $options
+    '--dev[Enable the sub-repositories in rocks servers for rockspecs of in-development versions]'
     '--local[Use the tree in the user'\''s home directory. To enable it, see '\''luarocks help path'\''.]'
+    '--lua-dir=[Which Lua installation to use.]:path:_files'
     '--only-server=[Fetch rocks/rockspecs from this server only (overrides any entries in the config file)]:server:_hosts'
     '--only-sources=[Restrict downloads to paths matching the given URL.]:url:_urls'
     '--server=[Fetch rocks/rockspecs from this server (takes priority over config file)]:server:_hosts'
@@ -15,7 +17,7 @@ _dromozoa_luarocks_options() {
     Xbuild)
       options=(
         $options
-        '--branch=[Override the `source.branch` field in the loaded rockspec. Allows to specify a different branch to  fetch. Particularly for SCM rocks.]:branch-name'
+        '--branch=[Override the `source.branch` field in the loaded rockspec. Allows to specify a different branch to  fetch. Particularly for "dev" rocks.]:branch-name'
         '--deps-mode=[How to handle dependencies.]:mode:((all\:"use all trees from the rocks_trees list for finding dependencies" one\:"use only the current tree (possibly set with --tree)" order\:"use trees based on order (use the current tree and all trees below it on the rocks_trees list)" none\:"ignore dependencies altogether."))'
         '--keep[Do not remove previously installed versions of the rock after building a new one. This behavior can be made permanent by setting keep_other_versions=true in the configuration file.]'
         '--only-deps[Installs only the dependencies of the rock.]'
@@ -49,6 +51,18 @@ _dromozoa_luarocks_options() {
         '--source[Download .src.rock if available.]'
       )
       ;;
+    Xinit)
+      options=(
+        $options
+        '--detailed=[A longer description string.]:text'
+        '--homepage=[Project homepage.]:url:_urls'
+        '--lib=[A comma-separated list of libraries that C files need to link to.]:library'
+        '--license=[A license string, such as "MIT/X11" or "GNU GPL v3".]:text'
+        '--lua-version=[Supported Lua versions. Accepted values are "5.1", "5.2", "5.3", "5.1,5.2", "5.2,5.3", or "5.1,5.2,5.3".]:vers'
+        '--rockspec-format=[Rockspec format version, such as "1.0" or "1.1".]:ver'
+        '--summary=[A short one-line description summary.]:text'
+      )
+      ;;
     Xinstall)
       options=(
         $options
@@ -67,7 +81,7 @@ _dromozoa_luarocks_options() {
     Xmake)
       options=(
         $options
-        '--branch=[Override the `source.branch` field in the loaded rockspec. Allows to specify a different branch to  fetch. Particularly for SCM rocks.]:branch-name'
+        '--branch=[Override the `source.branch` field in the loaded rockspec. Allows to specify a different branch to  fetch. Particularly for "dev" rocks.]:branch-name'
         '--keep[Do not remove previously installed versions of the rock after installing a new one. This behavior can be made permanent by setting keep_other_versions=true in the configuration file.]'
         '--pack-binary-rock[Do not install rock. Instead, produce a .rock file with the contents of compilation in the current directory.]'
       )
@@ -82,10 +96,10 @@ _dromozoa_luarocks_options() {
       options=(
         $options
         '--append[Appends the paths to the existing paths. Default is to prefix the LR paths to the existing paths.]'
-        '--bin[Adds the system path to the output]'
         '--lr-bin[Exports the system path (not formatted as shell command)]'
         '--lr-cpath[Exports the Lua cpath (not formatted as shell command)]'
         '--lr-path[Exports the Lua path (not formatted as shell command)]'
+        '--no-bin[Do not export the PATH variable]'
       )
       ;;
     Xpurge)
@@ -108,12 +122,14 @@ _dromozoa_luarocks_options() {
         $options
         '--all[List all contents of the server that are suitable to this platform, do not filter by name.]'
         '--binary[Return only pure Lua and binary rocks (rocks that can be used with the "install" command without requiring a C toolchain).]'
+        '--porcelain[Return a machine readable format.]'
         '--source[Return only rockspecs and source rocks, to be used with the "build" command.]'
       )
       ;;
     Xshow)
       options=(
         $options
+        '--build-deps[build-only dependencies for this package]'
         '--deps[packages this package depends on]'
         '--home[home page of project]'
         '--modules[all modules provided by this package as used by require()]'
@@ -121,6 +137,14 @@ _dromozoa_luarocks_options() {
         '--rock-dir[data directory of the installed rock]'
         '--rock-tree[local tree where rock is installed]'
         '--rockspec[the full path of the rockspec file]'
+        '--test-deps[dependencies for testing this package]'
+      )
+      ;;
+    Xtest)
+      options=(
+        $options
+        '--deps-mode=[How to handle dependencies.]:mode:((all\:"use all trees from the rocks_trees list for finding dependencies" one\:"use only the current tree (possibly set with --tree)" order\:"use trees based on order (use the current tree and all trees below it on the rocks_trees list)" none\:"ignore dependencies altogether."))'
+        '--test-type=[Specify the test suite type manually if it was not specified in the rockspec and it could not be auto-detected.]:type'
       )
       ;;
     Xunpack)
@@ -135,6 +159,7 @@ _dromozoa_luarocks_options() {
         '--api-key=[Give it an API key. It will be stored for subsequent uses.]:key'
         '--force[Replace existing rockspec if the same revision of a module already exists. This should be used only  in case of upload mistakes: when updating a rockspec, increment the revision number instead.]'
         '--skip-pack[Do not pack and send source rock.]'
+        '--temp-key=[Use the given a temporary API key in this invocation only. It will not be stored.]:key'
       )
       ;;
     Xwrite_rockspec)
@@ -144,7 +169,7 @@ _dromozoa_luarocks_options() {
         '--homepage=[Project homepage.]:url:_urls'
         '--lib=[A comma-separated list of libraries that C files need to link to.]:library'
         '--license=[A license string, such as "MIT/X11" or "GNU GPL v3".]:text'
-        '--lua-version=[Supported Lua versions. Accepted values are "5.1", "5.2", "5.3", "5.1,5.2", "5.2,5.3", or "5.1,5.2,5.3".]:vers'
+        '--lua-version=[Supported Lua versions.  Accepted values are: "5.1", "5.2", "5.3", "5.4", "5.1,5.2", "5.2,5.3", "5.3,5.4", "5.1,5.2,5.3", "5.2,5.3,5.4", or "5.1,5.2,5.3,5.4"]:vers'
         '--output=[Write the rockspec with the given filename. If not given, a file is written in the current directory with a filename based on given name and version.]:file:_files'
         '--rockspec-format=[Rockspec format version, such as "1.0" or "1.1".]:ver'
         '--summary=[A short one-line description summary.]:text'

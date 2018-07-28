@@ -63,6 +63,14 @@ _luarocks_arguments() {
     case X$i in
       Xcommand)
         _dromozoa_luarocks_commands;;
+      Xmodname)
+        luarocks list --porcelain 2>/dev/null | while read j k
+        do
+          luarocks show --modules --porcelain "$j" 2>/dev/null | while read j
+          do
+            arguments=($arguments "$j")
+          done
+        done;;
       Xname)
         luarocks list --porcelain 2>/dev/null | while read j k
         do

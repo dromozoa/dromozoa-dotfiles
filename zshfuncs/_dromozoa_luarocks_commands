@@ -2,11 +2,12 @@
 _dromozoa_luarocks_commands() {
   arguments=(
     $arguments
-    'build:Build/compile a rock.'
+    'build:build/compile a rock.'
     'config:Query information about the LuaRocks configuration.'
     'doc:Show documentation for an installed rock.'
     'download:Download a specific rock file from a rocks server.'
     'help:Help on commands. Type '\''luarocks help <command>'\'' for more.'
+    'init:Initialize a directory for a Lua project using LuaRocks.'
     'install:Install a rock.'
     'lint:Check syntax of a rockspec.'
     'list:List currently installed rocks.'
@@ -18,8 +19,10 @@ _dromozoa_luarocks_commands() {
     'remove:Uninstall a rock.'
     'search:Query the LuaRocks servers.'
     'show:Show information about an installed rock.'
+    'test:Run the test suite in the current directory.'
     'unpack:Unpack the contents of a rock.'
     'upload:Upload a rockspec to the public rocks repository.'
+    'which:Tell which file corresponds to a given module name.'
     'write_rockspec:Write a template for a rockspec file.'
   )
 }
