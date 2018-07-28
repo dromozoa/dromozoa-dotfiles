@@ -31,6 +31,12 @@ _dromozoa_luarocks_arguments() {
         ': :_luarocks_arguments __MARKER__ command'
       )
       ;;
+    Xinit)
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ name version'
+      )
+      ;;
     Xinstall)
       arguments=(
         $arguments
@@ -85,6 +91,12 @@ _dromozoa_luarocks_arguments() {
         ': :_luarocks_arguments __MARKER__ argument'
       )
       ;;
+    Xtest)
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ rockspec args'
+      )
+      ;;
     Xunpack)
       arguments=(
         $arguments
@@ -95,6 +107,12 @@ _dromozoa_luarocks_arguments() {
       arguments=(
         $arguments
         ': :_luarocks_arguments __MARKER__ rockspec'
+      )
+      ;;
+    Xwhich)
+      arguments=(
+        $arguments
+        ': :_luarocks_arguments __MARKER__ modname'
       )
       ;;
     Xwrite_rockspec)

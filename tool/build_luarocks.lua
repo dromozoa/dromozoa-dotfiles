@@ -117,6 +117,9 @@ handle:close()
 local chunk = "return " .. assert(content:match "\nlocal supported_flags = ({.-})\n")
 local supported_flags = assert(assert(load(chunk))())
 
+assert(not supported_flags["test-deps"])
+supported_flags["test-deps"] = true
+
 for item in os.getenv "PATH":gmatch "[^:]*" do
   if item == "" then
     item = "./luarocks"
@@ -127,7 +130,7 @@ for item in os.getenv "PATH":gmatch "[^:]*" do
   if handle then
     local script
     for line in handle:lines() do
-      script = line:match [[^exec .- '([^']+)' "%$@"$]]
+      script = line:match [[exec .- '([^']+)' "%$@"$]]
       if script then
         break
       end
@@ -138,10 +141,15 @@ for item in os.getenv "PATH":gmatch "[^:]*" do
     local handle = assert(io.open(script))
     local content = handle:read "*a"
     handle:close()
-    local chunk = "return " .. assert(content:match "\ncommands = ({.-})\n")
+    local chunk = "return " .. assert(content:match "%scommands = ({.-})\n")
     commands = assert(assert(load(chunk))())
     break
   end
+end
+
+local cfg = require "luarocks.core.cfg"
+if cfg then
+  cfg.deps_mode = ""
 end
 
 local names = {}
@@ -153,7 +161,7 @@ end
 table.sort(names)
 
 printout_buffer = {}
-modules.help.command()
+modules.help.command("", {})
 
 local general_opts = {}
 
@@ -194,14 +202,16 @@ for i = 1, #names do
   module.args = args
 
   for item in arguments:gmatch "[%w%-<=>_]+" do
-    local name = item:match "^%-%-([%w%-]+)"
-    if name then
-      opts[name] = {
-        name = name;
-        arg = assert(supported_flags[name]);
-      }
-    else
-      args[#args + 1] = assert(item:match "^<([^>]*)>$")
+    if item ~= "--" then
+      local name = item:match "^%-%-([%w%-]+)"
+      if name then
+        opts[name] = {
+          name = name;
+          arg = assert(supported_flags[name]);
+        }
+      else
+        args[#args + 1] = assert(item:match "^<([^>]*)>$")
+      end
     end
   end
 
