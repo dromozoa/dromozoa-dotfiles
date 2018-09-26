@@ -58,7 +58,8 @@ _dromozoa_luarocks_options() {
         '--homepage=[Project homepage.]:url:_urls'
         '--lib=[A comma-separated list of libraries that C files need to link to.]:library'
         '--license=[A license string, such as "MIT/X11" or "GNU GPL v3".]:text'
-        '--lua-version=[Supported Lua versions. Accepted values are "5.1", "5.2", "5.3", "5.1,5.2", "5.2,5.3", or "5.1,5.2,5.3".]:vers'
+        '--lua-versions=[Supported Lua versions. Accepted values are "5.1", "5.2", "5.3", "5.1,5.2", "5.2,5.3", or "5.1,5.2,5.3".]:versions'
+        '--reset[Regenerate .luarocks/config-5.x.lua and ./lua wrapper if those already exist.]'
         '--rockspec-format=[Rockspec format version, such as "1.0" or "1.1".]:ver'
         '--summary=[A short one-line description summary.]:text'
       )
@@ -169,7 +170,7 @@ _dromozoa_luarocks_options() {
         '--homepage=[Project homepage.]:url:_urls'
         '--lib=[A comma-separated list of libraries that C files need to link to.]:library'
         '--license=[A license string, such as "MIT/X11" or "GNU GPL v3".]:text'
-        '--lua-version=[Supported Lua versions.  Accepted values are: "5.1", "5.2", "5.3", "5.4", "5.1,5.2", "5.2,5.3", "5.3,5.4", "5.1,5.2,5.3", "5.2,5.3,5.4", or "5.1,5.2,5.3,5.4"]:vers'
+        '--lua-versions=[Supported Lua versions.  Accepted values are: "5.1", "5.2", "5.3", "5.4", "5.1,5.2", "5.2,5.3", "5.3,5.4", "5.1,5.2,5.3", "5.2,5.3,5.4", or "5.1,5.2,5.3,5.4"]:versions'
         '--output=[Write the rockspec with the given filename. If not given, a file is written in the current directory with a filename based on given name and version.]:file:_files'
         '--rockspec-format=[Rockspec format version, such as "1.0" or "1.1".]:ver'
         '--summary=[A short one-line description summary.]:text'
