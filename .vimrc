@@ -45,8 +45,13 @@ set smartcase
 
 set autowrite
 set updatetime=200
-autocmd InsertLeave * wall
-autocmd CursorHold * wall
+
+" remove: au! wall
+augroup wall
+  autocmd!
+  autocmd InsertLeave * wall
+  autocmd CursorHold * wall
+augroup END
 
 set debug=msg
 set clipboard=unnamed
