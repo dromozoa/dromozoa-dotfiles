@@ -1,4 +1,4 @@
-" Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+" Copyright (C) 2018,2019 Tomoyuki Fujimori <moyu@dromozoa.com>
 "
 " This file is part of dromozoa-dotfiles.
 "
@@ -45,8 +45,13 @@ set smartcase
 
 set autowrite
 set updatetime=200
-autocmd InsertLeave * wall
-autocmd CursorHold * wall
+
+" remove: au! wall
+augroup wall
+  autocmd!
+  autocmd InsertLeave * wall
+  autocmd CursorHold * wall
+augroup END
 
 set debug=msg
 set clipboard=unnamed

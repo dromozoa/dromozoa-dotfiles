@@ -70,6 +70,9 @@ alias git-commit-modify-test='git commit -m "テストを修正。"'
 # commit copyright
 alias git-commit-update-copyright='git commit -m "著作権表記を更新。"'
 
+# commit package
+alias git-commit-update-package='git commit -m "パッケージのバージョンを更新。"'
+
 alias tig-all='tig --all'
 
 alias imgcat='iterm2-file --inline'
