@@ -1,6 +1,6 @@
 #! /usr/bin/env lua
 
--- Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2018,2019 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dotfiles.
 --
@@ -23,6 +23,38 @@ local shell = require "dromozoa.shell"
 
 local author = "Tomoyuki Fujimori"
 
+local help = [[
+Usage: check-copyright [options]
+Avairable options are:
+  -h  --help
+  -q  --quiet
+]]
+
+local options = {}
+
+local i = 1
+local n = #arg
+while i <= n do
+  local this = arg[i]
+  i = i + 1
+  if this == "-h" or this == "--help" then
+    io.stderr:write(help)
+    os.exit()
+  elseif this == "-q" or this == "--quiet" then
+    options.quiet = true
+  elseif this == "--" then
+    break
+  elseif this:find "^%-" then
+    io.stderr:write(("check-copyright unrecognized option '%s'\n"):format(this), help)
+    os.exit(1)
+  else
+    i = i - 1
+    break
+  end
+end
+
+local code = 0
+
 local handle = assert(io.popen "git ls-files -z")
 local content = handle:read "*a"
 handle:close()
@@ -39,7 +71,9 @@ for file in content:gmatch "(.-)%z" do
     handle:close()
 
     if not source then
-      io.write("[  ] ", file, "\n")
+      if not options.quiet then
+        io.write("[  ] ", file, "\n")
+      end
     else
       local year_set = {}
       local command = ([[git log --author=%s --date="format:%%Y" --format="%%ad" %s]]):format(shell.quote(author), shell.quote(file))
@@ -86,8 +120,11 @@ for file in content:gmatch "(.-)%z" do
 
       local target = source:gsub("^(.-Copyright %(C%) )[%d%,%-]+( .*)", "%1" .. years .. "%2")
       if source == target then
-        io.write("[OK] ", file, "\n")
+        if not options.quiet then
+          io.write("[OK] ", file, "\n")
+        end
       else
+        code = 1
         io.write("[NG] ", file, "\n")
         io.write("\t", source, "\n")
         io.write("\t", target, "\n")
@@ -95,3 +132,5 @@ for file in content:gmatch "(.-)%z" do
     end
   end
 end
+
+os.exit(code)
