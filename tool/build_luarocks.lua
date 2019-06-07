@@ -148,9 +148,13 @@ for item in os.getenv "PATH":gmatch "[^:]*" do
 end
 
 local cfg = require "luarocks.core.cfg"
+cfg.init()
 if cfg then
   cfg.deps_mode = ""
 end
+
+local fs = require "luarocks.fs"
+fs.init()
 
 local names = {}
 local modules = {}
