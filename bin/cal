@@ -1,6 +1,6 @@
 #! /usr/bin/env lua
 
--- Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2018,2019 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dotfiles.
 --
@@ -17,7 +17,22 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-local calendar = require "dromozoa.calendar"
+local result, calendar = pcall(require, "dromozoa.calendar")
+if not result then
+  local shell = require "dromozoa.shell"
+
+  local command = {
+    "env";
+    "PATH=" .. shell.quote(((os.getenv "PATH"):gsub("^[^:]*:", "")));
+    "cal";
+  }
+  for i = 1, #arg do
+    command[#command + 1] = shell.quote(arg[i])
+  end
+
+  os.execute(table.concat(command, " "))
+  os.exit()
+end
 
 local floor = math.floor
 

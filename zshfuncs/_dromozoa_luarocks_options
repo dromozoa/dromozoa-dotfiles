@@ -3,8 +3,10 @@ _dromozoa_luarocks_options() {
   options=(
     $options
     '--dev[Enable the sub-repositories in rocks servers for rockspecs of in-development versions]'
+    '--global[Use the system tree when `local_by_default` is `true`.]'
     '--local[Use the tree in the user'\''s home directory. To enable it, see '\''luarocks help path'\''.]'
     '--lua-dir=[Which Lua installation to use.]:path:_files'
+    '--lua-version=[Which Lua version to use.]:vers'
     '--only-server=[Fetch rocks/rockspecs from this server only (overrides any entries in the config file)]:server:_hosts'
     '--only-sources=[Restrict downloads to paths matching the given URL.]:url:_urls'
     '--server=[Fetch rocks/rockspecs from this server (takes priority over config file)]:server:_hosts'
@@ -22,17 +24,16 @@ _dromozoa_luarocks_options() {
         '--keep[Do not remove previously installed versions of the rock after building a new one. This behavior can be made permanent by setting keep_other_versions=true in the configuration file.]'
         '--only-deps[Installs only the dependencies of the rock.]'
         '--pack-binary-rock[Do not install rock. Instead, produce a .rock file with the contents of compilation in the current directory.]'
+        '--sign[To be used with --pack-binary-rock. Also produce a signature file for the generated .rock file.]'
+        '--verify[Verify signature of the rockspec or src.rock being built. If the rockspec or src.rock is being downloaded, LuaRocks will attempt to download the signature as well. Otherwise, the signature file should be already available locally in the same directory. You need the signer’s public key in your local keyring for this option to work properly.]'
       )
       ;;
     Xconfig)
       options=(
         $options
-        '--lua-incdir[Path to Lua header files.]'
-        '--lua-libdir[Path to Lua library files.]'
-        '--lua-ver[Lua version (in major.minor format). e.g. 5.1]'
-        '--rock-trees[Rocks trees in use. First the user tree, then the system tree.]'
-        '--system-config[Location of the system config file.]'
-        '--user-config[Location of the user config file.]'
+        '--json[Output as JSON]'
+        '--scope=[The scope indicates which config file should be rewritten. Accepted values are "system", "user" or "project". * Using a wrapper created with `luarocks init`, the default is "project". * Using --local (or when `local_by_default` is `true`), the default is "user". * Otherwise, the default is "system".]:system|user|project'
+        '--unset'
       )
       ;;
     Xdoc)
@@ -59,7 +60,7 @@ _dromozoa_luarocks_options() {
         '--lib=[A comma-separated list of libraries that C files need to link to.]:library'
         '--license=[A license string, such as "MIT/X11" or "GNU GPL v3".]:text'
         '--lua-versions=[Supported Lua versions. Accepted values are "5.1", "5.2", "5.3", "5.1,5.2", "5.2,5.3", or "5.1,5.2,5.3".]:versions'
-        '--reset[Regenerate .luarocks/config-5.x.lua and ./lua wrapper if those already exist.]'
+        '--reset[Delete .luarocks/config-5.x.lua and ./lua and generate new ones.]'
         '--rockspec-format=[Rockspec format version, such as "1.0" or "1.1".]:ver'
         '--summary=[A short one-line description summary.]:text'
       )
@@ -69,7 +70,9 @@ _dromozoa_luarocks_options() {
         $options
         '--deps-mode=[How to handle dependencies.]:mode:((all\:"use all trees from the rocks_trees list for finding dependencies" one\:"use only the current tree (possibly set with --tree)" order\:"use trees based on order (use the current tree and all trees below it on the rocks_trees list)" none\:"ignore dependencies altogether."))'
         '--keep[Do not remove previously installed versions of the rock after installing a new one. This behavior can be made permanent by setting keep_other_versions=true in the configuration file.]'
+        '--no-doc[Installs the rock without its documentation.]'
         '--only-deps[Installs only the dependencies of the rock.]'
+        '--verify[Verify signature of the rock being installed. If rock is being downloaded, LuaRocks will attempt to download the signature as well. If the rock is local, the signature file should be in the same directory. You need the signer’s public key in your local keyring for this option to work properly.]'
       )
       ;;
     Xlist)
@@ -85,12 +88,20 @@ _dromozoa_luarocks_options() {
         '--branch=[Override the `source.branch` field in the loaded rockspec. Allows to specify a different branch to  fetch. Particularly for "dev" rocks.]:branch-name'
         '--keep[Do not remove previously installed versions of the rock after installing a new one. This behavior can be made permanent by setting keep_other_versions=true in the configuration file.]'
         '--pack-binary-rock[Do not install rock. Instead, produce a .rock file with the contents of compilation in the current directory.]'
+        '--sign[To be used with --pack-binary-rock. Also produce a signature file for the generated .rock file.]'
+        '--verify[Verify signature of the rockspec or src.rock being built. If the rockspec or src.rock is being downloaded, LuaRocks will attempt to download the signature as well. Otherwise, the signature file should be already available locally in the same directory. You need the signer’s public key in your local keyring for this option to work properly.]'
       )
       ;;
     Xnew_version)
       options=(
         $options
         '--tag=:tag'
+      )
+      ;;
+    Xpack)
+      options=(
+        $options
+        '--sign[Produce a signature file as well.]'
       )
       ;;
     Xpath)
@@ -159,6 +170,7 @@ _dromozoa_luarocks_options() {
         $options
         '--api-key=[Give it an API key. It will be stored for subsequent uses.]:key'
         '--force[Replace existing rockspec if the same revision of a module already exists. This should be used only  in case of upload mistakes: when updating a rockspec, increment the revision number instead.]'
+        '--sign[Upload a signature file alongside each file as well.]'
         '--skip-pack[Do not pack and send source rock.]'
         '--temp-key=[Use the given a temporary API key in this invocation only. It will not be stored.]:key'
       )

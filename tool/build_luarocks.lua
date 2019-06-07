@@ -1,4 +1,4 @@
--- Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2018,2019 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dotfiles.
 --
@@ -148,9 +148,13 @@ for item in os.getenv "PATH":gmatch "[^:]*" do
 end
 
 local cfg = require "luarocks.core.cfg"
+cfg.init()
 if cfg then
   cfg.deps_mode = ""
 end
+
+local fs = require "luarocks.fs"
+fs.init()
 
 local names = {}
 local modules = {}
@@ -201,7 +205,7 @@ for i = 1, #names do
   module.opts = opts
   module.args = args
 
-  for item in arguments:gmatch "[%w%-<=>_]+" do
+  for item in arguments:gmatch "[%w%-<=>_%.]+" do
     if item ~= "--" then
       local name = item:match "^%-%-([%w%-]+)"
       if name then
@@ -209,8 +213,10 @@ for i = 1, #names do
           name = name;
           arg = assert(supported_flags[name]);
         }
+      elseif item == "<flags...>" or item == "..." then
+        print(("ignore at name %q item %q"):format(names[i], item))
       else
-        args[#args + 1] = assert(item:match "^<([^>]*)>$")
+        args[#args + 1] = assert(item:match "^<([^>]*)>$", ("error at name %q item %q"):format(names[i], item))
       end
     end
   end

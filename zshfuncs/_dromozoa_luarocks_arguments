@@ -10,7 +10,7 @@ _dromozoa_luarocks_arguments() {
     Xconfig)
       arguments=(
         $arguments
-        ': :_luarocks_arguments __MARKER__ flag'
+        ': :_luarocks_arguments __MARKER__ key key value key'
       )
       ;;
     Xdoc)
