@@ -17,6 +17,8 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
+package.path = os.getenv "HOME" .. "/dromozoa-dotfiles/?.lua;" .. package.path
+
 local result, calendar = pcall(require, "dromozoa.calendar")
 if not result then
   local shell = require "dromozoa.shell"
