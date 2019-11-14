@@ -21,7 +21,10 @@ package.path = os.getenv "HOME" .. "/dromozoa-dotfiles/?.lua;" .. package.path
 
 local shell = require "dromozoa.shell"
 
-local author = "Tomoyuki Fujimori"
+local authors = {
+  "Tomoyuki Fujimori";
+  "<dev@brigid.jp>";
+}
 
 local help = [[
 Usage: check-copyright [options]
@@ -62,10 +65,16 @@ for file in content:gmatch "(.-)%z" do
   if not file:find "^bind/" then
     local source
     local handle = assert(io.open(file))
+    local author
     for line in handle:lines() do
-      if line:find "Copyright %(C%)" and line:find(author, 1, true) then
-        source = line
-        break
+      if line:find "Copyright %([Cc]%)" then
+        for i = 1, #authors do
+          author = authors[i]
+          if line:find(author, 1, true) then
+            source = line
+            break
+          end
+        end
       end
     end
     handle:close()
@@ -89,45 +98,49 @@ for file in content:gmatch "(.-)%z" do
       end
       table.sort(year_list)
 
-      local year_range = { year_list[1], year_list[1] }
-      local year_ranges = { year_range }
-      for i = 2, #year_list do
-        local year = year_list[i]
-        if year_range[2] == year - 1 then
-          year_range[2] = year
-        else
-          year_range = { year, year }
-          year_ranges[#year_ranges + 1] = year_range
-        end
-      end
-
-      local years = ""
-      for i = 1, #year_ranges do
-        local year_range = year_ranges[i]
-        local year1 = year_range[1]
-        local year2 = year_range[2]
-        if years ~= "" then
-          years = years .. ","
-        end
-        if year1 == year2 then
-          years = years .. year1
-        elseif year1 == year2 - 1 then
-          years = years .. year1 .. "," .. year2
-        else
-          years = years .. year1 .. "-" .. year2
-        end
-      end
-
-      local target = source:gsub("^(.-Copyright %(C%) )[%d%,%-]+( .*)", "%1" .. years .. "%2")
-      if source == target then
-        if not options.quiet then
-          io.write("[OK] ", file, "\n")
-        end
+      if #year_list == 0 then
+        io.write("[??] ", file, "\n")
       else
-        code = 1
-        io.write("[NG] ", file, "\n")
-        io.write("\t", source, "\n")
-        io.write("\t", target, "\n")
+        local year_range = { year_list[1], year_list[1] }
+        local year_ranges = { year_range }
+        for i = 2, #year_list do
+          local year = year_list[i]
+          if year_range[2] == year - 1 then
+            year_range[2] = year
+          else
+            year_range = { year, year }
+            year_ranges[#year_ranges + 1] = year_range
+          end
+        end
+
+        local years = ""
+        for i = 1, #year_ranges do
+          local year_range = year_ranges[i]
+          local year1 = year_range[1]
+          local year2 = year_range[2]
+          if years ~= "" then
+            years = years .. ","
+          end
+          if year1 == year2 then
+            years = years .. year1
+          elseif year1 == year2 - 1 then
+            years = years .. year1 .. "," .. year2
+          else
+            years = years .. year1 .. "-" .. year2
+          end
+        end
+
+        local target = source:gsub("^(.-Copyright %(C%) )[%d%,%-]+( .*)", "%1" .. years .. "%2")
+        if source == target then
+          if not options.quiet then
+            io.write("[OK] ", file, "\n")
+          end
+        else
+          code = 1
+          io.write("[NG] ", file, "\n")
+          io.write("\t", source, "\n")
+          io.write("\t", target, "\n")
+        end
       end
     end
   end
