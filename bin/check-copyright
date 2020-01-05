@@ -130,7 +130,7 @@ for file in content:gmatch "(.-)%z" do
           end
         end
 
-        local target = source:gsub("^(.-Copyright %(C%) )[%d%,%-]+( .*)", "%1" .. years .. "%2")
+        local target = source:gsub("^(.-Copyright %([Cc]%) )[%d%,%-]+( .*)", "%1" .. years .. "%2")
         if source == target then
           if not options.quiet then
             io.write("[OK] ", file, "\n")
