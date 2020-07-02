@@ -18,7 +18,7 @@
 # along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 case X$1 in
-  X51|X52|X53) version=$1;;
+  X51|X52|X53|X54) version=$1;;
   *) _dromozoa_error "unsupported version";;
 esac
 
