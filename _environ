@@ -19,9 +19,9 @@
 
 PATH=\
 $HOME/dromozoa-dotfiles/bin:\
-$HOME/prefixes/dromozoa53/bin:\
+$HOME/prefixes/dromozoa54/bin:\
 $HOME/prefixes/dromozoa/bin:\
-/opt/dromozoa53/bin:\
+/opt/dromozoa54/bin:\
 /opt/dromozoa/bin:\
 /usr/local/bin:\
 /usr/bin:\
@@ -30,9 +30,9 @@ $HOME/prefixes/dromozoa/bin:\
 /sbin
 
 MANPATH=\
-$HOME/prefixes/dromozoa53/share/man:\
+$HOME/prefixes/dromozoa54/share/man:\
 $HOME/prefixes/dromozoa/share/man:\
-/opt/dromozoa53/share/man:\
+/opt/dromozoa54/share/man:\
 /opt/dromozoa/share/man:\
 /usr/local/share/man:\
 /usr/share/man
