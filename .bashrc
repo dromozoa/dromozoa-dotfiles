@@ -21,7 +21,7 @@ case X$PS1 in
 esac
 
 _dromozoa_bashrc_d() {
-  if test -d "HOME/.bashrc.d"
+  if test -d "$HOME/.bashrc.d"
   then
     for i in "$HOME/.bashrc.d/"*
     do
