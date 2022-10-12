@@ -1,4 +1,4 @@
-# Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+# Copyright (C) 2018,2021 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
 # This file is part of dromozoa-dotfiles.
 #
@@ -19,3 +19,17 @@ case X$PS1 in
   X) . "$HOME/dromozoa-dotfiles/_environ";;
   *) . "$HOME/dromozoa-dotfiles/_bashrc";;
 esac
+
+_dromozoa_bashrc_d() {
+  if test -d "$HOME/.bashrc.d"
+  then
+    for i in "$HOME/.bashrc.d/"*
+    do
+      if test -f "$i"
+      then
+        . "$i"
+      fi
+    done
+  fi
+}
+_dromozoa_bashrc_d
