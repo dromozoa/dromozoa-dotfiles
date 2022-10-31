@@ -70,6 +70,7 @@ highlight Normal ctermbg=none
 highlight Underlined ctermfg=LightBlue
 
 autocmd FileType html setlocal wrap
+autocmd FileType markdown setlocal wrap
 autocmd FileType text setlocal textwidth=60
 autocmd FileType lua syntax sync minlines=500 maxlines=1000
 if has("lua")
