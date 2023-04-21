@@ -1,6 +1,6 @@
 #! /usr/bin/env lua
 
--- Copyright (C) 2018,2019 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2018-2020,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dotfiles.
 --
@@ -24,6 +24,9 @@ local shell = require "dromozoa.shell"
 local authors = {
   "Tomoyuki Fujimori";
   "<dev@brigid.jp>";
+}
+local author_map = {
+  ["煙人計画"] = "Tomoyuki Fujimori";
 }
 
 local help = [[
@@ -62,7 +65,7 @@ local handle = assert(io.popen "git ls-files -z")
 local content = handle:read "*a"
 handle:close()
 for file in content:gmatch "(.-)%z" do
-  if not file:find "^bind/" then
+  if not file:find "^bind/" and file ~= "build" then
     local source
     local handle = assert(io.open(file))
     local author
@@ -73,6 +76,15 @@ for file in content:gmatch "(.-)%z" do
           if line:find(author, 1, true) then
             source = line
             break
+          end
+        end
+        if not source then
+          for k, v in pairs(author_map) do
+            if line:find(k, 1, true) then
+              author = v
+              source = line
+              break
+            end
           end
         end
       end
