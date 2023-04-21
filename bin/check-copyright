@@ -1,6 +1,6 @@
 #! /usr/bin/env lua
 
--- Copyright (C) 2018,2019 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2018-2020,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dotfiles.
 --
@@ -65,7 +65,7 @@ local handle = assert(io.popen "git ls-files -z")
 local content = handle:read "*a"
 handle:close()
 for file in content:gmatch "(.-)%z" do
-  if not file:find "^bind/" then
+  if not file:find "^bind/" and file ~= "build" then
     local source
     local handle = assert(io.open(file))
     local author

@@ -1,6 +1,6 @@
 # vim: filetype=sh:
 
-# Copyright (C) 2018,2019 Tomoyuki Fujimori <moyu@dromozoa.com>
+# Copyright (C) 2018-2020,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
 # This file is part of dromozoa-dotfiles.
 #
@@ -72,6 +72,10 @@ alias git-commit-update-copyright='git commit -m "著作権表記を更新。"'
 
 # commit package
 alias git-commit-update-package='git commit -m "パッケージのバージョンを更新。"'
+
+# commit misc
+alias git-commit-update-submodule='git commit -m "サブモジュールを更新。"'
+alias git-commit-update-version='git commit -m "バージョンを更新。"'
 
 alias tig-all='tig --all'
 
