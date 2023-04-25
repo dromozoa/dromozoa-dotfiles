@@ -34,6 +34,7 @@ Usage: check-copyright [options]
 Avairable options are:
   -h  --help
   -q  --quiet
+  -u  --update
 ]]
 
 local options = {}
@@ -48,6 +49,8 @@ while i <= n do
     os.exit()
   elseif this == "-q" or this == "--quiet" then
     options.quiet = true
+  elseif this == "-u" or this == "--update" then
+    options.update = true
   elseif this == "--" then
     break
   elseif this:find "^%-" then
@@ -66,15 +69,21 @@ local content = handle:read "*a"
 handle:close()
 for file in content:gmatch "(.-)%z" do
   if not file:find "^bind/" and file ~= "build" then
+    local line_number = 0
+    local line_buffer = {}
     local source
+    local source_line_number
     local handle = assert(io.open(file))
     local author
     for line in handle:lines() do
+      line_number = line_number + 1
+      line_buffer[line_number] = line
       if line:find "Copyright %([Cc]%)" then
         for i = 1, #authors do
           author = authors[i]
           if line:find(author, 1, true) then
             source = line
+            source_line_number = line_number
             break
           end
         end
@@ -83,6 +92,7 @@ for file in content:gmatch "(.-)%z" do
             if line:find(k, 1, true) then
               author = v
               source = line
+              source_line_number = line_number
               break
             end
           end
@@ -152,6 +162,20 @@ for file in content:gmatch "(.-)%z" do
           io.write("[NG] ", file, "\n")
           io.write("\t", source, "\n")
           io.write("\t", target, "\n")
+        end
+
+        if options.update then
+          local handle = assert(io.open(file, "w"))
+
+          line_buffer[source_line_number] = target
+          for i = 1, #line_buffer do
+            local line = line_buffer[i]
+              :gsub("(FITNESS FOR A PARTICULAR PURPOSE)%.%s+(See the)", "%1. %2")
+              :gsub("%.%s+(If not, see )<http:(//www.gnu.org/licenses/)>", ". %1<https:%2>")
+            handle:write(line, "\n")
+          end
+
+          handle:close()
         end
       end
     end
