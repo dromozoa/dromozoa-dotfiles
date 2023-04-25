@@ -82,7 +82,6 @@ if exists("javaScript_fold")
 else
     syn keyword javaScriptFunction	function
     syn match	javaScriptBraces	   "[{}\[\]]"
-    syn match	javaScriptParens	   "[()]"
 endif
 
 if main_syntax == "javascript"

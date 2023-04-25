@@ -15,7 +15,7 @@
 " You should have received a copy of the GNU General Public License
 " along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-set runtimepath+=~/dromozoa-dotfiles/vimfiles
+set runtimepath^=~/dromozoa-dotfiles/vimfiles
 
 set ambiwidth=double
 set fileformats=unix,dos,mac
