@@ -16,6 +16,7 @@
 " along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
 set runtimepath^=~/dromozoa-dotfiles/vimfiles
+let g:netrw_home="~/.vim"
 
 set ambiwidth=double
 set fileformats=unix,dos,mac
