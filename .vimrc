@@ -47,7 +47,6 @@ set smartcase
 set autowrite
 set updatetime=200
 
-" remove: au! wall
 augroup wall
   autocmd!
   autocmd InsertLeave * wall
@@ -74,10 +73,10 @@ autocmd FileType html setlocal wrap
 autocmd FileType markdown setlocal wrap
 autocmd FileType text setlocal textwidth=60
 autocmd FileType lua syntax sync minlines=500 maxlines=1000
-" if has("lua")
-"   let $LUA_PATH=$HOME."/dromozoa-dotfiles/?.lua;;"
-"   autocmd FileType text setlocal formatexpr=dromozoa#format()
-" endif
+if has("lua")
+  let $LUA_PATH=$HOME."/dromozoa-dotfiles/?.lua;;"
+  autocmd FileType text setlocal formatexpr=dromozoa#format()
+endif
 
 nnoremap j gj
 nnoremap k gk

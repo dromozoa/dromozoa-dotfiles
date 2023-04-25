@@ -15,9 +15,21 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles.  If not, see <http://www.gnu.org/licenses/>.
 
-local text = require "dromozoa.text"
-local ucd = require "dromozoa.ucd"
-local utf8 = require "dromozoa.utf8"
+local text
+local ucd
+local utf8
+
+local result = pcall(function ()
+  text = require "dromozoa.text"
+  ucd = require "dromozoa.ucd"
+  utf8 = require "dromozoa.utf8"
+end)
+
+if not result then
+  return function (vim)
+    return "1"
+  end
+end
 
 local unpack = table.unpack or unpack
 
