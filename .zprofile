@@ -15,4 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
+# /etc/zprofileでパスが変更されるかもしれないので再設定する。
+. "$HOME/dromozoa-dotfiles/_zshenv"
 . "$HOME/dromozoa-dotfiles/_profile"
