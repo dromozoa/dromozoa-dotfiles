@@ -28,7 +28,7 @@ setopt hist_expand
 setopt hist_ignore_dups
 setopt hist_reduce_blanks
 setopt hist_verify
-setopt inc_append_history
+setopt inc_append_history_time
 setopt noautoremoveslash
 setopt noflowcontrol
 setopt share_history
@@ -52,7 +52,8 @@ HISTSIZE=65536
 SAVEHIST=65536
 CORRECT_IGNORE=_*
 
-alias h='history -E -i 1 | grep'
+# 標準出力以外への出力は時間がかかるので一時ファイルを作成する。
+alias h='history -E -i 1 >"$HOME/.zsh_history_cache"; cat "$HOME/.zsh_history_cache" | grep'
 
 autoload -U compinit
 compinit
@@ -65,6 +66,8 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "^N" history-beginning-search-forward-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^Q" push-line-or-edit
+bindkey "^R" history-incremental-search-backward
+bindkey "^S" history-incremental-search-forward
 
 _dromozoa_zshrc_d() {
   unsetopt local_options nomatch
