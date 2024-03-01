@@ -1,4 +1,4 @@
-" Copyright (C) 2018,2019,2022,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
+" Copyright (C) 2018,2019,2022-2024 Tomoyuki Fujimori <moyu@dromozoa.com>
 "
 " This file is part of dromozoa-dotfiles.
 "
@@ -49,8 +49,8 @@ set updatetime=200
 
 augroup wall
   autocmd!
-  autocmd InsertLeave * wall
-  autocmd CursorHold * wall
+  autocmd InsertLeave * silent! wall
+  autocmd CursorHold * silent! wall
 augroup END
 
 set debug=msg

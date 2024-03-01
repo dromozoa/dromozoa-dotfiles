@@ -1,6 +1,6 @@
 # vim: filetype=sh:
 
-# Copyright (C) 2018-2020,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
+# Copyright (C) 2018-2020,2023,2024 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
 # This file is part of dromozoa-dotfiles.
 #
@@ -44,6 +44,7 @@ alias git-push-all-tags-dry-run='git-push-all-tags --dry-run'
 alias git-clean='git clean -d -x'
 
 alias git-checkout-master='git checkout master'
+alias git-checkout-main='git checkout main'
 alias git-checkout-develop='_dromozoa_git_checkout develop master'
 alias git-checkout-feature='_dromozoa_git_checkout feature develop'
 alias git-checkout-release='_dromozoa_git_checkout release develop'
