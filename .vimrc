@@ -49,8 +49,8 @@ set updatetime=200
 
 augroup wall
   autocmd!
-  autocmd InsertLeave * wall
-  autocmd CursorHold * wall
+  autocmd InsertLeave * silent! wall
+  autocmd CursorHold * silent! wall
 augroup END
 
 set debug=msg
