@@ -30,13 +30,10 @@ setopt hist_reduce_blanks
 setopt hist_verify
 setopt noautoremoveslash
 setopt noflowcontrol
-setopt share_history
 
-# zsh 5.0.2 (CentOS 7) does not have inc_append_history_time
-if setopt inc_append_history_time >/dev/null 2>&1
-then
-  setopt inc_append_history
-fi
+setopt share_history
+# setopt inc_append_history
+# setopt inc_append_history_time
 
 _dromozoa_prompt() {
   local start='%{[91m%}'
