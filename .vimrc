@@ -55,6 +55,7 @@ augroup END
 
 set debug=msg
 set clipboard=unnamed
+set modeline
 set modelines=5
 set wildmode=list:longest
 
