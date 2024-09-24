@@ -20,7 +20,7 @@ let g:netrw_home="~/.vim"
 
 set ambiwidth=double
 set fileformats=unix,dos,mac
-set fileencodings=ucs-bom,utf-8,utf-16,sjis,euc-jp
+set fileencodings=ucs-bom,utf-8,sjis,euc-jp,utf-16
 
 set autoindent
 set expandtab
