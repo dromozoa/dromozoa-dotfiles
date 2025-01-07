@@ -1,4 +1,4 @@
-# Copyright (C) 2018,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
+# Copyright (C) 2018,2023,2024 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
 # This file is part of dromozoa-dotfiles.
 #
@@ -16,9 +16,24 @@
 # along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
 truecolor on
-hardstatus alwayslastline '%{= 0;7}%-w%{= 0;3}%50>%n %t%{-}%+w%-8= [%c]'
 shell -$SHELL
 startup_message off
 cjkwidth on
 maptimeout 0
 msgminwait 0
+
+# hardstatus alwayslastline '%{= 0;7}%-w%{= 0;3}%50>%n %t%{-}%+w%-8= [%c]'
+# TODO 長すぎる場合の真ん中寄せを検討する。
+setenv s ""
+setenv s "$s%{= 0;7}"
+setenv s "$s%-w"
+setenv s "$s%{= 0;3}"
+setenv s "$s%n"
+setenv s "$s "
+setenv s "$s%t"
+setenv s "$s%{-}"
+setenv s "$s%+w"
+setenv s "$s%="
+setenv s "$s[%c]"
+hardstatus alwayslastline "$s"
+unsetenv s
