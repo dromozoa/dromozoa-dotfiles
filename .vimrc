@@ -1,4 +1,4 @@
-" Copyright (C) 2018,2019,2022-2024 Tomoyuki Fujimori <moyu@dromozoa.com>
+" Copyright (C) 2018,2019,2022-2025 Tomoyuki Fujimori <moyu@dromozoa.com>
 "
 " This file is part of dromozoa-dotfiles.
 "
@@ -20,7 +20,7 @@ let g:netrw_home="~/.vim"
 
 set ambiwidth=double
 set fileformats=unix,dos,mac
-set fileencodings=ucs-bom,utf-8,utf-16,sjis,euc-jp
+set fileencodings=ucs-bom,utf-8,sjis,euc-jp,utf-16
 
 set autoindent
 set expandtab
@@ -53,8 +53,14 @@ augroup wall
   autocmd CursorHold * silent! wall
 augroup END
 
+augroup update_markdown_syntax
+  autocmd!
+  autocmd BufNew,BufEnter * if &filetype == 'markdown' | syntax match markdownError '\w\@<=\w\@=' | endif
+augroup END
+
 set debug=msg
 set clipboard=unnamed
+set modeline
 set modelines=5
 set wildmode=list:longest
 
