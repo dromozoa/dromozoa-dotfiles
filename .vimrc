@@ -53,6 +53,11 @@ augroup wall
   autocmd CursorHold * silent! wall
 augroup END
 
+augroup update_markdown_syntax
+  autocmd!
+  autocmd BufNew,BufEnter * if &filetype == 'markdown' | syntax match markdownError '\w\@<=\w\@=' | endif
+augroup END
+
 set debug=msg
 set clipboard=unnamed
 set modeline
