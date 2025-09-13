@@ -22,6 +22,9 @@ cjkwidth on
 maptimeout 0
 msgminwait 0
 
+defutf8
+defencoding UTF-8
+
 # hardstatus alwayslastline '%{= 0;7}%-w%{= 0;3}%50>%n %t%{-}%+w%-8= [%c]'
 # TODO 長すぎる場合の真ん中寄せを検討する。
 setenv s ""
