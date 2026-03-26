@@ -86,6 +86,7 @@ alias 51='eval `_dromozoa_switch_path 51`'
 alias 52='eval `_dromozoa_switch_path 52`'
 alias 53='eval `_dromozoa_switch_path 53`'
 alias 54='eval `_dromozoa_switch_path 54`'
+alias 55='eval `_dromozoa_switch_path 55`'
 
 alias mkdir-today-business='eval `_dromozoa_mkdir_today "$HOME/Workspace/Business"`'
 alias mkdir-today-hobby='eval `_dromozoa_mkdir_today "$HOME/Workspace/Hobby"`'
