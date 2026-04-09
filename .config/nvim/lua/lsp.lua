@@ -65,41 +65,36 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-local lua_ls_config = {
+vim.lsp.config("lua_ls", {
   cmd = { "/opt/lua-language-server/bin/lua-language-server" };
-  filetypes = { "lua" };
-  root_dir = function(bufnr, on_dir)
-    local name = vim.api.nvim_buf_get_name(bufnr)
-    on_dir(vim.fs.dirname(name))
-  end,
   settings = {
     Lua = {
       runtime = {
-        version = "LuaJIT",
-      },
+        version = "Lua 5.4";
+      };
       completion = {
-        callSnippet = "Replace",
-      },
+        callSnippet = "Replace";
+      };
       hint = {
-        enable = true,
-      },
+        enable = true;
+      };
       diagnostics = {
-        -- 必要になったら使う。最初から増やしすぎない。
-        globals = { "vim" },
-      },
+        disable = {
+          -- 気に入らないやつを無効化する
+        };
+        globals = { "vim" };
+      };
       workspace = {
-        checkThirdParty = false,
+        checkThirdParty = false;
         library = {
-          vim.env.VIMRUNTIME,
-          vim.fn.stdpath("config") .. "/lua",
-        },
-      },
+          -- いろいろ追加する
+        };
+      };
       telemetry = {
-        enable = false,
-      },
-    },
-  },
-}
+        enable = false;
+      };
+    };
+  };
+})
 
-vim.lsp.config("lua_ls", lua_ls_config)
 vim.lsp.enable("lua_ls")
