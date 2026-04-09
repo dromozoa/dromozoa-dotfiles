@@ -51,7 +51,8 @@ for i in \
   .bash_profile .bashrc .bash_logout \
   .zshenv .zprofile .zshrc .zlogout \
   .editrc .inputrc .screenrc .tigrc .vimrc \
-  .config/nvim/init.lua
+  .config/nvim/init.lua \
+  .config/nvim/lua/lsp.lua
 do
   if test -h "$i"
   then

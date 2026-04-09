@@ -16,6 +16,8 @@
 -- options
 -- -------------------------------------------------------------------
 
+require "lsp"
+
 local opt = vim.opt
 
 opt.ambiwidth = "double"
