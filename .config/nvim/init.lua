@@ -36,7 +36,7 @@ opt.debug = "msg"
 opt.clipboard = "unnamed"
 opt.modeline = true
 opt.modelines = 5
-opt.wildmode = { "list", "longest" }
+opt.wildmode = { "longest", "list" }
 
 vim.cmd "packadd! matchit"
 vim.cmd "syntax enable"

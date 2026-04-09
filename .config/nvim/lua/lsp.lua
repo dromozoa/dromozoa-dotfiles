@@ -67,6 +67,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 vim.lsp.config("lua_ls", {
   cmd = { "/opt/lua-language-server/bin/lua-language-server" };
+  filetypes = { "lua" };
   settings = {
     Lua = {
       runtime = {
