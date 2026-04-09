@@ -3,22 +3,22 @@ local function lsp_buf_map(bufnr, lhs, rhs, desc, mode)
 end
 
 vim.diagnostic.config({
-  underline = true,
-  update_in_insert = false,
-  severity_sort = true,
+  underline = true;
+  update_in_insert = false;
+  severity_sort = true;
   virtual_text = {
-    spacing = 2,
-    source = "if_many",
-  },
-  signs = true,
+    spacing = 2;
+    source = "if_many";
+  };
+  signs = true;
   float = {
-    border = "rounded",
-    source = "if_many",
-  },
+    border = "rounded";
+    source = "if_many";
+  };
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("my-lsp-attach", { clear = true }),
+  group = vim.api.nvim_create_augroup("my-lsp-attach", { clear = true });
   callback = function(args)
     local bufnr = args.buf
     local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -47,22 +47,22 @@ vim.api.nvim_create_autocmd("LspAttach", {
       local group = vim.api.nvim_create_augroup("my-lsp-highlight-" .. bufnr, { clear = true })
 
       vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-        group = group,
-        buffer = bufnr,
-        callback = vim.lsp.buf.document_highlight,
+        group = group;
+        buffer = bufnr;
+        callback = vim.lsp.buf.document_highlight;
       })
 
       vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "LspDetach" }, {
-        group = group,
-        buffer = bufnr,
-        callback = vim.lsp.buf.clear_references,
+        group = group;
+        buffer = bufnr;
+        callback = vim.lsp.buf.clear_references;
       })
     end
 
     if client:supports_method("textDocument/inlayHint") then
       vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
     end
-  end,
+  end;
 })
 
 vim.lsp.config("lua_ls", {
