@@ -68,10 +68,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
 vim.lsp.config("lua_ls", {
   cmd = { "/opt/lua-language-server/bin/lua-language-server" };
   filetypes = { "lua" };
+  root_markers = {
+    ".luarc.json";
+    ".git";
+  };
   settings = {
     Lua = {
       runtime = {
         version = "Lua 5.4";
+        pathStrict = true;
       };
       completion = {
         callSnippet = "Replace";
@@ -81,15 +86,12 @@ vim.lsp.config("lua_ls", {
       };
       diagnostics = {
         disable = {
-          -- 気に入らないやつを無効化する
+          "lowercase-global";
         };
         globals = { "vim" };
       };
       workspace = {
         checkThirdParty = false;
-        library = {
-          -- いろいろ追加する
-        };
       };
       telemetry = {
         enable = false;
