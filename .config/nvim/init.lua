@@ -18,10 +18,10 @@ opt.breakindent = true
 opt.number = true
 opt.list = true
 opt.listchars = {
-  tab = "__";
-  trail = "_";
-  precedes = "<";
-  extends = ">";
+  tab = "__",
+  trail = "_",
+  precedes = "<",
+  extends = ">",
 }
 opt.laststatus = 2
 opt.statusline = [[%F\ %m%r%h%w%y%{'['.&fileencoding.']['.&fileformat.']'}%=[%l,%c][U+%04B]]
@@ -45,6 +45,18 @@ vim.cmd "filetype plugin on"
 vim.cmd "colorscheme darkblue"
 vim.api.nvim_set_hl(0, "Normal", { ctermbg = "NONE" })
 vim.api.nvim_set_hl(0, "Underlined", { ctermfg = "LightBlue" })
+
+local wall_group = vim.api.nvim_create_augroup("wall", { clear = true })
+vim.api.nvim_create_autocmd("InsertLeave", {
+  group = wall_group,
+  pattern = "*",
+  command = "silent! wall",
+})
+vim.api.nvim_create_autocmd("CursorHold", {
+  group = wall_group,
+  pattern = "*",
+  command = "silent! wall",
+})
 
 local opts = { noremap = true, silent = true }
 vim.keymap.set("n", "j", "gj", opts)
