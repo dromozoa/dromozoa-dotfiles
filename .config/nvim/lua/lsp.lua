@@ -87,6 +87,7 @@ vim.lsp.config("lua_ls", {
       diagnostics = {
         disable = {
           "lowercase-global",
+          "redefined-local",
         },
         globals = { "vim" },
       },
@@ -95,6 +96,11 @@ vim.lsp.config("lua_ls", {
       },
       telemetry = {
         enable = false,
+      },
+      format = {
+        defaultConfig = {
+          -- align_continuous_assign_statement = "false",
+        },
       },
     },
   },
