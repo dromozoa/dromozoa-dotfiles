@@ -75,7 +75,7 @@ vim.lsp.config("lua_ls", {
   settings = {
     Lua = {
       runtime = {
-        version = "Lua 5.4",
+        version = "Lua 5.5",
         pathStrict = true,
       },
       completion = {
