@@ -30,6 +30,7 @@ opt.hlsearch = true
 opt.ignorecase = true
 opt.incsearch = true
 opt.smartcase = true
+opt.updatetime = 1000
 opt.autowrite = true
 
 opt.debug = "msg"
