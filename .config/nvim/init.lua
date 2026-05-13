@@ -2,6 +2,8 @@ require "lsp"
 
 local opt = vim.opt
 
+opt.mouse = ""
+
 opt.ambiwidth = "double"
 opt.fileformats = { "unix", "dos", "mac" }
 opt.fileencodings = { "ucs-bom", "utf-8", "sjis", "euc-jp", "utf-16" }
