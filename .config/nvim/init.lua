@@ -2,6 +2,8 @@ require "lsp"
 
 local opt = vim.opt
 
+opt.mouse = ""
+
 opt.ambiwidth = "double"
 opt.fileformats = { "unix", "dos", "mac" }
 opt.fileencodings = { "ucs-bom", "utf-8", "sjis", "euc-jp", "utf-16" }
@@ -30,6 +32,7 @@ opt.hlsearch = true
 opt.ignorecase = true
 opt.incsearch = true
 opt.smartcase = true
+opt.updatetime = 1000
 opt.autowrite = true
 
 opt.debug = "msg"
