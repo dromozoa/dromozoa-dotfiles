@@ -53,6 +53,21 @@ case X$LANG in
   X) LANG=C;;
 esac
 
+if infocmp "$TERM" >/dev/null 2>&1
+then
+  :
+elif test "X$TERM" = Xscreen.xterm-256color
+then
+  for i in screen-256color sceren
+  do
+    if infocmp "$i" >/dev/null 2>&1
+    then
+      TERM=$i
+      break
+    fi
+  done
+fi
+
 EDITOR=vim
 
 CPPFLAGS="-I$HOME/prefixes/dromozoa/include -I/opt/dromozoa/include"
@@ -62,4 +77,4 @@ case X`uname` in
   *) LDFLAGS="$LDFLAGS -Wl,-rpath -Wl,$HOME/prefixes/dromozoa/lib $LDFLAGS -Wl,-rpath -Wl,/opt/dromozoa/lib";;
 esac
 
-export PATH MANPATH LANG EDITOR CPPFLAGS LDFLAGS
+export PATH MANPATH LANG TERM EDITOR CPPFLAGS LDFLAGS
