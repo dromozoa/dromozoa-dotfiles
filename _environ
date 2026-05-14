@@ -58,7 +58,7 @@ then
   :
 elif test "X$TERM" = Xscreen.xterm-256color
 then
-  for i in screen-256color sceren
+  for i in screen-256color xterm-256color
   do
     if infocmp "$i" >/dev/null 2>&1
     then
