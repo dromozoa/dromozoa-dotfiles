@@ -26,18 +26,14 @@ defutf8
 defencoding UTF-8
 term screen.xterm-256color
 
-# hardstatus alwayslastline '%{= 0;7}%-w%{= 0;3}%50>%n %t%{-}%+w%-8= [%c]'
-# TODO 長すぎる場合の真ん中寄せを検討する。
 setenv s ""
-setenv s "$s%{= 0;7}"
-setenv s "$s%-w"
-setenv s "$s%{= 0;3}"
-setenv s "$s%n"
-setenv s "$s "
-setenv s "$s%t"
-setenv s "$s%{-}"
-setenv s "$s%+w"
-setenv s "$s%="
-setenv s "$s[%c]"
+setenv s "$s%{= 0;7}" # 前側windowの色: 黒/白
+setenv s "$s%-w"      # 前側のwindow list（フラグなし）
+setenv s "$s%{= 0;3}" # 現在windowの色: 黒/黄
+setenv s "$s%50>"     # 真ん中寄せ
+setenv s "$s%n %t"    # 現在windowの番号とタイトル
+setenv s "$s%{-}"     # 色を戻す
+setenv s "$s%+w"      # 後側のwindow list（フラグなし）
+setenv s "$s%<"       # 切り詰め
 hardstatus alwayslastline "$s"
 unsetenv s
