@@ -40,10 +40,10 @@ case X$1 in
   *) title=$1;;
 esac
 
-case X$TERM in
-  Xxterm*)
+case X$STY in
+  X)
     printf '\33]0;%s\7' "$title";;
-  Xscreen*)
+  *)
     case X$term in
       X) printf '\33k%s\33\\' "$title";;
       *) printf '\33P\33]0;%s\7\33\\' "$title";;

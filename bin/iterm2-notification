@@ -23,14 +23,16 @@ case X$1 in
 esac
 
 # DCS
-case X$TERM in
-  Xscreen*) printf '\33P';;
+case X$STY in
+  X) ;;
+  *) printf '\33P';;
 esac
 
 # iTerm2 notification
 printf '\33]9;%s\7' "$message"
 
 # ST
-case X$TERM in
-  Xscreen*) printf '\33\\';;
+case X$STY in
+  X) ;;
+  *) printf '\33\\';;
 esac

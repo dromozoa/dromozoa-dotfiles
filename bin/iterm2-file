@@ -35,7 +35,8 @@ Avairable options are:
   -p      --print-filename
 ]]
 
-local term = os.getenv "TERM"
+local sty = os.getenv "STY"
+
 local options = {}
 local print_filename
 local height
@@ -109,7 +110,7 @@ local function write(filename)
   end
   buffer[#buffer + 1] = "\n"
 
-  if term:find "^screen" then
+  if sty and sty ~= "" then
     if height then
       for i = 1, height do
         io.write "\n"
