@@ -1,6 +1,6 @@
 # vim: filetype=sh:
 
-# Copyright (C) 2018,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
+# Copyright (C) 2018,2023,2026 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
 # This file is part of dromozoa-dotfiles.
 #
@@ -17,12 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
-case X$TERM in
-  Xxterm*)
+case X$STY in
+  X)
     # push title
     printf '\33[22;0t'
     title 2>/dev/null
     iterm2-background 2>/dev/null;;
-  Xscreen*)
+  *)
     title 2>/dev/null;;
 esac

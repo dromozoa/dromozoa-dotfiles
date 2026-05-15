@@ -1,6 +1,6 @@
 #! /usr/bin/env lua
 
--- Copyright (C) 2018,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2018,2023,2026 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dotfiles.
 --
@@ -23,7 +23,7 @@ local encode_base64 = require "dromozoa.encode_base64"
 
 local unpack = table.unpack or unpack
 
-local term = os.getenv "TERM"
+local sty = os.getenv "STY"
 
 local function set(filename)
   if not filename then
@@ -40,7 +40,7 @@ local function set(filename)
   }
 
   -- DCS
-  if term:find "^screen" then
+  if sty and sty ~= "" then
     local payload = table.concat(buffer)
     for i = 1, #payload, 512 do
       io.write("\27P", payload:sub(i, i + 511), "\27\\")

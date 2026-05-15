@@ -1,4 +1,4 @@
-# Copyright (C) 2018,2023,2024 Tomoyuki Fujimori <moyu@dromozoa.com>
+# Copyright (C) 2018,2023,2024,2026 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
 # This file is part of dromozoa-dotfiles.
 #
@@ -38,8 +38,9 @@ setopt share_history
 _dromozoa_prompt() {
   local start='%{[91m%}'
   local reset="%{[0m%}"
-  case X$TERM in
-    Xscreen*) start="%{[92m%}";;
+  case X$STY in
+    X) ;;
+    *) start="%{[92m%}";;
   esac
   PS1="$start%n@%m:%~%#$reset "
   PS2="$start>$reset "
