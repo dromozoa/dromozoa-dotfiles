@@ -48,6 +48,8 @@ vim.cmd "filetype plugin on"
 vim.cmd "colorscheme darkblue"
 vim.api.nvim_set_hl(0, "Normal", { ctermbg = "NONE" })
 vim.api.nvim_set_hl(0, "Underlined", { ctermfg = "LightBlue" })
+vim.api.nvim_set_hl(0, "DiagnosticUnnecessary", { link = "Normal" })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { underline = false })
 
 local wall_group = vim.api.nvim_create_augroup("wall", { clear = true })
 vim.api.nvim_create_autocmd("InsertLeave", {
