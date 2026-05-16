@@ -26,10 +26,18 @@ defutf8
 defencoding UTF-8
 term screen.xterm-256color
 
+# | k | 0 | black
+# | r | 1 | red
+# | g | 2 | green
+# | y | 3 | yellow
+# | b | 4 | blue
+# | m | 5 | magenta
+# | c | 6 | cyan
+# | w | 7 | white
 setenv s ""
-setenv s "$s%{= 0;7}" # 前側windowの色: 黒/白
+setenv s "$s%{= wk}" # 前側windowの色: 黒/白
 setenv s "$s%-w"      # 前側のwindow list（フラグなし）
-setenv s "$s%{= 0;3}" # 現在windowの色: 黒/黄
+setenv s "$s%{= yk}" # 現在windowの色: 黒/黄
 setenv s "$s%50>"     # 真ん中寄せ
 setenv s "$s%n %t"    # 現在windowの番号とタイトル
 setenv s "$s%{-}"     # 色を戻す
