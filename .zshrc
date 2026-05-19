@@ -38,7 +38,7 @@ setopt share_history
 _dromozoa_prompt() {
   local start='%{[91m%}'
   local reset="%{[0m%}"
-  case X$STY in
+  case X$INSIDE_GNU_SCREEN in
     X) ;;
     *) start="%{[92m%}";;
   esac

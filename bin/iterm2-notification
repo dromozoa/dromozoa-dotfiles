@@ -23,7 +23,7 @@ case X$1 in
 esac
 
 # DCS
-case X$STY in
+case X$INSIDE_GNU_SCREEN in
   X) ;;
   *) printf '\33P';;
 esac
@@ -32,7 +32,7 @@ esac
 printf '\33]9;%s\7' "$message"
 
 # ST
-case X$STY in
+case X$INSIDE_GNU_SCREEN in
   X) ;;
   *) printf '\33\\';;
 esac

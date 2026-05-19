@@ -23,7 +23,7 @@
 _dromozoa_prompt() {
   local start='\[\e[91m\]'
   local reset='\[\e[m\]'
-  case X$STY in
+  case X$INSIDE_GNU_SCREEN in
     X) ;;
     *) start='\[\e[92m\]';;
   esac
