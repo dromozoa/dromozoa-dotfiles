@@ -40,7 +40,7 @@ case X$1 in
   *) title=$1;;
 esac
 
-case X$STY in
+case X$INSIDE_GNU_SCREEN in
   X)
     printf '\33]0;%s\7' "$title";;
   *)

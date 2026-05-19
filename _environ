@@ -53,6 +53,16 @@ case X$LANG in
   X) LANG=C;;
 esac
 
+INSIDE_GNU_SCREEN=
+case X$STY in
+  X)
+    case X$TERM in
+      Xscreen*) INSIDE_GNU_SCREEN=1;;
+    esac
+    ;;
+  *) INSIDE_GNU_SCREEN=1;;
+esac
+
 if infocmp "$TERM" >/dev/null 2>&1
 then
   :
