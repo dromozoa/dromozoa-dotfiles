@@ -87,4 +87,4 @@ case X`uname` in
   *) LDFLAGS="$LDFLAGS -Wl,-rpath -Wl,$HOME/prefixes/dromozoa/lib $LDFLAGS -Wl,-rpath -Wl,/opt/dromozoa/lib";;
 esac
 
-export PATH MANPATH LANG TERM EDITOR CPPFLAGS LDFLAGS
+export PATH MANPATH LANG INSIDE_GNU_SCREEN TERM EDITOR CPPFLAGS LDFLAGS
