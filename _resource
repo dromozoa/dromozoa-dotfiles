@@ -40,7 +40,6 @@ esac
 
 alias git-status='git status'
 alias git-tag='git tag -m "" -a'
-alias git-push-all-tags-dry-run='git-push-all-tags --dry-run'
 alias git-clean='git clean -d -e ".*.swp" -x'
 
 alias git-checkout-master='git checkout master'
