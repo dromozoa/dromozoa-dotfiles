@@ -1,4 +1,4 @@
--- Copyright (C) 2018,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2018,2023,2026 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dotfiles.
 --
@@ -15,9 +15,7 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
-local byte = string.byte
-local concat = table.concat
-
+---@type table<integer, string>
 local encode_table = {
   [62] = "+";
   [63] = "/";
@@ -33,13 +31,15 @@ for i = 52, 61 do
   encode_table[i] = string.char(i - 4)
 end
 
+---@param source string
+---@return string
 return function (source)
   local n = #source
   local i = 1
   local buffer = {}
 
   for j = 3, n, 3 do
-    local a, b, c = byte(source, j - 2, j)
+    local a, b, c = string.byte(source, j - 2, j)
     local a = a * 65536 + b * 256 + c
     local d = a % 64
     local a = (a - d) / 64
@@ -56,7 +56,7 @@ return function (source)
 
   local j = n % 3
   if j > 0 then
-    local a, b = byte(source, n + 1 - j, n)
+    local a, b = string.byte(source, n + 1 - j, n)
     if b then
       local a = a * 1024 + b * 4
       local c = a % 64
@@ -77,5 +77,5 @@ return function (source)
     end
   end
 
-  return concat(buffer)
+  return table.concat(buffer)
 end
