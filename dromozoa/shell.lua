@@ -16,5 +16,5 @@
 -- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
 return {
-  quote = require "dromozoa.shell.quote";
+  quote = require "dromozoa.shell.quote",
 }

@@ -17,8 +17,8 @@
 
 ---@type table<integer, string>
 local encode_table = {
-  [62] = "+";
-  [63] = "/";
+  [62] = "+",
+  [63] = "/",
 }
 
 for i = 0, 25 do
@@ -33,7 +33,7 @@ end
 
 ---@param source string
 ---@return string
-return function (source)
+return function(source)
   local n = #source
   local i = 1
   local buffer = {}

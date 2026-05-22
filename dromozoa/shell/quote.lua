@@ -23,6 +23,6 @@ local qqe = q .. q .. e
 
 ---@param source string
 ---@return string
-return function (source)
+return function(source)
   return ((q .. source:gsub(q, qeq) .. q):gsub(eqq, e):gsub(qqe, e))
 end
