@@ -68,3 +68,10 @@ vim.keymap.set("n", "j", "gj", opts)
 vim.keymap.set("n", "k", "gk", opts)
 vim.keymap.set("n", "<C-p>", "<Cmd>bprev<CR>", opts)
 vim.keymap.set("n", "<C-n>", "<Cmd>bnext<CR>", opts)
+
+local inside_gnu_screen = (vim.env.STY or "") ~= "" or (vim.env.TERM or ""):find "^screen"
+if inside_gnu_screen then
+  local termfeatures = vim.g.termfeatures or {}
+  termfeatures.osc52 = false
+  vim.g.termfeatures = termfeatures
+end
