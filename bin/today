@@ -17,6 +17,8 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
+package.path = os.getenv "HOME" .. "/dromozoa-dotfiles/?.lua;" .. package.path
+
 local date_to_jdn = require "dromozoa.calendar.date_to_jdn"
 local jdn_to_date = require "dromozoa.calendar.jdn_to_date"
 
