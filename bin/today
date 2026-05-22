@@ -1,6 +1,6 @@
 #! /usr/bin/env lua
 
--- Copyright (C) 2018,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2018,2023,2026 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dotfiles.
 --
@@ -17,4 +17,10 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
-io.write(os.date "%Y-%m-%d", "\n")
+local date_to_jdn = require "dromozoa.calendar.date_to_jdn"
+local jdn_to_date = require "dromozoa.calendar.jdn_to_date"
+
+local date = os.date "*t"
+local jdn = date_to_jdn(date.year, date.month, date.day)
+
+io.write(("%d-%02d-%02d\n"):format(jdn_to_date(jdn)))
