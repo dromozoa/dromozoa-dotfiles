@@ -21,6 +21,8 @@ package.path = os.getenv "HOME" .. "/dromozoa-dotfiles/?.lua;" .. package.path
 
 local encode_base64 = require "dromozoa.encode_base64"
 
+local inside_gnu_screen = (os.getenv "INSIDE_GNU_SCREEN" or "") ~= ""
+
 local unpack = table.unpack or unpack
 
 local help = [[
@@ -35,7 +37,6 @@ Avairable options are:
   -p      --print-filename
 ]]
 
-local inside_gnu_screen = os.getenv "INSIDE_GNU_SCREEN"
 
 local options = {}
 local print_filename
@@ -110,22 +111,19 @@ local function write(filename)
   end
   buffer[#buffer + 1] = "\n"
 
-  if inside_gnu_screen and inside_gnu_screen ~= "" then
+  local payload = table.concat(buffer)
+
+  if inside_gnu_screen then
     if height then
-      for i = 1, height do
-        io.write "\n"
-      end
-      -- DCS, CUU
-      io.write("\27P\27[", height, "A\27\\")
+      io.write(("\n"):rep(height), "\27P\27[", height, "A\27\\")
     end
 
-    local payload = table.concat(buffer)
     for i = 1, #payload, 512 do
       -- DCS, ST
       io.write("\27P", payload:sub(i, i + 511), "\27\\")
     end
   else
-    io.write(unpack(buffer))
+    io.write(payload)
   end
 end
 
