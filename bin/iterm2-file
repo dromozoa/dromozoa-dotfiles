@@ -23,8 +23,6 @@ local encode_base64 = require "dromozoa.encode_base64"
 
 local inside_gnu_screen = (os.getenv "INSIDE_GNU_SCREEN" or "") ~= ""
 
-local unpack = table.unpack or unpack
-
 local help = [[
 Usage: iterm2-file [options] [filename]...
 Avairable options are:
@@ -36,7 +34,6 @@ Avairable options are:
   -b      --cursor-bottom
   -p      --print-filename
 ]]
-
 
 local options = {}
 local print_filename
