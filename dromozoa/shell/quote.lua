@@ -1,4 +1,4 @@
--- Copyright (C) 2018,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2018,2023,2026 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dotfiles.
 --
@@ -21,6 +21,8 @@ local qeq = q .. e .. q
 local eqq = e .. q .. q
 local qqe = q .. q .. e
 
-return function (source)
+---@param source string
+---@return string
+return function(source)
   return ((q .. source:gsub(q, qeq) .. q):gsub(eqq, e):gsub(qqe, e))
 end

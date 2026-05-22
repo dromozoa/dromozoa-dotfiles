@@ -1,4 +1,4 @@
--- Copyright (C) 2018,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2018,2023,2026 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dotfiles.
 --
@@ -16,5 +16,5 @@
 -- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
 return {
-  quote = require "dromozoa.shell.quote";
+  quote = require "dromozoa.shell.quote",
 }

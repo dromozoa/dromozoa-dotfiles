@@ -1,6 +1,4 @@
-#! /usr/bin/env lua
-
--- Copyright (C) 2018,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2026 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dotfiles.
 --
@@ -17,4 +15,15 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
-io.write(os.date("%Y-%m-%d", os.time() - 86400), "\n")
+return function(year, month, day)
+  local y = math.floor((month - 3) / 12)
+  year = year + y
+  month = month + 1 - y * 12
+
+  local jdn = math.floor(365.25 * (year + 4716)) + math.floor(30.6001 * month) + day - 1524
+  if jdn >= 2299161 then
+    local A = math.floor(year / 100)
+    jdn = jdn + 2 - A + math.floor(A / 4)
+  end
+  return jdn
+end

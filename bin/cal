@@ -19,56 +19,16 @@
 
 package.path = os.getenv "HOME" .. "/dromozoa-dotfiles/?.lua;" .. package.path
 
-local floor = math.floor
-
-local function date_to_jdn(year, month, day)
-  local y = floor((month - 3) / 12)
-  year = year + y
-  month = month + 1 - y * 12
-
-  local jdn = floor(365.25 * (year + 4716)) + floor(30.6001 * month) + day - 1524
-  if jdn >= 2299161 then
-    local A = floor(year / 100)
-    jdn = jdn + 2 - A + floor(A / 4)
-  end
-  return jdn
-end
-
-local function jdn_to_date(jdn)
-  local A = jdn + 1
-  local wday = A % 7
-  if A >= 2299162 then
-    local a = floor((A - 1867217.25) / 36524.25)
-    A = A + 1 + a - floor(a / 4)
-  end
-  local B = A + 1523
-  local C = floor((B - 122.1) / 365.25)
-  local D = floor(365.25 * C)
-  local E = floor((B - D) / 30.6001)
-
-  local year
-  local month
-  if E < 14 then
-    year = C - 4716
-    month = E - 1
-  else
-    year = C - 4715
-    month = E - 13
-  end
-  local day = B - D - floor(30.6001 * E)
-  return year, month, day, wday
-end
+local date_to_jdn = require "dromozoa.calendar.date_to_jdn"
+local jdn_to_date = require "dromozoa.calendar.jdn_to_date"
 
 ---@diagnostic disable-next-line: unused-local
 local function is_holiday(year, month, day)
   return nil
 end
 
-pcall(function ()
-  local calendar = require "dromozoa.calendar"
-  date_to_jdn = calendar.date_to_jdn
-  jdn_to_date = calendar.jdn_to_date
-  is_holiday = calendar.is_holiday
+pcall(function()
+  is_holiday = require "dromozoa.calendar.is_holiday"
 end)
 
 local function SGR(n)
@@ -77,17 +37,17 @@ end
 
 local sgr_today = SGR(1) .. SGR "48;5;238"
 local sgr_holiday = {
-  ["祝日"] = SGR(1) .. SGR(91);
-  ["休日"] = SGR(1) .. SGR(91);
+  ["祝日"] = SGR(1) .. SGR(91),
+  ["休日"] = SGR(1) .. SGR(91),
 }
 local sgr_wday = {
-  [0] = SGR(91);
-  [1] = "";
-  [2] = "";
-  [3] = "";
-  [4] = "";
-  [5] = "";
-  [6] = SGR(96);
+  [0] = SGR(91),
+  [1] = "",
+  [2] = "",
+  [3] = "",
+  [4] = "",
+  [5] = "",
+  [6] = SGR(96),
 }
 local sgr_reset = SGR(0)
 
@@ -108,7 +68,7 @@ for i = 1, 24 do
   rows[i] = items
 end
 
-local min_jdn = date_to_jdn(year,  1,  1)
+local min_jdn = date_to_jdn(year, 1, 1)
 local max_jdn = date_to_jdn(year, 12, 31)
 local first_wday
 for jdn = min_jdn, max_jdn do
@@ -130,11 +90,11 @@ for jdn = min_jdn, max_jdn do
 
   local m = month - 1
   local d = first_wday + day - 1
-  local i = floor(m / 3) * 6 + floor(d / 7) + 1
+  local i = math.floor(m / 3) * 6 + math.floor(d / 7) + 1
   local j = m % 3 * 7 + d % 7 + 1
   rows[i][j] = {
-    day = day;
-    sgr = sgr;
+    day = day,
+    sgr = sgr,
   }
 end
 
@@ -168,7 +128,7 @@ end
 io.write((" "):rep(29), year, "\n\n")
 for i = 1, #rows do
   if i % 6 == 1 then
-    local month = floor(i / 6) * 3 + 1
+    local month = math.floor(i / 6) * 3 + 1
     if month < 10 then
       io.write(
         ("        %d月           "):format(month),
