@@ -20,7 +20,7 @@
 local date_to_jdn = require "dromozoa.calendar.date_to_jdn"
 local jdn_to_date = require "dromozoa.calendar.jdn_to_date"
 
+local number = tonumber((...)) or 0
 local date = os.date "*t"
-local jdn = date_to_jdn(date.year, date.month, date.day)
-
+local jdn = date_to_jdn(date.year, date.month, date.day) + number
 io.write(("%d-%02d-%02d\n"):format(jdn_to_date(jdn)))
