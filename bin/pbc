@@ -1,0 +1,45 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2026 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-dotfiles.
+--
+-- dromozoa-dotfiles is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-dotfiles is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
+
+package.path = os.getenv "HOME" .. "/dromozoa-dotfiles/?.lua;" .. package.path
+
+local encode_base64 = require "dromozoa.encode_base64"
+
+local inside_gnu_screen = (os.getenv "INSIDE_GNU_SCREEN" or "") ~= ""
+
+local filename = ...
+
+local data
+if filename then
+  local handle = assert(io.open(filename, "rb"))
+  data = handle:read "*a"
+  handle:close()
+else
+  data = io.read "*a"
+end
+
+local payload = "\27]52;;" .. encode_base64(data) .. "\7"
+
+if inside_gnu_screen then
+  for i = 1, #payload, 512 do
+    io.write("\27P", payload:sub(i, i + 511), "\27\\")
+  end
+else
+  io.write(payload)
+end
