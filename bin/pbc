@@ -19,21 +19,9 @@
 
 package.path = os.getenv "HOME" .. "/dromozoa-dotfiles/?.lua;" .. package.path
 
----@param command string?
----@return true|nil
-local function execute(command)
-  local result = os.execute(command)
-  -- Lua 5.1のos.executeはsystemの返り値を返す。
-  if type(result) == "number" then
-    -- systemの返り値はwaitpidの仕様に従う。
-    if result % 0x10000 == 0 then
-      return true
-    else
-      return nil
-    end
-  end
-  return result
-end
+local encode_base64 = require "dromozoa.encode_base64"
+
+local inside_gnu_screen = (os.getenv "INSIDE_GNU_SCREEN" or "") ~= ""
 
 local filename = ...
 
@@ -46,10 +34,12 @@ else
   data = io.read "*a"
 end
 
--- 常にpbcopyを使うかは難しい
-if execute "pbcopy -help >/dev/null 2>&1" then
-  local handle = assert(io.popen("pbcopy", "w"))
-  handle:write(data)
-  handle:close()
-  return
+local payload = "\27]52;;" .. encode_base64(data) .. "\7"
+
+if inside_gnu_screen then
+  for i = 1, #payload, 512 do
+    io.write("\27P", payload:sub(i, i + 511), "\27\\")
+  end
+else
+  io.write(payload)
 end
