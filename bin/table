@@ -17,11 +17,38 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
--- 入力: csv, tsv
--- 出力: csv, tsv, markdown
+local help = ([[
+Usage: %s [options] command
+Avairable options are:
+  -m  --multiple-lines
+  -h  --help
+Avairable commands are:
+  csv_to_tsv
+  csv_to_md
+  tsv_to_csv
+  tsv_to_md
+]]):format(arg[0])
 
-local command = ...
-local multiple_lines = true
+local multiple_lines = false
+
+local i = 1
+while i <= #arg do
+  local opt = arg[i]
+  i = i + 1
+  if opt == "-m" or opt == "--multiple-lines" then
+    multiple_lines = true
+  elseif opt == "-h" or opt == "--help" then
+    io.stderr:write(help)
+    os.exit()
+  elseif opt == "--" then
+    break
+  else
+    i = i - 1
+    break
+  end
+end
+
+local command = assert(arg[i])
 
 ---@param source string
 ---@return string[][]
@@ -158,7 +185,18 @@ end
 
 ---@param field string
 ---@return string
+local function process_multiple_lines(field)
+  if multiple_lines then
+    return field
+  else
+    return (field:gsub("\n.*", ""))
+  end
+end
+
+---@param field string
+---@return string
 local function quote_csv(field)
+  field = process_multiple_lines(field)
   if field:find '[\n\",]' then
     return '"' .. field:gsub('"', '""') .. '"'
   else
@@ -169,9 +207,7 @@ end
 ---@param field string
 ---@return string
 local function quote_tsv(field)
-  if not multiple_lines then
-    field = field:gsub("\n.*", "")
-  end
+  field = process_multiple_lines(field)
   -- \t => U+21E5 RIGHTWARDS ARROW TO BAR
   -- \n => U+21B5 DOWNWARDS ARROW WITH CORNER LEFTWARDS
   return (field:gsub("\t", "\226\135\165"):gsub("\n", "\226\134\181"))
@@ -180,6 +216,7 @@ end
 ---@param field string
 ---@return string
 local function quote_markdown(field)
+  field = process_multiple_lines(field)
   return (field:gsub("\n", "<br>"):gsub("|", "\\|"))
 end
 
@@ -215,24 +252,25 @@ end
 
 local commands = {}
 
+---@param source string
 function commands.csv_to_tsv(source)
   write(normalize(parse_csv(source)), quote_tsv, "\t")
 end
 
-function commands.tsv_to_csv(source)
-  write(normalize(parse_tsv(source)), quote_csv, ",")
-end
-
+---@param source string
 function commands.csv_to_md(source)
   write_markdown(normalize(parse_csv(source)))
 end
 
+---@param source string
+function commands.tsv_to_csv(source)
+  write(normalize(parse_tsv(source)), quote_csv, ",")
+end
+
+---@param source string
 function commands.tsv_to_md(source)
   write_markdown(normalize(parse_tsv(source)))
 end
 
 local command_fn = assert(commands[command])
-
-local source = io.read "*a"
-source = source:gsub("\n\r", "\n"):gsub("\r\n?", "\n")
-command_fn(source)
+command_fn(io.read "*a":gsub("\n\r", "\n"):gsub("\r\n?", "\n"))
