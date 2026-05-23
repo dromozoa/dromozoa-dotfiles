@@ -26,7 +26,7 @@ local vartabstop = {}
 
 for line in io.lines(filename) do
   local i = 0
-  for cell in line:gmatch "([^\t\r]*)[\t\r]?" do
+  for cell in (line .. "\t"):gmatch "(.-)\t" do
     i = i + 1
     vartabstop[i] = math.max(vartabstop[i] or padding, #cell + padding)
   end

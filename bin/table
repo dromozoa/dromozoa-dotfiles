@@ -20,8 +20,11 @@
 -- 入力: csv, tsv
 -- 出力: csv, tsv, markdown
 
-local json = require "dromozoa.commons.json"
+local command = ...
+local multiple_lines = true
 
+---@param source string
+---@return string[][]
 local function parse_csv(source)
   local position = 1
   local text
@@ -124,12 +127,112 @@ local function parse_csv(source)
   return records
 end
 
--- local commands = {}
--- function commands.csv_to_tsv(source)
---   local rows = parse_csv(source)
---   write_tsv(source)
--- end
+---@param source string
+---@return string[][]
+local function parse_tsv(source)
+  local records = {}
+  for line in source:gmatch "([^\n]*)\n?" do
+    local fields = {}
+    for field in (line.."\t"):gmatch "(.-)\t" do
+      table.insert(fields, field)
+    end
+    table.insert(records, fields)
+  end
+  return records
+end
+
+---@param records string[][]
+---@return string[][]
+local function normalize(records)
+  local n = 0
+  for _, fields in ipairs(records) do
+    n = math.max(n, #fields)
+  end
+  for _, fields in ipairs(records) do
+    for i = #fields + 1, n do
+      fields[i] = ""
+    end
+  end
+  return records
+end
+
+---@param field string
+---@return string
+local function quote_csv(field)
+  if field:find '[\n\",]' then
+    return '"' .. field:gsub('"', '""') .. '"'
+  else
+    return field
+  end
+end
+
+---@param field string
+---@return string
+local function quote_tsv(field)
+  if not multiple_lines then
+    field = field:gsub("\n.*", "")
+  end
+  -- \t => U+21E5 RIGHTWARDS ARROW TO BAR
+  -- \n => U+21B5 DOWNWARDS ARROW WITH CORNER LEFTWARDS
+  return (field:gsub("\t", "\226\135\165"):gsub("\n", "\226\134\181"))
+end
+
+---@param field string
+---@return string
+local function quote_markdown(field)
+  return (field:gsub("\n", "<br>"):gsub("|", "\\|"))
+end
+
+---@param records string[][]
+---@param quote fun(field: string):string
+---@param separator string
+local function write(records, quote, separator)
+  for _, fields in ipairs(records) do
+    local buffer = {}
+    for i, field in ipairs(fields) do
+      buffer[i] = quote(field)
+    end
+    io.write(table.concat(buffer, separator), "\n")
+  end
+end
+
+---@param records string[][]
+local function write_markdown(records)
+  for i, fields in ipairs(records) do
+    for _, field in ipairs(fields) do
+      io.write("|", quote_markdown(field))
+    end
+    io.write "|\n"
+
+    if i == 1 then
+      for _ = 1, #fields do
+        io.write "|---"
+      end
+      io.write "|\n"
+    end
+  end
+end
+
+local commands = {}
+
+function commands.csv_to_tsv(source)
+  write(normalize(parse_csv(source)), quote_tsv, "\t")
+end
+
+function commands.tsv_to_csv(source)
+  write(normalize(parse_tsv(source)), quote_csv, ",")
+end
+
+function commands.csv_to_md(source)
+  write_markdown(normalize(parse_csv(source)))
+end
+
+function commands.tsv_to_md(source)
+  write_markdown(normalize(parse_tsv(source)))
+end
+
+local command_fn = assert(commands[command])
 
 local source = io.read "*a"
-source:gsub("\n\r", "\n"):gsub("\r\n?", "\n")
-print(json.encode(parse_csv(source), { pretty = true, stable = true }))
+source = source:gsub("\n\r", "\n"):gsub("\r\n?", "\n")
+command_fn(source)
