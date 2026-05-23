@@ -1,0 +1,135 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2026 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-dotfiles.
+--
+-- dromozoa-dotfiles is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-dotfiles is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
+
+-- 入力: csv, tsv
+-- 出力: csv, tsv, markdown
+
+local json = require "dromozoa.commons.json"
+
+local function parse_csv(source)
+  local position = 1
+  local text
+
+  local function match(pattern)
+    local i, j = source:find("^" .. pattern, position)
+    if i then
+      position = j + 1
+      text = source:sub(i, j)
+      return true
+    else
+      text = nil
+      return false
+    end
+  end
+
+  local records = {}
+  local fields = {}
+  local state = 1
+
+  local function push(kind, value)
+    if state == 1 then
+      if kind == "Field" then
+        table.insert(fields, value)
+        state = 2
+      elseif kind == "Comma" then
+        table.insert(fields, "")
+      elseif kind == "LineBreak" then
+        table.insert(fields, "")
+        table.insert(records, fields)
+        fields = {}
+        state = 3
+      elseif kind == "EOF" then
+        table.insert(fields, "")
+        table.insert(records, fields)
+        fields = nil
+        state = 4
+      end
+    elseif state == 2 then
+      if kind == "Field" then
+        error("unexpected token <Field> at record " .. (#records + 1))
+      elseif kind == "Comma" then
+        state = 1
+      elseif kind == "LineBreak" then
+        table.insert(records, fields)
+        fields = {}
+        state = 3
+      elseif kind == "EOF" then
+        table.insert(records, fields)
+        fields = nil
+        state = 4
+      end
+    else
+      assert(state == 3)
+      if kind == "Field" then
+        table.insert(fields, value)
+        state = 2
+      elseif kind == "Comma" then
+        table.insert(fields, "")
+        state = 1
+      elseif kind == "LineBreak" then
+        table.insert(fields, "")
+        table.insert(records, fields)
+        fields = {}
+      elseif kind == "EOF" then
+        assert(#fields == 0)
+        fields = nil
+        state = 4
+      end
+    end
+  end
+
+  while position <= #source do
+    if match "\n" then
+      push "LineBreak"
+    elseif match "," then
+      push "Comma"
+    elseif match '"' then
+      local value = {}
+      while true do
+        if match '[^"]+' then
+          table.insert(value, text)
+        elseif match '""' then
+          table.insert(value, '"')
+        elseif match '"' then
+          break
+        else
+          error("unfinished field at position " .. position)
+        end
+      end
+      push("Field", table.concat(value))
+    else
+      assert(match '[^\n,"]+')
+      push("Field", text)
+    end
+  end
+  push "EOF"
+
+  assert(state == 4)
+  return records
+end
+
+-- local commands = {}
+-- function commands.csv_to_tsv(source)
+--   local rows = parse_csv(source)
+--   write_tsv(source)
+-- end
+
+local source = io.read "*a"
+source:gsub("\n\r", "\n"):gsub("\r\n?", "\n")
+print(json.encode(parse_csv(source), { pretty = true, stable = true }))
