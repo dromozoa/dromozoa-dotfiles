@@ -92,3 +92,19 @@ if inside_gnu_screen then
   termfeatures.osc52 = false
   vim.g.termfeatures = termfeatures
 end
+
+vim.api.nvim_create_user_command("EvalProcess", function(args)
+  local result = vim.system(args.fargs, {
+    stdin = vim.api.nvim_buf_get_lines(0, args.line1 - 1, args.line2, false),
+    text = true,
+  }):wait()
+  if result.code == 0 then
+    vim.cmd(result.stdout)
+  else
+    vim.notify(result.stderr, vim.log.levels.ERROR)
+  end
+end, {
+  nargs = "+",
+  range = "%",
+  complete = "shellcmdline",
+})
