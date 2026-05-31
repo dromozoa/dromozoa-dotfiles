@@ -23,7 +23,33 @@ local encode_base64 = require "dromozoa.encode_base64"
 
 local inside_gnu_screen = (os.getenv "INSIDE_GNU_SCREEN" or "") ~= ""
 
-local filename = ...
+local help = ([[
+Usage: %s [options] [file]
+Avairable options are:
+  -c  --chomp
+  -h  --help
+]]):format(arg[0])
+
+local chomp = false
+
+local i = 1
+while i <= #arg do
+  local opt = arg[i]
+  i = i + 1
+  if opt == "-c" or opt == "--chomp" then
+    chomp = true
+  elseif opt == "-h" or opt == "--help" then
+    io.stderr:write(help)
+    os.exit()
+  elseif opt == "--" then
+    break
+  else
+    i = i - 1
+    break
+  end
+end
+
+local filename = arg[i]
 
 local data
 if filename then
@@ -32,6 +58,10 @@ if filename then
   handle:close()
 else
   data = io.read "*a"
+end
+
+if chomp then
+  data = data:gsub("[\r\n]+$", "")
 end
 
 local payload = "\27]52;;" .. encode_base64(data) .. "\7"
