@@ -1,5 +1,41 @@
 #! /usr/bin/env lua
 
--- local handle = assert(io.popen [[ps -a -x -o "%mem,user,pid,ppid,pgid,%cpu,%mem,rss,args"]])
-local handle = assert(io.open "foo.txt")
+local keywords = {
+  "user",
+  "pid",
+  "ppid",
+  "pgid",
+  "pcpu",
+  "pmem",
+  "rss",
+  "command",
+}
+
+local handle = assert(io.popen(("ps -a -x -o '%s'"):format(table.concat(keywords, ","))))
+
+local header
+local processes = {}
+
+for line in handle:lines() do
+  local items = {}
+  local p = 1
+  for _ = 1, #keywords - 1 do
+    local _, j, item = assert(line:find("^(%S+)%s+", p))
+    table.insert(items, item)
+    p = j + 1
+  end
+  table.insert(items, line:sub(p))
+
+  for i, keyword in ipairs(keywords) do
+    items[keyword] = items[i]
+  end
+
+  if not header then
+    header = items
+  else
+    table.insert(processes, items)
+    print(items.user, items.pid, items.command)
+  end
+end
+
 handle:close()
