@@ -60,6 +60,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
     lsp_buf_map(bufnr, "<leader>e", vim.diagnostic.open_float, "Diagnostic: line")
     lsp_buf_map(bufnr, "<leader>q", vim.diagnostic.setloclist, "Diagnostic: loclist")
 
+    lsp_buf_map(bufnr, "<leader>ih", function()
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
+    end, "LSP: toggle inlay hints")
+
     if client:supports_method("textDocument/documentHighlight") then
       local group = vim.api.nvim_create_augroup("my-lsp-highlight-" .. bufnr, { clear = true })
 
@@ -100,6 +104,7 @@ vim.lsp.config("lua_ls", {
       },
       hint = {
         enable = true,
+        paramName = "Disable",
       },
       diagnostics = {
         disable = {
