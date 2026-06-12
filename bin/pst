@@ -11,31 +11,100 @@ local keywords = {
   "command",
 }
 
-local handle = assert(io.popen(("ps -a -x -o '%s'"):format(table.concat(keywords, ","))))
+---@class dromozoa.dotfiles.pst.process
+---@field user string
+---@field pid integer
+---@field ppid integer
+---@field pgid integer
+---@field pcpu number
+---@field pmem number
+---@field rss integer
+---@field command string
+---@field processes dromozoa.dotfiles.pst.process[]
+local class = {}
+local metatable = {
+  __index = class,
+  __name = "dromozoa.dotfiles.pst.process",
+}
 
-local header
-local processes = {}
-
-for line in handle:lines() do
-  local items = {}
-  local p = 1
-  for _ = 1, #keywords - 1 do
-    local _, j, item = assert(line:find("^(%S+)%s+", p))
-    table.insert(items, item)
-    p = j + 1
-  end
-  table.insert(items, line:sub(p))
-
+---@param items string[]
+---@return dromozoa.dotfiles.pst.process
+function class.new(items)
+  ---@type table<string, string>
+  local that = {}
   for i, keyword in ipairs(keywords) do
-    items[keyword] = items[i]
+    that[keyword] = items[i]
   end
+  return setmetatable({
+    user = that.user,
+    pid = tonumber(assert(that.pid:match "^%d+$")),
+    ppid = tonumber(assert(that.ppid:match "^%d+$")),
+    pgid = tonumber(assert(that.pgid:match "^%d+$")),
+    pcpu = tonumber(assert(that.pcpu:match "^(%d+%.%d+)$")),
+    pmem = tonumber(assert(that.pmem:match "^(%d+%.%d+)$")),
+    rss = tonumber(assert(that.rss:match "^%d+$")),
+    command = that.command,
+    processes = {},
+  }, metatable)
+end
 
-  if not header then
-    header = items
-  else
-    table.insert(processes, items)
-    print(items.user, items.pid, items.command)
+---@param depth integer
+function class:dump(depth)
+  io.write(("%s%s %d %g %g %s\n"):format(
+    ("  "):rep(depth),
+    self.user,
+    self.pid,
+    self.pcpu,
+    self.pmem,
+    self.command:sub(1, 40)))
+  depth = depth + 1
+  for _, process in ipairs(self.processes) do
+    process:dump(depth)
   end
 end
 
+---@type table<integer, dromozoa.dotfiles.pst.process>
+local process_map = {}
+
+local handle = assert(io.popen(("ps -a -x -o '%s'"):format(table.concat(keywords, ","))))
+local first = true
+for line in handle:lines() do
+  if first then
+    first = false
+  else
+    ---@type string
+    local line = line
+
+    ---@type string[]
+    local items = {}
+    local p = 1
+    for _ = 1, #keywords - 1 do
+      ---@type integer, integer, string
+      local _, j, item = assert(line:find("^(%S+)%s+", p))
+      table.insert(items, item)
+      p = j + 1
+    end
+    table.insert(items, line:sub(p))
+
+    local process = class.new(items)
+    process_map[process.pid] = process
+  end
+end
 handle:close()
+
+---@type dromozoa.dotfiles.pst.process[]
+local root_processes = {}
+
+for _, process in pairs(process_map) do
+  ---@type dromozoa.dotfiles.pst.process?
+  local parent_process = process_map[process.ppid]
+  if parent_process then
+    table.insert(parent_process.processes, process)
+  else
+    table.insert(root_processes, process)
+  end
+end
+
+for _, process in ipairs(root_processes) do
+  process:dump(0)
+end
