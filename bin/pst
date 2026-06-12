@@ -11,6 +11,15 @@ local keywords = {
   "command",
 }
 
+local cols
+do
+  local handle = assert(io.popen "tput cols")
+  local text = handle:read "*a"
+  handle:close()
+  ---@type integer
+  cols = assert(tonumber(assert(text:gsub("\n+$", ""):match "^%d+$")))
+end
+
 ---@class dromozoa.dotfiles.pst.process
 ---@field user string
 ---@field pid integer
@@ -49,17 +58,19 @@ function class.new(items)
 end
 
 ---@param depth integer
-function class:dump(depth)
-  io.write(("%s%s %d %g %g %s\n"):format(
-    ("  "):rep(depth),
+function class:print(depth)
+  local text = ("%s%s %d %g %g %s"):format(
+    ("    "):rep(depth),
     self.user,
     self.pid,
     self.pcpu,
     self.pmem,
-    self.command:sub(1, 40)))
+    self.command)
+  io.write(text:sub(1, cols - 2), "\n")
+
   depth = depth + 1
   for _, process in ipairs(self.processes) do
-    process:dump(depth)
+    process:print(depth)
   end
 end
 
@@ -106,5 +117,5 @@ for _, process in pairs(process_map) do
 end
 
 for _, process in ipairs(root_processes) do
-  process:dump(0)
+  process:print(0)
 end
