@@ -1,0 +1,5 @@
+#! /usr/bin/env lua
+
+-- local handle = assert(io.popen [[ps -a -x -o "%mem,user,pid,ppid,pgid,%cpu,%mem,rss,args"]])
+local handle = assert(io.open "foo.txt")
+handle:close()
