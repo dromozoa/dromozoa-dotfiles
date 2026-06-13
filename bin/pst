@@ -65,17 +65,18 @@ function class.new(items)
   }, metatable)
 end
 
-function class:summarize()
+function class:compute_subtree()
+  self.subtree_pcpu = self.pcpu
+  self.subtree_pmem = self.pmem
+  self.subtree_rss = self.rss
+
   for _, process in ipairs(self.processes) do
-    process:summarize()
+    process:compute_subtree()
   end
+
   table.sort(self.processes, function(a, b)
     return b.subtree_rss < a.subtree_rss
   end)
-
-  self.subtree_pcpu = self.subtree_pcpu + self.pcpu
-  self.subtree_pmem = self.subtree_pmem + self.pmem
-  self.subtree_rss = self.subtree_rss + self.rss
 
   local parent_process = self.parent_process
   if parent_process then
@@ -147,7 +148,7 @@ for _, process in pairs(process_map) do
 end
 
 for _, process in ipairs(root_processes) do
-  process:summarize()
+  process:compute_subtree()
 end
 for _, process in ipairs(root_processes) do
   process:print(0)
