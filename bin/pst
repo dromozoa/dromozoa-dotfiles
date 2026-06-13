@@ -30,7 +30,7 @@ end
 ---@field rss integer
 ---@field command string
 ---@field parent_process? dromozoa.dotfiles.pst.process
----@field processes dromozoa.dotfiles.pst.process[]
+---@field child_processes dromozoa.dotfiles.pst.process[]
 ---@field subtree_pcpu number
 ---@field subtree_pmem number
 ---@field subtree_rss integer
@@ -58,7 +58,7 @@ function class.new(items)
     rss = tonumber(assert(that.rss:match "^%d+$")),
     command = that.command,
     parent_process = nil,
-    processes = {},
+    child_processes = {},
     subtree_pcpu = 0.0,
     subtree_pmem = 0.0,
     subtree_rss = 0,
@@ -70,11 +70,11 @@ function class:compute_subtree()
   self.subtree_pmem = self.pmem
   self.subtree_rss = self.rss
 
-  for _, process in ipairs(self.processes) do
-    process:compute_subtree()
+  for _, child_process in ipairs(self.child_processes) do
+    child_process:compute_subtree()
   end
 
-  table.sort(self.processes, function(a, b)
+  table.sort(self.child_processes, function(a, b)
     return b.subtree_rss < a.subtree_rss
   end)
 
@@ -96,11 +96,11 @@ function class:print(depth)
     self.subtree_pmem,
     self.subtree_rss,
     self.command)
-  io.write(text:sub(1, cols - 2), "\n")
+  io.write(text:sub(1, cols ), "\n")
 
   depth = depth + 1
-  for _, process in ipairs(self.processes) do
-    process:print(depth)
+  for _, child_process in ipairs(self.child_processes) do
+    child_process:print(depth)
   end
 end
 
@@ -141,7 +141,7 @@ for _, process in pairs(process_map) do
   local parent_process = process_map[process.ppid]
   if parent_process then
     process.parent_process = parent_process
-    table.insert(parent_process.processes, process)
+    table.insert(parent_process.child_processes, process)
   else
     table.insert(root_processes, process)
   end
