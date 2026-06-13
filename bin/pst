@@ -93,13 +93,13 @@ function class:print(depth)
     return
   end
 
-  local text = ("%s%s %d %g %g %d %s"):format(
+  local text = ("%scpu:%.1f%% mem:%.1f%% rss:%.0fMB %s[%d] %s"):format(
     ("    "):rep(depth),
-    self.user,
-    self.pid,
     self.subtree_pcpu,
     self.subtree_pmem,
-    self.subtree_rss,
+    self.subtree_rss / 1024,
+    self.user,
+    self.pid,
     self.command)
   io.write(text:sub(1, cols), "\n")
 
