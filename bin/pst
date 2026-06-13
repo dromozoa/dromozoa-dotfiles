@@ -29,7 +29,11 @@ end
 ---@field pmem number
 ---@field rss integer
 ---@field command string
+---@field parent_process? dromozoa.dotfiles.pst.process
 ---@field processes dromozoa.dotfiles.pst.process[]
+---@field sum_pcpu number
+---@field sum_pmem number
+---@field sum_rss integer
 local class = {}
 local metatable = {
   __index = class,
@@ -53,18 +57,43 @@ function class.new(items)
     pmem = tonumber(assert(that.pmem:match "^(%d+%.%d+)$")),
     rss = tonumber(assert(that.rss:match "^%d+$")),
     command = that.command,
+    parent_process = nil,
     processes = {},
+    sum_pcpu = 0.0,
+    sum_pmem = 0.0,
+    sum_rss = 0,
   }, metatable)
+end
+
+function class:summarize()
+  for _, process in ipairs(self.processes) do
+    process:summarize()
+  end
+  table.sort(self.processes, function(a, b)
+    return b.sum_rss < a.sum_rss
+  end)
+
+  self.sum_pcpu = self.sum_pcpu + self.pcpu
+  self.sum_pmem = self.sum_pmem + self.pmem
+  self.sum_rss = self.sum_rss + self.rss
+
+  local parent_process = self.parent_process
+  if parent_process then
+    parent_process.sum_pcpu = parent_process.sum_pcpu + self.sum_pcpu
+    parent_process.sum_pmem = parent_process.sum_pmem + self.sum_pmem
+    parent_process.sum_rss = parent_process.sum_rss + self.sum_rss
+  end
 end
 
 ---@param depth integer
 function class:print(depth)
-  local text = ("%s%s %d %g %g %s"):format(
+  local text = ("%s%s %d %g %g %d %s"):format(
     ("    "):rep(depth),
     self.user,
     self.pid,
-    self.pcpu,
-    self.pmem,
+    self.sum_pcpu,
+    self.sum_pmem,
+    self.sum_rss,
     self.command)
   io.write(text:sub(1, cols - 2), "\n")
 
@@ -110,12 +139,16 @@ for _, process in pairs(process_map) do
   ---@type dromozoa.dotfiles.pst.process?
   local parent_process = process_map[process.ppid]
   if parent_process then
+    process.parent_process = parent_process
     table.insert(parent_process.processes, process)
   else
     table.insert(root_processes, process)
   end
 end
 
+for _, process in ipairs(root_processes) do
+  process:summarize()
+end
 for _, process in ipairs(root_processes) do
   process:print(0)
 end
