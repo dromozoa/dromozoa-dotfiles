@@ -20,6 +20,9 @@ do
   cols = assert(tonumber(assert(text:gsub("\n+$", ""):match "^%d+$")))
 end
 
+local sort
+local threshold
+
 ---@class dromozoa.dotfiles.pst.process
 ---@field user string
 ---@field pid integer
@@ -74,9 +77,7 @@ function class:compute_subtree()
     child_process:compute_subtree()
   end
 
-  table.sort(self.child_processes, function(a, b)
-    return b.subtree_rss < a.subtree_rss
-  end)
+  table.sort(self.child_processes, sort)
 
   local parent_process = self.parent_process
   if parent_process then
@@ -88,6 +89,10 @@ end
 
 ---@param depth integer
 function class:print(depth)
+  if not threshold(self) then
+    return
+  end
+
   local text = ("%s%s %d %g %g %d %s"):format(
     ("    "):rep(depth),
     self.user,
@@ -96,12 +101,98 @@ function class:print(depth)
     self.subtree_pmem,
     self.subtree_rss,
     self.command)
-  io.write(text:sub(1, cols ), "\n")
+  io.write(text:sub(1, cols), "\n")
 
   depth = depth + 1
   for _, child_process in ipairs(self.child_processes) do
     child_process:print(depth)
   end
+end
+
+local help = ([[
+Usage: %s [options]
+Avairable options are:
+  -c      --sort-pcpu
+  -m      --sort-pmem
+  -r      --sort-rss
+  -a      --asc
+  -d      --desc
+  -C ARG  --threshold-pcpu=ARG
+  -M ARG  --threshold-pmem=ARG
+  -R ARG  --threshold-rss=ARG
+  -h      --help
+]]):format(arg[0])
+
+---@type string
+local sort_key = "subtree_rss"
+
+---@type "asc"|"desc"
+local sort_order = "desc"
+
+---@type string
+local threshold_key = "subtree_pmem"
+
+---@type number
+local threshold_value = 0.1
+
+local i = 1
+while i <= #arg do
+  local opt = arg[i]
+  i = i + 1
+  if opt == "-c" or opt == "--sort-pcpu" then
+    sort_key = "subtree_pcpu"
+  elseif opt == "-m" or opt == "--sort-pmem" then
+    sort_key = "subtree_pmem"
+  elseif opt == "-r" or opt == "--sort-rss" then
+    sort_key = "subtree_rss"
+  elseif opt == "-a" or opt == "--asc" then
+    sort_order = "asc"
+  elseif opt == "-d" or opt == "--desc" then
+    sort_order = "desc"
+  elseif opt == "-C" or opt == "--threshold-pcpu" then
+    threshold_key = "subtree_pcpu"
+    threshold_value = assert(tonumber(arg[i]))
+    i = i + 1
+  elseif opt == "-M" or opt == "--threshold-pmem" then
+    threshold_key = "subtree_pmem"
+    threshold_value = assert(tonumber(arg[i]))
+    i = i + 1
+  elseif opt == "-R" or opt == "--threshold-rss" then
+    threshold_key = "subtree_rss"
+    threshold_value = assert(tonumber(arg[i]))
+    i = i + 1
+  elseif opt == "-h" or opt == "--help" then
+    io.stderr:write(help)
+    os.exit()
+  elseif opt == "--" then
+    break
+  else
+    local key, value = opt:match "^%-%-threshold%-(%w+)=(.*)"
+    if not key then
+      i = i - 1
+      break
+    end
+    assert(key == "pcpu" or key == "pmem" or key == "rss")
+    threshold_key = "subtree_" .. key
+    threshold_value = assert(tonumber(value))
+  end
+end
+
+---@param a dromozoa.dotfiles.pst.process
+---@param b dromozoa.dotfiles.pst.process
+---@return boolean
+function sort(a, b)
+  if sort_order == "desc" then
+    return a[sort_key] > b[sort_key]
+  else
+    return a[sort_key] < b[sort_key]
+  end
+end
+
+---@param process dromozoa.dotfiles.pst.process
+---@return boolean
+function threshold(process)
+  return process[threshold_key] >= threshold_value
 end
 
 ---@type table<integer, dromozoa.dotfiles.pst.process>
