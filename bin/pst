@@ -11,17 +11,11 @@ local keywords = {
   "command",
 }
 
-local cols
-do
-  local handle = assert(io.popen "tput cols")
-  local text = handle:read "*a"
-  handle:close()
-  ---@type integer
-  cols = assert(tonumber(assert(text:gsub("\n+$", ""):match "^%d+$")))
-end
-
 local sort
 local threshold
+
+---@type integer?
+local cols
 
 ---@class dromozoa.dotfiles.pst.process
 ---@field user string
@@ -101,7 +95,10 @@ function class:print(depth)
     self.user,
     self.pid,
     self.command)
-  io.write(text:sub(1, cols), "\n")
+  if cols then
+    text = text:sub(1, cols)
+  end
+  io.write(text, "\n")
 
   depth = depth + 1
   for _, child_process in ipairs(self.child_processes) do
@@ -120,6 +117,7 @@ Avairable options are:
   -C ARG  --threshold-pcpu=ARG
   -M ARG  --threshold-pmem=ARG
   -R ARG  --threshold-rss=ARG
+  -w      --wrap
   -h      --help
 ]]):format(arg[0])
 
@@ -134,6 +132,9 @@ local threshold_key = "subtree_pmem"
 
 ---@type number
 local threshold_value = 0.1
+
+---@type boolean
+local wrap = false
 
 local i = 1
 while i <= #arg do
@@ -161,6 +162,8 @@ while i <= #arg do
     threshold_key = "subtree_rss"
     threshold_value = assert(tonumber(arg[i]))
     i = i + 1
+  elseif opt == "-w" or opt == "--wrap" then
+    wrap = true
   elseif opt == "-h" or opt == "--help" then
     io.stderr:write(help)
     os.exit()
@@ -193,6 +196,13 @@ end
 ---@return boolean
 function threshold(process)
   return process[threshold_key] >= threshold_value
+end
+
+if not wrap then
+  local handle = assert(io.popen "tput cols")
+  local text = handle:read "*a"
+  handle:close()
+  cols = assert(tonumber(assert(text:gsub("\n+$", ""):match "^%d+$")))
 end
 
 ---@type table<integer, dromozoa.dotfiles.pst.process>
