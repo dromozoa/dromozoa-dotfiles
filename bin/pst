@@ -31,9 +31,9 @@ end
 ---@field command string
 ---@field parent_process? dromozoa.dotfiles.pst.process
 ---@field processes dromozoa.dotfiles.pst.process[]
----@field sum_pcpu number
----@field sum_pmem number
----@field sum_rss integer
+---@field subtree_pcpu number
+---@field subtree_pmem number
+---@field subtree_rss integer
 local class = {}
 local metatable = {
   __index = class,
@@ -59,9 +59,9 @@ function class.new(items)
     command = that.command,
     parent_process = nil,
     processes = {},
-    sum_pcpu = 0.0,
-    sum_pmem = 0.0,
-    sum_rss = 0,
+    subtree_pcpu = 0.0,
+    subtree_pmem = 0.0,
+    subtree_rss = 0,
   }, metatable)
 end
 
@@ -70,18 +70,18 @@ function class:summarize()
     process:summarize()
   end
   table.sort(self.processes, function(a, b)
-    return b.sum_rss < a.sum_rss
+    return b.subtree_rss < a.subtree_rss
   end)
 
-  self.sum_pcpu = self.sum_pcpu + self.pcpu
-  self.sum_pmem = self.sum_pmem + self.pmem
-  self.sum_rss = self.sum_rss + self.rss
+  self.subtree_pcpu = self.subtree_pcpu + self.pcpu
+  self.subtree_pmem = self.subtree_pmem + self.pmem
+  self.subtree_rss = self.subtree_rss + self.rss
 
   local parent_process = self.parent_process
   if parent_process then
-    parent_process.sum_pcpu = parent_process.sum_pcpu + self.sum_pcpu
-    parent_process.sum_pmem = parent_process.sum_pmem + self.sum_pmem
-    parent_process.sum_rss = parent_process.sum_rss + self.sum_rss
+    parent_process.subtree_pcpu = parent_process.subtree_pcpu + self.subtree_pcpu
+    parent_process.subtree_pmem = parent_process.subtree_pmem + self.subtree_pmem
+    parent_process.subtree_rss = parent_process.subtree_rss + self.subtree_rss
   end
 end
 
@@ -91,9 +91,9 @@ function class:print(depth)
     ("    "):rep(depth),
     self.user,
     self.pid,
-    self.sum_pcpu,
-    self.sum_pmem,
-    self.sum_rss,
+    self.subtree_pcpu,
+    self.subtree_pmem,
+    self.subtree_rss,
     self.command)
   io.write(text:sub(1, cols - 2), "\n")
 
