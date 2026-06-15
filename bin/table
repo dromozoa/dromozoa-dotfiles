@@ -20,9 +20,10 @@
 local help = ([[
 Usage: %s [options] command
 Avairable options are:
-  -m  --multiple-lines
-  -t  --transpose
-  -h  --help
+  -m          --multiple-lines
+  -t          --transpose
+  -q PATTERN  --quote-csv=PATTERN
+  -h          --help
 Avairable commands are:
   csv_to_csv
   csv_to_tsv
@@ -34,6 +35,7 @@ Avairable commands are:
 
 local multiple_lines = false
 local transpose = false
+local quote_csv_pattern
 
 local i = 1
 while i <= #arg do
@@ -43,14 +45,21 @@ while i <= #arg do
     multiple_lines = true
   elseif opt == "-t" or opt == "--transpose" then
     transpose = true
+  elseif opt == "-q" or opt == "--quote-csv" then
+    quote_csv_pattern = assert(arg[i])
+    i = i + 1
   elseif opt == "-h" or opt == "--help" then
     io.stderr:write(help)
     os.exit()
   elseif opt == "--" then
     break
   else
-    i = i - 1
-    break
+    local value = opt:match "^%-%-quote%-csv=(.*)"
+    if not value then
+      i = i - 1
+      break
+    end
+    quote_csv_pattern = value
   end
 end
 
@@ -166,7 +175,7 @@ local function parse_tsv(source)
   local records = {}
   for line in source:gmatch "([^\n]*)\n?" do
     local fields = {}
-    for field in (line.."\t"):gmatch "(.-)\t" do
+    for field in (line .. "\t"):gmatch "(.-)\t" do
       table.insert(fields, field)
     end
     table.insert(records, fields)
@@ -217,7 +226,12 @@ end
 ---@return string
 local function quote_csv(field)
   field = process_multiple_lines(field)
-  if field:find '[\n\",]' then
+
+  local quote = field:find '[\n\",]'
+  if not quote and quote_csv_pattern then
+    quote = field:find(quote_csv_pattern)
+  end
+  if quote then
     return '"' .. field:gsub('"', '""') .. '"'
   else
     return field
