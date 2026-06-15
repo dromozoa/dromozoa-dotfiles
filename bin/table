@@ -21,15 +21,19 @@ local help = ([[
 Usage: %s [options] command
 Avairable options are:
   -m  --multiple-lines
+  -t  --transpose
   -h  --help
 Avairable commands are:
+  csv_to_csv
   csv_to_tsv
   csv_to_md
+  tsv_to_tsv
   tsv_to_csv
   tsv_to_md
 ]]):format(arg[0])
 
 local multiple_lines = false
+local transpose = false
 
 local i = 1
 while i <= #arg do
@@ -37,6 +41,8 @@ while i <= #arg do
   i = i + 1
   if opt == "-m" or opt == "--multiple-lines" then
     multiple_lines = true
+  elseif opt == "-t" or opt == "--transpose" then
+    transpose = true
   elseif opt == "-h" or opt == "--help" then
     io.stderr:write(help)
     os.exit()
@@ -253,6 +259,11 @@ end
 local commands = {}
 
 ---@param source string
+function commands.csv_to_csv(source)
+  write(normalize(parse_csv(source)), quote_csv, ",")
+end
+
+---@param source string
 function commands.csv_to_tsv(source)
   write(normalize(parse_csv(source)), quote_tsv, "\t")
 end
@@ -260,6 +271,11 @@ end
 ---@param source string
 function commands.csv_to_md(source)
   write_markdown(normalize(parse_csv(source)))
+end
+
+---@param source string
+function commands.tsv_to_tsv(source)
+  write(normalize(parse_tsv(source)), quote_tsv, "\t")
 end
 
 ---@param source string
