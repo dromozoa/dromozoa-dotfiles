@@ -174,19 +174,33 @@ local function parse_tsv(source)
   return records
 end
 
----@param records string[][]
+---@param source_records string[][]
 ---@return string[][]
-local function normalize(records)
+local function process_records(source_records)
+  local m = #source_records
   local n = 0
-  for _, fields in ipairs(records) do
+  for _, fields in ipairs(source_records) do
     n = math.max(n, #fields)
   end
-  for _, fields in ipairs(records) do
-    for i = #fields + 1, n do
-      fields[i] = ""
+
+  local result_records = {}
+  if transpose then
+    for i = 1, n do
+      result_records[i] = {}
+      for j = 1, m do
+        result_records[i][j] = source_records[j][i] or ""
+      end
+    end
+  else
+    for i = 1, m do
+      result_records[i] = {}
+      for j = 1, n do
+        result_records[i][j] = source_records[i][j] or ""
+      end
     end
   end
-  return records
+
+  return result_records
 end
 
 ---@param field string
@@ -260,32 +274,32 @@ local commands = {}
 
 ---@param source string
 function commands.csv_to_csv(source)
-  write(normalize(parse_csv(source)), quote_csv, ",")
+  write(process_records(parse_csv(source)), quote_csv, ",")
 end
 
 ---@param source string
 function commands.csv_to_tsv(source)
-  write(normalize(parse_csv(source)), quote_tsv, "\t")
+  write(process_records(parse_csv(source)), quote_tsv, "\t")
 end
 
 ---@param source string
 function commands.csv_to_md(source)
-  write_markdown(normalize(parse_csv(source)))
+  write_markdown(process_records(parse_csv(source)))
 end
 
 ---@param source string
 function commands.tsv_to_tsv(source)
-  write(normalize(parse_tsv(source)), quote_tsv, "\t")
+  write(process_records(parse_tsv(source)), quote_tsv, "\t")
 end
 
 ---@param source string
 function commands.tsv_to_csv(source)
-  write(normalize(parse_tsv(source)), quote_csv, ",")
+  write(process_records(parse_tsv(source)), quote_csv, ",")
 end
 
 ---@param source string
 function commands.tsv_to_md(source)
-  write_markdown(normalize(parse_tsv(source)))
+  write_markdown(process_records(parse_tsv(source)))
 end
 
 local command_fn = assert(commands[command])
