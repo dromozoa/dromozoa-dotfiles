@@ -20,16 +20,22 @@
 local help = ([[
 Usage: %s [options] command
 Avairable options are:
-  -m  --multiple-lines
-  -h  --help
+  -m          --multiple-lines
+  -t          --transpose
+  -q PATTERN  --quote-csv=PATTERN
+  -h          --help
 Avairable commands are:
+  csv_to_csv
   csv_to_tsv
   csv_to_md
+  tsv_to_tsv
   tsv_to_csv
   tsv_to_md
 ]]):format(arg[0])
 
 local multiple_lines = false
+local transpose = false
+local quote_csv_pattern
 
 local i = 1
 while i <= #arg do
@@ -37,14 +43,23 @@ while i <= #arg do
   i = i + 1
   if opt == "-m" or opt == "--multiple-lines" then
     multiple_lines = true
+  elseif opt == "-t" or opt == "--transpose" then
+    transpose = true
+  elseif opt == "-q" or opt == "--quote-csv" then
+    quote_csv_pattern = assert(arg[i])
+    i = i + 1
   elseif opt == "-h" or opt == "--help" then
     io.stderr:write(help)
     os.exit()
   elseif opt == "--" then
     break
   else
-    i = i - 1
-    break
+    local value = opt:match "^%-%-quote%-csv=(.*)"
+    if not value then
+      i = i - 1
+      break
+    end
+    quote_csv_pattern = value
   end
 end
 
@@ -160,7 +175,7 @@ local function parse_tsv(source)
   local records = {}
   for line in source:gmatch "([^\n]*)\n?" do
     local fields = {}
-    for field in (line.."\t"):gmatch "(.-)\t" do
+    for field in (line .. "\t"):gmatch "(.-)\t" do
       table.insert(fields, field)
     end
     table.insert(records, fields)
@@ -168,19 +183,33 @@ local function parse_tsv(source)
   return records
 end
 
----@param records string[][]
+---@param source_records string[][]
 ---@return string[][]
-local function normalize(records)
+local function process_records(source_records)
+  local m = #source_records
   local n = 0
-  for _, fields in ipairs(records) do
+  for _, fields in ipairs(source_records) do
     n = math.max(n, #fields)
   end
-  for _, fields in ipairs(records) do
-    for i = #fields + 1, n do
-      fields[i] = ""
+
+  local result_records = {}
+  if transpose then
+    for i = 1, n do
+      result_records[i] = {}
+      for j = 1, m do
+        result_records[i][j] = source_records[j][i] or ""
+      end
+    end
+  else
+    for i = 1, m do
+      result_records[i] = {}
+      for j = 1, n do
+        result_records[i][j] = source_records[i][j] or ""
+      end
     end
   end
-  return records
+
+  return result_records
 end
 
 ---@param field string
@@ -197,7 +226,12 @@ end
 ---@return string
 local function quote_csv(field)
   field = process_multiple_lines(field)
-  if field:find '[\n\",]' then
+
+  local quote = field:find '[\n\",]'
+  if not quote and quote_csv_pattern then
+    quote = field:find(quote_csv_pattern)
+  end
+  if quote then
     return '"' .. field:gsub('"', '""') .. '"'
   else
     return field
@@ -253,23 +287,33 @@ end
 local commands = {}
 
 ---@param source string
+function commands.csv_to_csv(source)
+  write(process_records(parse_csv(source)), quote_csv, ",")
+end
+
+---@param source string
 function commands.csv_to_tsv(source)
-  write(normalize(parse_csv(source)), quote_tsv, "\t")
+  write(process_records(parse_csv(source)), quote_tsv, "\t")
 end
 
 ---@param source string
 function commands.csv_to_md(source)
-  write_markdown(normalize(parse_csv(source)))
+  write_markdown(process_records(parse_csv(source)))
+end
+
+---@param source string
+function commands.tsv_to_tsv(source)
+  write(process_records(parse_tsv(source)), quote_tsv, "\t")
 end
 
 ---@param source string
 function commands.tsv_to_csv(source)
-  write(normalize(parse_tsv(source)), quote_csv, ",")
+  write(process_records(parse_tsv(source)), quote_csv, ",")
 end
 
 ---@param source string
 function commands.tsv_to_md(source)
-  write_markdown(normalize(parse_tsv(source)))
+  write_markdown(process_records(parse_tsv(source)))
 end
 
 local command_fn = assert(commands[command])
