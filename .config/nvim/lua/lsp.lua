@@ -43,6 +43,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
       return
     end
 
+    if vim.bo[bufnr].filetype == "lua" then
+      vim.bo[bufnr].formatexpr = nil
+    end
+
     lsp_buf_map(bufnr, "gd", vim.lsp.buf.definition, "LSP: goto definition")
     lsp_buf_map(bufnr, "gD", vim.lsp.buf.declaration, "LSP: goto declaration")
     lsp_buf_map(bufnr, "gr", vim.lsp.buf.references, "LSP: references")
