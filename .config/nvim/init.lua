@@ -108,3 +108,8 @@ end, {
   range = "%",
   complete = "shellcmdline",
 })
+
+vim.api.nvim_create_user_command("CopenRight", function()
+  local width = math.max(50, math.floor(vim.api.nvim_win_get_width(0) * 0.5))
+  vim.cmd("botright vertical " .. width .. " copen")
+end, {})
