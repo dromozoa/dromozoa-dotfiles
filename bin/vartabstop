@@ -19,6 +19,26 @@
 
 -- タブ区切りテキストを読んでvartabstopを計算する
 
+local home = os.getenv "HOME"
+package.path = home .. "/dromozoa-dotfiles/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-calendar/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-commons/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-utf8/?.lua;"
+    .. package.path
+
+local utf8 = require "dromozoa.utf8"
+local east_asian_width_ambiguous_full = require "dromozoa.ucd.east_asian_width_ambiguous_full"
+
+---@param s string
+---@return integer
+local function width(s)
+  local n = 0
+  for _, c in utf8.codes(s) do
+    n = n + east_asian_width_ambiguous_full(c)
+  end
+  return n
+end
+
 local filename = ...
 
 local padding = 2
@@ -28,7 +48,7 @@ for line in io.lines(filename) do
   local i = 0
   for cell in (line .. "\t"):gmatch "(.-)\t" do
     i = i + 1
-    vartabstop[i] = math.max(vartabstop[i] or padding, #cell + padding)
+    vartabstop[i] = math.max(vartabstop[i] or padding, width(cell) + padding)
   end
 end
 
