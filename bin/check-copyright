@@ -17,16 +17,21 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
-package.path = os.getenv "HOME" .. "/dromozoa-dotfiles/?.lua;" .. package.path
+local home = os.getenv "HOME"
+package.path = home .. "/dromozoa-dotfiles/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-calendar/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-commons/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-utf8/?.lua;"
+    .. package.path
 
-local shell = require "dromozoa.shell"
+local shell = require "dromozoa.commons.shell"
 
 local authors = {
-  "Tomoyuki Fujimori";
-  "<dev@brigid.jp>";
+  "Tomoyuki Fujimori",
+  "<dev@brigid.jp>",
 }
 local author_map = {
-  ["煙人計画"] = "Tomoyuki Fujimori";
+  ["煙人計画"] = "Tomoyuki Fujimori",
 }
 
 local help = [[
@@ -68,7 +73,7 @@ local handle = assert(io.popen "git ls-files -z")
 local content = handle:read "*a"
 handle:close()
 for file in content:gmatch "(.-)%z" do
-  if not file:find "^bind/" and file ~= "build" then
+  if not file:find "^bind/" and file ~= "build" and not file:find "^modules/dromozoa%-" then
     local line_number = 0
     local line_buffer = {}
     local source
@@ -107,7 +112,8 @@ for file in content:gmatch "(.-)%z" do
       end
     else
       local year_set = {}
-      local command = ([[git log --author=%s --date="format:%%Y" --format="%%ad" %s]]):format(shell.quote(author), shell.quote(file))
+      local command = ([[git log --author=%s --date="format:%%Y" --format="%%ad" %s]]):format(shell.quote(author),
+        shell.quote(file))
       local handle = assert(io.popen(command))
       for line in handle:lines() do
         year_set[tonumber(line)] = true
@@ -170,8 +176,8 @@ for file in content:gmatch "(.-)%z" do
           line_buffer[source_line_number] = target
           for i = 1, #line_buffer do
             local line = line_buffer[i]
-              :gsub("(FITNESS FOR A PARTICULAR PURPOSE)%.%s+(See the)", "%1. %2")
-              :gsub("%.%s+(If not, see )<http:(//www.gnu.org/licenses/)>", ". %1<https:%2>")
+                :gsub("(FITNESS FOR A PARTICULAR PURPOSE)%.%s+(See the)", "%1. %2")
+                :gsub("%.%s+(If not, see )<http:(//www.gnu.org/licenses/)>", ". %1<https:%2>")
             handle:write(line, "\n")
           end
 
