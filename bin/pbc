@@ -17,9 +17,14 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
-package.path = os.getenv "HOME" .. "/dromozoa-dotfiles/?.lua;" .. package.path
+local home = os.getenv "HOME"
+package.path = home .. "/dromozoa-dotfiles/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-calendar/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-commons/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-utf8/?.lua;"
+    .. package.path
 
-local encode_base64 = require "dromozoa.encode_base64"
+local base64 = require "dromozoa.commons.base64"
 
 local inside_gnu_screen = (os.getenv "INSIDE_GNU_SCREEN" or "") ~= ""
 
@@ -64,7 +69,7 @@ if chomp then
   data = data:gsub("[\r\n]+$", "")
 end
 
-local payload = "\27]52;;" .. encode_base64(data) .. "\7"
+local payload = "\27]52;;" .. base64.encode(data) .. "\7"
 
 if inside_gnu_screen then
   for i = 1, #payload, 512 do

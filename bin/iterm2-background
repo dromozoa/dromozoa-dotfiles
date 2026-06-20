@@ -17,9 +17,14 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
-package.path = os.getenv "HOME" .. "/dromozoa-dotfiles/?.lua;" .. package.path
+local home = os.getenv "HOME"
+package.path = home .. "/dromozoa-dotfiles/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-calendar/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-commons/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-utf8/?.lua;"
+    .. package.path
 
-local encode_base64 = require "dromozoa.encode_base64"
+local base64 = require "dromozoa.commons.base64"
 
 local inside_gnu_screen = (os.getenv "INSIDE_GNU_SCREEN" or "") ~= ""
 
@@ -31,7 +36,7 @@ local function set(filename)
     filename = "/Users/moyu/Pictures/termbg/" .. hostname .. ".png"
   end
 
-  local payload = "\27]1337;SetBackgroundImageFile=" .. encode_base64(filename) .. "\7"
+  local payload = "\27]1337;SetBackgroundImageFile=" .. base64.encode(filename) .. "\7"
 
   -- DCS
   if inside_gnu_screen then
