@@ -17,9 +17,14 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
-package.path = os.getenv "HOME" .. "/dromozoa-dotfiles/?.lua;" .. package.path
+local home = os.getenv "HOME"
+package.path = home .. "/dromozoa-dotfiles/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-calendar/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-commons/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-utf8/?.lua;"
+    .. package.path
 
-local encode_base64 = require "dromozoa.encode_base64"
+local base64 = require "dromozoa.commons.base64"
 
 local inside_gnu_screen = (os.getenv "INSIDE_GNU_SCREEN" or "") ~= ""
 
@@ -96,12 +101,12 @@ local function write(filename)
     local handle = assert(io.open(filename, "rb"))
     data = handle:read "*a"
     handle:close()
-    buffer[#buffer + 1] = "name=" .. encode_base64(filename) .. ";"
+    buffer[#buffer + 1] = "name=" .. base64.encode(filename) .. ";"
   else
     data = io.read "*a"
   end
   buffer[#buffer + 1] = "size=" .. #data .. ":"
-  buffer[#buffer + 1] = encode_base64(data)
+  buffer[#buffer + 1] = base64.encode(data)
   buffer[#buffer + 1] = "\7"
   if filename and print_filename then
     buffer[#buffer + 1] = "\n" .. filename
