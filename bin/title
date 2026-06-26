@@ -17,7 +17,20 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
+help() {
+  cat <<EOH
+Usage: $0 [options] [title]
+Avairable options are:
+  -x  --xterm
+  -d  --working-dir
+  -r  --project-root
+  -h  --help
+EOH
+  exit
+}
+
 term=
+mode=hostname
 while :
 do
   case X$# in
@@ -26,6 +39,12 @@ do
   case X$1 in
     X-x|X--xterm)
       shift; term=xterm;;
+    X-d|X--working-dir)
+      shift; mode=working-dir;;
+    X-r|X--project-root)
+      shift; mode=project-root;;
+    X-h|X--help)
+      shift; help;;
     X--)
       shift; break;;
     X-*)
@@ -36,8 +55,23 @@ do
 done
 
 case X$1 in
-  X) title=`hostname`; title=`expr "X$title" : '\(X[^.]*\)' '|' "X$title" | sed 's/^.//'`;;
-  *) title=$1;;
+  X)
+    case X$mode in
+      Xhostname)
+        title=`hostname`
+        title=`expr "X$title" : '\(X[^.]*\)' '|' "X$title" | sed 's/^.//'`
+        ;;
+      Xworking-dir)
+        title=`pwd`
+        title=`basename "$title"`
+        ;;
+      Xproject-root)
+        title=`_dromozoa_project_root`
+        title=`basename "$title"`
+        ;;
+    esac;;
+  *)
+    title=$1;;
 esac
 
 case X$INSIDE_GNU_SCREEN in
