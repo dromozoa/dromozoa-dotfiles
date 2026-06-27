@@ -24,6 +24,7 @@ msgminwait 0
 
 defutf8
 defencoding UTF-8
+defscrollback 10000
 
 # v5で色の文字指定が廃止された。両対応のために両方指定する。
 # | 4 | 5 | color   |
