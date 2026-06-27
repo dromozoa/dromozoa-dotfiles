@@ -20,6 +20,9 @@ case X$PS1 in
   *) . "$HOME/dromozoa-dotfiles/_bashrc";;
 esac
 
+bind '"\C-n": history-search-forward'
+bind '"\C-p": history-search-backward'
+
 _dromozoa_bashrc_d() {
   if test -d "$HOME/.bashrc.d"
   then
