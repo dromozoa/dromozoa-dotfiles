@@ -23,7 +23,7 @@ opt.mouse = ""
 
 opt.ambiwidth = "double"
 opt.fileformats = { "unix", "dos", "mac" }
-opt.fileencodings = { "ucs-bom", "utf-8", "sjis", "euc-jp", "utf-16" }
+opt.fileencodings = { "ucs-bom", "utf-8", "cp932", "euc-jp", "utf-16" }
 
 opt.autoindent = true
 opt.expandtab = true
