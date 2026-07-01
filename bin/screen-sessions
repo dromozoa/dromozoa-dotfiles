@@ -27,31 +27,72 @@ package.path = home .. "/dromozoa-dotfiles/?.lua;"
 local json = require "dromozoa.commons.json"
 local shell = require "dromozoa.commons.shell"
 
-local function main()
-  local sessions = {}
+local help = [[
+Usage: screen-sessions [sockname...]
+]]
+
+local function list_sockets()
+  local sockets = {}
 
   local handle = assert(io.popen "screen -list")
   for line in handle:lines() do
     local socket = line:match "(%d+%S+)%s+%(Attached%)"
     if socket then
-      table.insert(sessions, { socket = socket })
+      table.insert(sockets, socket)
     end
   end
   handle:close()
 
-  for _, session in ipairs(sessions) do
+  return sockets
+end
+
+local function write_sessions(sockets)
+  local sessions = {}
+
+  for _, socket in ipairs(sockets) do
     local command = {
       "screen-windows",
       "-j",
       "-s",
-      shell.quote(session.socket),
+      shell.quote(socket),
     }
     local handle = assert(io.popen(table.concat(command, " ")))
-    session.windows = assert(json.decode(handle:read "*a"))
+    table.insert(sessions, {
+      socket = socket,
+      windows = assert(json.decode(handle:read "*a"))
+    })
     handle:close()
   end
 
   io.write(json.encode(sessions, { pretty = true, stable = true }), "\n")
 end
 
-main()
+local i = 1
+while i <= #arg do
+  local opt = arg[i]
+  i = i + 1
+  if opt == "-h" or opt == "--help" then
+    io.stderr:write(help)
+    os.exit()
+  elseif opt == "--" then
+    break
+  elseif opt:find "^%-" then
+    io.stderr:write("screen-sessions unrecognized option '", opt, "'\n", help)
+    os.exit(1)
+  else
+    i = i - 1
+    break
+  end
+end
+
+local sockets
+if i <= #arg then
+  sockets = {}
+  for i = i, #arg do
+    table.insert(sockets, arg[i])
+  end
+else
+  sockets = list_sockets()
+end
+
+write_sessions(sockets)
