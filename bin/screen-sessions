@@ -1,0 +1,57 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2026 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-dotfiles.
+--
+-- dromozoa-dotfiles is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-dotfiles is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
+
+local home = os.getenv "HOME"
+package.path = home .. "/dromozoa-dotfiles/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-calendar/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-commons/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-utf8/?.lua;"
+    .. package.path
+
+local json = require "dromozoa.commons.json"
+local shell = require "dromozoa.commons.shell"
+
+local function main()
+  local sessions = {}
+
+  local handle = assert(io.popen "screen -list")
+  for line in handle:lines() do
+    local socket = line:match "(%d+%S+)%s+%(Attached%)"
+    if socket then
+      table.insert(sessions, { socket = socket })
+    end
+  end
+  handle:close()
+
+  for _, session in ipairs(sessions) do
+    local command = {
+      "screen-windows",
+      "-j",
+      "-s",
+      shell.quote(session.socket),
+    }
+    local handle = assert(io.popen(table.concat(command, " ")))
+    session.windows = assert(json.decode(handle:read "*a"))
+    handle:close()
+  end
+
+  io.write(json.encode(sessions, { pretty = true, stable = true }), "\n")
+end
+
+main()
