@@ -24,20 +24,24 @@ package.path = home .. "/dromozoa-dotfiles/?.lua;"
     .. home .. "/dromozoa-dotfiles/modules/dromozoa-utf8/?.lua;"
     .. package.path
 
+local json = require "dromozoa.commons.json"
 local shell = require "dromozoa.commons.shell"
+
+local json_encode = json.encode
 
 local help = [[
 Usage: screen-windows [options]
 Avairable options are:
   -e      --edit
-  -l      --list
+  -j      --json
   -s ARG  --session=ARG
+  -l      --list
 ]]
 
 local command
 local session
 
-local function list(out)
+local function list_windows()
   local command = { "_dromozoa_screen_windows" }
   if session then
     command[#command + 1] = "-S"
@@ -48,21 +52,30 @@ local function list(out)
   for line in handle:lines() do
     local number, flag, title = assert(line:match "^(%d+)\t([^\t]*)\t(.*)")
     windows[#windows + 1] = {
-      number = tonumber(number);
-      flag = flag;
-      title = title;
+      number = tonumber(number),
+      flag = flag,
+      title = title,
     }
   end
   handle:close()
 
-  table.sort(windows, function (a, b) return a.number < b.number end)
+  table.sort(windows, function(a, b) return a.number < b.number end)
+  return windows
+end
+
+local function list(out)
+  local windows = list_windows()
   for i = 1, #windows do
     local window = windows[i]
     local flag = window.flag
     out:write(("%4d%1s %s\n"):format(window.number, flag, window.title))
   end
-
   return windows
+end
+
+local function json(out)
+  local windows = list_windows()
+  out:write(json_encode(windows, { pretty = true, stable = true }), "\n")
 end
 
 local function edit()
@@ -84,9 +97,9 @@ local function edit()
     if not line:find "^%s*$" or not line:find "^%s*#" then
       local number, flag, title = assert(line:match "^%s*(%d+)(.) (.*)")
       new_windows[#new_windows + 1] = {
-        number = tonumber(number);
-        flag = flag;
-        title = title;
+        number = tonumber(number),
+        flag = flag,
+        title = title,
       }
     end
   end
@@ -168,6 +181,8 @@ while i <= n do
   elseif this == "-s" or this == "--session" then
     session = arg[i]
     i = i + 1
+  elseif this == "-j" or this == "--json" then
+    command = "json"
   elseif this == "-h" or this == "--help" then
     io.stderr:write(help)
     os.exit()
@@ -182,13 +197,15 @@ while i <= n do
       os.exit(1)
     end
   else
-    i = i -1
+    i = i - 1
     break
   end
 end
 
 if command == "edit" then
   edit()
+elseif command == "json" then
+  json(io.stdout)
 else
   list(io.stdout)
 end
