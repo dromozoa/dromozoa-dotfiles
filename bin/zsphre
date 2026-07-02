@@ -17,6 +17,35 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
-# ディレクトリを作成する
-# luaとsqlite3が利用できることを確認する
-# zsphre.luaを実行する
+if test -z "$XDG_STATE_HOME"
+then
+  XDG_STATE_HOME=$HOME/.local/state
+fi
+export XDG_STATE_HOME
+mkdir -p "$XDG_STATE_HOME"
+
+log=$XDG_STATE_HOME/zsphre.log
+
+lua=
+for i in luajit lua
+do
+  if "$i" -v >/dev/null 2>&1
+  then
+    lua=$i
+    break
+  fi
+done
+
+if test -z "$lua"
+then
+  echo "command not found: lua" >>"$log"
+  exit
+fi
+
+if ! sqlite3 -version >/dev/null 2>&1
+then
+  echo "command not found: sqlite3" >>"$log"
+  exit
+fi
+
+"$lua" "$0.lua" "$@" >>"$log" 2>&1 || :
