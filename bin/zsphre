@@ -24,8 +24,6 @@ fi
 export XDG_STATE_HOME
 mkdir -p "$XDG_STATE_HOME"
 
-log=$XDG_STATE_HOME/zsphre.log
-
 lua=
 for i in luajit lua
 do
@@ -36,16 +34,27 @@ do
   fi
 done
 
-if test -z "$lua"
-then
-  echo "command not found: lua" >>"$log"
-  exit
-fi
-
-if ! sqlite3 -version >/dev/null 2>&1
-then
-  echo "command not found: sqlite3" >>"$log"
-  exit
-fi
-
-"$lua" "$0.lua" "$@" 2>>"$log" || :
+case X$1 in
+  Xzsh_hook_*)
+    log=$XDG_STATE_HOME/zsphre.log
+    if test -z "$lua"
+    then
+      echo "command not found: lua" >>"$log"
+      exit
+    fi
+    if test "$1" = zsh_hook_preexec
+    then
+      "$lua" "$0.lua" "$@" 2>>"$log" || :
+    else
+      "$lua" "$0.lua" "$@" >>"$log" 2>&1 || :
+    fi
+    ;;
+  *)
+    if test -z "$lua"
+    then
+      echo "command not found: lua" >&2
+      exit 1
+    fi
+    exec "$lua" "$0.lua" "$@"
+    ;;
+esac

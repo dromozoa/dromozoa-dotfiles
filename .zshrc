@@ -77,7 +77,7 @@ autoload -Uz add-zsh-hook
 typeset -g _zsphre_id=
 
 _zsphre_preexec() {
-  _zsphre_id=$(zsphre --preexec "$1" "$3" "$PWD" "$TTY" "$HOST" || :)
+  _zsphre_id=$(zsphre zsh_hook_preexec "$1" "$3" "$PWD" "$TTY" "$HOST" || :)
 }
 
 _zsphre_precmd() {
@@ -86,7 +86,7 @@ _zsphre_precmd() {
   _zsphre_id=
   if test -n "$id"
   then
-    zsphre --precmd "$id" "$save_status" "$save_pipestatus" >/dev/null || :
+    zsphre zsh_hook_precmd "$id" "$save_status" "$save_pipestatus" >/dev/null || :
   fi
   return 0
 }

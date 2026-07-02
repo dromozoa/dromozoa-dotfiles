@@ -93,7 +93,7 @@ end
 
 local commands = {}
 
-function commands.preexec(db_file, line, full, cwd, tty, host)
+function commands.zsh_hook_preexec(db_file, line, full, cwd, tty, host)
   local result = sqlite3(db_file, ([[
     pragma synchronous=NORMAL;
 
@@ -111,7 +111,7 @@ function commands.preexec(db_file, line, full, cwd, tty, host)
   io.write(result:match "^(%d*)", "\n")
 end
 
-function commands.precmd(db_file, id, status, pipe_status)
+function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
   sqlite3(db_file, ([[
     pragma synchronous=NORMAL;
 
@@ -127,22 +127,15 @@ end
 
 local help = [[
 Usage:
-  zshphre --preexec line full cwd tty host
-  zshphre --precmd id status pipe_status
+  zshphre zsh_hook_preexec line full cwd tty host
+  zshphre zsh_hook_precmd id status pipe_status
 ]]
 
-local command
 local i = 1
 while i <= #arg do
   local opt = arg[i]
   i = i + 1
-  if opt == "--preexec" then
-    command = commands.preexec
-    break
-  elseif opt == "--precmd" then
-    command = commands.precmd
-    break
-  elseif opt == "-h" or opt == "--help" then
+  if opt == "-h" or opt == "--help" then
     io.stderr:write(help)
     os.exit()
   elseif opt == "--" then
@@ -152,8 +145,8 @@ while i <= #arg do
     break
   end
 end
-assert(command)
+local command = assert(commands[arg[i]])
 
 local db_file = os.getenv "XDG_STATE_HOME" .. "/zsphre.db"
 create_db(db_file)
-command(db_file, (table.unpack or unpack)(arg, i))
+command(db_file, (table.unpack or unpack)(arg, i + 1))
