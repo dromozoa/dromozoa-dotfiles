@@ -55,42 +55,45 @@ local function exists(file)
   end
 end
 
-local db_file = os.getenv "XDG_STATE_HOME" .. "/zsphre.db"
-if not exists(db_file) then
-  sqlite3(db_file, [[
-    pragma auto_vacuum=INCREMENTAL;
-    pragma journal_mode=WAL;
-    pragma synchronous=NORMAL;
+local function create_db(db_file)
+  if not exists(db_file) then
+    sqlite3(db_file, [[
+      pragma auto_vacuum=INCREMENTAL;
+      pragma journal_mode=WAL;
+      pragma synchronous=NORMAL;
 
-    begin immediate transaction;
+      begin immediate transaction;
 
-    create table if not exists commands (
-      id integer primary key,
-      started_at text not null,
-      finished_at text,
-      line text not null,
-      full text not null,
-      cwd text not null,
-      tty text not null,
-      host text not null,
-      status integer,
-      pipe_status text,
-      on_finish text,
-      inserted_at text not null default (strftime('%Y-%m-%dT%H:%M:%fZ')),
-      updated_at text not null default (strftime('%Y-%m-%dT%H:%M:%fZ'))
-    );
+      create table if not exists commands (
+        id integer primary key,
+        started_at text not null,
+        finished_at text,
+        line text not null,
+        full text not null,
+        cwd text not null,
+        tty text not null,
+        host text not null,
+        status integer,
+        pipe_status text,
+        on_finish text,
+        inserted_at text not null default (strftime('%Y-%m-%dT%H:%M:%fZ')),
+        updated_at text not null default (strftime('%Y-%m-%dT%H:%M:%fZ'))
+      );
 
-    create trigger if not exists trigger_commands_update after update on commands
-    for each row
-    begin
-      update commands set updated_at = strftime('%Y-%m-%dT%H:%M:%fZ') where rowid = new.rowid;
-    end;
+      create trigger if not exists trigger_commands_update after update on commands
+      for each row
+      begin
+        update commands set updated_at = strftime('%Y-%m-%dT%H:%M:%fZ') where rowid = new.rowid;
+      end;
 
-    commit transaction;
-  ]])
+      commit transaction;
+    ]])
+  end
 end
 
-if arg[1] == "--preexec" then
+local commands = {}
+
+function commands.preexec(db_file, line, full, cwd, tty, host)
   local result = sqlite3(db_file, ([[
     pragma synchronous=NORMAL;
 
@@ -100,13 +103,15 @@ if arg[1] == "--preexec" then
     select last_insert_rowid();
   ]]):format(
     sqlite3_quote "%Y-%m-%dT%H:%M:%fZ",
-    sqlite3_quote(arg[2]),
-    sqlite3_quote(arg[4]),
-    sqlite3_quote(shell.eval "pwd"),
-    sqlite3_quote(shell.eval "tty"),
-    sqlite3_quote(shell.eval "uname -n")))
+    sqlite3_quote(line),
+    sqlite3_quote(full),
+    sqlite3_quote(cwd),
+    sqlite3_quote(tty),
+    sqlite3_quote(host)))
   io.write(result:match "^(%d*)", "\n")
-elseif arg[1] == "--precmd" then
+end
+
+function commands.precmd(db_file, id, status, pipe_status)
   sqlite3(db_file, ([[
     pragma synchronous=NORMAL;
 
@@ -115,7 +120,40 @@ elseif arg[1] == "--precmd" then
     where id = %d;
   ]]):format(
     sqlite3_quote "%Y-%m-%dT%H:%M:%fZ",
-    arg[3],
-    sqlite3_quote(arg[4]),
-    arg[2]))
+    status,
+    sqlite3_quote(pipe_status),
+    id))
 end
+
+local help = [[
+Usage:
+  zshphre --preexec line full cwd tty host
+  zshphre --precmd id status pipe_status
+]]
+
+local command
+local i = 1
+while i <= #arg do
+  local opt = arg[i]
+  i = i + 1
+  if opt == "--preexec" then
+    command = commands.preexec
+    break
+  elseif opt == "--precmd" then
+    command = commands.precmd
+    break
+  elseif opt == "-h" or opt == "--help" then
+    io.stderr:write(help)
+    os.exit()
+  elseif opt == "--" then
+    break
+  else
+    i = i - 1
+    break
+  end
+end
+assert(command)
+
+local db_file = os.getenv "XDG_STATE_HOME" .. "/zsphre.db"
+create_db(db_file)
+command(db_file, (table.unpack or unpack)(arg, i))
