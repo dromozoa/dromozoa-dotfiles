@@ -37,6 +37,7 @@ local function sqlite3(db_file, sql)
 
   local command = table.concat({
     "sqlite3",
+    "-header",
     "-csv",
     shell.quote(db_file),
     ">",
@@ -52,6 +53,23 @@ local function sqlite3(db_file, sql)
 
   os.remove(out_file)
   return result
+end
+
+local function sqlite3_parse_csv(source)
+  local source_records = parse_csv(source)
+  local result_records = {}
+
+  local source_header = source_records[1]
+  for i = 2, #source_records do
+    local source_record = source_records[i]
+    local result_record = {}
+    for j, k in ipairs(source_header) do
+      result_record[k] = source_record[j]
+    end
+    table.insert(result_records, result_record)
+  end
+
+  return result_records
 end
 
 local function exists(file)
@@ -97,7 +115,7 @@ function commands.zsh_hook_preexec(db_file, hist, line, full, cwd, tty, host)
     insert into commands (started_at, hist, line, full, cwd, tty, host)
     values (strftime(%s), %s, %s, %s, %s, %s, %s);
 
-    select last_insert_rowid();
+    select last_insert_rowid() as id;
 
     commit transaction;
   ]]):format(
@@ -108,8 +126,8 @@ function commands.zsh_hook_preexec(db_file, hist, line, full, cwd, tty, host)
     sqlite3_quote(cwd),
     sqlite3_quote(tty),
     sqlite3_quote(host)))
-  local records = parse_csv(result)
-  io.write(records[1][1], "\n")
+  local records = sqlite3_parse_csv(result)
+  io.write(records[1].id, "\n")
 end
 
 function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
@@ -121,9 +139,9 @@ function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
     where id = %d;
 
     select
-      strftime(%s, started_at, 'localtime'),
-      strftime(%s, finished_at, 'localtime'),
-      strftime(%s, finished_at) - strftime(%s, started_at),
+      strftime(%s, started_at, 'localtime') as started_at,
+      strftime(%s, finished_at, 'localtime') as finished_at,
+      strftime(%s, finished_at) - strftime(%s, started_at) as elapsed,
       hist,
       line,
       full,
@@ -148,31 +166,19 @@ function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
     sqlite3_quote "%s",
     id))
 
-  local records = parse_csv(result)
+  local records = sqlite3_parse_csv(result)
   local record = assert(records[1])
-  local data = {
-    started_at = record[1],
-    finished_at = record[2],
-    elapsed = tonumber(record[3]),
-    hist = record[4],
-    line = record[5],
-    full = record[6],
-    cwd = record[7],
-    tty = record[8],
-    host = record[9],
-    status = tonumber(record[10]),
-    pipe_status = record[11],
-    on_finish = record[12]
-  }
-  print(json.encode(data, { pretty = true, stable = true }))
+  record.elapsed = tonumber(record.elapsed)
+  record.status = tonumber(record.status)
+  print(json.encode(record, { pretty = true, stable = true }))
 end
 
 function commands.list_runnings(db_file)
   local result = sqlite3(db_file, ([[
     select
       id,
-      strftime(%s, started_at, 'localtime'),
-      strftime(%s) - strftime(%s, started_at),
+      strftime(%s, started_at, 'localtime') as started_at,
+      strftime(%s) - strftime(%s, started_at) as elapsed,
       line
     from commands
     where finished_at is null
@@ -182,16 +188,13 @@ function commands.list_runnings(db_file)
     sqlite3_quote "%s",
     sqlite3_quote "%s"))
 
-  local records = parse_csv(result)
+  local records = sqlite3_parse_csv(result)
   for _, record in ipairs(records) do
-    if #record == 1 then
-      break
-    end
     io.write(("| %d | %s | %d | %s\n"):format(
-        tonumber(record[1]),
-        record[2],
-        tonumber(record[3]),
-        record[4]))
+      tonumber(record.id),
+      record.started_at,
+      tonumber(record.elapsed),
+      record.line))
   end
 end
 
