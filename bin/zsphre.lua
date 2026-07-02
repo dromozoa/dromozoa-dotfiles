@@ -69,7 +69,6 @@ local function create_db(db_file)
     sqlite3(db_file, [[
       pragma auto_vacuum=INCREMENTAL;
       pragma journal_mode=WAL;
-      pragma synchronous=NORMAL;
 
       create table if not exists commands (
         id integer primary key,
@@ -164,10 +163,40 @@ function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
   print(json.encode(data, { pretty = true, stable = true }))
 end
 
+function commands.list_runnings(db_file)
+  local result = sqlite3(db_file, ([[
+    select
+      id,
+      strftime(%s, started_at, 'localtime'),
+      strftime(%s) - strftime(%s, started_at),
+      line
+    from commands
+    where finished_at is null
+    order by id;
+  ]]):format(
+    sqlite3_quote "%Y/%m/%d %H:%M:%S",
+    sqlite3_quote "%s",
+    sqlite3_quote "%s"))
+
+  local records = parse_csv(result)
+  for _, record in ipairs(records) do
+    if #record == 1 then
+      break
+    end
+    io.write(("| %d | %s | %d | %s\n"):format(
+        tonumber(record[1]),
+        record[2],
+        tonumber(record[3]),
+        record[4]:gsub("%s+", " ")))
+  end
+end
+
 local help = [[
 Usage:
-  zshphre zsh_hook_preexec line full cwd tty host
-  zshphre zsh_hook_precmd id status pipe_status
+  zsphre zsh_hook_preexec line full cwd tty host
+  zsphre zsh_hook_precmd id status pipe_status
+  zsphre list_runnings
+  zsphre on_finish ids hook
 ]]
 
 local i = 1
