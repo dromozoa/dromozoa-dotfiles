@@ -168,9 +168,14 @@ function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
 
   local records = sqlite3_parse_csv(result)
   local record = assert(records[1])
-  record.elapsed = tonumber(record.elapsed)
-  record.status = tonumber(record.status)
-  print(json.encode(record, { pretty = true, stable = true }))
+  record.elapsed = assert(tonumber(record.elapsed))
+  record.status = assert(tonumber(record.status))
+
+  if record.on_finish ~= "" then
+    local handle = assert(io.popen(record.on_finish, "w"))
+    handle:write(json.encode(record, { pretty = true, stable = true }), "\n")
+    handle:close()
+  end
 end
 
 function commands.list_runnings(db_file)
@@ -190,12 +195,32 @@ function commands.list_runnings(db_file)
 
   local records = sqlite3_parse_csv(result)
   for _, record in ipairs(records) do
-    io.write(("| %d | %s | %d | %s\n"):format(
-      tonumber(record.id),
+    io.write(("%d\t%s\t%d\t%s\n"):format(
+      assert(tonumber(record.id)),
       record.started_at,
-      tonumber(record.elapsed),
+      assert(tonumber(record.elapsed)),
       record.line))
   end
+end
+
+function commands.on_finish(db_file, ids, hook)
+  local condition = nil
+  if ids == "all" then
+    condition = "1"
+  elseif ids:find "^%d+$" then
+    condition = "id = " .. ids
+  elseif ids:find "^%d[%d,]+%d$" then
+    condition = "id in (" .. ids .. ")"
+  end
+  assert(condition)
+
+  sqlite3(db_file, ([[
+    update commands
+    set on_finish = %s
+    where finished_at is null and %s;
+  ]]):format(
+    sqlite3_quote(hook),
+    condition))
 end
 
 local help = [[
