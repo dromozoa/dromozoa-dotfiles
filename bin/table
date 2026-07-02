@@ -17,6 +17,15 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
+local home = os.getenv "HOME"
+package.path = home .. "/dromozoa-dotfiles/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-calendar/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-commons/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-utf8/?.lua;"
+    .. package.path
+
+local parse_csv = require "dromozoa.parse_csv"
+
 local help = ([[
 Usage: %s [options] command
 Avairable options are:
@@ -64,110 +73,6 @@ while i <= #arg do
 end
 
 local command = assert(arg[i])
-
----@param source string
----@return string[][]
-local function parse_csv(source)
-  local position = 1
-  local text
-
-  local function match(pattern)
-    local i, j = source:find("^" .. pattern, position)
-    if i then
-      position = j + 1
-      text = source:sub(i, j)
-      return true
-    else
-      text = nil
-      return false
-    end
-  end
-
-  local records = {}
-  local fields = {}
-  local state = 1
-
-  local function push(kind, value)
-    if state == 1 then
-      if kind == "Field" then
-        table.insert(fields, value)
-        state = 2
-      elseif kind == "Comma" then
-        table.insert(fields, "")
-      elseif kind == "LineBreak" then
-        table.insert(fields, "")
-        table.insert(records, fields)
-        fields = {}
-        state = 3
-      elseif kind == "EOF" then
-        table.insert(fields, "")
-        table.insert(records, fields)
-        fields = nil
-        state = 4
-      end
-    elseif state == 2 then
-      if kind == "Field" then
-        error("unexpected token <Field> at record " .. (#records + 1))
-      elseif kind == "Comma" then
-        state = 1
-      elseif kind == "LineBreak" then
-        table.insert(records, fields)
-        fields = {}
-        state = 3
-      elseif kind == "EOF" then
-        table.insert(records, fields)
-        fields = nil
-        state = 4
-      end
-    else
-      assert(state == 3)
-      if kind == "Field" then
-        table.insert(fields, value)
-        state = 2
-      elseif kind == "Comma" then
-        table.insert(fields, "")
-        state = 1
-      elseif kind == "LineBreak" then
-        table.insert(fields, "")
-        table.insert(records, fields)
-        fields = {}
-      elseif kind == "EOF" then
-        assert(#fields == 0)
-        fields = nil
-        state = 4
-      end
-    end
-  end
-
-  while position <= #source do
-    if match "\n" then
-      push "LineBreak"
-    elseif match "," then
-      push "Comma"
-    elseif match '"' then
-      local value = {}
-      while true do
-        if match '[^"]+' then
-          table.insert(value, text)
-        elseif match '""' then
-          table.insert(value, '"')
-        elseif match '"' then
-          break
-        else
-          error("unfinished field at position " .. position)
-        end
-      end
-      push("Field", table.concat(value))
-    else
-      assert(match '[^\n,"]+')
-      push("Field", text)
-    end
-  end
-  push "EOF"
-
-  assert(state == 4)
-  return records
-end
 
 ---@param source string
 ---@return string[][]

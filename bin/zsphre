@@ -1,0 +1,60 @@
+#! /bin/sh -e
+
+# Copyright (C) 2026 Tomoyuki Fujimori <moyu@dromozoa.com>
+#
+# This file is part of dromozoa-dotfiles.
+#
+# dromozoa-dotfiles is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# dromozoa-dotfiles is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
+
+if test -z "$XDG_STATE_HOME"
+then
+  XDG_STATE_HOME=$HOME/.local/state
+fi
+export XDG_STATE_HOME
+mkdir -p "$XDG_STATE_HOME"
+
+lua=
+for i in luajit lua
+do
+  if "$i" -v >/dev/null 2>&1
+  then
+    lua=$i
+    break
+  fi
+done
+
+case X$1 in
+  Xzsh_hook_*)
+    log=$XDG_STATE_HOME/zsphre.log
+    if test -z "$lua"
+    then
+      echo "command not found: lua" >>"$log"
+      exit
+    fi
+    if test "$1" = zsh_hook_preexec
+    then
+      "$lua" "$0.lua" "$@" 2>>"$log" || :
+    else
+      "$lua" "$0.lua" "$@" >>"$log" 2>&1 || :
+    fi
+    ;;
+  *)
+    if test -z "$lua"
+    then
+      echo "command not found: lua" >&2
+      exit 1
+    fi
+    exec "$lua" "$0.lua" "$@"
+    ;;
+esac
