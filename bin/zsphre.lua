@@ -17,6 +17,15 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
+local home = os.getenv "HOME"
+package.path = home .. "/dromozoa-dotfiles/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-calendar/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-commons/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-utf8/?.lua;"
+    .. package.path
+
+local parse_csv = require "dromozoa.parse_csv"
+local json = require "dromozoa.commons.json"
 local shell = require "dromozoa.commons.shell"
 
 local function sqlite3_quote(s)
@@ -62,8 +71,6 @@ local function create_db(db_file)
       pragma journal_mode=WAL;
       pragma synchronous=NORMAL;
 
-      begin immediate transaction;
-
       create table if not exists commands (
         id integer primary key,
         started_at text not null,
@@ -75,18 +82,8 @@ local function create_db(db_file)
         host text not null,
         status integer,
         pipe_status text,
-        on_finish text,
-        inserted_at text not null default (strftime('%Y-%m-%dT%H:%M:%fZ')),
-        updated_at text not null default (strftime('%Y-%m-%dT%H:%M:%fZ'))
+        on_finish text
       );
-
-      create trigger if not exists trigger_commands_update after update on commands
-      for each row
-      begin
-        update commands set updated_at = strftime('%Y-%m-%dT%H:%M:%fZ') where rowid = new.rowid;
-      end;
-
-      commit transaction;
     ]])
   end
 end
@@ -95,12 +92,14 @@ local commands = {}
 
 function commands.zsh_hook_preexec(db_file, line, full, cwd, tty, host)
   local result = sqlite3(db_file, ([[
-    pragma synchronous=NORMAL;
+    begin immediate transaction;
 
     insert into commands (started_at, line, full, cwd, tty, host)
     values (strftime(%s), %s, %s, %s, %s, %s);
 
     select last_insert_rowid();
+
+    commit transaction;
   ]]):format(
     sqlite3_quote "%Y-%m-%dT%H:%M:%fZ",
     sqlite3_quote(line),
@@ -108,21 +107,61 @@ function commands.zsh_hook_preexec(db_file, line, full, cwd, tty, host)
     sqlite3_quote(cwd),
     sqlite3_quote(tty),
     sqlite3_quote(host)))
-  io.write(result:match "^(%d*)", "\n")
+  local records = parse_csv(result)
+  io.write(records[1][1], "\n")
 end
 
 function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
-  sqlite3(db_file, ([[
-    pragma synchronous=NORMAL;
+  local result = sqlite3(db_file, ([[
+    begin immediate transaction;
 
     update commands
     set finished_at = strftime(%s), status = %d, pipe_status = %s
     where id = %d;
+
+    select
+      strftime(%s, started_at, 'localtime'),
+      strftime(%s, finished_at, 'localtime'),
+      strftime(%s, finished_at) - strftime(%s, started_at),
+      line,
+      full,
+      cwd,
+      tty,
+      host,
+      status,
+      pipe_status,
+      on_finish
+    from commands
+    where id = %d;
+
+    commit transaction;
   ]]):format(
     sqlite3_quote "%Y-%m-%dT%H:%M:%fZ",
     status,
     sqlite3_quote(pipe_status),
+    id,
+    sqlite3_quote "%Y/%m/%d %H:%M:%S",
+    sqlite3_quote "%Y/%m/%d %H:%M:%S",
+    sqlite3_quote "%s",
+    sqlite3_quote "%s",
     id))
+
+  local records = parse_csv(result)
+  local record = assert(records[1])
+  local data = {
+    started_at = record[1],
+    finished_at = record[2],
+    elapsed = tonumber(record[3]),
+    line = record[4],
+    full = record[5],
+    cwd = record[6],
+    tty = record[7],
+    host = record[8],
+    status = tonumber(record[9]),
+    pipe_status = record[10],
+    on_finish = record[11]
+  }
+  print(json.encode(data, { pretty = true, stable = true }))
 end
 
 local help = [[
