@@ -48,4 +48,4 @@ then
   exit
 fi
 
-"$lua" "$0.lua" "$@" >>"$log" 2>&1 || :
+"$lua" "$0.lua" "$@" 2>>"$log" || :

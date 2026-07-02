@@ -72,6 +72,29 @@ bindkey "^Q" push-line-or-edit
 bindkey "^R" history-incremental-search-backward
 bindkey "^S" history-incremental-search-forward
 
+autoload -Uz add-zsh-hook
+
+typeset -g _zsphre_id=
+
+_zsphre_preexec() {
+  _zsphre_id=$(zsphre preexec "$1" "$2" "$3" "$(pwd)" "$HISTCMD" || :)
+}
+
+_zsphre_precmd() {
+  local save_status=$?
+  local save_pipestatus=$pipestatus
+  local id=$_zsphre_id
+  _zsphre_id=
+  if test -n "$id"
+  then
+    zsphre precmd "$id" "$save_status" "$save_pipestatus" || :
+  fi
+  return 0
+}
+
+add-zsh-hook preexec _zsphre_preexec
+add-zsh-hook precmd _zsphre_precmd
+
 _dromozoa_zshrc_d() {
   unsetopt local_options nomatch
   if test -d "$HOME/.zshrc.d"
