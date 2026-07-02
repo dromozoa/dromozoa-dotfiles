@@ -74,6 +74,7 @@ local function create_db(db_file)
         id integer primary key,
         started_at text not null,
         finished_at text,
+        hist text not null,
         line text not null,
         full text not null,
         cwd text not null,
@@ -89,18 +90,19 @@ end
 
 local commands = {}
 
-function commands.zsh_hook_preexec(db_file, line, full, cwd, tty, host)
+function commands.zsh_hook_preexec(db_file, hist, line, full, cwd, tty, host)
   local result = sqlite3(db_file, ([[
     begin immediate transaction;
 
-    insert into commands (started_at, line, full, cwd, tty, host)
-    values (strftime(%s), %s, %s, %s, %s, %s);
+    insert into commands (started_at, hist, line, full, cwd, tty, host)
+    values (strftime(%s), %s, %s, %s, %s, %s, %s);
 
     select last_insert_rowid();
 
     commit transaction;
   ]]):format(
     sqlite3_quote "%Y-%m-%dT%H:%M:%fZ",
+    sqlite3_quote(hist),
     sqlite3_quote(line),
     sqlite3_quote(full),
     sqlite3_quote(cwd),
@@ -122,6 +124,7 @@ function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
       strftime(%s, started_at, 'localtime'),
       strftime(%s, finished_at, 'localtime'),
       strftime(%s, finished_at) - strftime(%s, started_at),
+      hist,
       line,
       full,
       cwd,
@@ -151,14 +154,15 @@ function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
     started_at = record[1],
     finished_at = record[2],
     elapsed = tonumber(record[3]),
-    line = record[4],
-    full = record[5],
-    cwd = record[6],
-    tty = record[7],
-    host = record[8],
-    status = tonumber(record[9]),
-    pipe_status = record[10],
-    on_finish = record[11]
+    hist = record[4],
+    line = record[5],
+    full = record[6],
+    cwd = record[7],
+    tty = record[8],
+    host = record[9],
+    status = tonumber(record[10]),
+    pipe_status = record[11],
+    on_finish = record[12]
   }
   print(json.encode(data, { pretty = true, stable = true }))
 end
@@ -187,13 +191,13 @@ function commands.list_runnings(db_file)
         tonumber(record[1]),
         record[2],
         tonumber(record[3]),
-        record[4]:gsub("%s+", " ")))
+        record[4]))
   end
 end
 
 local help = [[
 Usage:
-  zsphre zsh_hook_preexec line full cwd tty host
+  zsphre zsh_hook_preexec hist line full cwd tty host
   zsphre zsh_hook_precmd id status pipe_status
   zsphre list_runnings
   zsphre on_finish ids hook

@@ -77,7 +77,7 @@ autoload -Uz add-zsh-hook
 typeset -g _zsphre_id=
 
 _zsphre_preexec() {
-  _zsphre_id=$(zsphre zsh_hook_preexec "$1" "$3" "$PWD" "$TTY" "$HOST" || :)
+  _zsphre_id=$(zsphre zsh_hook_preexec "$1" "$2" "$3" "$PWD" "$TTY" "$HOST" || :)
 }
 
 _zsphre_precmd() {
