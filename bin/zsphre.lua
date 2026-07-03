@@ -84,7 +84,7 @@ end
 
 local function create_db(db_file)
   if not exists(db_file) then
-    sqlite3(db_file, [[
+    sqlite3(db_file, [[.timeout 1000
       pragma auto_vacuum=INCREMENTAL;
       pragma journal_mode=WAL;
 
@@ -109,7 +109,7 @@ end
 local commands = {}
 
 function commands.zsh_hook_preexec(db_file, hist, line, full, cwd, tty, host)
-  local result = sqlite3(db_file, ([[
+  local result = sqlite3(db_file, ([[.timeout 1000
     begin immediate transaction;
 
     insert into commands (started_at, hist, line, full, cwd, tty, host)
@@ -131,7 +131,7 @@ function commands.zsh_hook_preexec(db_file, hist, line, full, cwd, tty, host)
 end
 
 function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
-  local result = sqlite3(db_file, ([[
+  local result = sqlite3(db_file, ([[.timeout 1000
     begin immediate transaction;
 
     update commands
