@@ -56,7 +56,7 @@ local function sqlite3(db_file, sql)
 end
 
 local function sqlite3_parse_csv(source)
-  local source_records = parse_csv(source)
+  local source_records = parse_csv(source:gsub("\n\r", "\n"):gsub("\r\n?", "\n"))
   local result_records = {}
 
   local source_header = source_records[1]
