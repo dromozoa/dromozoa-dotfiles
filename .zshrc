@@ -81,7 +81,7 @@ _zsphre_preexec() {
 }
 
 _zsphre_precmd() {
-  local save_status=$? save_pipestatus=$pipestatus
+  local save_status=$? save_pipestatus="$pipestatus"
   local id=$_zsphre_id
   _zsphre_id=
   if test -n "$id"
