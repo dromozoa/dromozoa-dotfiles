@@ -1,3 +1,4 @@
+.timeout 1000
 begin immediate transaction;
 
 insert into commands (started_at, hist, line, full, cwd, tty, host)

@@ -1,3 +1,4 @@
+.timeout 1000
 pragma auto_vacuum=INCREMENTAL;
 pragma journal_mode=WAL;
 

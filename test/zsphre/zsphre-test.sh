@@ -10,6 +10,7 @@ fi
 id=$(sqlite3 -csv "$db_file" <insert.sql)
 
 sqlite3 -csv "$db_file" <<EOH >/dev/null
+.timeout 1000
 begin immediate transaction;
 
 update commands
