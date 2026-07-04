@@ -1,0 +1,25 @@
+#compdef zsphre
+
+_zsphre() {
+  local curcontext=$curcontext
+  local context state state_descr line
+  typeset -A opt_args
+
+  local program=$words[1]
+
+  local -a options
+  options=("${(f)$(_call_program options $program zsh_completion_options)}")
+
+  _arguments -C \
+    $options \
+    "1: :->command" \
+    "*: :_files"
+
+  case X$state in
+    Xcommand)
+      local -a commands
+      commands=("${(f)$(_call_program commands $program zsh_completion_commands)}")
+      _describe command commands
+      ;;
+  esac
+}
