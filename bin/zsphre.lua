@@ -32,18 +32,23 @@ local function sqlite3_quote(s)
   return "'" .. (s or ""):gsub("'", "''") .. "'"
 end
 
-local function sqlite3(db_file, sql)
+local function sqlite3(db_file, sql, suppress_stderr)
   local out_file = os.tmpname()
 
-  local command = table.concat({
+  local command = {
     "sqlite3",
     "-header",
     "-csv",
     shell.quote(db_file),
     ">",
     shell.quote(out_file),
-  }, " ")
-  local handle = assert(io.popen(command, "w"))
+  }
+
+  if suppress_stderr then
+    table.insert(command, "2>/dev/null")
+  end
+
+  local handle = assert(io.popen(table.concat(command, " "), "w"))
   handle:write(sql)
   handle:close()
 
@@ -97,6 +102,7 @@ local function create_db(db_file)
         full text not null,
         cwd text not null,
         tty text not null,
+        user text not null,
         host text not null,
         status integer,
         pipe_status text,
@@ -104,16 +110,26 @@ local function create_db(db_file)
       );
     ]])
   end
+
+  sqlite3(db_file, [[.timeout 1000
+    alter table commands add column user text not null default '';
+  ]], true)
 end
 
 local commands = {}
 
-function commands.zsh_hook_preexec(db_file, hist, line, full, cwd, tty, host)
+function commands.zsh_hook_preexec(db_file, hist, line, full, cwd, tty, user, host)
+  -- userの追加のための移行措置
+  if not host then
+    host = user
+    user = shell.eval "id -u -n" or ""
+  end
+
   local result = sqlite3(db_file, ([[.timeout 1000
     begin immediate transaction;
 
-    insert into commands (started_at, hist, line, full, cwd, tty, host)
-    values (strftime(%s), %s, %s, %s, %s, %s, %s);
+    insert into commands (started_at, hist, line, full, cwd, tty, user, host)
+    values (strftime(%s), %s, %s, %s, %s, %s, %s, %s);
 
     select last_insert_rowid() as id;
 
@@ -125,6 +141,7 @@ function commands.zsh_hook_preexec(db_file, hist, line, full, cwd, tty, host)
     sqlite3_quote(full),
     sqlite3_quote(cwd),
     sqlite3_quote(tty),
+    sqlite3_quote(user),
     sqlite3_quote(host)))
   local records = sqlite3_parse_csv(result)
   io.write(records[1].id, "\n")
@@ -147,6 +164,7 @@ function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
       full,
       cwd,
       tty,
+      user,
       host,
       status,
       pipe_status,
@@ -225,7 +243,7 @@ end
 
 local help = [[
 Usage:
-  zsphre zsh_hook_preexec hist line full cwd tty host
+  zsphre zsh_hook_preexec hist line full cwd tty user host
   zsphre zsh_hook_precmd id status pipe_status
   zsphre list_runnings
   zsphre on_finish ids hook
