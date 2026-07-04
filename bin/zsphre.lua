@@ -126,8 +126,37 @@ local function create_db(db_file)
   ]], true)
 end
 
+local help = [[
+Usage:
+  zsphre zsh_completion_commands
+  zsphre zsh_completion_options
+  zsphre zsh_hook_preexec hist line full cwd tty user host
+  zsphre zsh_hook_precmd id status pipe_status
+  zsphre list_runnings
+  zsphre on_finish ids hook
+]]
+
 ---@class zsphre.commands
 local commands = {}
+
+function commands.zsh_completion_commands()
+  io.write [[
+zsh_completion_commands
+zsh_completion_options
+zsh_hook_preexec:hist line full cwd tty user host
+zsh_hook_precmd:id status pipe_status
+list_runnings
+on_finish:ids hook
+]]
+end
+
+function commands.zsh_completion_options()
+  io.write [[
+(-- -h --help)--[end of options]
+(-- -h --help)-h[show help and exit]
+(-- -h --help)--help[show help and exit]
+]]
+end
 
 ---@param db_file string
 ---@param hist string
@@ -272,14 +301,6 @@ function commands.on_finish(db_file, ids, hook)
     sqlite3_quote(hook),
     condition))
 end
-
-local help = [[
-Usage:
-  zsphre zsh_hook_preexec hist line full cwd tty user host
-  zsphre zsh_hook_precmd id status pipe_status
-  zsphre list_runnings
-  zsphre on_finish ids hook
-]]
 
 local i = 1
 while i <= #arg do
