@@ -28,10 +28,15 @@ local parse_csv = require "dromozoa.parse_csv"
 local json = require "dromozoa.commons.json"
 local shell = require "dromozoa.commons.shell"
 
+---@param s string
+---@return string
 local function sqlite3_quote(s)
   return "'" .. (s or ""):gsub("'", "''") .. "'"
 end
 
+---@param db_file string
+---@param sql string
+---@param suppress_stderr boolean?
 local function sqlite3(db_file, sql, suppress_stderr)
   local out_file = os.tmpname()
 
@@ -60,6 +65,8 @@ local function sqlite3(db_file, sql, suppress_stderr)
   return result
 end
 
+---@param source string
+---@return table<string, string>[]
 local function sqlite3_parse_csv(source)
   local source_records = parse_csv(source:gsub("\n\r", "\n"):gsub("\r\n?", "\n"))
   local result_records = {}
@@ -77,6 +84,8 @@ local function sqlite3_parse_csv(source)
   return result_records
 end
 
+---@param file string
+---@return boolean
 local function exists(file)
   local handle = io.open(file, "rb")
   if handle then
@@ -87,6 +96,7 @@ local function exists(file)
   end
 end
 
+---@param db_file string
 local function create_db(db_file)
   if not exists(db_file) then
     sqlite3(db_file, [[.timeout 1000
@@ -116,8 +126,17 @@ local function create_db(db_file)
   ]], true)
 end
 
+---@class zsphre.commands
 local commands = {}
 
+---@param db_file string
+---@param hist string
+---@param line string
+---@param full string
+---@param cwd string
+---@param tty string
+---@param user string
+---@param host string?
 function commands.zsh_hook_preexec(db_file, hist, line, full, cwd, tty, user, host)
   -- userの追加のための移行措置
   if not host then
@@ -147,6 +166,10 @@ function commands.zsh_hook_preexec(db_file, hist, line, full, cwd, tty, user, ho
   io.write(records[1].id, "\n")
 end
 
+---@param db_file string
+---@param id string
+---@param status string
+---@param pipe_status string
 function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
   local result = sqlite3(db_file, ([[.timeout 1000
     begin immediate transaction;
@@ -185,17 +208,28 @@ function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
     id))
 
   local records = sqlite3_parse_csv(result)
-  local record = assert(records[1])
-  record.elapsed = assert(tonumber(record.elapsed))
-  record.status = assert(tonumber(record.status))
+  local on_finish = ""
 
-  if record.on_finish ~= "" then
-    local handle = assert(io.popen(record.on_finish, "w"))
+  ---@type table<string, string|number>
+  local record = {}
+  for k, v in pairs(records[1]) do
+    if k == "elapsed" or k == "status" then
+      record[k] = assert(tonumber(v))
+    elseif k == "on_finish" then
+      on_finish = v
+    else
+      record[k] = v
+    end
+  end
+
+  if on_finish ~= "" then
+    local handle = assert(io.popen(on_finish, "w"))
     handle:write(json.encode(record, { pretty = true, stable = true }), "\n")
     handle:close()
   end
 end
 
+---@param db_file string
 function commands.list_runnings(db_file)
   local result = sqlite3(db_file, ([[
     select
@@ -221,6 +255,9 @@ function commands.list_runnings(db_file)
   end
 end
 
+---@param db_file string
+---@param ids string
+---@param hook string
 function commands.on_finish(db_file, ids, hook)
   local condition = nil
   if ids == "all" then
