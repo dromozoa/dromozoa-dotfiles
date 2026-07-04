@@ -17,7 +17,7 @@
 
 . "$HOME/dromozoa-dotfiles/_resource"
 
-fpath=("$HOME/dromozoa-dotfiles/zshfuncs" $fpath)
+fpath=("$HOME/.zshfuncs" "$HOME/dromozoa-dotfiles/zshfuncs" $fpath)
 
 setopt auto_cd
 setopt autopushd
