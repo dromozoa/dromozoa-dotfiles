@@ -181,7 +181,7 @@ function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
     select
       strftime(%s, started_at, 'localtime') as started_at,
       strftime(%s, finished_at, 'localtime') as finished_at,
-      strftime(%s, finished_at) - strftime(%s, started_at) as elapsed,
+      strftime('%%s', finished_at) - strftime('%%s', started_at) as elapsed,
       hist,
       line,
       full,
@@ -203,8 +203,6 @@ function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
     id,
     sqlite3_quote "%Y/%m/%d %H:%M:%S",
     sqlite3_quote "%Y/%m/%d %H:%M:%S",
-    sqlite3_quote "%s",
-    sqlite3_quote "%s",
     id))
 
   local records = sqlite3_parse_csv(result)
@@ -235,15 +233,12 @@ function commands.list_runnings(db_file)
     select
       id,
       strftime(%s, started_at, 'localtime') as started_at,
-      strftime(%s) - strftime(%s, started_at) as elapsed,
+      strftime('%%s') - strftime('%%s', started_at) as elapsed,
       line
     from commands
     where finished_at is null
     order by id;
-  ]]):format(
-    sqlite3_quote "%Y/%m/%d %H:%M:%S",
-    sqlite3_quote "%s",
-    sqlite3_quote "%s"))
+  ]]):format(sqlite3_quote "%Y/%m/%d %H:%M:%S"))
 
   local records = sqlite3_parse_csv(result)
   for _, record in ipairs(records) do
