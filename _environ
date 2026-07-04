@@ -45,9 +45,9 @@ case X$MSYSTEM in
   *) PATH=$PATH:$path_save;;
 esac
 
-LANG=`locale -a 2>&1 | sed -n '/^ja_JP\.[Uu][Tt][Ff]-*8$/p'`
+LANG=$(locale -a 2>&1 | sed -n '/^ja_JP\.[Uu][Tt][Ff]-*8$/p')
 case X$LANG in
-  X) LANG=`locale -a 2>&1 | sed -n '/^C\.[Uu][Tt][Ff]-*8$/p'`;;
+  X) LANG=$(locale -a 2>&1 | sed -n '/^C\.[Uu][Tt][Ff]-*8$/p');;
 esac
 case X$LANG in
   X) LANG=C;;
@@ -66,7 +66,7 @@ esac
 if infocmp "$TERM" >/dev/null 2>&1
 then
   :
-elif test "X$TERM" = Xscreen.xterm-256color
+elif test "$TERM" = screen.xterm-256color
 then
   for i in screen-256color screen
   do
@@ -82,7 +82,7 @@ EDITOR=vim
 
 CPPFLAGS="-I$HOME/prefixes/dromozoa/include -I/opt/dromozoa/include"
 LDFLAGS="-L$HOME/prefixes/dromozoa/lib -L/opt/dromozoa/lib"
-case X`uname` in
+case X$(uname) in
   XDarwin) ;;
   *) LDFLAGS="$LDFLAGS -Wl,-rpath -Wl,$HOME/prefixes/dromozoa/lib $LDFLAGS -Wl,-rpath -Wl,/opt/dromozoa/lib";;
 esac
