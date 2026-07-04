@@ -67,8 +67,11 @@ if ! infocmp "$TERM" >/dev/null 2>&1 || test "$TERM" = screen
 then
   for i in screen.xterm-256color screen.xterm-xfree86 screen-256color screen-16color screen
   do
-    TERM=$i
-    break
+    if infocmp "$i" >/dev/null 2>&1
+    then
+      TERM=$i
+      break
+    fi
   done
 fi
 
