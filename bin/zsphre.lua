@@ -134,6 +134,7 @@ Usage:
   zsphre zsh_hook_precmd id status pipe_status
   zsphre list_runnings
   zsphre on_finish ids hook
+  zsphre on_finish_api ids token
 ]]
 
 ---@class zsphre.commands
@@ -147,6 +148,7 @@ zsh_hook_preexec:hist line full cwd tty user host
 zsh_hook_precmd:id status pipe_status
 list_runnings
 on_finish:ids hook
+on_finish_api:ids token
 ]]
 end
 
@@ -300,6 +302,23 @@ function commands.on_finish(db_file, ids, hook)
   ]]):format(
     sqlite3_quote(hook),
     condition))
+end
+
+---@param db_file string
+---@param ids string
+---@param token string
+function commands.on_finish_api(db_file, ids, token)
+  commands.on_finish(db_file, ids, table.concat({
+    "curl",
+    "--silent",
+    "https://dromologie.com/api/zsphre.on_finish",
+    "--header",
+    shell.quote("Authorization: Bearer " .. token),
+    "--data-binary",
+    "@-",
+    "--output",
+    "/dev/null",
+  }, " "))
 end
 
 local i = 1
