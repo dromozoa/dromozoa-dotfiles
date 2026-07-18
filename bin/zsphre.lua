@@ -126,6 +126,20 @@ local function create_db(db_file)
   ]], true)
 end
 
+---@param ids string
+---@return string
+local function parse_ids(ids)
+  local condition
+  if ids == "all" then
+    condition = "1"
+  elseif ids:find "^%d+$" then
+    condition = "id = " .. ids
+  elseif ids:find "^%d[%d,]+%d$" then
+    condition = "id in (" .. ids .. ")"
+  end
+  return assert(condition)
+end
+
 local help = [[
 Usage:
   zsphre zsh_completion_commands
@@ -135,6 +149,7 @@ Usage:
   zsphre list_runnings
   zsphre on_finish ids hook
   zsphre on_finish_api ids token
+  zsphre delete ids
 ]]
 
 ---@class zsphre.commands
@@ -149,6 +164,7 @@ zsh_hook_precmd:id status pipe_status
 list_runnings
 on_finish:ids hook
 on_finish_api:ids token
+delete:ids
 ]]
 end
 
@@ -285,23 +301,9 @@ end
 ---@param ids string
 ---@param hook string
 function commands.on_finish(db_file, ids, hook)
-  local condition = nil
-  if ids == "all" then
-    condition = "1"
-  elseif ids:find "^%d+$" then
-    condition = "id = " .. ids
-  elseif ids:find "^%d[%d,]+%d$" then
-    condition = "id in (" .. ids .. ")"
-  end
-  assert(condition)
-
   sqlite3(db_file, ([[
-    update commands
-    set on_finish = %s
-    where finished_at is null and %s;
-  ]]):format(
-    sqlite3_quote(hook),
-    condition))
+    update commands set on_finish = %s where finished_at is null and %s;
+  ]]):format(sqlite3_quote(hook), parse_ids(ids)))
 end
 
 ---@param db_file string
@@ -319,6 +321,15 @@ function commands.on_finish_api(db_file, ids, token)
     "--output",
     "/dev/null",
   }, " "))
+end
+
+---@param db_file string
+---@param ids string
+function commands.delete(db_file, ids)
+  local condition = parse_ids(ids)
+  sqlite3(db_file, ([[
+    delete from commands where %s;
+  ]]):format(parse_ids(ids)))
 end
 
 local i = 1
