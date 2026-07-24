@@ -126,6 +126,7 @@ vim.lsp.config("lua_ls", {
       format = {
         defaultConfig = {
           -- align_continuous_assign_statement = "false",
+          max_line_length = "200",
         },
       },
     },
