@@ -42,8 +42,8 @@ local function sqlite3(db_file, sql, suppress_stderr)
 
   local command = {
     "sqlite3",
-    "-header",
     "-csv",
+    "-header",
     shell.quote(db_file),
     ">",
     shell.quote(out_file),
