@@ -38,13 +38,16 @@ setopt share_history
 _dromozoa_prompt() {
   local start='%{[91m%}'
   local reset='%{[0m%}'
+  local date='%{[90m%}'
+  local exit='%{[93m%}'
   case X$INSIDE_GNU_SCREEN in
     X) ;;
     *) start='%{[92m%}';;
   esac
   PS1="$start%n@%m:%~%#$reset "
   PS2="$start>$reset "
-  RPROMPT="%(?..%B%F{white}%K{red}[exit=%?]%b%f%k)"
+
+  RPROMPT="%(?..${exit}[exit=%?]$reset )${date}[%D{%Y/%m/%d %H:%M:%S}]$reset"
   SPROMPT="${start}correct '%R' to '%r' [(N)o, (y)es, (a)bort, (e)dit]?$reset "
 }
 _dromozoa_prompt
