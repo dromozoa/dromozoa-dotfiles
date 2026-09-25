@@ -87,6 +87,20 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client:supports_method("textDocument/inlayHint") then
       vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
     end
+
+    if client:supports_method("textDocument/completion") then
+      vim.bo[bufnr].complete = "o"
+
+      vim.lsp.completion.enable(true, client.id, bufnr)
+
+      lsp_buf_map(
+        bufnr,
+        "<C-Space>",
+        vim.lsp.completion.get,
+        "LSP: completion",
+        "i"
+      )
+    end
   end,
 })
 

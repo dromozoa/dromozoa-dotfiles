@@ -58,6 +58,21 @@ opt.modeline = true
 opt.modelines = 5
 opt.wildmode = { "longest", "list" }
 
+opt.autocomplete = true
+opt.autocompletedelay = 80
+
+opt.completeopt = {
+  "menuone",
+  "noselect",
+  "fuzzy",
+  "popup",
+}
+opt.completeitemalign = { "kind", "abbr", "menu" }
+
+-- opt.pumborder = "solid"
+opt.pumheight = 12
+opt.pummaxwidth = 80
+
 vim.cmd "packadd! matchit"
 vim.cmd "syntax enable"
 vim.cmd "filetype plugin on"
