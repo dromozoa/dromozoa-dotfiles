@@ -1,0 +1,225 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2026 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-dotfiles.
+--
+-- dromozoa-dotfiles is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-dotfiles is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
+
+local home = os.getenv "HOME"
+package.path = home .. "/dromozoa-dotfiles/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-calendar/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-commons/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-utf8/?.lua;"
+    .. package.path
+
+local parse_csv = require "dromozoa.parse_csv"
+
+local help = ([[
+Usage: %s [options] command
+Avairable options are:
+  -m          --multiple-lines
+  -t          --transpose
+  -q PATTERN  --quote-csv=PATTERN
+  -h          --help
+Avairable commands are:
+  csv_to_csv
+  csv_to_tsv
+  csv_to_md
+  tsv_to_tsv
+  tsv_to_csv
+  tsv_to_md
+]]):format(arg[0])
+
+local multiple_lines = false
+local transpose = false
+local quote_csv_pattern
+
+local i = 1
+while i <= #arg do
+  local opt = arg[i]
+  i = i + 1
+  if opt == "-m" or opt == "--multiple-lines" then
+    multiple_lines = true
+  elseif opt == "-t" or opt == "--transpose" then
+    transpose = true
+  elseif opt == "-q" or opt == "--quote-csv" then
+    quote_csv_pattern = assert(arg[i])
+    i = i + 1
+  elseif opt == "-h" or opt == "--help" then
+    io.stderr:write(help)
+    os.exit()
+  elseif opt == "--" then
+    break
+  else
+    local value = opt:match "^%-%-quote%-csv=(.*)"
+    if not value then
+      i = i - 1
+      break
+    end
+    quote_csv_pattern = value
+  end
+end
+
+local command = assert(arg[i])
+
+---@param source string
+---@return string[][]
+local function parse_tsv(source)
+  local records = {}
+  for line in source:gmatch "([^\n]*)\n?" do
+    local fields = {}
+    for field in (line .. "\t"):gmatch "(.-)\t" do
+      table.insert(fields, field)
+    end
+    table.insert(records, fields)
+  end
+  return records
+end
+
+---@param source_records string[][]
+---@return string[][]
+local function process_records(source_records)
+  local m = #source_records
+  local n = 0
+  for _, fields in ipairs(source_records) do
+    n = math.max(n, #fields)
+  end
+
+  local result_records = {}
+  if transpose then
+    for i = 1, n do
+      result_records[i] = {}
+      for j = 1, m do
+        result_records[i][j] = source_records[j][i] or ""
+      end
+    end
+  else
+    for i = 1, m do
+      result_records[i] = {}
+      for j = 1, n do
+        result_records[i][j] = source_records[i][j] or ""
+      end
+    end
+  end
+
+  return result_records
+end
+
+---@param field string
+---@return string
+local function process_multiple_lines(field)
+  if multiple_lines then
+    return field
+  else
+    return (field:gsub("\n.*", ""))
+  end
+end
+
+---@param field string
+---@return string
+local function quote_csv(field)
+  field = process_multiple_lines(field)
+
+  local quote = field:find '[\n\",]'
+  if not quote and quote_csv_pattern then
+    quote = field:find(quote_csv_pattern)
+  end
+  if quote then
+    return '"' .. field:gsub('"', '""') .. '"'
+  else
+    return field
+  end
+end
+
+---@param field string
+---@return string
+local function quote_tsv(field)
+  field = process_multiple_lines(field)
+  -- \t => U+21E5 RIGHTWARDS ARROW TO BAR
+  -- \n => U+21B5 DOWNWARDS ARROW WITH CORNER LEFTWARDS
+  return (field:gsub("\t", "\226\135\165"):gsub("\n", "\226\134\181"))
+end
+
+---@param field string
+---@return string
+local function quote_markdown(field)
+  field = process_multiple_lines(field)
+  return (field:gsub("\n", "<br>"):gsub("|", "\\|"))
+end
+
+---@param records string[][]
+---@param quote fun(field: string):string
+---@param separator string
+local function write(records, quote, separator)
+  for _, fields in ipairs(records) do
+    local buffer = {}
+    for i, field in ipairs(fields) do
+      buffer[i] = quote(field)
+    end
+    io.write(table.concat(buffer, separator), "\n")
+  end
+end
+
+---@param records string[][]
+local function write_markdown(records)
+  for i, fields in ipairs(records) do
+    for _, field in ipairs(fields) do
+      io.write("|", quote_markdown(field))
+    end
+    io.write "|\n"
+
+    if i == 1 then
+      for _ = 1, #fields do
+        io.write "|---"
+      end
+      io.write "|\n"
+    end
+  end
+end
+
+local commands = {}
+
+---@param source string
+function commands.csv_to_csv(source)
+  write(process_records(parse_csv(source)), quote_csv, ",")
+end
+
+---@param source string
+function commands.csv_to_tsv(source)
+  write(process_records(parse_csv(source)), quote_tsv, "\t")
+end
+
+---@param source string
+function commands.csv_to_md(source)
+  write_markdown(process_records(parse_csv(source)))
+end
+
+---@param source string
+function commands.tsv_to_tsv(source)
+  write(process_records(parse_tsv(source)), quote_tsv, "\t")
+end
+
+---@param source string
+function commands.tsv_to_csv(source)
+  write(process_records(parse_tsv(source)), quote_csv, ",")
+end
+
+---@param source string
+function commands.tsv_to_md(source)
+  write_markdown(process_records(parse_tsv(source)))
+end
+
+local command_fn = assert(commands[command])
+command_fn(io.read "*a":gsub("\n\r", "\n"):gsub("\r\n?", "\n"))

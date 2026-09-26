@@ -1,4 +1,4 @@
-# Copyright (C) 2018,2023,2024 Tomoyuki Fujimori <moyu@dromozoa.com>
+# Copyright (C) 2018,2023,2024,2026 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
 # This file is part of dromozoa-dotfiles.
 #
@@ -17,7 +17,7 @@
 
 . "$HOME/dromozoa-dotfiles/_resource"
 
-fpath=("$HOME/dromozoa-dotfiles/zshfuncs" $fpath)
+fpath=("$HOME/.zshfuncs" "$HOME/dromozoa-dotfiles/zshfuncs" $fpath)
 
 setopt auto_cd
 setopt autopushd
@@ -37,14 +37,18 @@ setopt share_history
 
 _dromozoa_prompt() {
   local start='%{[91m%}'
-  local reset="%{[0m%}"
-  case X$TERM in
-    Xscreen*) start="%{[92m%}";;
+  local reset='%{[0m%}'
+  local date='%{[90m%}'
+  local exit='%{[93m%}'
+  case X$INSIDE_GNU_SCREEN in
+    X) ;;
+    *) start='%{[92m%}';;
   esac
   PS1="$start%n@%m:%~%#$reset "
   PS2="$start>$reset "
-  RPROMPT=
-  SPROMPT="${start}correct '%R' to '%r' [nyae]?$reset "
+
+  RPROMPT="%(?..${exit}[exit=%?]$reset )${date}[%D{%Y/%m/%d %H:%M:%S}]$reset"
+  SPROMPT="${start}correct '%R' to '%r' [(N)o, (y)es, (a)bort, (e)dit]?$reset "
 }
 _dromozoa_prompt
 unfunction _dromozoa_prompt
@@ -70,6 +74,29 @@ bindkey "^P" history-beginning-search-backward-end
 bindkey "^Q" push-line-or-edit
 bindkey "^R" history-incremental-search-backward
 bindkey "^S" history-incremental-search-forward
+
+autoload -Uz add-zsh-hook
+
+typeset -g _zsphre_id=
+
+_zsphre_preexec() {
+  _zsphre_id=$(zsphre zsh_hook_preexec "$1" "$2" "$3" "$PWD" "$TTY" "$USER" "$HOST" || :)
+}
+
+_zsphre_precmd() {
+  local save_status=$? save_pipestatus="$pipestatus"
+  local id=$_zsphre_id
+  _zsphre_id=
+  if test -n "$id"
+  then
+    zsphre zsh_hook_precmd "$id" "$save_status" "$save_pipestatus" >/dev/null || :
+  fi
+  return 0
+}
+
+add-zsh-hook preexec _zsphre_preexec
+add-zsh-hook precmd _zsphre_precmd
+add-zsh-hook zshexit _zsphre_precmd
 
 _dromozoa_zshrc_d() {
   unsetopt local_options nomatch

@@ -1,6 +1,6 @@
 #! /usr/bin/env lua
 
--- Copyright (C) 2019,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2019,2023,2026 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dotfiles.
 --
@@ -17,14 +17,19 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
-package.path = os.getenv "HOME" .. "/dromozoa-dotfiles/?.lua;" .. package.path
+local home = os.getenv "HOME"
+package.path = home .. "/dromozoa-dotfiles/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-calendar/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-commons/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-utf8/?.lua;"
+    .. package.path
 
-local shell = require "dromozoa.shell"
+local shell = require "dromozoa.commons.shell"
 
 local base_dir = ...
 
 local today = os.date "%Y-%m-%d"
-local today_dir = ("%s/%s"):format(base_dir, today)
+local today_dir = base_dir .. "/" .. today
 
 io.write(([[
 mkdir -p %s && cd %s && title %s

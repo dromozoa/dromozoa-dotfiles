@@ -45,21 +45,43 @@ case X$MSYSTEM in
   *) PATH=$PATH:$path_save;;
 esac
 
-LANG=`locale -a 2>&1 | sed -n '/^ja_JP\.[Uu][Tt][Ff]-*8$/p'`
+LANG=$(locale -a 2>&1 | sed -n '/^ja_JP\.[Uu][Tt][Ff]-*8$/p')
 case X$LANG in
-  X) LANG=`locale -a 2>&1 | sed -n '/^C\.[Uu][Tt][Ff]-*8$/p'`;;
+  X) LANG=$(locale -a 2>&1 | sed -n '/^C\.[Uu][Tt][Ff]-*8$/p');;
 esac
 case X$LANG in
   X) LANG=C;;
 esac
 
+INSIDE_GNU_SCREEN=
+case X$STY in
+  X)
+    case X$TERM in
+      Xscreen*) INSIDE_GNU_SCREEN=1;;
+    esac
+    ;;
+  *) INSIDE_GNU_SCREEN=1;;
+esac
+
+if ! infocmp "$TERM" >/dev/null 2>&1 || test "$TERM" = screen
+then
+  for i in screen.xterm-256color screen.xterm-xfree86 screen-256color screen-16color screen
+  do
+    if infocmp "$i" >/dev/null 2>&1
+    then
+      TERM=$i
+      break
+    fi
+  done
+fi
+
 EDITOR=vim
 
 CPPFLAGS="-I$HOME/prefixes/dromozoa/include -I/opt/dromozoa/include"
 LDFLAGS="-L$HOME/prefixes/dromozoa/lib -L/opt/dromozoa/lib"
-case X`uname` in
+case X$(uname) in
   XDarwin) ;;
   *) LDFLAGS="$LDFLAGS -Wl,-rpath -Wl,$HOME/prefixes/dromozoa/lib $LDFLAGS -Wl,-rpath -Wl,/opt/dromozoa/lib";;
 esac
 
-export PATH MANPATH LANG EDITOR CPPFLAGS LDFLAGS
+export PATH MANPATH LANG INSIDE_GNU_SCREEN TERM EDITOR CPPFLAGS LDFLAGS

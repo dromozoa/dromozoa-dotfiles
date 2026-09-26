@@ -1,0 +1,286 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2017,2018,2023,2026 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-utf8.
+--
+-- dromozoa-utf8 is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-utf8 is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-utf8. If not, see <https://www.gnu.org/licenses/>.
+
+local utf8 = require "dromozoa.utf8"
+
+local help = ([[
+Usage: %s [options] [ambiguous_width]
+Avairable options are:
+  -c  --csv
+  -t  --tsv
+  -h  --help
+]]):format(arg[0])
+
+local ambiguous_width = 2
+local output_mode = "markdown"
+
+local i = 1
+while i <= #arg do
+  local opt = arg[i]
+  i = i + 1
+  if opt == "-c" or opt == "--csv" then
+    output_mode = "csv"
+  elseif opt == "-t" or opt == "--tsv" then
+    output_mode = "tsv"
+  elseif opt == "-h" or opt == "--help" then
+    io.stderr:write(help)
+    os.exit()
+  elseif opt == "--" then
+    break
+  else
+    i = i - 1
+    break
+  end
+end
+
+if arg[i] then
+  ambiguous_width = assert(tonumber(arg[i]))
+end
+
+local east_asian_width
+if ambiguous_width == 1 then
+  east_asian_width = require "dromozoa.ucd.east_asian_width_ambiguous_half"
+else
+  east_asian_width = require "dromozoa.ucd.east_asian_width_ambiguous_full"
+end
+
+local function width(s)
+  local width = 0
+  for _, c in utf8.codes(s) do
+    width = width + east_asian_width(c)
+  end
+  return width
+end
+
+-- compact |------:| パイプの直後が非空白
+-- github  | ----: | パイプの直後が空白
+local header_mode = "compact"
+local header_padding = 0
+
+local function parse(line, n, is_header)
+  local line = line:gsub("^%s*|?", ""):gsub("%s*$", "")
+
+  if #line == 0 then
+    return {}
+  end
+
+  local tokens = {}
+  local i = 1
+  repeat
+    local j
+    local v
+    repeat
+      local _
+      _, j, v = line:find("^(\\|?)", i)
+      if j then
+        break
+      end
+      _, j, v = line:find("^(`[^`]*`)", i)
+      if j then
+        break
+      end
+      _, j, v = line:find("^(%$[^%$]*%$)", i)
+      if j then
+        break
+      end
+      _, j, v = line:find("^([^\\`%$|]+)", i)
+      if j then
+        break
+      end
+      _, j, v = line:find("^(|)", i)
+      if j then
+        break
+      end
+      error("unexpected token at " .. n .. ":" .. i)
+    until false
+    table.insert(tokens, v)
+    i = j + 1
+  until i > #line
+
+  if tokens[#tokens] ~= "|" then
+    table.insert(tokens, "|")
+  end
+
+  local items = {}
+  local item = ""
+  for _, v in ipairs(tokens) do
+    if v == "|" then
+      -- ヘッダの最初の要素が空白で始まるかどうかを調べる
+      if is_header and #items == 0 and item:find "^%s" then
+        header_mode = "github"
+        header_padding = 2
+      end
+      item = item
+          :gsub("^%s*", "")
+          :gsub("%s*$", "")
+      table.insert(items, item)
+      item = ""
+    else
+      item = item .. v
+    end
+  end
+  return items
+end
+
+local n = 0
+local header
+local data = {}
+
+for line in io.lines() do
+  n = n + 1
+  local items = parse(line, n, n == header)
+  if not header and #items > 0 then
+    header = n + 1
+  end
+  data[n] = items
+end
+
+local alignments = {}
+local max_widths = {}
+
+for i, items in ipairs(data) do
+  if i == header then
+    for j, item in ipairs(items) do
+      if item:find ":$" then
+        if item:find "^:." then
+          alignments[j] = "center"
+        else
+          alignments[j] = "right"
+        end
+      else
+        alignments[j] = "normal"
+      end
+    end
+  else
+    for j, item in ipairs(items) do
+      local m = max_widths[j]
+      local n = width(item)
+      if m == nil or m < n then
+        max_widths[j] = n
+      end
+    end
+  end
+end
+
+local m = #alignments
+local n = #max_widths
+if m < n then
+  for i = m + 1, n do
+    alignments[i] = "normal"
+  end
+else
+  for i = n + 1, m do
+    max_widths[i] = 0
+  end
+  n = m
+end
+
+if output_mode == "csv" then
+  local csv_endl = "\n"
+  local function quote_csv(item)
+    local item = item:gsub("\n\r", "\n"):gsub("\r\n?", csv_endl)
+    if item:find '[\r\n\",]' then
+      return '"' .. item:gsub('"', '""') .. '"'
+    else
+      return item
+    end
+  end
+  for i, items in ipairs(data) do
+    if #items == 0 then
+      io.write "\n"
+    elseif i ~= header then
+      for j = 1, n do
+        if j > 1 then
+          io.write ","
+        end
+        io.write(quote_csv( items[j] or ""))
+      end
+      io.write(csv_endl)
+    end
+  end
+  os.exit()
+elseif output_mode == "tsv" then
+  local tsv_tab = string.char(0xE2, 0x87, 0xA5) -- U+21E5 RIGHTWARDS ARROW TO BAR
+  local function quote_tsv(item)
+    return (item:gsub("\t", tsv_tab))
+  end
+  for i, items in ipairs(data) do
+    if #items == 0 then
+      io.write "\n"
+    elseif i ~= header then
+      for j = 1, n do
+        if j > 1 then
+          io.write "\t"
+        end
+        io.write(quote_tsv(items[j] or ""))
+      end
+      io.write "\n"
+    end
+  end
+  os.exit()
+end
+
+for i, items in ipairs(data) do
+  if #items == 0 then
+    io.write "\n"
+  elseif i == header then
+    for j = 1, n do
+      local alignment = alignments[j]
+      local max_width = max_widths[j]
+      io.write "|"
+      if header_mode == "github" then
+        io.write " "
+      end
+      if alignment == "center" then
+        io.write ":"
+      else
+        io.write "-"
+      end
+      io.write(("-"):rep(math.max(max_width, header_padding) - header_padding))
+      if alignment == "normal" then
+        io.write "-"
+      else
+        io.write ":"
+      end
+      if header_mode == "github" then
+        io.write " "
+      end
+    end
+    io.write "|\n"
+  else
+    for j = 1, n do
+      local alignment = alignments[j]
+      local max_width = max_widths[j]
+      io.write "|"
+      local item = items[j] or ""
+      local w = math.max(max_width, header_padding) - width(item) + 2
+      local w1
+      if alignment == "normal" then
+        w1 = 1
+      elseif alignment == "center" then
+        w1 = (w - w % 2) / 2
+      elseif alignment == "right" then
+        w1 = w - 1
+      end
+      local w2 = w - w1
+      io.write((" "):rep(w1), item, (" "):rep(w2))
+    end
+    io.write "|\n"
+  end
+end

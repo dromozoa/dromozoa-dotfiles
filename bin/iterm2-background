@@ -1,6 +1,6 @@
 #! /usr/bin/env lua
 
--- Copyright (C) 2018,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2018,2023,2026 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-dotfiles.
 --
@@ -17,13 +17,16 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
-package.path = os.getenv "HOME" .. "/dromozoa-dotfiles/?.lua;" .. package.path
+local home = os.getenv "HOME"
+package.path = home .. "/dromozoa-dotfiles/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-calendar/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-commons/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-utf8/?.lua;"
+    .. package.path
 
-local encode_base64 = require "dromozoa.encode_base64"
+local base64 = require "dromozoa.commons.base64"
 
-local unpack = table.unpack or unpack
-
-local term = os.getenv "TERM"
+local inside_gnu_screen = (os.getenv "INSIDE_GNU_SCREEN" or "") ~= ""
 
 local function set(filename)
   if not filename then
@@ -33,20 +36,15 @@ local function set(filename)
     filename = "/Users/moyu/Pictures/termbg/" .. hostname .. ".png"
   end
 
-  local buffer = {
-    "\27]1337;SetBackgroundImageFile=";
-    encode_base64(filename);
-    "\7";
-  }
+  local payload = "\27]1337;SetBackgroundImageFile=" .. base64.encode(filename) .. "\7"
 
   -- DCS
-  if term:find "^screen" then
-    local payload = table.concat(buffer)
+  if inside_gnu_screen then
     for i = 1, #payload, 512 do
       io.write("\27P", payload:sub(i, i + 511), "\27\\")
     end
   else
-    io.write(unpack(buffer))
+    io.write(payload)
   end
 end
 

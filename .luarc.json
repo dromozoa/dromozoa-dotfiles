@@ -1,0 +1,8 @@
+{
+  "runtime.version": "LuaJIT",
+  "workspace.library": [
+    "modules/dromozoa-calendar",
+    "modules/dromozoa-commons",
+    "modules/dromozoa-utf8"
+  ]
+}

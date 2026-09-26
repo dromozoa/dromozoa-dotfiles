@@ -1,0 +1,353 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2026 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-dotfiles.
+--
+-- dromozoa-dotfiles is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-dotfiles is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
+
+local home = os.getenv "HOME"
+package.path = home .. "/dromozoa-dotfiles/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-calendar/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-commons/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-utf8/?.lua;"
+    .. package.path
+
+local parse_csv = require "dromozoa.parse_csv"
+local json = require "dromozoa.commons.json"
+local shell = require "dromozoa.commons.shell"
+
+---@param s string
+---@return string
+local function sqlite3_quote(s)
+  return "'" .. (s or ""):gsub("'", "''") .. "'"
+end
+
+---@param db_file string
+---@param sql string
+---@param suppress_stderr boolean?
+local function sqlite3(db_file, sql, suppress_stderr)
+  local out_file = os.tmpname()
+
+  local command = {
+    "sqlite3",
+    "-csv",
+    "-header",
+    shell.quote(db_file),
+    ">",
+    shell.quote(out_file),
+  }
+
+  if suppress_stderr then
+    table.insert(command, "2>/dev/null")
+  end
+
+  local handle = assert(io.popen(table.concat(command, " "), "w"))
+  handle:write(sql)
+  handle:close()
+
+  local handle = assert(io.open(out_file))
+  local result = handle:read "*a"
+  handle:close()
+
+  os.remove(out_file)
+  return result
+end
+
+---@param source string
+---@return table<string, string>[]
+local function sqlite3_parse_csv(source)
+  local source_records = parse_csv(source:gsub("\n\r", "\n"):gsub("\r\n?", "\n"))
+  local result_records = {}
+
+  local source_header = source_records[1]
+  for i = 2, #source_records do
+    local source_record = source_records[i]
+    local result_record = {}
+    for j, k in ipairs(source_header) do
+      result_record[k] = source_record[j]
+    end
+    table.insert(result_records, result_record)
+  end
+
+  return result_records
+end
+
+---@param file string
+---@return boolean
+local function exists(file)
+  local handle = io.open(file, "rb")
+  if handle then
+    handle:close()
+    return true
+  else
+    return false
+  end
+end
+
+---@param db_file string
+local function create_db(db_file)
+  if not exists(db_file) then
+    sqlite3(db_file, [[.timeout 1000
+      pragma auto_vacuum=INCREMENTAL;
+      pragma journal_mode=WAL;
+
+      create table if not exists commands (
+        id integer primary key,
+        started_at text not null,
+        finished_at text,
+        hist text not null,
+        line text not null,
+        full text not null,
+        cwd text not null,
+        tty text not null,
+        user text not null,
+        host text not null,
+        status integer,
+        pipe_status text,
+        on_finish text
+      );
+    ]])
+  end
+
+  sqlite3(db_file, [[.timeout 1000
+    alter table commands add column user text not null default '';
+  ]], true)
+end
+
+---@param ids string
+---@return string
+local function parse_ids(ids)
+  local condition
+  if ids == "all" then
+    condition = "1"
+  elseif ids:find "^%d+$" then
+    condition = "id = " .. ids
+  elseif ids:find "^%d[%d,]+%d$" then
+    condition = "id in (" .. ids .. ")"
+  end
+  return assert(condition)
+end
+
+local help = [[
+Usage:
+  zsphre zsh_completion_commands
+  zsphre zsh_completion_options
+  zsphre zsh_hook_preexec hist line full cwd tty user host
+  zsphre zsh_hook_precmd id status pipe_status
+  zsphre list_runnings
+  zsphre on_finish ids hook
+  zsphre on_finish_api ids token
+  zsphre delete ids
+]]
+
+---@class zsphre.commands
+local commands = {}
+
+function commands.zsh_completion_commands()
+  io.write [[
+zsh_completion_commands
+zsh_completion_options
+zsh_hook_preexec:hist line full cwd tty user host
+zsh_hook_precmd:id status pipe_status
+list_runnings
+on_finish:ids hook
+on_finish_api:ids token
+delete:ids
+]]
+end
+
+function commands.zsh_completion_options()
+  io.write [[
+(-- -h --help)--[end of options]
+(-- -h --help)-h[show help and exit]
+(-- -h --help)--help[show help and exit]
+]]
+end
+
+---@param db_file string
+---@param hist string
+---@param line string
+---@param full string
+---@param cwd string
+---@param tty string
+---@param user string
+---@param host string?
+function commands.zsh_hook_preexec(db_file, hist, line, full, cwd, tty, user, host)
+  -- userの追加のための移行措置
+  if not host then
+    host = user
+    user = shell.eval "id -u -n" or ""
+  end
+
+  local result = sqlite3(db_file, ([[.timeout 1000
+    begin immediate transaction;
+
+    insert into commands (started_at, hist, line, full, cwd, tty, user, host)
+    values (strftime(%s), %s, %s, %s, %s, %s, %s, %s);
+
+    select last_insert_rowid() as id;
+
+    commit transaction;
+  ]]):format(
+    sqlite3_quote "%Y-%m-%dT%H:%M:%fZ",
+    sqlite3_quote(hist),
+    sqlite3_quote(line),
+    sqlite3_quote(full),
+    sqlite3_quote(cwd),
+    sqlite3_quote(tty),
+    sqlite3_quote(user),
+    sqlite3_quote(host)))
+  local records = sqlite3_parse_csv(result)
+  io.write(records[1].id, "\n")
+end
+
+---@param db_file string
+---@param id string
+---@param status string
+---@param pipe_status string
+function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
+  local result = sqlite3(db_file, ([[.timeout 1000
+    begin immediate transaction;
+
+    update commands
+    set finished_at = strftime(%s), status = %d, pipe_status = %s
+    where id = %d;
+
+    select
+      strftime(%s, started_at, 'localtime') as started_at,
+      strftime(%s, finished_at, 'localtime') as finished_at,
+      strftime('%%s', finished_at) - strftime('%%s', started_at) as elapsed,
+      hist,
+      line,
+      full,
+      cwd,
+      tty,
+      user,
+      host,
+      status,
+      pipe_status,
+      on_finish
+    from commands
+    where id = %d;
+
+    commit transaction;
+  ]]):format(
+    sqlite3_quote "%Y-%m-%dT%H:%M:%fZ",
+    status,
+    sqlite3_quote(pipe_status),
+    id,
+    sqlite3_quote "%Y/%m/%d %H:%M:%S",
+    sqlite3_quote "%Y/%m/%d %H:%M:%S",
+    id))
+
+  local records = sqlite3_parse_csv(result)
+  local on_finish = ""
+
+  ---@type table<string, string|number>
+  local record = {}
+  for k, v in pairs(records[1]) do
+    if k == "elapsed" or k == "status" then
+      record[k] = assert(tonumber(v))
+    elseif k == "on_finish" then
+      on_finish = v
+    else
+      record[k] = v
+    end
+  end
+
+  if on_finish ~= "" then
+    local handle = assert(io.popen(on_finish, "w"))
+    handle:write(json.encode(record, { pretty = true, stable = true }), "\n")
+    handle:close()
+  end
+end
+
+---@param db_file string
+function commands.list_runnings(db_file)
+  local result = sqlite3(db_file, ([[
+    select
+      id,
+      strftime(%s, started_at, 'localtime') as started_at,
+      strftime('%%s') - strftime('%%s', started_at) as elapsed,
+      line
+    from commands
+    where finished_at is null
+    order by id;
+  ]]):format(sqlite3_quote "%Y/%m/%d %H:%M:%S"))
+
+  local records = sqlite3_parse_csv(result)
+  for _, record in ipairs(records) do
+    io.write(("%d\t%s\t%d\t%s\n"):format(
+      assert(tonumber(record.id)),
+      record.started_at,
+      assert(tonumber(record.elapsed)),
+      record.line))
+  end
+end
+
+---@param db_file string
+---@param ids string
+---@param hook string
+function commands.on_finish(db_file, ids, hook)
+  sqlite3(db_file, ([[
+    update commands set on_finish = %s where finished_at is null and %s;
+  ]]):format(sqlite3_quote(hook), parse_ids(ids)))
+end
+
+---@param db_file string
+---@param ids string
+---@param token string
+function commands.on_finish_api(db_file, ids, token)
+  commands.on_finish(db_file, ids, table.concat({
+    "curl",
+    "--silent",
+    "https://dromologie.com/api/zsphre.on_finish",
+    "--header",
+    shell.quote("Authorization: Bearer " .. token),
+    "--data-binary",
+    "@-",
+    "--output",
+    "/dev/null",
+  }, " "))
+end
+
+---@param db_file string
+---@param ids string
+function commands.delete(db_file, ids)
+  local condition = parse_ids(ids)
+  sqlite3(db_file, ([[
+    delete from commands where %s;
+  ]]):format(parse_ids(ids)))
+end
+
+local i = 1
+while i <= #arg do
+  local opt = arg[i]
+  i = i + 1
+  if opt == "-h" or opt == "--help" then
+    io.stderr:write(help)
+    os.exit()
+  elseif opt == "--" then
+    break
+  else
+    i = i - 1
+    break
+  end
+end
+local command = assert(commands[arg[i]])
+
+local db_file = os.getenv "XDG_STATE_HOME" .. "/zsphre.db"
+create_db(db_file)
+command(db_file, (table.unpack or unpack)(arg, i + 1))

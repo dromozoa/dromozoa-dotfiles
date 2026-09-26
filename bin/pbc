@@ -1,0 +1,80 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2026 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-dotfiles.
+--
+-- dromozoa-dotfiles is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-dotfiles is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
+
+local home = os.getenv "HOME"
+package.path = home .. "/dromozoa-dotfiles/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-calendar/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-commons/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-utf8/?.lua;"
+    .. package.path
+
+local base64 = require "dromozoa.commons.base64"
+
+local inside_gnu_screen = (os.getenv "INSIDE_GNU_SCREEN" or "") ~= ""
+
+local help = ([[
+Usage: %s [options] [file]
+Avairable options are:
+  -c  --chomp
+  -h  --help
+]]):format(arg[0])
+
+local chomp = false
+
+local i = 1
+while i <= #arg do
+  local opt = arg[i]
+  i = i + 1
+  if opt == "-c" or opt == "--chomp" then
+    chomp = true
+  elseif opt == "-h" or opt == "--help" then
+    io.stderr:write(help)
+    os.exit()
+  elseif opt == "--" then
+    break
+  else
+    i = i - 1
+    break
+  end
+end
+
+local filename = arg[i]
+
+local data
+if filename then
+  local handle = assert(io.open(filename, "rb"))
+  data = handle:read "*a"
+  handle:close()
+else
+  data = io.read "*a"
+end
+
+if chomp then
+  data = data:gsub("[\r\n]+$", "")
+end
+
+local payload = "\27]52;;" .. base64.encode(data) .. "\7"
+
+if inside_gnu_screen then
+  for i = 1, #payload, 512 do
+    io.write("\27P", payload:sub(i, i + 511), "\27\\")
+  end
+else
+  io.write(payload)
+end
