@@ -18,6 +18,10 @@
 set runtimepath^=~/dromozoa-dotfiles/vimfiles
 let g:netrw_home="~/.vim"
 
+" Vim 9.2.1132でMarkdownを開くと「E216: No such group or event: htmltagfold」
+" というエラーが出る件のワークアラウンド
+let g:html_expr_folding=1
+
 set ambiwidth=double
 set fileformats=unix,dos,mac
 set fileencodings=ucs-bom,utf-8,cp932,euc-jp,utf-16
