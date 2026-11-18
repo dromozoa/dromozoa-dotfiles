@@ -121,6 +121,11 @@ end
 
 ---@return boolean
 function Char:is_line_start_prohibited()
+  local c = self:code()
+  if c == 0xFF09 then
+    print("!!!!", dromozoa.text.is_line_start_prohibited(self:code()))
+  end
+
   return dromozoa.text.is_line_start_prohibited(self:code())
 end
 
@@ -277,7 +282,7 @@ function Paragraph:append(body)
     if is_space(char:code()) then
       text:append(new_token(char))
       token = nil
-    elseif token and (is_unbreakable(token:last_char(), char) or char:width() == 1) then
+    elseif token and (is_unbreakable(token:last_char(), char) or (not token:is_space() and token:last_char():width() == 1 and char:width() == 1)) then
       token:append(char)
     else
       token = new_token(char)
@@ -344,7 +349,7 @@ function Paragraph:format(text_width)
     for i = token_start, #tokens do
       local token = tokens[i]
       width = width + token:width()
-      if i == token_start or width <= max_width or token:is_space() or token:last_char():is_line_start_prohibited() then
+      if i == token_start or width <= max_width or token:is_space() or token:first_char():is_line_start_prohibited() then
         token_index = i
       else
         break
@@ -354,7 +359,7 @@ function Paragraph:format(text_width)
     local token_end = token_start
     for i = token_index, token_start + 1, -1 do
       local token = tokens[i]
-      if not token:is_space() and not token:first_char():is_line_end_prohibited() then
+      if not token:is_space() and not token:last_char():is_line_end_prohibited() then
         token_end = i
         break
       end
