@@ -223,6 +223,7 @@ end
 ---| "unordered"
 ---| "ordered"
 ---| "paragraph"
+---| "prefixed"
 
 ---@class dromozoa.format_text.Paragraph
 ---@field kind dromozoa.format_text.Paragraph.Kind
@@ -288,6 +289,17 @@ function Paragraph:append(body)
   return self
 end
 
+---@param ... dromozoa.format_text.Paragraph.Kind
+---@return boolean
+function Paragraph:check(...)
+  for _, kind in ipairs { ... } do
+    if self.kind == kind then
+      return true
+    end
+  end
+  return false
+end
+
 ---@param line_number integer
 ---@return string
 function Paragraph:prefix(line_number)
@@ -301,7 +313,7 @@ end
 ---@param text_width integer
 ---@return string
 function Paragraph:format(text_width)
-  if self.kind == "empty" then
+  if self:check "empty" then
     return "\n"
   end
 
@@ -375,19 +387,37 @@ local function parse(lines)
   ---@type dromozoa.format_text.Paragraph[]
   local paragraphs = {}
   for _, line in ipairs(lines) do
-    local prefix, body = line:gsub("%s+$", ""):match "^(%s*)(.*)"
-    if body == "" then
-      table.insert(paragraphs, new_paragraph("empty", prefix, body))
-    elseif body:find "^%- " then
-      table.insert(paragraphs, new_paragraph("unordered", prefix, body))
-    elseif body:find "^%d+%. " then
-      table.insert(paragraphs, new_paragraph("ordered", prefix, body))
+    local prefix, text = line:gsub("%s+$", ""):match "^(%s*)(.*)"
+    ---@type dromozoa.format_text.Paragraph.Kind
+    local kind = "paragraph"
+    if text == "" then
+      kind = "empty"
+    elseif text:find "^%- " then
+      kind = "unordered"
+    elseif text:find "^%d+%. " then
+      kind = "ordered"
+    elseif text:find "^[>#] " or text:find "^// " or text:find "^%-%- " then
+      local p, t = text:match "^(%S+ )(.*)"
+      prefix = prefix .. p
+      text = t
+      kind = "prefixed"
+    end
+
+    if kind == "empty" or kind == "unordered" or kind == "ordered" then
+      table.insert(paragraphs, new_paragraph(kind, prefix, text))
+    elseif kind == "paragraph" then
+      local paragraph = paragraphs[#paragraphs]
+      if paragraph and (paragraph:check "paragraph" and paragraph:prefix(1) == prefix or paragraph:check("unordered", "ordered")) then
+        paragraph:append(text)
+      else
+        table.insert(paragraphs, new_paragraph(kind, prefix, text))
+      end
     else
       local paragraph = paragraphs[#paragraphs]
-      if paragraph and paragraph.kind ~= "empty" then
-        paragraph:append(body)
+      if paragraph and paragraph:check "prefixed" and paragraph:prefix(1) == prefix then
+        paragraph:append(text)
       else
-        table.insert(paragraphs, new_paragraph("paragraph", prefix, body))
+        table.insert(paragraphs, new_paragraph(kind, prefix, text))
       end
     end
   end
@@ -398,7 +428,6 @@ end
 ---@param text_width integer
 ---@return string
 local function format_text(lines, text_width)
-
   local paragraphs = parse(lines)
 
   ---@type string[]
