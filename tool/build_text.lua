@@ -58,9 +58,13 @@ for i = 1, #source do
   end
 end
 
+-- 行頭禁則・行末禁則に全角丸括弧を追加する。
+names.is_line_start_prohibited._:range(0xFF09, 0xFF09, true)
+names.is_line_end_prohibited._:range(0xFF08, 0xFF08, true)
+
 for k, v in pairs(names) do
   local _ = v._
   local result_filename = ("dromozoa/text/%s.lua"):format(k)
   local out = assert(io.open(result_filename, "w"))
-  _.compile(out, _:build()):close()
+  _.compile(out, _:build(), "boolean"):close()
 end

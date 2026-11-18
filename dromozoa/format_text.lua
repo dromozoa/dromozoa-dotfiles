@@ -121,11 +121,6 @@ end
 
 ---@return boolean
 function Char:is_line_start_prohibited()
-  local c = self:code()
-  if c == 0xFF09 then
-    print("!!!!", dromozoa.text.is_line_start_prohibited(self:code()))
-  end
-
   return dromozoa.text.is_line_start_prohibited(self:code())
 end
 

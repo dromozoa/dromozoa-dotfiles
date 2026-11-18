@@ -1,3 +1,5 @@
+---@param c integer
+---@return boolean
 return function (c)
   c = c + 0
   if c < 12358 then
@@ -127,7 +129,7 @@ return function (c)
       end
     end
   else
-    if c < 12483 then
+    if c < 12515 then
       if c < 12439 then
         if c < 12420 then
           if c < 12362 then
@@ -174,44 +176,48 @@ return function (c)
             end
           end
         else
-          if c < 12457 then
+          if c < 12458 then
             if c < 12456 then
               return c >= 12455
             else
-              return false
+              return c >= 12457
             end
           else
-            return c < 12458
+            if c < 12484 then
+              return c >= 12483
+            else
+              return false
+            end
           end
         end
       end
     else
-      if c < 12526 then
-        if c < 12517 then
-          if c < 12515 then
-            return c < 12484
-          else
+      if c < 12533 then
+        if c < 12519 then
+          if c < 12517 then
             return c < 12516
+          else
+            return c < 12518
           end
         else
-          if c < 12519 then
-            return c < 12518
-          else
+          if c < 12526 then
             return c < 12520
+          else
+            return c < 12527
           end
         end
       else
-        if c < 12539 then
-          if c < 12533 then
-            return c < 12527
-          else
+        if c < 12784 then
+          if c < 12539 then
             return c < 12535
+          else
+            return c < 12543
           end
         else
-          if c < 12784 then
-            return c < 12543
-          else
+          if c < 65289 then
             return c < 12800
+          else
+            return c < 65290
           end
         end
       end
