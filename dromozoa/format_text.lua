@@ -226,26 +226,26 @@ end
 
 ---@class dromozoa.format_text.Paragraph
 ---@field kind dromozoa.format_text.Paragraph.Kind
----@field first_indent string
----@field hanging_indent string
+---@field prefix1 string
+---@field prefix2 string
 ---@field texts dromozoa.format_text.Text[]
 local Paragraph = {}
 local Paragraph_metatable = { __index = Paragraph }
 
 ---@param kind dromozoa.format_text.Paragraph.Kind
----@param indent string
+---@param prefix1 string
 ---@param text string
 ---@return dromozoa.format_text.Paragraph
-local function new_paragraph(kind, indent, text)
-  local hanging_indent = indent
+local function new_paragraph(kind, prefix1, text)
+  local prefix2 = prefix1
   if kind == "unordered" or kind == "ordered" then
     local _, j = assert(text:find "^%S+ ")
-    hanging_indent = hanging_indent .. string.rep(" ", j)
+    prefix2 = prefix2 .. string.rep(" ", j)
   end
   return setmetatable({
     kind = kind,
-    first_indent = indent,
-    hanging_indent = hanging_indent,
+    prefix1 = prefix1,
+    prefix2 = prefix2,
     texts = {},
   }, Paragraph_metatable):append(text)
 end
@@ -290,11 +290,11 @@ end
 
 ---@param line_number integer
 ---@return string
-function Paragraph:indent(line_number)
+function Paragraph:prefix(line_number)
   if line_number == 1 then
-    return self.first_indent
+    return self.prefix1
   else
-    return self.hanging_indent
+    return self.prefix2
   end
 end
 
@@ -325,7 +325,7 @@ function Paragraph:format(text_width)
 
   while token_start <= #tokens do
     line_number = line_number + 1
-    local max_width = text_width - get_width(self:indent(line_number))
+    local max_width = text_width - get_width(self:prefix(line_number))
     local width = 0
 
     local token_index
@@ -348,7 +348,7 @@ function Paragraph:format(text_width)
       end
     end
 
-    table.insert(buffer, self:indent(line_number))
+    table.insert(buffer, self:prefix(line_number))
     for i = token_start, token_end do
       table.insert(buffer, tokens[i]:string())
     end
@@ -375,19 +375,19 @@ local function parse(lines)
   ---@type dromozoa.format_text.Paragraph[]
   local paragraphs = {}
   for _, line in ipairs(lines) do
-    local indent, body = line:gsub("%s+$", ""):match "^(%s*)(.*)"
+    local prefix, body = line:gsub("%s+$", ""):match "^(%s*)(.*)"
     if body == "" then
-      table.insert(paragraphs, new_paragraph("empty", indent, body))
+      table.insert(paragraphs, new_paragraph("empty", prefix, body))
     elseif body:find "^%- " then
-      table.insert(paragraphs, new_paragraph("unordered", indent, body))
+      table.insert(paragraphs, new_paragraph("unordered", prefix, body))
     elseif body:find "^%d+%. " then
-      table.insert(paragraphs, new_paragraph("ordered", indent, body))
+      table.insert(paragraphs, new_paragraph("ordered", prefix, body))
     else
       local paragraph = paragraphs[#paragraphs]
       if paragraph and paragraph.kind ~= "empty" then
         paragraph:append(body)
       else
-        table.insert(paragraphs, new_paragraph("paragraph", indent, body))
+        table.insert(paragraphs, new_paragraph("paragraph", prefix, body))
       end
     end
   end
