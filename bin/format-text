@@ -1,0 +1,68 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2026 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-dotfiles.
+--
+-- dromozoa-dotfiles is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-dotfiles is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
+
+local home = os.getenv "HOME"
+package.path = home .. "/dromozoa-dotfiles/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-calendar/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-commons/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-utf8/?.lua;"
+    .. package.path
+
+local format_text = require "dromozoa.format_text"
+
+local help = string.format([[
+Usage: %s [options]
+Avairable options are:
+  -w INTEGER  --text-width=INTEGER
+  -h          --help
+]], arg[0])
+
+local text_width = 0
+
+local i = 1
+while i <= #arg do
+  local opt = arg[i]
+  i = i + 1
+  if opt == "-w" or opt == "--text-width" then
+    text_width = assert(tonumber(arg[i]))
+    i = i + 1
+  elseif opt == "-h" or opt == "--help" then
+    io.stderr:write(help)
+    os.exit()
+  elseif opt == "--" then
+    break
+  else
+    local value = opt:match "^%-%-text%-width=(.*)"
+    if not value then
+      i = i - 1
+      break
+    end
+    text_width = assert(tonumber(arg[i]))
+  end
+end
+
+if text_width <= 0 then
+  text_width = 0xFFFFFFFF
+end
+
+local source = {}
+for line in io.lines() do
+  table.insert(source, line)
+end
+io.write(format_text(source, text_width))
