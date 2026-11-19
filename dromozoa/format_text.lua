@@ -220,8 +220,7 @@ end
 
 ---@alias dromozoa.format_text.Paragraph.Kind
 ---| "empty"
----| "unordered"
----| "ordered"
+---| "list"
 ---| "paragraph"
 ---| "prefixed"
 
@@ -235,14 +234,10 @@ local Paragraph_metatable = { __index = Paragraph }
 
 ---@param kind dromozoa.format_text.Paragraph.Kind
 ---@param prefix1 string
+---@param prefix2 string
 ---@param text string
 ---@return dromozoa.format_text.Paragraph
-local function new_paragraph(kind, prefix1, text)
-  local prefix2 = prefix1
-  if kind == "unordered" or kind == "ordered" then
-    local _, j = assert(text:find "^%S+ ")
-    prefix2 = prefix2 .. string.rep(" ", j)
-  end
+local function new_paragraph(kind, prefix1, prefix2, text)
   return setmetatable({
     kind = kind,
     prefix1 = prefix1,
@@ -387,37 +382,51 @@ local function parse(lines)
   ---@type dromozoa.format_text.Paragraph[]
   local paragraphs = {}
   for _, line in ipairs(lines) do
-    local prefix, text = line:gsub("%s+$", ""):match "^(%s*)(.*)"
     ---@type dromozoa.format_text.Paragraph.Kind
     local kind = "paragraph"
-    if text == "" then
-      kind = "empty"
-    elseif text:find "^%- " then
-      kind = "unordered"
-    elseif text:find "^%d+%. " then
-      kind = "ordered"
-    elseif text:find "^[>#] " or text:find "^// " or text:find "^%-%- " then
-      local p, t = text:match "^(%S+ )(.*)"
-      prefix = prefix .. p
-      text = t
-      kind = "prefixed"
-    end
+    local prefix1, text = line:gsub("%s+$", ""):match "^(%s*)(.*)"
+    local prefix2 = prefix1
 
-    if kind == "empty" or kind == "unordered" or kind == "ordered" then
-      table.insert(paragraphs, new_paragraph(kind, prefix, text))
+    repeat
+      if text == "" then
+        kind = "empty"
+        break
+      end
+
+      local item = text:match "^%- " or text:match "^%d+%. "
+      if item then
+        kind = "list"
+        prefix1 = prefix1 .. item
+        prefix2 = prefix2 .. string.rep(" ", #item)
+        text = text:sub(#item + 1)
+        break
+      end
+
+      local item = text:match "^[>#] " or text:match "^// " or text:match "^%-%- "
+      if item then
+        kind = "prefixed"
+        prefix1 = prefix1 .. item
+        prefix2 = prefix2 .. item
+        text = text:sub(#item + 1)
+        break
+      end
+    until true
+
+    if kind == "empty" or kind == "list" then
+      table.insert(paragraphs, new_paragraph(kind, prefix1, prefix2, text))
     elseif kind == "paragraph" then
       local paragraph = paragraphs[#paragraphs]
-      if paragraph and (paragraph:check "paragraph" and paragraph:prefix(1) == prefix or paragraph:check("unordered", "ordered")) then
+      if paragraph and (paragraph:check "paragraph" and paragraph:prefix(1) == prefix1 or paragraph:check "list") then
         paragraph:append(text)
       else
-        table.insert(paragraphs, new_paragraph(kind, prefix, text))
+        table.insert(paragraphs, new_paragraph(kind, prefix1, prefix2, text))
       end
     else
       local paragraph = paragraphs[#paragraphs]
-      if paragraph and paragraph:check "prefixed" and paragraph:prefix(1) == prefix then
+      if paragraph and paragraph:check "prefixed" and paragraph:prefix(1) == prefix1 then
         paragraph:append(text)
       else
-        table.insert(paragraphs, new_paragraph(kind, prefix, text))
+        table.insert(paragraphs, new_paragraph(kind, prefix1, prefix2, text))
       end
     end
   end
