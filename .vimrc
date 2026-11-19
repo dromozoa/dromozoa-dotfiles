@@ -82,11 +82,13 @@ highlight Underlined ctermfg=LightBlue
 autocmd FileType html setlocal wrap
 autocmd FileType markdown setlocal wrap
 autocmd FileType text setlocal textwidth=60
+autocmd FileType text setlocal formatprg=format-text\ -w\ 60
 autocmd FileType lua syntax sync minlines=500 maxlines=1000
-if has("lua")
-  let $LUA_PATH=$HOME."/dromozoa-dotfiles/?.lua;;"
-  autocmd FileType text setlocal formatexpr=dromozoa#format()
-endif
+
+augroup update_formatprg
+  autocmd!
+  autocmd BufEnter,OptionSet textwidth let &l:formatprg = 'format-text -w ' . &l:textwidth
+augroup END
 
 nnoremap j gj
 nnoremap k gk
