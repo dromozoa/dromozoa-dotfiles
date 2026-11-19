@@ -249,6 +249,12 @@ end
 ---@param body string
 ---@return dromozoa.format_text.Paragraph
 function Paragraph:append(body)
+  if body == "" then
+    assert(self:check "empty")
+    assert(#self.texts == 0)
+    return self
+  end
+
   ---@type dromozoa.format_text.Text
   local text = new_text()
 
@@ -309,8 +315,10 @@ end
 ---@return string
 function Paragraph:format(text_width)
   if self:check "empty" then
+    assert(#self.texts == 0)
     return "\n"
   end
+  assert(#self.texts > 0)
 
   ---@type dromozoa.format_text.Token[]
   local tokens = {}
@@ -332,14 +340,17 @@ function Paragraph:format(text_width)
 
   while token_start <= #tokens do
     line_number = line_number + 1
-    local max_width = text_width - get_width(self:prefix(line_number))
+    local max_width
+    if text_width > 0 then
+      max_width = text_width - get_width(self:prefix(line_number))
+    end
     local width = 0
 
     local token_index
     for i = token_start, #tokens do
       local token = tokens[i]
       width = width + token:width()
-      if i == token_start or width <= max_width or token:is_space() or token:first_char():is_line_start_prohibited() then
+      if i == token_start or not max_width or width <= max_width or token:is_space() or token:first_char():is_line_start_prohibited() then
         token_index = i
       else
         break

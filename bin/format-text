@@ -57,10 +57,6 @@ while i <= #arg do
   end
 end
 
-if text_width <= 0 then
-  text_width = 0xFFFFFFFF
-end
-
 local source = {}
 for line in io.lines() do
   table.insert(source, line)
