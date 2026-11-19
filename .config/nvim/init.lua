@@ -95,6 +95,22 @@ vim.api.nvim_create_autocmd("CursorHold", {
   command = "silent! wall",
 })
 
+local filetype_group = vim.api.nvim_create_augroup("filetype_local_options", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  group = filetype_group,
+  pattern = "text",
+  callback = function()
+    vim.opt_local.textwidth = 60
+    vim.opt_local.formatprg = "format-text -w 60"
+  end,
+})
+vim.api.nvim_create_autocmd("OptionSet", {
+  pattern = "textwidth",
+  callback = function()
+    vim.bo.formatprg = string.format("format-text -w %d", vim.bo.textwidth)
+  end,
+})
+
 local opts = { noremap = true, silent = true }
 vim.keymap.set("n", "j", "gj", opts)
 vim.keymap.set("n", "k", "gk", opts)
