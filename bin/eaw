@@ -29,25 +29,32 @@ local base64 = require "dromozoa.commons.base64"
 local inside_gnu_screen = (os.getenv "INSIDE_GNU_SCREEN" or "") ~= ""
 
 local help = [[
-Usage: ambiwidth full|half
+Usage: eaw full|half
 ]]
 
-local ambiwidth = ...
+local ST = "\27\\"
+
+local ambiguous_width = ...
 local iterm2_value
 local screen_value
 
-if ambiwidth == "full" then
-  iterm2_value = base64.encode "true"
+if ambiguous_width == "full" then
+  iterm2_value = "true"
   screen_value = "on"
-elseif ambiwidth == "half" then
-  iterm2_value = base64.encode "false"
+elseif ambiguous_width == "half" then
+  iterm2_value = "false"
   screen_value = "off"
 else
   io.stderr:write(help)
   os.exit()
 end
 
-io.write("\27]1337;SetProfileProperty=Ambiguous Double Width=", iterm2_value, "\27\\")
+-- GNU screenに透過させるため、DTに\7を使う。
+local iterm2_escape_sequence = "\27]1337;SetProfileProperty=Ambiguous Double Width=" .. base64.encode(iterm2_value) .. "\7"
+
 if inside_gnu_screen then
+  io.write("\27P", iterm2_escape_sequence, "\27\\")
   os.execute("screen -X cjkwidth " .. screen_value)
+else
+  io.write(iterm2_escape_sequence)
 end
