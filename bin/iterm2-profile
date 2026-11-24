@@ -1,0 +1,44 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2026 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-dotfiles.
+--
+-- dromozoa-dotfiles is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-dotfiles is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
+
+local help = [[
+Usage: iterm2-file profile
+Available profiles are:
+]]
+
+local profiles = {
+  "moyu-2026",
+  "moyu-2026-ambiwidth-half",
+}
+
+local profile_set = {}
+for _, profile in ipairs(profiles) do
+  profile_set[profile] = true
+end
+
+local profile = ...
+if not profile_set[profile] then
+  io.stderr:write(help)
+  for _, profile in ipairs(profiles) do
+    io.stderr:write("  ", profile, "\n")
+  end
+  os.exit()
+end
+
+io.write("\27]1337;SetProfile=", profile, "\27\\")
