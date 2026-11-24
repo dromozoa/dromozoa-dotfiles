@@ -28,7 +28,7 @@ local format_text = require "dromozoa.format_text"
 
 local help = string.format([[
 Usage: %s [options]
-Avairable options are:
+Available options are:
   -w INTEGER  --text-width=INTEGER
   -h          --help
 ]], arg[0])

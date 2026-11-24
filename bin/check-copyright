@@ -36,7 +36,7 @@ local author_map = {
 
 local help = [[
 Usage: check-copyright [options]
-Avairable options are:
+Available options are:
   -h  --help
   -q  --quiet
   -u  --update

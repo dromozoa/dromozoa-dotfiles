@@ -30,7 +30,7 @@ local inside_gnu_screen = (os.getenv "INSIDE_GNU_SCREEN" or "") ~= ""
 
 local help = ([[
 Usage: %s [options] [file]
-Avairable options are:
+Available options are:
   -c  --chomp
   -h  --help
 ]]):format(arg[0])

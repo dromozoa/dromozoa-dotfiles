@@ -20,7 +20,7 @@
 help() {
   cat <<EOH
 Usage: $0 [options] [title]
-Avairable options are:
+Available options are:
   -x  --xterm
   -d  --working-dir
   -r  --project-root

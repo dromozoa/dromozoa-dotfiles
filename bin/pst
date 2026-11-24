@@ -125,7 +125,7 @@ end
 
 local help = ([[
 Usage: %s [options]
-Avairable options are:
+Available options are:
   -c      --sort-pcpu
   -m      --sort-pmem
   -r      --sort-rss

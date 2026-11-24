@@ -30,7 +30,7 @@ local inside_gnu_screen = (os.getenv "INSIDE_GNU_SCREEN" or "") ~= ""
 
 local help = [[
 Usage: iterm2-file [options] [filename]...
-Avairable options are:
+Available options are:
   -i      --inline
   -w ARG  --width=ARG   ARG=N|Npx|N%|auto
   -h ARG  --height=ARG  ARG=N|Npx|N%|auto

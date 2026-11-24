@@ -31,7 +31,7 @@ local json_encode = json.encode
 
 local help = [[
 Usage: screen-windows [options]
-Avairable options are:
+Available options are:
   -e      --edit
   -j      --json
   -s ARG  --session=ARG

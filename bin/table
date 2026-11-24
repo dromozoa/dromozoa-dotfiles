@@ -28,12 +28,12 @@ local parse_csv = require "dromozoa.parse_csv"
 
 local help = ([[
 Usage: %s [options] command
-Avairable options are:
+Available options are:
   -m          --multiple-lines
   -t          --transpose
   -q PATTERN  --quote-csv=PATTERN
   -h          --help
-Avairable commands are:
+Available commands are:
   csv_to_csv
   csv_to_tsv
   csv_to_md
