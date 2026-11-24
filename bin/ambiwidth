@@ -17,28 +17,29 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-dotfiles. If not, see <https://www.gnu.org/licenses/>.
 
+local home = os.getenv "HOME"
+package.path = home .. "/dromozoa-dotfiles/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-calendar/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-commons/?.lua;"
+    .. home .. "/dromozoa-dotfiles/modules/dromozoa-utf8/?.lua;"
+    .. package.path
+
+local base64 = require "dromozoa.commons.base64"
+
 local help = [[
-Usage: iterm2-file profile
-Available profiles are:
+Usage: ambiwidth full|half
 ]]
 
-local profiles = {
-  "moyu-2026",
-  "moyu-2026-ambiwidth-half",
-}
+local ambiwidth = ...
+local b64_value
 
-local profile_set = {}
-for _, profile in ipairs(profiles) do
-  profile_set[profile] = true
-end
-
-local profile = ...
-if not profile_set[profile] then
+if ambiwidth == "full" then
+  b64_value = base64.encode "true"
+elseif ambiwidth == "half" then
+  b64_value = base64.encode "false"
+  else
   io.stderr:write(help)
-  for _, profile in ipairs(profiles) do
-    io.stderr:write("  ", profile, "\n")
-  end
   os.exit()
 end
 
-io.write("\27]1337;SetProfile=", profile, "\27\\")
+io.write("\27]1337;SetProfileProperty=Ambiguous Double Width=", b64_value, "\27\\")
