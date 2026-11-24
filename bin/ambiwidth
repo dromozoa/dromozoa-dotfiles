@@ -26,20 +26,28 @@ package.path = home .. "/dromozoa-dotfiles/?.lua;"
 
 local base64 = require "dromozoa.commons.base64"
 
+local inside_gnu_screen = (os.getenv "INSIDE_GNU_SCREEN" or "") ~= ""
+
 local help = [[
 Usage: ambiwidth full|half
 ]]
 
 local ambiwidth = ...
-local b64_value
+local iterm2_value
+local screen_value
 
 if ambiwidth == "full" then
-  b64_value = base64.encode "true"
+  iterm2_value = base64.encode "true"
+  screen_value = "on"
 elseif ambiwidth == "half" then
-  b64_value = base64.encode "false"
-  else
+  iterm2_value = base64.encode "false"
+  screen_value = "off"
+else
   io.stderr:write(help)
   os.exit()
 end
 
-io.write("\27]1337;SetProfileProperty=Ambiguous Double Width=", b64_value, "\27\\")
+io.write("\27]1337;SetProfileProperty=Ambiguous Double Width=", iterm2_value, "\27\\")
+if inside_gnu_screen then
+  os.execute("screen -X cjkwidth " .. screen_value)
+end
