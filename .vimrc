@@ -85,10 +85,12 @@ autocmd FileType text setlocal textwidth=60
 autocmd FileType text setlocal formatprg=format-text\ -w\ 60
 autocmd FileType lua syntax sync minlines=500 maxlines=1000
 
-augroup update_formatprg
-  autocmd!
-  autocmd BufEnter,OptionSet textwidth let &l:formatprg = 'format-text -w ' . &l:textwidth
-augroup END
+if exists('##OptionSet')
+  augroup update_formatprg
+    autocmd!
+    autocmd BufEnter,OptionSet textwidth let &l:formatprg = 'format-text -w ' . &l:textwidth
+  augroup END
+endif
 
 nnoremap j gj
 nnoremap k gk
