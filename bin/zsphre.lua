@@ -147,6 +147,7 @@ Usage:
   zsphre zsh_hook_preexec hist line full cwd tty user host
   zsphre zsh_hook_precmd id status pipe_status
   zsphre list_runnings
+  zsphre list_running_execs
   zsphre on_finish ids hook
   zsphre on_finish_api ids token
   zsphre delete ids
@@ -162,6 +163,7 @@ zsh_completion_options
 zsh_hook_preexec:hist line full cwd tty user host
 zsh_hook_precmd:id status pipe_status
 list_runnings
+list_running_execs
 on_finish:ids hook
 on_finish_api:ids token
 delete:ids
@@ -275,7 +277,8 @@ function commands.zsh_hook_precmd(db_file, id, status, pipe_status)
 end
 
 ---@param db_file string
-function commands.list_runnings(db_file)
+---@param condition string
+local function list_runnings(db_file, condition)
   local result = sqlite3(db_file, ([[
     select
       id,
@@ -283,18 +286,33 @@ function commands.list_runnings(db_file)
       strftime('%%s') - strftime('%%s', started_at) as elapsed,
       line
     from commands
-    where finished_at is null
+    where finished_at is null and %s
     order by id;
-  ]]):format(sqlite3_quote "%Y/%m/%d %H:%M:%S"))
+  ]]):format(sqlite3_quote "%Y/%m/%d %H:%M:%S", condition))
 
   local records = sqlite3_parse_csv(result)
+  local ids = {}
   for _, record in ipairs(records) do
     io.write(("%d\t%s\t%d\t%s\n"):format(
       assert(tonumber(record.id)),
       record.started_at,
       assert(tonumber(record.elapsed)),
       record.line))
+    table.insert(ids, tonumber(record.id))
   end
+  io.write "\n"
+  io.write("ids = ", table.concat(ids, ","), "\n")
+end
+
+
+---@param db_file string
+function commands.list_runnings(db_file)
+  list_runnings(db_file, "1")
+end
+
+---@param db_file string
+function commands.list_running_execs(db_file)
+  list_runnings(db_file, "line like 'exec %'")
 end
 
 ---@param db_file string
@@ -326,7 +344,6 @@ end
 ---@param db_file string
 ---@param ids string
 function commands.delete(db_file, ids)
-  local condition = parse_ids(ids)
   sqlite3(db_file, ([[
     delete from commands where %s;
   ]]):format(parse_ids(ids)))
